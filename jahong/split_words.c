@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_with_quotes.c                             :+:      :+:    :+:   */
+/*   split_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/25 22:22:37 by jemoon            #+#    #+#             */
-/*   Updated: 2024/12/27 15:55:57 by jemoon           ###   ########.fr       */
+/*   Created: 2024-12-29 05:11:01 by jahong            #+#    #+#             */
+/*   Updated: 2024-12-29 05:11:01 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 # include "minishell.h"
 
@@ -21,7 +22,7 @@ char	*extract_word(char const *str, int start_index, int index)
 	word_line = (char *)malloc(sizeof(char) * (index - start_index + 1));
 	if (!word_line)
 		return (NULL);
-	while (start_index < index)
+	while (start_index < index + 1 && str[start_index] != '\0')
 	{
 		word_line[idx] = str[start_index];
 		start_index++;
@@ -29,6 +30,157 @@ char	*extract_word(char const *str, int start_index, int index)
 	}
 	word_line[idx] = '\0';
 	return (word_line);
+}
+int single_quote_div(t_list **words, char const *str, int index)
+{
+    char    *word_line;
+    int     start_index;
+    int     flag;
+    
+    start_index = index;
+    flag = 0;
+    while (str[index] != '\0')
+    {
+        if (str[index] == 39)
+        { 
+            flag++;
+            if ((flag == 2 && index - 1 >= 0) && str[index - 1] != '\\')
+                break ;
+        }
+        index++;
+    }
+    word_line = extract_word(str, start_index, index);
+    if (word_line == NULL)
+        return (-1);
+    make_node(words, word_line);
+    if (make_node == NULL)
+        return (-1);
+    return (index);
+}
+
+
+int double_quote_div(t_list **words, char const *str, int index)
+{
+    char    *word_line;
+    int     start_index;
+    int     flag;
+ 
+    start_index = index;
+    flag = 0;
+    while (str[index] != '\0')
+    {
+        if (str[index] == 34)
+        {
+            flag++;
+            if (flag == 2 && (index - 1 >= 0 && str[index - 1] != '\\'))
+                break;
+        }
+        index++;
+    }
+    word_line = extract_word(str, start_index, index);
+    if (word_line == NULL)
+        return (-1);
+    make_node(words, word_line);
+    if (make_node == NULL)
+        return (-1);
+    return (index);
+
+}
+
+int string_div(t_list **words, char const *str, int index)
+{
+    int s_flag;
+    int d_flag;
+    char *word_line;
+    int start_index;
+
+    s_flag = 0;
+    d_flag = 0;
+    start_index = index;
+    while (str[index] != '\0')
+    {
+        if ((str[index] == 39 && s_flag == 0) && d_flag == 0)
+            s_flag = 1;
+        else if (str[index] == 39 && s_flag == 1)
+            s_flag = 0;
+        else if ((str[index] == 34 && d_flag == 0) && s_flag == 0)
+            d_flag = 1;
+        else if ((str[index] == 34 && d_flag == 1))
+            d_flag = 0;
+        else if (str[index] == 32 && s_flag == 0 && d_flag == 0)
+            break ;
+        index++;
+    }
+    word_line = extract_word(str, start_index, index);
+    if (word_line == NULL)
+        return (-1);
+    make_node(words, word_line);
+    if (make_node == NULL)
+        return (-1);
+    return (index);
+}
+
+int pipe_div(t_list **words, const char *str, int index)
+{
+    char    *word_line;
+    int     start_index;
+
+    start_index = index;
+    while (str[index] != '\0')
+    {
+        if (str[index] == '|')
+            break ;
+        index++;
+    }
+    word_line = extract_word(str, start_index, index);
+    if (word_line == NULL)
+        return (-1);
+    make_node(words, word_line);
+    if (make_node == NULL)
+        return (-1);
+    return (index);
+}
+
+int in_redirec_div(t_list **words, const char *str, int index)
+{
+    char    *word_line;
+    int     start_index;
+
+    start_index = index;
+    while (str[index] != '\0')
+    {
+        if (str[index] != '<')
+            break ;
+        index++;
+    }
+    word_line = extract_word(str, start_index, index);
+    if (word_line == NULL)
+        return (-1);
+    make_node(words, word_line);
+    if (make_node == NULL)
+        return (-1);
+    return (index);
+}
+
+int out_redirec_div(t_list **words, const char *str, int index)
+{
+    char    *word_line;
+    int     start_index;
+
+    start_index = index;
+    while (str[index] != '\0')
+    {
+        if (str[index] != '>')
+            break ;
+        index++;
+    }
+    word_line = extract_word(str, start_index, index);
+    if (word_line == NULL)
+        return (-1);
+    make_node(words, word_line);
+    if (make_node == NULL)
+        return (-1);
+    return (index);
 }
 
 t_list	*split_words(char const *str)
@@ -39,23 +191,27 @@ t_list	*split_words(char const *str)
 	char	*word_line;
 
 	index = 0;
-	start_index = 0;
 	words = NULL;
 	while (str[index] != '\0')
 	{
-		if (str[index] == 32 || str[index] == 9 || str[index + 1] == '\0')
-		{
-			if (str[index + 1] == '\0')
-				index++;
-			word_line = extract_word(str, start_index, index);
-			if (word_line == NULL)
-				return (NULL);
-			make_node(&words, word_line);
-			if (words == NULL)
-				return (NULL);
-			start_index = index + 1;
-		}
-		index++;
+        start_index = index;
+        /*if (str[index] == 39)
+            index = single_quote_div(&words, str, index);
+        else if (str[index] == 34)
+            index = double_quote_div(&words, str, index);*/
+        if (str[index] == '|')
+            index = pipe_div(&words, str, index);
+        else if (str[index] == '<')
+            index = in_redirec_div(&words, str, index);
+        else if (str[index] == '>')
+            index = out_redirec_div(&words, str, index);
+        else if (str[index] != 32)
+            index = string_div(&words, str, index);
+        if (index == -1)
+            return (NULL);
+        else if (str[index] == '\0')
+            break ;
+        index++;
 	}
 	return (words);
 }

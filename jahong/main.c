@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/25 16:40:49 by jemoon            #+#    #+#             */
-/*   Updated: 2024/12/27 16:09:09 by jemoon           ###   ########.fr       */
+/*   Created: 2024-12-29 05:10:55 by jahong            #+#    #+#             */
+/*   Updated: 2024-12-29 05:10:55 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 # include "minishell.h"
 
@@ -33,21 +34,19 @@ int main(void)
     t_list  *tokens;
     t_list  *tmp; // 출력확인용
     
-	tokens = NULL;
-    tmp = tokens; // 출력확인용
     while(1)
     {
         str = readline("bash : ");
         if (str[0] == '\0')
             continue;;
         tokens = mn_split(str);
-        while (tokens != NULL) // 확인용
+        tmp = tokens;
+        while (tmp != NULL) // 확인용
         {
-            printf("%s\n", tokens->token);
-            tokens = tokens->next;
+            printf("%s\n", tmp->token);
+            tmp = tmp->next;
         }
         
-        tokens = tmp;
        // lexer_n_parse(tokens);
         //run_process(tokens);
         free_linked_list(tokens);
