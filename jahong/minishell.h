@@ -41,7 +41,7 @@ typedef struct  cmd_list
 int     main(void);
 
 /* tokenize_with_quotes.c */
-t_list  *split_words(char const *str);
+t_list  *split_words(char const *str, int cmd_flag);
 t_list *mn_split(char const *str);
 
 /* linked_list.c */

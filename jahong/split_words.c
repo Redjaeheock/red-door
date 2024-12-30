@@ -19,6 +19,8 @@ char	*extract_word(char const *str, int start_index, int index)
 	int		idx;
 
 	idx = 0;
+    if (str == NULL)
+        return (NULL);
 	word_line = (char *)malloc(sizeof(char) * (index - start_index + 1));
 	if (!word_line)
 		return (NULL);
@@ -31,90 +33,40 @@ char	*extract_word(char const *str, int start_index, int index)
 	word_line[idx] = '\0';
 	return (word_line);
 }
-int single_quote_div(t_list **words, char const *str, int index)
+int operator_check(char c)
 {
-    char    *word_line;
-    int     start_index;
-    int     flag;
-    
-    start_index = index;
-    flag = 0;
-    while (str[index] != '\0')
-    {
-        if (str[index] == 39)
-        { 
-            flag++;
-            if ((flag == 2 && index - 1 >= 0) && str[index - 1] != '\\')
-                break ;
-        }
-        index++;
-    }
-    word_line = extract_word(str, start_index, index);
-    if (word_line == NULL)
-        return (-1);
-    make_node(words, word_line);
-    if (make_node == NULL)
-        return (-1);
-    return (index);
-}
-
-
-int double_quote_div(t_list **words, char const *str, int index)
-{
-    char    *word_line;
-    int     start_index;
-    int     flag;
- 
-    start_index = index;
-    flag = 0;
-    while (str[index] != '\0')
-    {
-        if (str[index] == 34)
-        {
-            flag++;
-            if (flag == 2 && (index - 1 >= 0 && str[index - 1] != '\\'))
-                break;
-        }
-        index++;
-    }
-    word_line = extract_word(str, start_index, index);
-    if (word_line == NULL)
-        return (-1);
-    make_node(words, word_line);
-    if (make_node == NULL)
-        return (-1);
-    return (index);
-
+    if (c == '|' || c == '>' || c == '<')
+        return (1);
+    return (0);
 }
 
 int string_div(t_list **words, char const *str, int index)
 {
-    int s_flag;
-    int d_flag;
-    char *word_line;
+    int flag;
     int start_index;
 
-    s_flag = 0;
-    d_flag = 0;
+    flag = 0;
     start_index = index;
     while (str[index] != '\0')
     {
-        if ((str[index] == 39 && s_flag == 0) && d_flag == 0)
-            s_flag = 1;
-        else if (str[index] == 39 && s_flag == 1)
-            s_flag = 0;
-        else if ((str[index] == 34 && d_flag == 0) && s_flag == 0)
-            d_flag = 1;
-        else if ((str[index] == 34 && d_flag == 1))
-            d_flag = 0;
-        else if (str[index] == 32 && s_flag == 0 && d_flag == 0)
+        if (str[index] == 39 && flag == 0)
+            flag = 39;
+        else if (str[index] == 39 && flag != 34)
+            flag = 0;
+        else if (str[index] == 34 && flag == 0)
+            flag = 34;
+        else if ((str[index] == 34 && flag != 39))
+            flag = 0;
+        else if (flag == 0 && operator_check(str[index]) == 1)
+        {
+            index--;
+            break ;
+        }
+        else if (str[index] == 32 && flag == 0)
             break ;
         index++;
     }
-    word_line = extract_word(str, start_index, index);
-    if (word_line == NULL)
-        return (-1);
-    make_node(words, word_line);
+    make_node(words, extract_word(str, start_index, index));
     if (make_node == NULL)
         return (-1);
     return (index);
@@ -180,31 +132,23 @@ int out_redirec_div(t_list **words, const char *str, int index)
     make_node(words, word_line);
     if (make_node == NULL)
         return (-1);
+    if (str[index] == '\0')
+        index--;
     return (index);
 }
 
-t_list	*split_words(char const *str)
+t_list	*split_words(char const *str, int cmd_flag)
 {
 	t_list	*words;
 	int		index;
-	int		start_index;
 	char	*word_line;
 
 	index = 0;
 	words = NULL;
 	while (str[index] != '\0')
-	{
-        start_index = index;
-        /*if (str[index] == 39)
-            index = single_quote_div(&words, str, index);
-        else if (str[index] == 34)
-            index = double_quote_div(&words, str, index);*/
+	{   
         if (str[index] == '|')
             index = pipe_div(&words, str, index);
-        else if (str[index] == '<')
-            index = in_redirec_div(&words, str, index);
-        else if (str[index] == '>')
-            index = out_redirec_div(&words, str, index);
         else if (str[index] != 32)
             index = string_div(&words, str, index);
         if (index == -1)
@@ -216,13 +160,31 @@ t_list	*split_words(char const *str)
 	return (words);
 }
 
+int start_check(char c)
+{
+    if (c == '|')
+    {
+        printf("bash: syntax error near unexpected token `|'\n");
+        // 에러 넘버 확인
+        return (-1);
+    }
+    else if (c == '<' || c == '>')
+        return (0);
+    else
+        return (1);
+}
+
 t_list *mn_split(char const *str)
 {
 	t_list	*words;
+    int cmd_flag;
 
 	if (!str)
 		return (NULL);
-	words = split_words(str);
+    cmd_flag = start_check(str[0]);
+    if (cmd_flag == -1)
+        return (NULL);
+	words = split_words(str, cmd_flag);
 	return (words);
 }
 
