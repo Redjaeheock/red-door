@@ -3,39 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   split_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              #+#  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-12-29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2024-12-29 05:11:01 by jahong           ###   ########.fr       */
+/*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
+/*   Updated: 2024/12/31 01:10:07 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 # include "minishell.h"
 
-char	*extract_word(char const *str, int start_index, int index)
+char	*extract_word(char const *str, int start_index, int end)
 {
 	char	*word_line;
 	int		idx;
+    int     len;
 
 	idx = 0;
     if (str == NULL)
         return (NULL);
-	word_line = (char *)malloc(sizeof(char) * (index - start_index + 1));
+    len = (end - start_index);
+	word_line = (char *)malloc(sizeof(char) * (len + 1));
 	if (!word_line)
 		return (NULL);
-	while (start_index < index + 1 && str[start_index] != '\0')
+	while (idx < len && str[start_index + idx] != '\0')
 	{
-		word_line[idx] = str[start_index];
-		start_index++;
+		word_line[idx] = str[start_index + idx];
 		idx++;
 	}
 	word_line[idx] = '\0';
 	return (word_line);
 }
+
+int in_redirec_div(t_list **words, const char *str, int index)
+{
+    int     start_index;
+
+    start_index = index;
+    while (str[index] != '<')
+        index++;
+    if ((index - start_index) > 2)
+        return (-1);  
+    make_node(&(*words), extract_word(str, start_index, index));
+    if (make_node == NULL)
+        return (-1);
+    return (index--);
+}
+/*
+int out_redirec_div(t_list *words, const char *str, int index)
+{
+    char    *word_line;
+    int     start_index;
+
+    start_index = index;
+    while (str[index] != '\0')
+    {
+        if (str[index] != '>')
+            break ;
+        index++;
+    }
+    word_line = extract_word(str, start_index, index);
+    if (word_line == NULL)
+        return (-1);
+    make_node(words, word_line);
+    if (make_node == NULL)
+        return (-1);
+    if (str[index] == '\0')
+        index--;
+    return (index);
+}*/
+
 int operator_check(char c)
 {
-    if (c == '|' || c == '>' || c == '<')
+    if (c == '|' || c == '>' || c == '<' || c == ' ')
         return (1);
     return (0);
 }
@@ -58,21 +98,16 @@ int string_div(t_list **words, char const *str, int index)
         else if ((str[index] == 34 && flag != 39))
             flag = 0;
         else if (flag == 0 && operator_check(str[index]) == 1)
-        {
-            index--;
-            break ;
-        }
-        else if (str[index] == 32 && flag == 0)
             break ;
         index++;
     }
-    make_node(words, extract_word(str, start_index, index));
-    if (make_node == NULL)
+    make_node(&(*words), extract_word(str, start_index, index));
+    if (words == NULL)
         return (-1);
-    return (index);
+    return (index--);
 }
-
-int pipe_div(t_list **words, const char *str, int index)
+/*
+int pipe_div(t_list *words, const char *str, int index)
 {
     char    *word_line;
     int     start_index;
@@ -91,51 +126,7 @@ int pipe_div(t_list **words, const char *str, int index)
     if (make_node == NULL)
         return (-1);
     return (index);
-}
-
-int in_redirec_div(t_list **words, const char *str, int index)
-{
-    char    *word_line;
-    int     start_index;
-
-    start_index = index;
-    while (str[index] != '\0')
-    {
-        if (str[index] != '<')
-            break ;
-        index++;
-    }
-    word_line = extract_word(str, start_index, index);
-    if (word_line == NULL)
-        return (-1);
-    make_node(words, word_line);
-    if (make_node == NULL)
-        return (-1);
-    return (index);
-}
-
-int out_redirec_div(t_list **words, const char *str, int index)
-{
-    char    *word_line;
-    int     start_index;
-
-    start_index = index;
-    while (str[index] != '\0')
-    {
-        if (str[index] != '>')
-            break ;
-        index++;
-    }
-    word_line = extract_word(str, start_index, index);
-    if (word_line == NULL)
-        return (-1);
-    make_node(words, word_line);
-    if (make_node == NULL)
-        return (-1);
-    if (str[index] == '\0')
-        index--;
-    return (index);
-}
+}*/
 
 t_list	*split_words(char const *str, int cmd_flag)
 {
@@ -147,9 +138,11 @@ t_list	*split_words(char const *str, int cmd_flag)
 	words = NULL;
 	while (str[index] != '\0')
 	{   
-        if (str[index] == '|')
-            index = pipe_div(&words, str, index);
-        else if (str[index] != 32)
+        /*if (str[index] == '|')
+            index = pipe_div(words, str, index);
+        else if (str[index] == '<')
+            index = in_redirec_div(words, str, index);
+        else*/ if (str[index] != 32)
             index = string_div(&words, str, index);
         if (index == -1)
             return (NULL);

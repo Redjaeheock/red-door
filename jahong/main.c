@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              #+#  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-12-29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2024-12-29 05:10:55 by jahong           ###   ########.fr       */
+/*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
+/*   Updated: 2024/12/30 23:03:29 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int main(void)
     {
         str = readline("bash : ");
         if (str[0] == '\0')
-            continue;;
+            continue;
         tokens = mn_split(str);
         tmp = tokens;
         while (tmp != NULL) // 확인용

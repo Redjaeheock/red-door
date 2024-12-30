@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              #+#  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-12-29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2024-12-29 05:11:14 by jahong           ###   ########.fr       */
+/*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
+/*   Updated: 2024/12/31 01:00:30 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,13 @@ typedef struct  cmd_list
     struct cmd_list	*next;
 }					t_list;
 
-//void replace_char(char *str);
-int     main(void);
-
 /* tokenize_with_quotes.c */
 t_list  *split_words(char const *str, int cmd_flag);
 t_list *mn_split(char const *str);
 
 /* linked_list.c */
 t_list  *create_linked_list(char *str);
-void    add_back_linked_list(t_list **tokenize, t_list *new);
+void    add_back_linked_list(t_list *tokenize, t_list *new);
 void    make_node(t_list **tokenize, char *str);
 void	free_linked_list(t_list *list);
 

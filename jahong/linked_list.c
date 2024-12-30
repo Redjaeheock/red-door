@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              #+#  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-12-29 05:11:21 by jahong            #+#    #+#             */
-/*   Updated: 2024-12-29 05:11:21 by jahong           ###   ########.fr       */
+/*   Created: 2024/12/29 05:11:21 by jahong            #+#    #+#             */
+/*   Updated: 2024/12/31 01:06:56 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ t_list *create_linked_list(char *str)
 	return (new);
 }
 
-void	add_back_linked_list(t_list **tokenize, t_list *new)
+void	add_back_linked_list(t_list *tokenize, t_list *new)
 {
 	t_list *temp;
 
-	temp = *tokenize;
+	temp = tokenize;
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new;
@@ -58,5 +58,5 @@ void	make_node(t_list **tokenize, char *str)
 	if (*tokenize == NULL)
 		*tokenize = new_node;
 	else
-		add_back_linked_list(tokenize, new_node);
+		add_back_linked_list(*tokenize, new_node);
 }
