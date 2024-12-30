@@ -1,0 +1,54 @@
+<쉘 종료값>
+
+커맨드 및 ctrl d = 0
+
+파일 읽어오기 실패시 = 1
+
+syntax error(| , <, >, &) = 2 (오퍼레이터로 cmd_line 시작)
+
+command not found = 127
+
+ctrl c 종료시 = 130
+
+ctrl \ 종료시 = 131
+
+
+<<< + string = 에러가 아니다
+
+
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ |
+bash: syntax error near unexpected token `|'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ ||
+bash: syntax error near unexpected token `||'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ |||
+bash: syntax error near unexpected token `||'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ ||||||
+bash: syntax error near unexpected token `||'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ ||||||||
+bash: syntax error near unexpected token `||'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ &
+bash: syntax error near unexpected token `&'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ &&
+bash: syntax error near unexpected token `&&'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ &&&&&&
+bash: syntax error near unexpected token `&&'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ &&&&&&&
+bash: syntax error near unexpected token `&&'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<
+bash: syntax error near unexpected token `newline'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ >>>
+bash: syntax error near unexpected token `>'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ >>>>
+bash: syntax error near unexpected token `>>'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ >>>>>>>
+bash: syntax error near unexpected token `>>'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<
+bash: syntax error near unexpected token `<'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<<
+bash: syntax error near unexpected token `<<'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<<<
+bash: syntax error near unexpected token `<<<'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<<<<<
+bash: syntax error near unexpected token `<<<'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$
+

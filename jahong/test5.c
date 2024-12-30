@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:26:20 by jahong            #+#    #+#             */
-/*   Updated: 2024/12/30 21:07:07 by jahong           ###   ########.fr       */
+/*   Updated: 2024/12/31 03:31:12 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int main(int ac, char **av, char **envp)
     char *str;
     char **arr;
 
-    str = readline("");
+    str = readline("> : ");
     printf(">>> %s\n", str);
     arr = (char **)malloc(sizeof(char*) * 2);
     arr[0] = NULL;
     arr[1] = NULL;
 
-    if (execve("/usr/bin/ls", arr, envp) == -1)
+    if (execve("/usr/bin/$?", arr, envp) == -1)
         printf("%s: command not found\n", str);
     return (0);
 
