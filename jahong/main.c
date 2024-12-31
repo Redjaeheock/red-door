@@ -6,53 +6,51 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2024/12/31 03:31:13 by jahong           ###   ########.fr       */
+/*   Updated: 2024/12/31 10:01:44 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 
-# include "minishell.h"
-
-void replace_char(char *str)
+void	replace_char(char *str)
 {
-    int i;
+    int	i;
 
-    i = 0;
-    if (!str)
-        return ;
-    while (str[i] != '\0')
-    {
-        if (str[i] == 32 || str[i] == 9 || str[i] == 10)
-            str[i] = 20;
-        i++;
-    }
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i] != '\0')
+	{
+		if (str[i] == 32 || str[i] == 9 || str[i] == 10)
+			str[i] = 20;
+		i++;
+	}
 }
 
-int main(void)
+int	main(void)
 {
-    char    *str;
-    t_list  *tokens;
-    t_list  *tmp; // 출력확인용
-    
-    while(1)
-    {
-        str = readline("bash : ");
-        if (str[0] == '\0')
-            continue;
-        tokens = mn_split(str);
-        tmp = tokens;
-        while (tmp != NULL) // 확인용
-        {
-            printf("%s\n", tmp->token);
-            tmp = tmp->next;
-        }
-        
+	char	*str;
+	t_list	*tokens;
+	t_list	*tmp; // 출력확인용
+
+	while(1)
+	{
+		str = readline("bash : ");
+		if (str[0] == '\0')
+			continue;
+		tokens = mn_split(str);
+		tmp = tokens;
+		while (tmp != NULL) // 확인용
+		{
+			printf("%s\n", tmp->token);
+			tmp = tmp->next;
+		}
        // lexer_n_parse(tokens);
         //run_process(tokens);
-        free_linked_list(tokens);
+		free_linked_list(tokens);
 //      add_history(str);
-        free(str);
-    }
+		free(str);
+	}
 }
 
 // mini shell parsing을 통해서, 들어온 인자값들을 우선 정제시킬 필요가 있음.

@@ -6,10 +6,9 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2024/12/31 03:31:09 by jahong           ###   ########.fr       */
+/*   Updated: 2024/12/31 09:43:32 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -26,7 +25,7 @@ typedef enum {
     CMD,
     OPTION,
     ARG
-} t_tokentype;
+}	t_tokentype;
 
 typedef struct  cmd_list
 {

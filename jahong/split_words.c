@@ -6,23 +6,22 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2024/12/31 03:31:12 by jahong           ###   ########.fr       */
+/*   Updated: 2024/12/31 09:59:07 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-# include "minishell.h"
+#include "minishell.h"
 
 char	*extract_word(char const *str, int start_index, int end)
 {
 	char	*word_line;
 	int		idx;
-    int     len;
+	int		len;
 
 	idx = 0;
-    if (str == NULL)
-        return (NULL);
-    len = (end - start_index);
+	if (str == NULL)
+		return (NULL);
+	len = (end - start_index);
 	word_line = (char *)malloc(sizeof(char) * (len + 1));
 	if (!word_line)
 		return (NULL);
@@ -35,104 +34,103 @@ char	*extract_word(char const *str, int start_index, int end)
 	return (word_line);
 }
 
-
-int operator_check(char const *str, int index)
+int	operator_check(char const *str, int index)
 {
-    printf("check operator\n");
-    if (str[index] == '|' || str[index] == '>')
-        return (1);
-    if (str[index] == '<' || str[index] == ' ')
-        return (1);
-    if (str[index] == '&' && str[index + 1] == '&')
-        return (1);
-    return (0);
+	printf("check operator\n");
+	if (str[index] == '|' || str[index] == '>')
+		return (1);
+	if (str[index] == '<' || str[index] == ' ')
+		return (1);
+	if (str[index] == '&' && str[index + 1] == '&')
+		return (1);
+	return (0);
 }
 
-int string_div(t_list **words, char const *str, int index)
+int	string_div(t_list **words, char const *str, int index)
 {
-    int flag;
-    int start_index;
+	int	flag;
+	int	start_index;
 
-    flag = 0;
-    start_index = index;
-    while (str[index] != '\0')
-    {
-        if (str[index] == 39 && flag == 0)
-            flag = 39;
-        else if (str[index] == 39 && flag != 34)
-            flag = 0;
-        else if (str[index] == 34 && flag == 0)
-            flag = 34;
-        else if ((str[index] == 34 && flag != 39))
-            flag = 0;
-        else if (flag == 0 && operator_check(str, index) == 1)
-            break ;
-        index++;
-    }
-    make_node(&(*words), extract_word(str, start_index, index));
-    if (words == NULL)
-        return (-1);
-    return (--index);
+	flag = 0;
+	start_index = index;
+	while (str[index] != '\0')
+	{
+		if (str[index] == 39 && flag == 0)
+			flag = 39;
+		else if (str[index] == 39 && flag != 34)
+			flag = 0;
+		else if (str[index] == 34 && flag == 0)
+			flag = 34;
+		else if ((str[index] == 34 && flag != 39))
+			flag = 0;
+		else if (flag == 0 && operator_check(str, index) == 1)
+			break ;
+		index++;
+	}
+	make_node(&(*words), extract_word(str, start_index, index));
+	if (words == NULL)
+		return (-1);
+	return (--index);
 }
 
-int ampersand_div(t_list **words, const char *str, int index)
+int	ampersand_div(t_list **words, const char *str, int index)
 {
-    int     start_index;
+	int	start_index;
 
-    start_index = index;
-    while (str[index] == '&')
-        index++;
-    if ((index - start_index) != 2 )
-        return (index);
-    make_node(&(*words), extract_word(str, start_index, index));
-    if (make_node == NULL)
-        return (-1);
-    return (--index);
+	start_index = index;
+	while (str[index] == '&')
+		index++;
+	if ((index - start_index) != 2)
+		return (index);
+	make_node(&(*words), extract_word(str, start_index, index));
+	if (make_node == NULL)
+		return (-1);
+	return (--index);
 }
 
-int in_redirec_div(t_list **words, const char *str, int index)
+int	in_redirec_div(t_list **words, const char *str, int index)
 {
-    int     start_index;
+	int	start_index;
 
-    start_index = index;
-    while (str[index] == '<')
-        index++;
-    if ((index - start_index) > 2)
-        return (-1);  
-    make_node(&(*words), extract_word(str, start_index, index));
-    if (make_node == NULL)
-        return (-1);
-    return (--index);
+	start_index = index;
+	while (str[index] == '<')
+		index++;
+	if ((index - start_index) > 2)
+		return (-1);
+	make_node(&(*words), extract_word(str, start_index, index));
+	if (make_node == NULL)
+		return (-1);
+	return (--index);
 }
 
-int out_redirec_div(t_list **words, const char *str, int index)
+int	out_redirec_div(t_list **words, const char *str, int index)
 {
-    int     start_index;
+	int	start_index;
 
-    start_index = index;
-    while (str[index] == '>')
-        index++;
-    if ((index - start_index) > 2)
-        return (-1); 
-    make_node(&(*words), extract_word(str, start_index, index));
-    if (make_node == NULL)
-        return (-1);
-    return (--index);
+	start_index = index;
+	while (str[index] == '>')
+		index++;
+	if ((index - start_index) > 2)
+		return (-1);
+	make_node(&(*words), extract_word(str, start_index, index));
+	if (make_node == NULL)
+		return (-1);
+	return (--index);
 }
 
-int pipe_div(t_list **words, const char *str, int index)
+int	pipe_div(t_list	**words, const char	*str, int index)
 {
-    int     start_index;
+	int	start_index;
 
-    start_index = index;
-    while (str[index] == '|')
-        index++;
-    if ((index - start_index) > 2)
-        return (-1);
-    make_node(&(*words), extract_word(str, start_index, index));
-    if (make_node == NULL)
-        return (-1);
-    return (--index);
+	start_index = index;
+	while (str[index] == '|')
+		index++;
+	if ((index - start_index) > 2)
+		return (-1);
+	make_node(&(*words), extract_word(str, start_index, index));
+	if (make_node == NULL)
+		return (-1);
+	return (--index);
 }
 
 t_list	*split_words(char const *str, int cmd_flag)
@@ -144,58 +142,55 @@ t_list	*split_words(char const *str, int cmd_flag)
 	index = 0;
 	words = NULL;
 	while (str[index] != '\0')
-	{   
-        if (str[index] == '|')
-            index = pipe_div(&words, str, index);
-        else if (str[index] == '<')
-            index = in_redirec_div(&words, str, index);
-        else if (str[index] == '>')
-            index = out_redirec_div(&words, str, index);
-        else if (str[index] == '&')
-            index = ampersand_div(&words, str, index);
-        else if (str[index] != 32)
-            index = string_div(&words, str, index);
-        if (index == -1)
-            return (NULL);
-        else if (str[index] == '\0')
-            break ;
-        index++;
+	{
+		if (str[index] == '|')
+			index = pipe_div(&words, str, index);
+		else if (str[index] == '<')
+			index = in_redirec_div(&words, str, index);
+		else if (str[index] == '>')
+			index = out_redirec_div(&words, str, index);
+		else if (str[index] == '&')
+			index = ampersand_div(&words, str, index);
+		else if (str[index] != 32)
+			index = string_div(&words, str, index);
+		if (index == -1)
+			return (NULL);
+		else if (str[index] == '\0')
+			break ;
+		index++;
 	}
 	return (words);
 }
 
-int start_check(char c)
+int	start_check(char c)
 {
-    if (c == '|')
-    {
-        printf("bash: syntax error near unexpected token `|'\n");
-        // 에러 넘버 확인
-        return (-1);
-    }
-    else if (c == '&')
-    {
-
-         printf("bash: syntax error near unexpected token `&'\n");
-        // 에러 넘버 확인
-        return (-1);
-
-    }
-    else if (c == '<' || c == '>')
-        return (0);
-    
-    return (1);
+	if (c == '|')
+	{
+		printf("bash: syntax error near unexpected token `|'\n");
+		// 에러 넘버 확인
+		return (-1);
+	}
+	else if (c == '&')
+	{
+		printf("bash: syntax error near unexpected token `&'\n");
+		// 에러 넘버 확인
+		return (-1);
+	}
+	else if (c == '<' || c == '>')
+		return (0);
+	return (1);
 }
 
-t_list *mn_split(char const *str)
+t_list	*mn_split(char const *str)
 {
 	t_list	*words;
-    int cmd_flag;
+	int		cmd_flag;
 
 	if (!str)
 		return (NULL);
-    cmd_flag = start_check(str[0]);
-    if (cmd_flag == -1)
-        return (NULL);
+	cmd_flag = start_check(str[0]);
+	if (cmd_flag == -1)
+		return (NULL);
 	words = split_words(str, cmd_flag);
 	return (words);
 }
@@ -213,6 +208,5 @@ t_list *mn_split(char const *str)
 
 // cmd와 리다이렉션은 제일 처음에오고, 제일 마지막
 // 리다이렉션 뒤는 무조건 -> 파라미터(파일)
-
 
 // index -> 
