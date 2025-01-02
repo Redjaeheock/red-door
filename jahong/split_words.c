@@ -6,10 +6,9 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/02 10:40:33 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/02 11:00:11 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 # include "minishell.h"
 
@@ -39,7 +38,6 @@ int	string_div(t_list **words, char const *str, int index)
 		return (-1);
 	return (--index);
 }
-
 int	ampersand_div(t_list **words, const char *str, int index)
 {
 	int	start_index;
@@ -54,7 +52,6 @@ int	ampersand_div(t_list **words, const char *str, int index)
 		return (-1);
 	return (--index);
 }
-
 int	in_redirec_div(t_list **words, const char *str, int index)
 {
 	int	start_index;
@@ -69,7 +66,6 @@ int	in_redirec_div(t_list **words, const char *str, int index)
 		return (-1);
 	return (--index);
 }
-
 int	out_redirec_div(t_list **words, const char *str, int index)
 {
 	int	start_index;
@@ -84,7 +80,6 @@ int	out_redirec_div(t_list **words, const char *str, int index)
 		return (-1);
 	return (--index);
 }
-
 int	pipe_div(t_list	**words, const char	*str, int index)
 {
 	int	start_index;
@@ -99,7 +94,6 @@ int	pipe_div(t_list	**words, const char	*str, int index)
 		return (-1);
 	return (--index);
 }
-
 //	1. 더블 쿼터나 싱글 쿼터 중 하나가 보이면 해당 plag 지정.
 //	2. 지정된 plag가 아닌 쿼터가 나온다면(IFS 값 포함, 중복 쿼터), 우선은 문자열로 처리하고 pass
 //	3. 지정된 plag가 나온다면, 우선은 plag 지정해제,

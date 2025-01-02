@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/02 10:39:51 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/02 11:22:38 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,30 @@ t_list	*split_words(char const *str, int cmd_flag)
 	}
 	return (words);
 }
-
-int start_check(char c)
+int start_check(const char *str, int index)
 {
-    if (c == '|')
-    {
-        printf("bash: syntax error near unexpected token `|'\n");
+	if (str[index] == '|')
+	{
+		if (str[index + 1] == '|')
+			printf("bash: syntax error near unexpected token `||'\n");
+		else
+			printf("bash: syntax error near unexpected token `|'\n");
+		// 에러 넘버 확인
+		return (-1);
+	}
+	else if (str[index] == '&')
+	{
+		if (str[index + 1] == '&')
+			printf("bash: syntax error near unexpected token `&&'\n");
+		else
+			printf("bash: syntax error near unexpected token `&'\n");
         // 에러 넘버 확인
         return (-1);
     }
-    else if (c == '&')
-    {
-
-         printf("bash: syntax error near unexpected token `&'\n");
-        // 에러 넘버 확인
-        return (-1);
-
-    }
-    else if (c == '<' || c == '>')
+    else if (str[index] == '<' || str[index] == '>')
         return (0);
-    
     return (1);
 }
-
 t_list *mn_split(char const *str)
 {
 	t_list	*words;
@@ -70,13 +71,12 @@ t_list *mn_split(char const *str)
 
 	if (!str)
 		return (NULL);
-    cmd_flag = start_check(str[0]);
+    cmd_flag = start_check(str, 0);
     if (cmd_flag == -1)
         return (NULL);
 	words = split_words(str, cmd_flag);
 	return (words);
 }
-
 int	main(void)
 {
 	char	*str;
@@ -102,7 +102,6 @@ int	main(void)
 		free(str);
 	}
 }
-
 // mini shell parsing을 통해서, 들어온 인자값들을 우선 정제시킬 필요가 있음.
 // 싱글쿼터, 더블쿼터가 들어왔을 때, 쓸모없는 글들을 탈락시키고, 유요한 값들만 문자열.
 // 전달된 유요한 값이 빌트인이면, 빌트인으로 들어가서 작동

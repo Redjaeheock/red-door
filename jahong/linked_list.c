@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:21 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/02 10:37:02 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/02 11:00:13 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	free_linked_list(t_list *list)
 		free(temp);
 	}
 }
-
 t_list	*create_linked_list(char *str)
 {
 	t_list	*new;
@@ -36,7 +35,6 @@ t_list	*create_linked_list(char *str)
 	new->next = NULL;
 	return (new);
 }
-
 void	add_back_linked_list(t_list *tokenize, t_list *new)
 {
 	t_list	*temp;
@@ -46,7 +44,6 @@ void	add_back_linked_list(t_list *tokenize, t_list *new)
 		temp = temp->next;
 	temp->next = new;
 }
-
 void	make_node(t_list **tokenize, char *str)
 {
 	t_list	*new_node;
