@@ -1,19 +1,19 @@
 <쉘 종료값>
 
-커맨드 및 ctrl d = 0
+0 = 커맨드 및 ctrl d (명령어의 성공적 종료)
 
-파일 읽어오기 실패시 = 1
+1 = 파일 읽어오기 실패시
 
-syntax error(| , <, >, &) = 2 (오퍼레이터로 cmd_line 시작)
+2 = syntax error(| , <, >, &) (오퍼레이터로 cmd_line 시작)
 
-command not found = 127
+127 = command not found
 
-ctrl c 종료시 = 130
+130 = ctrl c 종료시
 
-ctrl \ 종료시 = 131
+131 = ctrl \ 종료시
 
 
-<<< + string = 에러가 아니다
+<<< + string = 에러가 아니다 (bash 환경에 따라 달라지는 것으로 보임)
 
 
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ |
@@ -34,21 +34,34 @@ red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ &&&&&&
 bash: syntax error near unexpected token `&&'
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ &&&&&&&
 bash: syntax error near unexpected token `&&'
+
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<
-bash: syntax error near unexpected token `newline'
+bash: syntax error near unexpected token `newline' (내 컴퓨터 환경)
+bash: syntax error near unexpected token `<<' (클러스터 환경)
+
+
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ >>>
-bash: syntax error near unexpected token `>'
+bash: syntax error near unexpected token `>' (내 컴퓨터 환경)
+bash: syntax error near unexpected token `>>' (클러스터 환경)
+
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ >>>>
 bash: syntax error near unexpected token `>>'
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ >>>>>>>
 bash: syntax error near unexpected token `>>'
+
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<
-bash: syntax error near unexpected token `<'
+bash: syntax error near unexpected token `<' (내 컴퓨터 환경)
+bash: syntax error near unexpected token `<<' (클러스터 환경)
+
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<<
 bash: syntax error near unexpected token `<<'
+
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<<<
-bash: syntax error near unexpected token `<<<'
+bash: syntax error near unexpected token `<<<' (내 컴퓨터 환경)
+bash: syntax error near unexpected token `<<' (클러스터 환경경)
+
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<<<<<
-bash: syntax error near unexpected token `<<<'
-red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$
+bash: syntax error near unexpected token `<<<' (내 컴퓨터 환경)
+bash: syntax error near unexpected token `<<' (클러스터 환경)
+
 

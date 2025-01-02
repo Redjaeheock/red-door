@@ -6,25 +6,75 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2024/12/31 10:01:44 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/02 10:39:51 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	replace_char(char *str)
+t_list	*split_words(char const *str, int cmd_flag)
 {
-    int	i;
+	t_list	*words;
+	int		index;
+	char	*word_line;
 
-	i = 0;
-	if (!str)
-		return ;
-	while (str[i] != '\0')
-	{
-		if (str[i] == 32 || str[i] == 9 || str[i] == 10)
-			str[i] = 20;
-		i++;
+	index = 0;
+	words = NULL;
+	while (str[index] != '\0')
+	{   
+        if (str[index] == '|')
+            index = pipe_div(&words, str, index);
+        else if (str[index] == '<')
+            index = in_redirec_div(&words, str, index);
+        else if (str[index] == '>')
+            index = out_redirec_div(&words, str, index);
+        else if (str[index] == '&')
+            index = ampersand_div(&words, str, index);
+        else if (str[index] != 32)
+            index = string_div(&words, str, index);
+        if (index == -1)
+            return (NULL);
+        else if (str[index] == '\0')
+            break ;
+        index++;
 	}
+	return (words);
+}
+
+int start_check(char c)
+{
+    if (c == '|')
+    {
+        printf("bash: syntax error near unexpected token `|'\n");
+        // 에러 넘버 확인
+        return (-1);
+    }
+    else if (c == '&')
+    {
+
+         printf("bash: syntax error near unexpected token `&'\n");
+        // 에러 넘버 확인
+        return (-1);
+
+    }
+    else if (c == '<' || c == '>')
+        return (0);
+    
+    return (1);
+}
+
+t_list *mn_split(char const *str)
+{
+	t_list	*words;
+    int cmd_flag;
+
+	if (!str)
+		return (NULL);
+    cmd_flag = start_check(str[0]);
+    if (cmd_flag == -1)
+        return (NULL);
+	words = split_words(str, cmd_flag);
+	return (words);
 }
 
 int	main(void)

@@ -6,45 +6,12 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2024/12/31 09:59:07 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/02 10:40:33 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 
-char	*extract_word(char const *str, int start_index, int end)
-{
-	char	*word_line;
-	int		idx;
-	int		len;
-
-	idx = 0;
-	if (str == NULL)
-		return (NULL);
-	len = (end - start_index);
-	word_line = (char *)malloc(sizeof(char) * (len + 1));
-	if (!word_line)
-		return (NULL);
-	while (idx < len && str[start_index + idx] != '\0')
-	{
-		word_line[idx] = str[start_index + idx];
-		idx++;
-	}
-	word_line[idx] = '\0';
-	return (word_line);
-}
-
-int	operator_check(char const *str, int index)
-{
-	printf("check operator\n");
-	if (str[index] == '|' || str[index] == '>')
-		return (1);
-	if (str[index] == '<' || str[index] == ' ')
-		return (1);
-	if (str[index] == '&' && str[index + 1] == '&')
-		return (1);
-	return (0);
-}
+# include "minishell.h"
 
 int	string_div(t_list **words, char const *str, int index)
 {
@@ -131,68 +98,6 @@ int	pipe_div(t_list	**words, const char	*str, int index)
 	if (make_node == NULL)
 		return (-1);
 	return (--index);
-}
-
-t_list	*split_words(char const *str, int cmd_flag)
-{
-	t_list	*words;
-	int		index;
-	char	*word_line;
-
-	index = 0;
-	words = NULL;
-	while (str[index] != '\0')
-	{
-		if (str[index] == '|')
-			index = pipe_div(&words, str, index);
-		else if (str[index] == '<')
-			index = in_redirec_div(&words, str, index);
-		else if (str[index] == '>')
-			index = out_redirec_div(&words, str, index);
-		else if (str[index] == '&')
-			index = ampersand_div(&words, str, index);
-		else if (str[index] != 32)
-			index = string_div(&words, str, index);
-		if (index == -1)
-			return (NULL);
-		else if (str[index] == '\0')
-			break ;
-		index++;
-	}
-	return (words);
-}
-
-int	start_check(char c)
-{
-	if (c == '|')
-	{
-		printf("bash: syntax error near unexpected token `|'\n");
-		// 에러 넘버 확인
-		return (-1);
-	}
-	else if (c == '&')
-	{
-		printf("bash: syntax error near unexpected token `&'\n");
-		// 에러 넘버 확인
-		return (-1);
-	}
-	else if (c == '<' || c == '>')
-		return (0);
-	return (1);
-}
-
-t_list	*mn_split(char const *str)
-{
-	t_list	*words;
-	int		cmd_flag;
-
-	if (!str)
-		return (NULL);
-	cmd_flag = start_check(str[0]);
-	if (cmd_flag == -1)
-		return (NULL);
-	words = split_words(str, cmd_flag);
-	return (words);
 }
 
 //	1. 더블 쿼터나 싱글 쿼터 중 하나가 보이면 해당 plag 지정.

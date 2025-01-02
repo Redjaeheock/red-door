@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2024/12/31 09:43:32 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/02 10:37:39 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,23 @@ typedef struct  cmd_list
     struct cmd_list	*next;
 }					t_list;
 
-/* tokenize_with_quotes.c */
-t_list  *split_words(char const *str, int cmd_flag);
-t_list *mn_split(char const *str);
+/*special_character_check.c*/
+int operator_check(char const *str, int index);
+
+/*extradt_words.c*/
+char    *extract_word(char const *str, int start_index, int end);
+
+/* split_words.c */
+int     string_div(t_list **words, char const *str, int index);
+int     ampersand_div(t_list **words, const char *str, int index);
+int     in_redirec_div(t_list **words, const char *str, int index);
+int     out_redirec_div(t_list **words, const char *str, int index);
+int     pipe_div(t_list **words, const char *str, int index);
 
 /* linked_list.c */
 t_list  *create_linked_list(char *str);
 void    add_back_linked_list(t_list *tokenize, t_list *new);
 void    make_node(t_list **tokenize, char *str);
-void	free_linked_list(t_list *list);
+void    free_linked_list(t_list *list);
 
 #endif
