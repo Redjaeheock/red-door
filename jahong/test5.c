@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:26:20 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/02 11:41:33 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/03 13:11:11 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@ int main(int ac, char **av, char **envp)
 
     str = readline("> : ");
     printf(">>> %s\n", str);
-    arr = (char **)malloc(sizeof(char*) * 5);
-    arr[0] = "grep";
-    arr[1] = "-i";
-    arr[2] = "pattern";
-    arr[3] = "file.txt";
-    arr[4] = NULL;
+    arr = (char **)malloc(sizeof(char*) * 4);
+    arr[0] = "ls";
+    arr[1] = "-l";
+    arr[2] = "a";
+    arr[3] = NULL;
 
-    if (execve("/usr/bin/grep", arr, envp) == -1)
+    if (execve("/usr/bin/ls", arr, envp) == -1)
         printf("%s: command not found\n", str);
     return (0);
 
