@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/03 14:53:42 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/03 15:09:20 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,29 @@ t_list	*split_words(char const *str, int cmd_flag)
 	}
 	return (words);
 }
+int	start_check_second(const char *str, int index)
+{
+	int	num;
+
+	if (str[index] == '<')
+	{
+		num = check_in_redirection(str, index);
+		if (num == 3)
+			return (error_syntax("<"));
+		else if (num >= 4)
+			return (error_syntax("<<"));
+	}
+	else if (str[index] == '>')
+	{
+		num = check_out_redirection(str, index);
+		if (num == 3)
+			return (error_syntax(">"));
+		else if (num >= 4)
+			return (error_syntax(">>"));
+	}
+	return (1);
+
+}
 int start_check(const char *str, int index)
 {
 	if (str[index] == '|')
@@ -57,20 +80,8 @@ int start_check(const char *str, int index)
 			return (error_syntax("&&"));
         // 에러 넘버 확인
     }
-    else if (str[index] == '<')
-	{
-		if (check_in_redirection(str, index) == 3)
-			return (error_syntax("<"));
-		else if (check_in_redirection(str, index) >= 4)
-			return (error_syntax("<<"));
-	}
-	else if (str[index] == '>')
-	{
-		if (check_out_redirection(str, index) == 3)
-			return (error_syntax(">"));
-		else if (check_out_redirection(str, index) >= 4)
-			return (error_syntax(">>"));
-	}
+    else if (str[index] == '<' || str[index] == '>')
+		return (start_check_second(str, index));
     return (1);
 }
 t_list *mn_split(char const *str)
