@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/03 15:09:20 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/04 18:48:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int start_check(const char *str, int index)
 			return (error_syntax("&"));
 		else
 			return (error_syntax("&&"));
-        // 에러 넘버 확인
     }
     else if (str[index] == '<' || str[index] == '>')
 		return (start_check_second(str, index));
@@ -97,11 +96,12 @@ t_list *mn_split(char const *str)
 	words = split_words(str, cmd_flag);
 	return (words);
 }
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_list	*tokens;
 	t_list	*tmp; // 출력확인용
+	(void)argc, argv;
 
 	while(1)
 	{

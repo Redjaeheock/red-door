@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/03 14:47:48 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/04 19:14:45 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,21 @@ typedef struct  cmd_list
     struct cmd_list	*prev;
     struct cmd_list	*next;
 }					t_list;
+
+typedef struct	path_list
+{
+	char				*key;
+	char				*value;
+	struct path_list	*next;
+}						t_path;
+
+typedef struct meta_data
+{
+	struct cmd_list		*tokens;
+	struct path_list	*exp;
+	struct path_list	*env;
+	char				**envm;
+};
 
 /*libft*/
 int     ft_strlen(const char *str);
