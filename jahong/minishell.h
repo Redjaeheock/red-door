@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/04 19:14:45 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/05 14:58:08 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,21 @@ typedef enum {
 
 typedef struct  cmd_list
 {
-    char			*token;
-    t_tokentype		type;
-    struct cmd_list	*parant;
-    struct cmd_list	*prev;
-    struct cmd_list	*next;
-}					t_list;
+    struct cmd_list     *parant;
+    struct cmd_list     *prev;
+    struct cmd_list     *next;
+    struct path_list    *env;
+    struct path_list    *exp;
+    t_tokentype		    type;
+    char                **path;
+    char		    	*token;
+}					    t_list;
 
 typedef struct	path_list
 {
+    struct path_list	*next;
 	char				*key;
 	char				*value;
-	struct path_list	*next;
 }						t_path;
 
 typedef struct meta_data
@@ -49,7 +52,8 @@ typedef struct meta_data
 	struct path_list	*exp;
 	struct path_list	*env;
 	char				**envm;
-};
+    char                **args;
+}                      t_token;
 
 /*libft*/
 int     ft_strlen(const char *str);

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/04 18:48:18 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/05 14:59:12 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	main(int argc, char **argv, char **envp)
 			printf("%s\n", tmp->token);
 			tmp = tmp->next;
 		}
-       // lexer_n_parse(tokens);
+        // lexer_n_parse(tokens);
         //run_process(tokens);
 		free_linked_list(tokens);
 //      add_history(str);
