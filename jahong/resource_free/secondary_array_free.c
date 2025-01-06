@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   secondary_array_free.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 14:34:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/06 16:06:52 by jahong           ###   ########.fr       */
+/*   Created: 2025/01/06 15:56:30 by jahong            #+#    #+#             */
+/*   Updated: 2025/01/06 16:30:47 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_strlen(const char *str)
+void	*free_sndry_arr(void **array)
 {
-	int	len;
+	int     row;
 
-	len = 0;
-	if (str == NULL)
-		return (0);
-	while (str[len] != '\0')
-		len++;
-	return (len);
+	row = 0;
+	if (array == NULL)
+		return (NULL);
+	while (array[row] != NULL)
+	{
+		free(array[row]);
+		row++;
+	}
+	free(array);
+	return (NULL);
 }

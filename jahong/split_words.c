@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/02 11:00:11 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/06 11:55:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	string_div(t_list **words, char const *str, int index)
 			flag = 34;
 		else if ((str[index] == 34 && flag != 39))
 			flag = 0;
-		else if (flag == 0 && operator_check(str, index) == 1)
+		else if (flag == 0 && check_operator_set(str, index) == 1)
 			break ;
 		index++;
 	}

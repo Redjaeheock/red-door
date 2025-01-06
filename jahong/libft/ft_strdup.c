@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 14:34:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/06 16:06:52 by jahong           ###   ########.fr       */
+/*   Created: 2025/01/06 15:45:52 by jahong            #+#    #+#             */
+/*   Updated: 2025/01/06 15:58:59 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_strlen(const char *str)
+char	*ft_strdup(const char *s)
 {
-	int	len;
+	char	*copy_str;
+	int		len;
+	int		idx;
 
-	len = 0;
-	if (str == NULL)
-		return (0);
-	while (str[len] != '\0')
-		len++;
-	return (len);
+	if (s == NULL)
+		return (NULL);
+	len = ft_strlen(s);
+	copy_str = (char *)malloc(sizeof(char) * (len + 1));
+	if (copy_str == NULL)
+		return (NULL);
+	idx = 0;
+	while (((char *)s)[idx] != '\0')
+	{
+		copy_str[idx] = ((char *)s)[idx];
+		idx++;
+	}
+	copy_str[idx] = '\0';
+	return (copy_str);
 }

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 09:46:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/03 15:00:41 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/06 17:04:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ int check_vartical_var(const char *str, int index)
 		index++;
 	return (index - start_index);
 }
-int operator_check(char const *str, int index)
+int check_operator_set(char const *str, int index)
 {
-	printf("check operator\n");
 	if (str[index] == '|' || str[index] == ' ')
 		return (1);
 	if (str[index] == '<' || str[index] == '>')

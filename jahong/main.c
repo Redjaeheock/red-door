@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/05 14:59:12 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/06 16:46:46 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_list	*split_words(char const *str, int cmd_flag)
 	}
 	return (words);
 }
-int	start_check_second(const char *str, int index)
+int	check_operator_v2(const char *str, int index)
 {
 	int	num;
 
@@ -63,7 +63,7 @@ int	start_check_second(const char *str, int index)
 	return (1);
 
 }
-int start_check(const char *str, int index)
+int check_operator_v1(const char *str, int index)
 {
 	if (str[index] == '|')
 	{
@@ -80,7 +80,7 @@ int start_check(const char *str, int index)
 			return (error_syntax("&&"));
     }
     else if (str[index] == '<' || str[index] == '>')
-		return (start_check_second(str, index));
+		return (check_operator_v2(str, index));
     return (1);
 }
 t_list *mn_split(char const *str)
@@ -90,7 +90,7 @@ t_list *mn_split(char const *str)
 
 	if (!str)
 		return (NULL);
-    cmd_flag = start_check(str, 0);
+    cmd_flag = check_operator_v1(str, 0);
     if (cmd_flag == -1)
         return (NULL);
 	words = split_words(str, cmd_flag);
@@ -100,8 +100,11 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_list	*tokens;
+	t_data 	*meta;
 	t_list	*tmp; // 출력확인용
 	(void)argc, argv;
+
+	meta = initial_env(envp);
 
 	while(1)
 	{
@@ -117,7 +120,7 @@ int	main(int argc, char **argv, char **envp)
 		}
         // lexer_n_parse(tokens);
         //run_process(tokens);
-		free_linked_list(tokens);
+		free_t_list(tokens);
 //      add_history(str);
 		free(str);
 	}

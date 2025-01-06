@@ -6,24 +6,12 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:21 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/03 14:19:01 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/06 16:48:15 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	free_linked_list(t_list *list)
-{
-	t_list	*temp;
-
-	while (list != NULL)
-	{
-		temp = list;
-		list = list->next;
-		free(temp->token);
-		free(temp);
-	}
-}
 t_list	*create_linked_list(char *str)
 {
 	t_list	*new;
@@ -50,7 +38,10 @@ void	make_node(t_list **tokenize, char *str)
 
 	new_node = create_linked_list(str);
 	if (new_node == NULL)
-		return (free_linked_list(new_node));
+	{
+		free_t_list(new_node);
+		return ;
+	}
 	if (*tokenize == NULL)
 		*tokenize = new_node;
 	else

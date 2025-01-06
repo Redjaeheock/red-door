@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/05 14:58:08 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/06 16:45:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,8 @@ typedef enum {
 
 typedef struct  cmd_list
 {
-    struct cmd_list     *parant;
     struct cmd_list     *prev;
     struct cmd_list     *next;
-    struct path_list    *env;
-    struct path_list    *exp;
     t_tokentype		    type;
     char                **path;
     char		    	*token;
@@ -44,20 +41,31 @@ typedef struct	path_list
     struct path_list	*next;
 	char				*key;
 	char				*value;
+    char                *set;
 }						t_path;
 
 typedef struct meta_data
 {
-	struct cmd_list		*tokens;
+    struct cmd_list     *tokens;
+	struct cmd_list		*cmd;
 	struct path_list	*exp;
 	struct path_list	*env;
 	char				**envm;
     char                **args;
-}                      t_token;
+    char                **path;
+}                      t_data;
+
+
+/* free_list.c*/
+void    *free_t_list(t_list *list);
+void    *free_t_path(t_path *lsit);
 
 /*libft*/
 int     ft_strlen(const char *str);
 int     ft_strncmp(char *s1, const char *s2, unsigned int n);
+char	*ft_strdup(const char *s);
+int     sndry_arr_len(void **array);
+void	*free_sndry_arr(void **array);
 
 /*error_print.c*/
 int     error_syntax(char *str);
@@ -67,7 +75,7 @@ int		check_out_redirection(const char *str, int index);
 int		check_in_redirection(const char *str, int index);
 int		check_ampersand(const char *str, int index);
 int     check_vartical_var(const char *str, int index);
-int		operator_check(char const *str, int index);
+int		check_operator_set(char const *str, int index);
 
 /*extradt_words.c*/
 char	*extract_word(char const *str, int start_index, int end);
@@ -84,5 +92,8 @@ t_list	*create_linked_list(char *str);
 void	add_back_linked_list(t_list *tokenize, t_list *new);
 void	make_node(t_list **tokenize, char *str);
 void	free_linked_list(t_list *list);
+
+/* set_environ.c*/
+t_data  *initial_env(char **envp);
 
 #endif

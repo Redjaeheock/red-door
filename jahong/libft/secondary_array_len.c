@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   secondary_array_len.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 14:34:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/06 16:06:52 by jahong           ###   ########.fr       */
+/*   Created: 2025/01/06 15:57:55 by jahong            #+#    #+#             */
+/*   Updated: 2025/01/06 15:58:38 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_strlen(const char *str)
+int	sndry_arr_len(void **array)
 {
-	int	len;
+	int     len;
 
 	len = 0;
-	if (str == NULL)
+	if (array == NULL)
 		return (0);
-	while (str[len] != '\0')
+	while (array[len] != NULL)
 		len++;
 	return (len);
 }
