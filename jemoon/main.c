@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:40:49 by jemoon            #+#    #+#             */
-/*   Updated: 2024/12/30 22:08:11 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/07 11:32:03 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 const char *token_type_to_str(t_tokentype type)
 {
@@ -59,7 +59,7 @@ int main(int argc, char **argv, char **envp)
     char		*str;
     t_list 		*tokens;
     t_list		*tmp; // 출력확인용
-	t_env_list	*env_list; // 환경변수 내놔
+	//t_env_list	*env_list; // 환경변수 내놔
 
 	tokens = NULL;
     tmp = tokens; // 출력확인용
@@ -69,17 +69,20 @@ int main(int argc, char **argv, char **envp)
         if (str[0] == '\0')
             continue;;
         tokens = mn_split(str + skip_leading_ifs(str));
+		tmp = tokens;
 		tpye_init(&tokens);
         while (tokens != NULL) // 확인용
         {
-            printf("Token: %s, Type: %s\n", tokens->token, token_type_to_str(tokens->type));
+            printf("%s, [%s]\n", tokens->token, token_type_to_str(tokens->type));
             tokens = tokens->next;
         }
-        tokens = tmp;
-       // lexer_n_parse(tokens);
+        tokens = tmp; // 확인 후 다시 원 위치
+		validate_bash_syntax(&tokens);
+        tokens = tmp; // 유효성 검사가 끝난 후 원 위치
+        //lexer_n_parse(tokens);
         //run_process(tokens);
         free_linked_list(tokens);
-//      add_history(str);
+		//add_history(str);
         free(str);
     }
 }

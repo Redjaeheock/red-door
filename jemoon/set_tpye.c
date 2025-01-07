@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:42:51 by jemoon            #+#    #+#             */
-/*   Updated: 2024/12/31 01:00:29 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/07 12:31:02 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 void	is_first_node_type(t_list **tokens)
 {
@@ -22,18 +22,20 @@ void	is_first_node_type(t_list **tokens)
 		(*tokens)->type = HEREDOC;
 	else if (((*tokens)->token[0] == '>' && (*tokens)->token[1] == '>'))
 		(*tokens)->type = GR_REDEC;
+	else if (((*tokens)->token[0] == '|' && (*tokens)->token[1] == '\0'))
+		(*tokens)->type = PIPE;
 	else if (((*tokens)->token[0] != '<' || (*tokens)->token[0] != '>'))
 		(*tokens)->type = CMD;
 }
 
 void	set_tpye(t_list **tokens)
 {
-	if ((*tokens)->prev == NULL)
+	if ((*tokens)->prev == NULL) /* 첫 노드의 경우, prev가 연결이 안되있어, 해당 조건으로 첫 노드 구분 */
 		is_first_node_type(&(*tokens));
+	else if ((*tokens)->prev->token[0] == '|' && ((*tokens)->token[0] != '<' && (*tokens)->token[0] != '>' && (*tokens)->token[0] != '|'))
+		(*tokens)->type = CMD;
 	else if ((*tokens)->token[0] == '|')
 		(*tokens)->type = PIPE;
-	else if ((*tokens)->prev->token[0] == '|')
-		(*tokens)->type = CMD;
 	else if ((*tokens)->token[0] == '<' && (*tokens)->token[1] == '\0')
 		(*tokens)->type = IN_REDEC;
 	else if ((*tokens)->token[0] == '>' && (*tokens)->token[1] == '\0')
@@ -50,10 +52,9 @@ void	set_tpye(t_list **tokens)
 
 void	tpye_init(t_list **tokens)
 {
-	t_list **tmp;
+	t_list	**tmp;
 
 	*tmp = *tokens;
-
 	while ((*tokens) != NULL)
 	{
 		set_tpye(&(*tokens));

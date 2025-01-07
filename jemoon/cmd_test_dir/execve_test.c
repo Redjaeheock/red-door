@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_getenv.c                                      :+:      :+:    :+:   */
+/*   execve_test.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/30 20:44:22 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/02 11:11:39 by jemoon           ###   ########.fr       */
+/*   Created: 2025/01/02 11:41:18 by jemoon            #+#    #+#             */
+/*   Updated: 2025/01/02 11:47:30 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-/* Where the environment variable 'PATH' is set to a value. */
-
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
-	char	*pathvar;
+	char	*str;
+	char	**arr;
 
-	pathvar = getenv("PATH");
-	printf("%s",pathvar);
+	str = readline("> : ");
+	printf(">>> %s\n", str);
+	arr = (char **)malloc(sizeof(char *) * 2);
+	arr[0] = "<<<";
+	arr[1] = NULL;
+	if (execve("/usr/bin/grep", arr, envp) == -1)
+		printf("%s: command not found\n", str);
+	return (0);
 }
