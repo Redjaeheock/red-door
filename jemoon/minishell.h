@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:58:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/07 11:30:47 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/08 14:36:30 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ typedef struct	cmd_list
 
 typedef struct	start_list
 {
-	char			**str;
-	t_tokentype		tpye;
+	char				**str;
+	t_tokentype			type;
+	struct start_list 	*next;
 }					t_cmd_list;
 
 /* main.c */
@@ -77,6 +78,8 @@ void	set_tpye(t_list **tokens);
 int		check_is_valid(t_list **tokens, int count_cmd_line);
 void	validate_bash_syntax(t_list **tokens);
 
+int		get_double_string_array_size(t_list **tmp);
+int		get_double_string_array_size_version_2(t_list **tmp);
 
 void	parsor(char const *str, int *start_index, int *index);
 

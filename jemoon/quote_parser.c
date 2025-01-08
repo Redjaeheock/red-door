@@ -6,13 +6,14 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 14:36:58 by jemoon            #+#    #+#             */
-/*   Updated: 2024/12/30 13:38:44 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/08 14:30:32 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
 /*
+
 void quote_parser(char const *str, int *index, t_list **words)
 {
 	int	start_index;
@@ -54,7 +55,6 @@ void quote_parser(char const *str, int *index, t_list **words)
 	else
 		return;
 }
-
 
 int	check_quote(char const *str, int start_index, int index)
 {
@@ -109,13 +109,13 @@ char *check_quote_line(char const *str, int start_index, int *index)
 void	parsor(char const *str, int *start_index, int *index)
 {
 	int	plag_quote_d;
-	int plag_quote_s;
+	int	plag_quote_s;
 
 	plag_quote_d = 0;
 	plag_quote_s = 0;
 	while (str[*index])
 	{
-		if (plag_quote_s == 0  && str[*index] == '\"')
+		if (plag_quote_s == 0 && str[*index] == '\"')
 		{
 			(*index)++;
 			plag_quote_d = 1;
@@ -136,11 +136,11 @@ void	parsor(char const *str, int *start_index, int *index)
 		else if (str[*index] == 32 && (plag_quote_d == 1 || plag_quote_s == 1))
 		{
 			(*index)++;
-			continue;
+			continue ;
 		}
 		else if (str[*index] == 32)
 			return ;
 		else
 			(*index)++;
-	}	
+	}
 }

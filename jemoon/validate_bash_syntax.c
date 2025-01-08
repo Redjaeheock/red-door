@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/07 12:41:54 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/08 19:23:03 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ int	check_is_valid_redirection(t_list **tokens)
 	else
 	{
 		*tokens = (*tokens)->next;
-		if ((*tokens)->next == NULL)
+		if (!(*tokens))
 			return (1);
 		*tokens = (*tokens)->next;
 		return (1);
 	}
 }
 
-int	chekc_is_valid_arg(t_list **tokens)
+int	check_is_valid_arg(t_list **tokens)
 {
 	*tokens = (*tokens)->next;
 	while ((*tokens) != NULL)
 	{
 		if ((*tokens)->type == PIPE)
 			return (1);
-		else if ((*tokens)->type == REDIRECTION)
+		else if (REDIRECTION <= (*tokens)->type && (*tokens)->type <= HEREDOC)
 			return (1);
 		else
 			*tokens = (*tokens)->next;
@@ -52,7 +52,7 @@ int	check_is_valid(t_list **tokens, int count_cmd_line)
 		else if (REDIRECTION <= (*tokens)->type && (*tokens)->type <= HEREDOC)
 			return (check_is_valid_redirection(&(*tokens)));
 		else if (CMD <= (*tokens)->type && (*tokens)->type <= ARG)
-			return (chekc_is_valid_arg(&(*tokens)));
+			return (check_is_valid_arg(&(*tokens)));
 		else
 			return (0);
 	}
@@ -60,14 +60,20 @@ int	check_is_valid(t_list **tokens, int count_cmd_line)
 	{
 		if ((*tokens)->type == PIPE)
 		{
-			if ((*tokens)->next == NULL || (*tokens)->next->type == PIPE)
+			if ((*tokens)->prev->type == PIPE)
 				return (0);
-			return (chekc_is_valid_arg(&(*tokens)));
+			else if (REDIRECTION <= (*tokens)->next->type && (*tokens)->next->type <= HEREDOC)
+			{
+				*tokens = (*tokens)->next;
+				return (check_is_valid_redirection(&(*tokens)));
+			}
+			else
+				return (check_is_valid_arg(&(*tokens)));
 		}
 		else if (REDIRECTION <= (*tokens)->type && (*tokens)->type <= HEREDOC)
 			return (check_is_valid_redirection(&(*tokens)));
 		else if (CMD <= (*tokens)->type && (*tokens)->type <= ARG)
-			return (chekc_is_valid_arg(&(*tokens)));
+			return (check_is_valid_arg(&(*tokens)));
 		else
 			return (0);
 	}
@@ -75,14 +81,19 @@ int	check_is_valid(t_list **tokens, int count_cmd_line)
 
 void	validate_bash_syntax(t_list **tokens)
 {
-	int		count_cmd_line;
+	int				count_cmd_line;
 
 	count_cmd_line = 0;
 	while ((*tokens) != NULL)
 	{
 		printf("기점을 출력합니다 : %s \n", (*tokens)->token);
+		if (count_cmd_line == 0)
+			printf("c1 = [%d]\n", get_double_string_array_size(&(*tokens)));
+		else
+			printf("c2 = [%d]\n", get_double_string_array_size_version_2(&(*tokens)));
 		if (check_is_valid(&(*tokens), count_cmd_line) == 0)
 		{
+			// free cmd_str를 프리해준다.
 			printf("틀렸습니다.\n");
 			return ;
 		}
@@ -100,4 +111,3 @@ void	validate_bash_syntax(t_list **tokens)
 //		해당 부분이 리다이렉션인지 아닌지 구분해서 리다이렉션이면 1번과 2번 반복 아닐 시,
 //		파이프 만날 때 까지 arg인지만 체크
 //	4. 헤더가 파이프일 경우,  
-

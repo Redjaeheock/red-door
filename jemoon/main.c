@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:40:49 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/07 11:32:03 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/07 16:05:49 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int main(int argc, char **argv, char **envp)
     {
         str = readline("bash : ");
         if (str[0] == '\0')
-            continue;;
+            continue ;
         tokens = mn_split(str + skip_leading_ifs(str));
 		tmp = tokens;
 		tpye_init(&tokens);
