@@ -6,70 +6,76 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/08 15:24:56 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/08 21:05:26 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	conditinal_strlen(const char *s, char condition)
+int	conditinal_strlen(const char *s, unsigned char condition)
 {
-	int	idx;
+	int	len;
 
-	idx = 0;
+	len = 0;
 	if (s == NULL)
 		return (0);
-	while ((s[idx] != condition) && (s[idx] != '\0'))
-		idx++;
-	return (idx);
+	while ((s[len] != condition) && (s[len] != '\0'))
+		len++;
+	return (len);
+}
+
+char	*extract_from_envp(char *envp, int *idx, char condition)
+{
+	char	*str;
+	int		col;
+	int		len;
+
+	col = 0;
+	len = conditinal_strlen(envp, condition);
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (str == NULL)
+		return (NULL /*리스트의 멤버 변수 free 작업 추가*/);
+	while ((envp[*idx] != condition) && (envp[*idx] != '\0'))
+	{
+		str[col] = envp[*idx];
+		*idx += 1;
+		col++;
+	}
+	*idx += 1;
+	str[col] = '\0';
+	return (str);
 }
 
 t_path 	*init_key_value(char **envp)
 {
 	t_path	*env_path;
 	t_path	*tmp;
+	int		row;
 	int		idx;
-	int		cyc;
-	int		len;
-	int		lol;
 
-	idx = 0;
+	row = 0;
 	env_path = (t_path *)malloc(sizeof(t_path));
 	if (env_path == NULL)
 		return (NULL);
 	env_path->next = NULL;
 	tmp = env_path;
-	while (envp[idx] != NULL)
+	while (envp[row] != NULL)
 	{
-		len = conditinal_strlen(envp[idx], '=');
-		tmp->key = (char *)malloc(sizeof(char *) * len);
-		if (tmp->key == NULL)
-			free(env_path); // 구조체 배열 및 멤버 변수 free 확인
-		cyc = 0;
-		while(envp[idx][cyc] != '=')
-		{
-			tmp->key[cyc] = envp[idx][cyc];
-			cyc++;
-		}
-		tmp->key[cyc] = '\0';
-		cyc++;
-		len = conditinal_strlen(&envp[idx][cyc], '\0');
-		tmp->value = (char *)malloc(sizeof(char *) * len);
-		if (tmp->value == NULL)
-			free(env_path); // 구조체 배열 및 멤버	 변수 free 확인
-		lol = 0;
-		while (envp[idx][cyc] != '\0')
-		{
-			tmp->value[lol] = envp[idx][cyc];
-			cyc++;
-			lol++;
-		}
-		tmp->value[lol] = '\0';
-		idx++;
+		idx = 0;
+		tmp->key = extract_from_envp(envp[row], &idx, '=');
+//		if (tmp->key == NULL)
+//			free(env_path); // 구조체 리스트 free 확인
+		tmp->value = extract_from_envp(envp[row], &idx, '\0');
+//		if (tmp->value == NULL)
+//			free(env_path); // 구조체 배열 및 멤버	 변수 free 확인
+		row++;
 		tmp->next = (t_path *)malloc(sizeof(t_path));
+		if (tmp->next == NULL)
+		{
+			free(tmp);
+			return (NULL);
+		}
 		tmp = tmp->next;
-		if (tmp == NULL)
-			free(env_path);
 		tmp->next = NULL;
 	}
 	return (env_path);
@@ -105,6 +111,11 @@ t_data	*initial_env(char **envp)
 	t_path *tmp;
 
 	idx = 0;
+	/*while (envp[idx] != NULL)
+	{
+		printf("orgin %s\n", envp[idx]);
+		idx++;
+	}*/
 	meta = (t_data *)malloc(sizeof(t_data) * 1);
 	if (meta == NULL)
 		return(NULL /*에러 메세지 추가*/);
