@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/06 11:55:18 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/09 13:05:41 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ampersand_div(t_list **words, const char *str, int index)
 	if ((index - start_index) != 2)
 		return (index);
 	make_node(&(*words), extract_word(str, start_index, index));
-	if (make_node == NULL)
+	if (words == NULL)
 		return (-1);
 	return (--index);
 }
@@ -62,7 +62,7 @@ int	in_redirec_div(t_list **words, const char *str, int index)
 	if ((index - start_index) > 2)
 		return (-1);
 	make_node(&(*words), extract_word(str, start_index, index));
-	if (make_node == NULL)
+	if (words == NULL)
 		return (-1);
 	return (--index);
 }
@@ -76,7 +76,7 @@ int	out_redirec_div(t_list **words, const char *str, int index)
 	if ((index - start_index) > 2)
 		return (-1);
 	make_node(&(*words), extract_word(str, start_index, index));
-	if (make_node == NULL)
+	if (words == NULL)
 		return (-1);
 	return (--index);
 }
@@ -90,7 +90,7 @@ int	pipe_div(t_list	**words, const char	*str, int index)
 	if ((index - start_index) > 2)
 		return (-1);
 	make_node(&(*words), extract_word(str, start_index, index));
-	if (make_node == NULL)
+	if (words == NULL)
 		return (-1);
 	return (--index);
 }

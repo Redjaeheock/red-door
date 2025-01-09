@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/06 16:46:46 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/09 16:31:48 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,23 @@ int check_operator_v1(const char *str, int index)
 		return (check_operator_v2(str, index));
     return (1);
 }
-t_list *mn_split(char const *str)
+t_list *mn_split(char **str)
 {
 	t_list	*words;
     int cmd_flag;
 
-	if (!str)
+	if (*str == NULL)
 		return (NULL);
-    cmd_flag = check_operator_v1(str, 0);
+	if ((*str)[0] == '\0')
+	{
+		free(*str);
+		*str = NULL;
+		return (NULL);
+	}
+    cmd_flag = check_operator_v1(*str, 0);
     if (cmd_flag == -1)
         return (NULL);
-	words = split_words(str, cmd_flag);
+	words = split_words(*str, cmd_flag);
 	return (words);
 }
 int	main(int argc, char **argv, char **envp)
@@ -102,24 +108,22 @@ int	main(int argc, char **argv, char **envp)
 	t_list	*tokens;
 	t_data 	*meta;
 	t_list	*tmp; // 출력확인용
+
+
 	(void)argc, argv;
-
 	meta = initial_env(envp);
-
 	while(1)
 	{
 		str = readline("bash : ");
-		if (str[0] == '\0')
+		tokens = mn_split(&str);
+		if (tokens == NULL)
 			continue;
-		tokens = mn_split(str);
 		tmp = tokens;
 		while (tmp != NULL) // 확인용
 		{
 			printf("%s\n", tmp->token);
 			tmp = tmp->next;
 		}
-        // lexer_n_parse(tokens);
-        //run_process(tokens);
 		free_t_list(tokens);
 //      add_history(str);
 		free(str);

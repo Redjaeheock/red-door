@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:21 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/08 10:52:16 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/09 13:05:43 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	make_node(t_list **tokenize, char *str)
 	new_node = create_linked_list(str);
 	if (new_node == NULL)
 	{
-		free_t_list(new_node);
+		t_list_alloc_err(new_node);
 		return ;
 	}
 	if (*tokenize == NULL)

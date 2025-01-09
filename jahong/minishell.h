@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/06 16:45:18 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/09 16:24:15 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,31 @@ typedef struct meta_data
 	struct path_list	*env;
 	char				**envm;
     char                **args;
-    char                **path;
+    char                *path;
 }                      t_data;
 
 
 /* free_list.c*/
-void    *free_t_list(t_list *list);
+void	*free_key_value(t_path *path);
 void    *free_t_path(t_path *lsit);
+void    *free_t_list(t_list *list);
+void	*free_t_data(t_data *meta);
+void	*free_env_resource(t_data *meta);
 
 /*libft*/
 int     ft_strlen(const char *str);
+int     conditinal_strlen(const char *s, unsigned char condition);
 int     ft_strncmp(char *s1, const char *s2, unsigned int n);
 char	*ft_strdup(const char *s);
 int     sndry_arr_len(void **array);
 void	*free_sndry_arr(void **array);
 
-/*error_print.c*/
+/*error_process*/
 int     error_syntax(char *str);
+void	*t_path_key_val_alloc_err(t_path *tmp);
+void	*t_list_alloc_err(t_list *tmp);
+void	*sndry_alloc_err(void **arr);
+void	*t_data_alloc_err(t_data *meta);
 
 /*special_character_check.c*/
 int		check_out_redirection(const char *str, int index);
@@ -79,6 +87,9 @@ int		check_operator_set(char const *str, int index);
 
 /*extradt_words.c*/
 char	*extract_word(char const *str, int start_index, int end);
+char	*extract_from_envp(char *envp, int *idx, char condition);
+int     extract_key_value(t_path *tmp, char *envp, int idx);
+char	*extrcat_path(char **envp, t_path *path);
 
 /* split_words.c */
 int		string_div(t_list **words, char const *str, int index);
@@ -91,7 +102,6 @@ int		pipe_div(t_list **words, const char *str, int index);
 t_list	*create_linked_list(char *str);
 void	add_back_linked_list(t_list *tokenize, t_list *new);
 void	make_node(t_list **tokenize, char *str);
-void	free_linked_list(t_list *list);
 
 /* set_environ.c*/
 t_data  *initial_env(char **envp);

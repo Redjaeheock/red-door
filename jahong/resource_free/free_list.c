@@ -6,26 +6,41 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/06 16:45:44 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/09 16:53:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	*free_t_path(t_path	*list)
+void	*free_t_path(t_path	*path)
 {
-	t_path	*temp;
+	t_path	*tmp;
 
-	while (list != NULL)
+	while (path != NULL)
 	{
-		temp = list;
-		list = list->next;
-		free(temp);
+		tmp = path;
+		path = path->next;
+		free(tmp);
 	}
 	return (NULL);
 }
+void	*free_key_value(t_path *path)
+{
+	t_path *tmp;
 
-
+	tmp = path;
+	while (tmp != NULL)
+	{
+		if (tmp->key != NULL)
+			free(tmp->key);
+		if (tmp->value != NULL)
+			free(tmp->value);
+		if (tmp->set != NULL)
+			free(tmp->set);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
 void	*free_t_list(t_list *list)
 {
 	t_list	*temp;
@@ -40,5 +55,26 @@ void	*free_t_list(t_list *list)
 		free(temp->token);
 		free(temp);
 	}
+	return (NULL);
+}
+void	*free_t_data(t_data *meta)
+{
+	if (meta == NULL)
+		return (NULL);
+	free(meta);
+	return (NULL);
+}
+void	*free_env_resource(t_data *meta)
+{
+	if (meta->path != NULL)
+		free(meta->path);
+	if (meta->exp != NULL)
+		free_key_value(meta->exp);
+	if (meta->env != NULL)
+		free_key_value(meta->env);
+	if (meta->envm != NULL)
+		free_sndry_arr((void **)meta->envm);
+	if (meta != NULL)
+		free_t_data(meta);
 	return (NULL);
 }
