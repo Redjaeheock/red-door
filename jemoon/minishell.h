@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:58:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/09 15:18:10 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/09 17:23:10 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,14 @@ void	tpye_init(t_list **tokens);
 void	set_tpye(t_list **tokens);
 
 /* validate_bash_syntax.c */
+void	validate_bash_syntax(t_list **tokens);
+
+/* validate_bash_syntax.c */
 int		check_is_valid_redirection(t_list **tokens);
 int		check_is_valid_arg(t_list **tokens);
+int		first_check_is_valid(t_list **tokens);
+int		rest_check_is_valid(t_list **tokens);
 int		check_is_valid(t_list **tokens, int count_cmd_line);
-void	validate_bash_syntax(t_list **tokens);
 
 /* linkedlist_to_matrix.c */
 int		check_redirection_size(t_list **tmp, int *array_size);
@@ -96,5 +100,10 @@ void	exec_make_node(t_cmd_list **exec_commads, char **string_array);
 char	*set_string(t_list *tokens);
 char	**set_string_array(t_list *tokens, int cmd_size);
 void	get_exec_commads(t_list **tokens, t_cmd_list **exec_commads, int i);
+
+/* printf_utils.c */
+void	printf_exec_commads(t_cmd_list *exec_commands);
+const char *token_type_to_str_1(t_tokentype type);
+void	printf_tokens(t_list *tokens);
 
 #endif
