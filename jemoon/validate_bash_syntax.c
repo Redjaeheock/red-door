@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/09 17:21:16 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/09 19:22:42 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	validate_bash_syntax(t_list **tokens)
 {
 	int				count_cmd_line;
 	t_cmd_list		*exec_commands;
-	t_list			**tmp;
+	t_list			*tmp;
 
-	*tmp = *tokens;
+	tmp = *tokens;
 	count_cmd_line = 0;
 	exec_commands = NULL;
 	while ((*tokens) != NULL)
@@ -30,7 +30,7 @@ void	validate_bash_syntax(t_list **tokens)
 			printf_exec_commads(exec_commands);
 			free_exec_linked_list(exec_commands);
 			printf("틀렸습니다.\n");
-			*tokens = *tmp;
+			*tokens = tmp;
 			return ;
 		}
 		count_cmd_line++;
@@ -38,6 +38,6 @@ void	validate_bash_syntax(t_list **tokens)
 	printf_exec_commads(exec_commands);
 	free_exec_linked_list(exec_commands);
 	printf("맞았습니다.\n");
-	*tokens = *tmp;
+	*tokens = tmp;
 	return ;
 }

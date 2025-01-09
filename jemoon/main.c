@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:40:49 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/09 17:23:08 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/09 19:30:44 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **envp)
 		//lexer_n_parse(tokens);
 		//run_process(tokens);
 		free_linked_list(tokens);
-		//add_history(str);
+		add_history(str);
 		free(str);
 	}
 }

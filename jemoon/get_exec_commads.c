@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 19:55:03 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/09 14:42:14 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/09 18:46:18 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**set_string_array(t_list *tokens, int cmd_size)
 		tokens = tokens->next;
 		i++;
 	}
-	string_array[cmd_size] = NULL;
+	string_array[i] = NULL;
 	return (string_array);
 }
 
