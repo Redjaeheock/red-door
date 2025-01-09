@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:42:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/07 12:31:02 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/08 19:47:31 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ void	is_first_node_type(t_list **tokens)
 
 void	set_tpye(t_list **tokens)
 {
-	if ((*tokens)->prev == NULL) /* 첫 노드의 경우, prev가 연결이 안되있어, 해당 조건으로 첫 노드 구분 */
+	if ((*tokens)->prev == NULL)
 		is_first_node_type(&(*tokens));
-	else if ((*tokens)->prev->token[0] == '|' && ((*tokens)->token[0] != '<' && (*tokens)->token[0] != '>' && (*tokens)->token[0] != '|'))
+	else if ((*tokens)->prev->token[0] == '|' && ((*tokens)->token[0] != '<' && \
+	(*tokens)->token[0] != '>' && (*tokens)->token[0] != '|'))
 		(*tokens)->type = CMD;
 	else if ((*tokens)->token[0] == '|')
 		(*tokens)->type = PIPE;

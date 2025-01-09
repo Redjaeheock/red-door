@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/08 19:23:03 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/09 15:19:05 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	check_is_valid(t_list **tokens, int count_cmd_line)
 		{
 			if ((*tokens)->prev->type == PIPE)
 				return (0);
+			else if ((*tokens)->next == NULL)
+				return (0);
 			else if (REDIRECTION <= (*tokens)->next->type && (*tokens)->next->type <= HEREDOC)
 			{
 				*tokens = (*tokens)->next;
@@ -79,26 +81,45 @@ int	check_is_valid(t_list **tokens, int count_cmd_line)
 	}
 }
 
+void	printf_exec_commads(t_cmd_list *exec_commands)
+{
+	int	i;
+
+	while (exec_commands)
+	{
+		i = 0;
+		while (exec_commands->str[i] != NULL)
+		{
+			printf("%s ", exec_commands->str[i]);
+			i++;
+		}
+		printf("\n");
+		exec_commands = exec_commands->next;
+	}
+}
+
 void	validate_bash_syntax(t_list **tokens)
 {
 	int				count_cmd_line;
+	t_cmd_list		*exec_commands;
 
 	count_cmd_line = 0;
+	exec_commands = NULL;
 	while ((*tokens) != NULL)
 	{
 		printf("기점을 출력합니다 : %s \n", (*tokens)->token);
-		if (count_cmd_line == 0)
-			printf("c1 = [%d]\n", get_double_string_array_size(&(*tokens)));
-		else
-			printf("c2 = [%d]\n", get_double_string_array_size_version_2(&(*tokens)));
+		get_exec_commads(&(*tokens), &(exec_commands), count_cmd_line);
 		if (check_is_valid(&(*tokens), count_cmd_line) == 0)
 		{
-			// free cmd_str를 프리해준다.
+			printf_exec_commads(exec_commands);
+			free_exec_linked_list(exec_commands);
 			printf("틀렸습니다.\n");
 			return ;
 		}
 		count_cmd_line++;
 	}
+	printf_exec_commads(exec_commands);
+	free_exec_linked_list(exec_commands);
 	printf("맞았습니다.\n");
 	return ;
 }

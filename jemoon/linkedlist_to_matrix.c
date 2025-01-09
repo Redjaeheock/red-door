@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:38:05 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/08 19:17:32 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/09 14:36:29 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ int	check_redirection_size(t_list **tmp, int *array_size)
 	t_list	*tmp2;
 
 	tmp2 = *tmp;
+	if ((*tmp) == NULL)
+		return (1);
 	if (REDIRECTION <= (*tmp)->type && (*tmp)->type <= HEREDOC)
 	{
 		*tmp = (*tmp)->next;
 		(*array_size)++;
-		if ((*tmp)->type == ARG)
+		if ((*tmp) && (*tmp)->type == ARG)
 		{
+			if ((*tmp)->next != NULL && (*tmp)->next->type == PIPE)
+				++(*array_size);
 			*tmp = tmp2;
 			++(*array_size);
 			return (0);
