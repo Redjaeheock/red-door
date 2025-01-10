@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/09 16:24:15 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/10 12:13:35 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct meta_data
 	struct path_list	*env;
 	char				**envm;
     char                **args;
-    char                *path;
+    char                **path;
 }                      t_data;
 
 
@@ -70,6 +70,7 @@ int     ft_strncmp(char *s1, const char *s2, unsigned int n);
 char	*ft_strdup(const char *s);
 int     sndry_arr_len(void **array);
 void	*free_sndry_arr(void **array);
+char	**ft_split(char const *s, char c);
 
 /*error_process*/
 int     error_syntax(char *str);
@@ -89,7 +90,7 @@ int		check_operator_set(char const *str, int index);
 char	*extract_word(char const *str, int start_index, int end);
 char	*extract_from_envp(char *envp, int *idx, char condition);
 int     extract_key_value(t_path *tmp, char *envp, int idx);
-char	*extrcat_path(char **envp, t_path *path);
+char	**extract_path(char **envp, t_path *path);
 
 /* split_words.c */
 int		string_div(t_list **words, char const *str, int index);

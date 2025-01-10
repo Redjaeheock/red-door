@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/09 16:56:51 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/10 12:37:34 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_path *make_t_path(void)
 	tmp->set = NULL;
 	return (tmp);
 }
-
 t_path 	*init_key_value(char **envp)
 {
 	t_path	*env_path;
@@ -53,7 +52,6 @@ t_path 	*init_key_value(char **envp)
 	}
 	return (env_path);
 }
-
 char	**copy_envp(char **envp)
 {
 	char	**cp_envp;
@@ -78,7 +76,6 @@ char	**copy_envp(char **envp)
 t_data	*initial_env(char **envp)
 {
 	t_data *meta;
-	int idx = 0;
 
 	meta = (t_data *)malloc(sizeof(t_data) * 1);
 	if (meta == NULL)
@@ -96,7 +93,7 @@ t_data	*initial_env(char **envp)
 	meta->exp = init_key_value(envp);
 	if (meta->exp == NULL)
 		return (free_env_resource(meta));
-	meta->path = extrcat_path(envp, meta->env);
+	meta->path = extract_path(envp, meta->env);
 	if (meta->path == NULL)
 		return (free_env_resource(meta));
 	return (meta);

@@ -6,33 +6,23 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/09 19:58:15 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/10 12:13:34 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*extrcat_path(char **envp, t_path *path)
+char	**extract_path(char **envp, t_path *path)
 {
-	int	idx;
-	int	cnt;
+	char	**paths;
 
-	idx = 0;
-	cnt = 0;
-	printf("visit\n");
-	while (path != NULL && ft_strncmp(path->key, "PATH", 4) != 0)
+	while ((path != NULL) && (ft_strncmp(path->key, "PATH", 4) != 0))
 		path = path->next;
-	printf("search %s\n", path->value);
-	while (path->value[idx] != '\0')
-	{
-		if (path->value[idx] == ':')
-			cnt++;
-		idx++;
-	}
-	printf("result cnt = %d\n", cnt);
-	return (NULL);
+	paths = ft_split(path->value, ':');
+	if (paths == NULL)
+		return (NULL);
+	return (paths);
 }
-
 char	*extract_from_envp(char *envp, int *idx, char condition)
 {
 	char	*str;
