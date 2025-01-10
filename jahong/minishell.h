@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/10 12:13:35 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/10 13:32:24 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct meta_data
     char                **args;
     char                **path;
 }                      t_data;
-
 
 /* free_list.c*/
 void	*free_key_value(t_path *path);

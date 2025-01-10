@@ -1,10 +1,12 @@
 <쉘 종료값>
 
-0 = 커맨드 및 ctrl d (명령어의 성공적 종료)
+0 = 커맨드 및 ctrl d 또는 실행한 실행 파일의 정상 종료료(명령어의 성공적 종료)
 
 1 = 파일 읽어오기 실패시
 
 2 = syntax error(| , <, >, &) (오퍼레이터로 cmd_line 시작)
+
+126 = 실행 파일은 존재하지만 실행할 수 없음 (권한 문제 등)
 
 127 = command not found
 
@@ -38,7 +40,6 @@ bash: syntax error near unexpected token `&&'
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<
 bash: syntax error near unexpected token `newline' (내 컴퓨터 환경)
 bash: syntax error near unexpected token `<<' (클러스터 환경)
-
 
 red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ >>>
 bash: syntax error near unexpected token `>' (내 컴퓨터 환경)

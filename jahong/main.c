@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/09 16:31:48 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/10 16:36:23 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	check_operator_v2(const char *str, int index)
 			return (error_syntax(">>"));
 	}
 	return (1);
-
 }
 int check_operator_v1(const char *str, int index)
 {
@@ -100,6 +99,7 @@ t_list *mn_split(char **str)
     if (cmd_flag == -1)
         return (NULL);
 	words = split_words(*str, cmd_flag);
+	substitution_dollar_sign(words);
 	return (words);
 }
 int	main(int argc, char **argv, char **envp)
