@@ -6,11 +6,33 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 19:55:03 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/09 18:46:18 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/10 14:59:14 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	recycle_size(t_list *tokens, int *cmd_size)
+{
+	int	size;
+	int	i;
+
+	i = 0;
+	size = *cmd_size;
+	if (tokens->type == PIPE)
+		tokens = tokens->next;
+	while (i < size)
+	{
+		if (tokens->type == PIPE || \
+		(REDIRECTION <= tokens->type && tokens->type <= HEREDOC))
+		{
+			(*cmd_size)--;
+		}
+		i++;
+		tokens = tokens->next;
+	}
+	return ;
+}
 
 char	*set_string(t_list *tokens)
 {
@@ -33,6 +55,9 @@ char	**set_string_array(t_list *tokens, int cmd_size)
 	int		i;
 
 	i = 0;
+	recycle_size(tokens, &cmd_size);
+	if (cmd_size == 0)
+		return (NULL);
 	string_array = (char **)malloc(sizeof(char *) * (cmd_size + 1));
 	if (string_array == NULL)
 		return (NULL);
@@ -40,9 +65,15 @@ char	**set_string_array(t_list *tokens, int cmd_size)
 		tokens = tokens->next;
 	while (i < cmd_size)
 	{
-		string_array[i] = set_string(tokens);
-		tokens = tokens->next;
-		i++;
+		if (tokens->type == PIPE || \
+		(REDIRECTION <= tokens->type && tokens->type <= HEREDOC))
+			tokens = tokens->next;
+		else
+		{
+			string_array[i] = set_string(tokens);
+			tokens = tokens->next;
+			i++;
+		}
 	}
 	string_array[i] = NULL;
 	return (string_array);
@@ -62,5 +93,7 @@ void	get_exec_commads(t_list **tokens, t_cmd_list **exec_commads, int i)
 	if (cmd_size == 0)
 		return ;
 	string_array = set_string_array(*tokens, cmd_size);
+	if (string_array == NULL)
+		return ;
 	exec_make_node(&(*exec_commads), string_array);
 }
