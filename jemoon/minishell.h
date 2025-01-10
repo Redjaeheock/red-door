@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:58:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/09 17:23:10 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/10 17:08:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,16 @@ int		get_double_string_array_size_version_2(t_list **tmp);
 
 /* exec_commads_liked_list.c */
 void	free_exec_linked_list(t_cmd_list *list);
-t_cmd_list	*create_exec_linked_list(char **str);
+//t_cmd_list	*create_exec_linked_list(char **str);
+t_cmd_list	*create_exec_linked_list(char **str, t_tokentype plag_pipe, t_tokentype plag_redi);
 void	add_back_exec_linked_list(t_cmd_list **exec_commads, t_cmd_list *new);
-void	exec_make_node(t_cmd_list **exec_commads, char **string_array);
+void	exec_make_node(t_cmd_list **exec_commads, char **string_array, t_tokentype plag_pipe, t_tokentype plag_redi);
+//void	exec_make_node(t_cmd_list **exec_commads, char **string_array);
 
 /* get_exec_commads.c */
 char	*set_string(t_list *tokens);
-char	**set_string_array(t_list *tokens, int cmd_size);
+char	**set_string_array(t_list *tokens, int cmd_size, t_tokentype *plag_pipe, t_tokentype *plag_redi);
+//char	**set_string_array(t_list *tokens, int cmd_size);
 void	get_exec_commads(t_list **tokens, t_cmd_list **exec_commads, int i);
 
 /* printf_utils.c */

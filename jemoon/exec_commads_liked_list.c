@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/09 11:28:51 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/10 17:12:01 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_exec_linked_list(t_cmd_list *list)
 	}
 }
 
-t_cmd_list	*create_exec_linked_list(char **str)
+t_cmd_list	*create_exec_linked_list(char **str, t_tokentype plag_pipe, t_tokentype plag_redi)
 {
 	t_cmd_list	*new;
 
@@ -40,8 +40,14 @@ t_cmd_list	*create_exec_linked_list(char **str)
 	if (new == NULL)
 		return (NULL);
 	new->str = str;
-	new->type_pipe = NONE;
-	new->type_re = NONE;
+	if (plag_pipe == PIPE)
+		new->type_pipe = plag_pipe;
+	else
+		new->type_pipe = NONE;
+	if (REDIRECTION <= plag_redi && plag_redi <= HEREDOC)
+		new->type_re = plag_redi;
+	else
+		new->type_re = NONE;
 	new->next = NULL;
 	return (new);
 }
@@ -55,11 +61,11 @@ void	add_back_exec_linked_list(t_cmd_list **exec_commads, t_cmd_list *new)
 	temp->next = new;
 }
 
-void	exec_make_node(t_cmd_list **exec_commads, char **string_array)
+void	exec_make_node(t_cmd_list **exec_commads, char **string_array, t_tokentype plag_pipe, t_tokentype plag_redi)
 {
 	t_cmd_list	*new_node;
 
-	new_node = create_exec_linked_list(string_array);
+	new_node = create_exec_linked_list(string_array, plag_pipe, plag_redi);
 	if (new_node == NULL)
 		return (free_exec_linked_list(new_node));
 	if (*exec_commads == NULL)

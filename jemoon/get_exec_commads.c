@@ -6,13 +6,13 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 19:55:03 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/10 14:59:14 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/10 17:08:42 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	recycle_size(t_list *tokens, int *cmd_size)
+void	recycle_size(t_list *tokens, int *cmd_size, t_tokentype *plag_pipe, t_tokentype *plag_redi)
 {
 	int	size;
 	int	i;
@@ -23,10 +23,15 @@ void	recycle_size(t_list *tokens, int *cmd_size)
 		tokens = tokens->next;
 	while (i < size)
 	{
-		if (tokens->type == PIPE || \
-		(REDIRECTION <= tokens->type && tokens->type <= HEREDOC))
+		if (tokens->type == PIPE)
 		{
 			(*cmd_size)--;
+			(*plag_pipe) = tokens->type;
+		}
+		else if (REDIRECTION <= tokens->type && tokens->type <= HEREDOC)
+		{
+			(*cmd_size)--;
+			(*plag_redi) = tokens->type;
 		}
 		i++;
 		tokens = tokens->next;
@@ -49,13 +54,13 @@ char	*set_string(t_list *tokens)
 	return (str);
 }
 
-char	**set_string_array(t_list *tokens, int cmd_size)
+char	**set_string_array(t_list *tokens, int cmd_size, t_tokentype *plag_pipe, t_tokentype *plag_redi)
 {
 	char	**string_array;
 	int		i;
 
 	i = 0;
-	recycle_size(tokens, &cmd_size);
+	recycle_size(tokens, &cmd_size, &(*plag_pipe), &(*plag_redi));
 	if (cmd_size == 0)
 		return (NULL);
 	string_array = (char **)malloc(sizeof(char *) * (cmd_size + 1));
@@ -84,6 +89,12 @@ void	get_exec_commads(t_list **tokens, t_cmd_list **exec_commads, int i)
 	int		cmd_size;
 	char	**string_array;
 
+	t_tokentype	plag_pipe;
+	t_tokentype	plag_redi;
+
+	plag_pipe = NONE;
+	plag_redi = NONE;
+
 	if (i == 0)
 		cmd_size = get_double_string_array_size(&(*tokens));
 	else
@@ -92,8 +103,9 @@ void	get_exec_commads(t_list **tokens, t_cmd_list **exec_commads, int i)
 	printf("기점의 포인트를 출력합니다 : %s\n", (*tokens)->token);
 	if (cmd_size == 0)
 		return ;
-	string_array = set_string_array(*tokens, cmd_size);
+	string_array = set_string_array(*tokens, cmd_size, &plag_pipe, &plag_redi);
 	if (string_array == NULL)
 		return ;
-	exec_make_node(&(*exec_commads), string_array);
+	printf("[%d %d]\n", plag_pipe, plag_redi);
+	exec_make_node(&(*exec_commads), string_array, plag_pipe, plag_redi);
 }
