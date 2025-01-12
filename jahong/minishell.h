@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/10 13:32:24 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/12 16:46:17 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <readline/readline.h>    /* readline함수를 사용하기위한 헤더 */
 # include <readline/history.h>     /* add_history함수를 사용하기위한 헤더 */
 # include <stdio.h>                /* printf함수를 사용하기위한 헤더 */
-# include <stdlib.h> 
+# include <stdlib.h>
 
 typedef enum {
     NONE,
@@ -73,6 +73,7 @@ char	**ft_split(char const *s, char c);
 
 /*error_process*/
 int     error_syntax(char *str);
+void	error_qoute(int qoute);
 void	*t_path_key_val_alloc_err(t_path *tmp);
 void	*t_list_alloc_err(t_list *tmp);
 void	*sndry_alloc_err(void **arr);
@@ -82,7 +83,7 @@ void	*t_data_alloc_err(t_data *meta);
 int		check_out_redirection(const char *str, int index);
 int		check_in_redirection(const char *str, int index);
 int		check_ampersand(const char *str, int index);
-int     check_vartical_var(const char *str, int index);
+int     check_vartical_bar(const char *str, int index);
 int		check_operator_set(char const *str, int index);
 
 /*extradt_words.c*/
@@ -105,5 +106,9 @@ void	make_node(t_list **tokenize, char *str);
 
 /* set_environ.c*/
 t_data  *initial_env(char **envp);
+
+/* substitusion_env.c*/
+int     check_quote_invalid(char *token);
+int     substitution_env_var(t_list *tokens);
 
 #endif

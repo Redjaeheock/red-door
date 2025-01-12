@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 09:46:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/09 13:05:44 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/12 13:59:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int check_ampersand(const char *str, int index)
 	return (index - start_index);
 }
 
-int check_vartical_var(const char *str, int index)
+int check_vartical_bar(const char *str, int index)
 {
 	int start_index;
 

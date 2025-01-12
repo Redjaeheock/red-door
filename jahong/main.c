@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/10 16:36:23 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/12 16:05:50 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int check_operator_v1(const char *str, int index)
 {
 	if (str[index] == '|')
 	{
-		if (check_vartical_var(str, index) == 1)
+		if (check_vartical_bar(str, index) == 1)
 			return (error_syntax("|"));
 		else 
 			return (error_syntax("||"));
@@ -99,7 +99,8 @@ t_list *mn_split(char **str)
     if (cmd_flag == -1)
         return (NULL);
 	words = split_words(*str, cmd_flag);
-	substitution_dollar_sign(words);
+	if (substitution_env_var(words) == 0)
+		return (free_t_list(words));
 	return (words);
 }
 int	main(int argc, char **argv, char **envp)
