@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:34:43 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/13 17:11:54 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/13 21:13:16 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ch_dollar_to_envval(char *token, int dollar, int qoute)
+char	*ch_dollar_to_envval(char *token, int dollarz, int qoute)
 {
 	int	idx;
 
@@ -62,17 +62,47 @@ int	count_dollar_sign(char *str)
 	}
 	return (cnt);
 }
+
+int	measure_length_quote_set(char *s, int cnt)
+{
+	int	idx;
+	int qote;
+
+	idx = 0;
+	qote = 0;
+	while (s[idx] != '\0')
+	{
+		if (qote == 0) 
+		{
+			if (s[idx] == '\'')
+				qote = 1;
+			else if (s[idx] == '"')
+				qote = 2;
+			else if (idx == 0 || s[idx - 1] == '\'' || s[idx - 1] == '"')
+				cnt++;
+		}
+		else if ((qote == 1 && s[idx] == '\'') || (qote == 2 && s[idx] == '"'))
+		{
+			qote = 0;
+			cnt++;
+		}
+		idx++;
+	}
+	return (cnt);
+}
+
 int	mapping_dollor_sign(t_list *tokens)
 {
-	int	*dollars;
-	int		quote;
-	int		len;
+	int	row;
 
-	len = count_dollar_sign(tokens->token);
-	dollars = malloc(sizeof(int) * len);
-	if (dollars == NULL)
-		return (0);
-	check_dollar_sign_invalid(tokens->token, dollars, len);
+	row = measure_length_quote_set(tokens->token, row = 0);
+	printf("row = %d\n", row);
+
+	//len = count_dollar_sign(tokens->token);
+	//dollars = malloc(sizeof(int) * len);
+	//if (dollars == NULL)
+	//	return (0);
+	///check_dollar_sign_invalid(tokens->token, dollars, len);
 	// if (dollar_flag == 1 && quote != 1)
 	// 	str = ch_dollar_to_envval(tokens->token, dollar_idx, quote);
 	// else
