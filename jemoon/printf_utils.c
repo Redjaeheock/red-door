@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:58:04 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/10 16:46:03 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/12 16:45:09 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	printf_exec_commads(t_cmd_list *exec_commands)
 			printf("%s ", exec_commands->str[i]);
 			i++;
 		}
-		printf(": [%s] [%s] \n", token_type_to_str_1(exec_commands->type_pipe), token_type_to_str_1(exec_commands->type_re));
+		printf(": [%s] [%s] \n", token_type_to_str_1(exec_commands->type_pipe), \
+		token_type_to_str_1(exec_commands->type_re));
 		exec_commands = exec_commands->next;
 	}
 }
@@ -51,6 +52,10 @@ const char	*token_type_to_str_1(t_tokentype type)
 		return ("OPTION");
 	else if (type == ARG)
 		return ("ARG");
+	else if (type == AND)
+		return ("AND");
+	else if (type == OR)
+		return ("OR");
 	else
 		return ("UNKNOWN");
 }

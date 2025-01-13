@@ -6,13 +6,14 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 19:55:03 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/10 17:08:42 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/13 15:32:53 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	recycle_size(t_list *tokens, int *cmd_size, t_tokentype *plag_pipe, t_tokentype *plag_redi)
+void	recycle_size(t_list *tokens, int *cmd_size, \
+t_tokentype *plag_pipe, t_tokentype *plag_redi)
 {
 	int	size;
 	int	i;
@@ -21,9 +22,11 @@ void	recycle_size(t_list *tokens, int *cmd_size, t_tokentype *plag_pipe, t_token
 	size = *cmd_size;
 	if (tokens->type == PIPE)
 		tokens = tokens->next;
+	if (tokens == NULL && *cmd_size == 1)
+		return ;
 	while (i < size)
 	{
-		if (tokens->type == PIPE)
+		if (tokens->type == PIPE && tokens->prev->type != PIPE)
 		{
 			(*cmd_size)--;
 			(*plag_pipe) = tokens->type;
@@ -46,15 +49,44 @@ char	*set_string(t_list *tokens)
 	char	*str;
 
 	i = 0;
-	string_len = strlen(tokens->token); // ft_strlen 찾아서 변경하기.
+	string_len = strlen(tokens->token);
 	str = (char *)malloc(sizeof(char) * (string_len + 1));
 	if (str == NULL)
 		return (NULL);
-	strcpy(str, tokens->token); // ft_strcpy 찾아서 변경하기.
+	strcpy(str, tokens->token);
 	return (str);
 }
 
-char	**set_string_array(t_list *tokens, int cmd_size, t_tokentype *plag_pipe, t_tokentype *plag_redi)
+void	fill_string_array(char **string_array, t_list *tokens, int cmd_size)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd_size)
+	{
+		if (tokens->type == PIPE && tokens->prev == NULL)
+		{
+			string_array[i] = set_string(tokens);
+			tokens = tokens->next;
+			i++;
+		}
+		else if (tokens->type == PIPE && tokens->prev->type != PIPE || \
+		(REDIRECTION <= tokens->type && tokens->type <= HEREDOC))
+		{
+			tokens = tokens->next;
+		}
+		else
+		{
+			string_array[i] = set_string(tokens);
+			tokens = tokens->next;
+			i++;
+		}
+	}
+	string_array[i] = NULL;
+}
+
+char	**set_string_array(t_list *tokens, int cmd_size, \
+t_tokentype *plag_pipe, t_tokentype *plag_redi)
 {
 	char	**string_array;
 	int		i;
@@ -66,35 +98,21 @@ char	**set_string_array(t_list *tokens, int cmd_size, t_tokentype *plag_pipe, t_
 	string_array = (char **)malloc(sizeof(char *) * (cmd_size + 1));
 	if (string_array == NULL)
 		return (NULL);
-	if (tokens->type == PIPE)
+	if (tokens->type == PIPE && cmd_size != 1)
 		tokens = tokens->next;
-	while (i < cmd_size)
-	{
-		if (tokens->type == PIPE || \
-		(REDIRECTION <= tokens->type && tokens->type <= HEREDOC))
-			tokens = tokens->next;
-		else
-		{
-			string_array[i] = set_string(tokens);
-			tokens = tokens->next;
-			i++;
-		}
-	}
-	string_array[i] = NULL;
+	fill_string_array(string_array, tokens, cmd_size);
 	return (string_array);
 }
 
 void	get_exec_commads(t_list **tokens, t_cmd_list **exec_commads, int i)
 {
-	int		cmd_size;
-	char	**string_array;
-
+	int			cmd_size;
+	char		**string_array;
 	t_tokentype	plag_pipe;
 	t_tokentype	plag_redi;
 
 	plag_pipe = NONE;
 	plag_redi = NONE;
-
 	if (i == 0)
 		cmd_size = get_double_string_array_size(&(*tokens));
 	else

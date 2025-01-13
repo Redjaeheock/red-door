@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:35:17 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/09 16:37:43 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/12 14:44:26 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	check_is_valid_redirection(t_list **tokens)
 {
@@ -62,7 +62,10 @@ int	rest_check_is_valid(t_list **tokens)
 		if ((*tokens)->prev->type == PIPE)
 			return (0);
 		else if ((*tokens)->next == NULL)
-			return (0);
+		{
+			*tokens = (*tokens)->next;
+			return (1);
+		}
 		else if (REDIRECTION <= (*tokens)->next->type && \
 		(*tokens)->next->type <= HEREDOC)
 		{

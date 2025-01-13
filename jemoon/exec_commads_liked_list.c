@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/10 17:12:01 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:41:28 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 void	free_exec_linked_list(t_cmd_list *list)
 {
@@ -32,7 +32,8 @@ void	free_exec_linked_list(t_cmd_list *list)
 	}
 }
 
-t_cmd_list	*create_exec_linked_list(char **str, t_tokentype plag_pipe, t_tokentype plag_redi)
+t_cmd_list	*create_exec_linked_list(char **str, \
+t_tokentype plag_pipe, t_tokentype plag_redi)
 {
 	t_cmd_list	*new;
 
@@ -51,7 +52,9 @@ t_cmd_list	*create_exec_linked_list(char **str, t_tokentype plag_pipe, t_tokenty
 	new->next = NULL;
 	return (new);
 }
-void	add_back_exec_linked_list(t_cmd_list **exec_commads, t_cmd_list *new)
+
+void	add_back_exec_linked_list(t_cmd_list **exec_commads, \
+t_cmd_list *new)
 {
 	t_cmd_list	*temp;
 
@@ -61,7 +64,8 @@ void	add_back_exec_linked_list(t_cmd_list **exec_commads, t_cmd_list *new)
 	temp->next = new;
 }
 
-void	exec_make_node(t_cmd_list **exec_commads, char **string_array, t_tokentype plag_pipe, t_tokentype plag_redi)
+void	exec_make_node(t_cmd_list **exec_commads, char **string_array, \
+t_tokentype plag_pipe, t_tokentype plag_redi)
 {
 	t_cmd_list	*new_node;
 
@@ -72,5 +76,4 @@ void	exec_make_node(t_cmd_list **exec_commads, char **string_array, t_tokentype 
 		*exec_commads = new_node;
 	else
 		add_back_exec_linked_list(exec_commads, new_node);
-
 }

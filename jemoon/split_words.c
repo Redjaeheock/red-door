@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 22:22:37 by jemoon            #+#    #+#             */
-/*   Updated: 2024/12/30 17:29:33 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/12 14:45:51 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 char	*extract_word(char const *str, int start_index, int index)
 {
@@ -43,13 +43,11 @@ t_list	*split_words(char const *str)
 	words = NULL;
 	while (str[index] != '\0')
 	{
-		/* 연속으로 화이트 스페이스가 올 때, 스페이스를 토큰으로 나눔. */
 		if ((str[index] == 32 && str[index + 1] != 32) || str[index] == 9 || str[index + 1] == '\0')
 		{
 			if (str[index + 1] == '\0')
 				index++;
 			word_line = extract_word(str, start_index, index);
-			// word_line = check_quote_line(str, start_index, &index);
 			if (word_line == NULL)
 				return (NULL);
 			make_node(&words, word_line);
@@ -57,13 +55,12 @@ t_list	*split_words(char const *str)
 				return (NULL);
 			start_index = index + 1;
 		}
-		/* quote_parser(str, &index, &words);  */
 		index++;
 	}
 	return (words);
 }
 
-t_list *mn_split(char const *str)
+t_list	*mn_split(char const *str)
 {
 	t_list	*words;
 
