@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/12 16:46:17 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/13 16:59:30 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ void	*t_path_key_val_alloc_err(t_path *tmp);
 void	*t_list_alloc_err(t_list *tmp);
 void	*sndry_alloc_err(void **arr);
 void	*t_data_alloc_err(t_data *meta);
+
+/* quote_character_check.c */
+int     check_quote_pair(char c, int quote);
 
 /*special_character_check.c*/
 int		check_out_redirection(const char *str, int index);

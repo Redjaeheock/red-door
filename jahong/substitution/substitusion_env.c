@@ -6,98 +6,78 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:34:43 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/12 18:27:04 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/13 17:11:54 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *change_envval(char *str)
+char	*ch_dollar_to_envval(char *token, int dollar, int qoute)
 {
 	int	idx;
-	int	len;
+
+	idx = 0;
+
+
+}
+
+void	check_dollar_sign_invalid(char *s, int *dollars, int dollars_len)
+{
+	int	idx;
 	int	quote;
-
-	idx = 0;
-	len = 0;
-	quote = 0;
-	while (str[idx] != '\0')
-	{
-		if (str[idx + len] == '\0' && quote == 0)
-			
-
-		
-	}
-}
-
-char	*divede_token_str(char *token,  int row)
-{
-	char	**str;
-	int		idx;
-	int		quote;
+	int dollars_idx;
 
 	idx = 0;
 	quote = 0;
-	str = (char *)malloc(sizeof(char *) * (row + 1));
-	if (str == NULL)
-		return (sndry_alloc_err(NULL));
-	while (idx <= row)
-	{
-		str[idx] = change_envval(token);
-		if (str[idx] == NULL)
-		{
-			sndry_alloc_err((void **)str);
-			return (NULL);
-		}
-		idx++;
-	}
-	return (str);
-}
-
-char	*ch_dollar_to_envval(char *token, int row)
-{
-	char 	**div_str;
-	char 	*join_str;
-
-	div_str = divede_token_str(token, row);
-	join_str = join_token_str(div_str);
-
-}
-
-int	check_dollar_sign_invalid(char *s, int row)
-{
-	int		idx;
-	int		quot;
-
-	idx = 0;
-	quot = 0;
+	dollars_idx = 0;
 	while (s[idx] != '\0')
 	{
-		if (quot == 0) 
+		quote = check_quote_pair(s[idx], quote);
+		if (s[idx] == '$' && dollars_idx < dollars_len)
 		{
-			if (s[idx] == '\'')
-				quot = 1;
-			else if (s[idx] == '"')
-				quot = 2;
-			else if (idx == 0 || s[idx - 1] == '\'' || s[idx - 1] == '"')
-				row++;
-		}
-		else if ((quot == 1 && s[idx] == '\'') || (quot == 2 && s[idx] == '"')) 
-		{
-			quot = 0;
-			row++;
+			dollars[dollars_idx] = quote;
+			dollars_idx++;
+			if (s[idx + 1] == '$')
+				idx++;
 		}
    	 	idx++;
 	}
-	return (row);
 }
-int	mapping_dollor_sign(char **token)
+int	count_dollar_sign(char *str)
 {
-	char	*str;
-	int		row;
+	int	idx;
+	int	cnt;
 
-	row = check_dollar_sign_invalid(*token, row = 0); //norm check!!!
-	str = ch_dollar_to_envval(*token, row);
+	idx = 0;
+	cnt = 0;
+	while (str[idx] != '\0')
+	{
+		if (str[idx] == '$')
+		{
+			cnt++;
+			if (str[idx + 1] == '$')
+				idx++;
+		}
+		idx++;
+	}
+	return (cnt);
+}
+int	mapping_dollor_sign(t_list *tokens)
+{
+	int	*dollars;
+	int		quote;
+	int		len;
+
+	len = count_dollar_sign(tokens->token);
+	dollars = malloc(sizeof(int) * len);
+	if (dollars == NULL)
+		return (0);
+	check_dollar_sign_invalid(tokens->token, dollars, len);
+	// if (dollar_flag == 1 && quote != 1)
+	// 	str = ch_dollar_to_envval(tokens->token, dollar_idx, quote);
+	// else
+	// 	str = cp_dollar_to_toekn(tokens->token);
+	return (0);
 	
 }
 int	check_quote_invalid(char *token)
@@ -109,14 +89,7 @@ int	check_quote_invalid(char *token)
 	quote = 0;
 	while (token[idx] != '\0')
 	{
-		if (token[idx] == '\'' && quote == 0)
-			quote = 1;
-		else if (token[idx] == '"' && quote == 0)
-			quote = 2;
-		else if (token[idx] == '\'' && quote == 1)
-			quote = 0;
-		else if (token[idx] == '"' && quote == 2)
-			quote = 0;
+		quote = check_quote_pair(token[idx], quote);
 		idx++;
 	}
 	if (quote != 0)
@@ -132,7 +105,7 @@ int	substitution_env_var(t_list *tokens)
 	{
 		if (check_quote_invalid(tokens->token) == 0)
 			return (0);
-		if (mapping_dollor_sign(&(tokens->token)) == 0);
+		if (mapping_dollor_sign(tokens) == 0);
 			return (0);
 		tokens = tokens->next;
 	}
