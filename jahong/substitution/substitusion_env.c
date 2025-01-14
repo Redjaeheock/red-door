@@ -6,43 +6,90 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:34:43 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/13 21:13:16 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/14 14:55:44 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ch_dollar_to_envval(char *token, int dollarz, int qoute)
+char	*extract_partial_token(char *str, int idx, int end)
 {
-	int	idx;
+	printf("start func3\n");
+	char	*tmp;
+	int		len;
+	int		i;
 
-	idx = 0;
-
-
+	len = end - idx;
+	i = 0;
+	tmp = (char *)malloc(sizeof(char) * (len + 1));
+	if (tmp == NULL)
+		return (sndry_alloc_err(NULL));
+	while (idx < end)
+	{
+		tmp[i] = str[idx];
+		i++;
+		idx++;
+	}
+	tmp[i] = '\0';
+	return (tmp);
 }
 
-void	check_dollar_sign_invalid(char *s, int *dollars, int dollars_len)
+char	*temporary_div_token(char *str, int *idx, int quote)
 {
-	int	idx;
-	int	quote;
-	int dollars_idx;
+	printf("start func2\n");
+	char	*tmp;
+	int		len;
+	int		start;
 
+	start = *idx;
+	while (str[*idx] != '\0')
+	{
+		printf("curren str[%d] = %c\n", *idx, str[*idx]);
+		if (quote == 0 && check_quote_pair(str[*idx + 1], quote) != 0)		
+			break;
+		else if (quote == 1 && check_quote_pair(str[*idx], quote) == 0)
+			break ;
+		else if (quote == 2 && check_quote_pair(str[*idx], quote) == 0)
+			break ;
+		*idx++;
+	}
+	tmp = extract_partial_token(str, start, *idx);
+	if (tmp == NULL)
+		return (NULL);
+	return (tmp);
+}
+
+char	**temporary_copy_token(char *str, int len)
+{
+	printf("start func1\n");
+	char	**tmp;
+	int		row;
+	int		idx;
+	int		quote;
+	int cnt = 0;
+
+	row = 0;
 	idx = 0;
 	quote = 0;
-	dollars_idx = 0;
-	while (s[idx] != '\0')
+	tmp = (char **)malloc(sizeof(char *) * (len + 1));
+	if (tmp == NULL)
+		return (NULL);
+	while (row < len)
 	{
-		quote = check_quote_pair(s[idx], quote);
-		if (s[idx] == '$' && dollars_idx < dollars_len)
-		{
-			dollars[dollars_idx] = quote;
-			dollars_idx++;
-			if (s[idx + 1] == '$')
-				idx++;
-		}
-   	 	idx++;
+		quote = check_quote_pair(str[idx], quote);
+		tmp[row] = temporary_div_token(str, &idx, quote);
+		if (tmp[row] == NULL)
+			return (free_sndry_arr((void **)tmp));
+		row++;
 	}
+	while (tmp[cnt] != NULL)
+	{
+		printf("%s\n", tmp[cnt]);
+		cnt++;
+	}
+	return (tmp);
 }
+
 int	count_dollar_sign(char *str)
 {
 	int	idx;
@@ -94,9 +141,11 @@ int	measure_length_quote_set(char *s, int cnt)
 int	mapping_dollor_sign(t_list *tokens)
 {
 	int	row;
+	char	**tmp;
 
 	row = measure_length_quote_set(tokens->token, row = 0);
 	printf("row = %d\n", row);
+	tmp = temporary_copy_token(tokens->token, row);
 
 	//len = count_dollar_sign(tokens->token);
 	//dollars = malloc(sizeof(int) * len);
