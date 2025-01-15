@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/13 16:59:30 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/15 12:01:46 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,14 @@ void	make_node(t_list **tokenize, char *str);
 /* set_environ.c*/
 t_data  *initial_env(char **envp);
 
-/* substitusion_env.c*/
+/* check_token_quote.c*/
+char	*extract_partial_token(char *str, int idx, int *end, int *quote);
+char	*temporary_div_token(char *str, int *idx, int *quote);
+char	**temporary_copy_token(char *str, int len);
+int	    measure_length_quote_set(char *str, int cnt);
+
+/* substitution_token.c*/
+int     mapping_dollor_sign(t_list *tokens);
 int     check_quote_invalid(char *token);
 int     substitution_env_var(t_list *tokens);
 

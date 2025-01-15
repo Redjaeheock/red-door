@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:50:35 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/13 20:46:20 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/15 21:20:43 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static char	**allocate_secondary_array(int len)
 	arr = (char **)malloc(sizeof(char *) * (len + 1));
 	if (arr == NULL)
 		return (NULL);
+	arr[len + 1] = NULL;
 	return (arr);
 }
 static char	*copy_str(char *str, char c, int *idx)
@@ -78,7 +79,6 @@ static char	**div_word(char *s, char c, int cnt)
 			return (free_arr(array));
 		row++;
 	}
-	array[row] = NULL;
 	return (array);
 }
 char	**ft_split(char const *s, char c)
