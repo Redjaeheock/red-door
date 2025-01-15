@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 13:30:59 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/02 11:13:18 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:42:22 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	skip_leading_ifs(char *str)
 {

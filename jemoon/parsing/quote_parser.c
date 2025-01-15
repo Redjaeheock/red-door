@@ -6,13 +6,13 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 14:36:58 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/12 14:48:13 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:42:27 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	parsor(char const *str, int *start_index, int *index)
+void	parsor(char const *str, int *index)
 {
 	int	plag_quote_d;
 	int	plag_quote_s;

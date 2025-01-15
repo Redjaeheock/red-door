@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:58:04 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/12 16:45:09 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:42:35 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	printf_exec_commads(t_cmd_list *exec_commands)
 {
@@ -56,8 +56,7 @@ const char	*token_type_to_str_1(t_tokentype type)
 		return ("AND");
 	else if (type == OR)
 		return ("OR");
-	else
-		return ("UNKNOWN");
+	return ("UNKNOWN");
 }
 
 void	printf_tokens(t_list *tokens)

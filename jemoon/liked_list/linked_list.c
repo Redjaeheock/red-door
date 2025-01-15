@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:55:12 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/12 10:42:56 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:42:18 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_linked_list(t_list *list)
 {

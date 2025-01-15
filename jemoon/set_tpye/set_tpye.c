@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:42:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/13 15:32:48 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:42:39 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	is_first_node_type(t_list **tokens)
 {
@@ -24,10 +24,10 @@ void	is_first_node_type(t_list **tokens)
 		(*tokens)->type = GR_REDEC;
 	else if (((*tokens)->token[0] == '|' && (*tokens)->token[1] == '\0'))
 		(*tokens)->type = PIPE;
-//	else if (((*tokens)->token[0] == '&' && (*tokens)->token[1] == '&'))
-//		(*tokens)->type = AND;
-//	else if (((*tokens)->token[0] == '|' && (*tokens)->token[1] == '|'))
-//		(*tokens)->type = OR;
+	else if (((*tokens)->token[0] == '&' && (*tokens)->token[1] == '&'))
+		(*tokens)->type = AND;
+	else if (((*tokens)->token[0] == '|' && (*tokens)->token[1] == '|'))
+		(*tokens)->type = OR;
 	else if (((*tokens)->token[0] != '<' || (*tokens)->token[0] != '>'))
 		(*tokens)->type = CMD;
 	else
@@ -51,10 +51,10 @@ void	set_tpye(t_list **tokens)
 		(*tokens)->type = HEREDOC;
 	else if ((*tokens)->token[0] == '>' && (*tokens)->token[1] == '>')
 		(*tokens)->type = GR_REDEC;
-//	else if ((*tokens)->token[0] == '&' && (*tokens)->token[1] == '&')
-//		(*tokens)->type = AND;
-//	else if ((*tokens)->token[0] == '|' && (*tokens)->token[1] == '|')
-//		(*tokens)->type = OR;
+	else if ((*tokens)->token[0] == '&' && (*tokens)->token[1] == '&')
+		(*tokens)->type = AND;
+	else if ((*tokens)->token[0] == '|' && (*tokens)->token[1] == '|')
+		(*tokens)->type = OR;
 	else if ((*tokens)->prev != NULL && (*tokens)->token[0] == '-')
 		(*tokens)->type = OPTION;
 	else
@@ -63,13 +63,14 @@ void	set_tpye(t_list **tokens)
 
 void	tpye_init(t_list **tokens)
 {
-	t_list	**tmp;
+	t_list	*tmp;
 
-	*tmp = *tokens;
+	//tmp = NULL;
+	tmp = *tokens;
 	while ((*tokens) != NULL)
 	{
 		set_tpye(&(*tokens));
 		*tokens = (*tokens)->next;
 	}
-	*tokens = *tmp;
+	*tokens = tmp;
 }

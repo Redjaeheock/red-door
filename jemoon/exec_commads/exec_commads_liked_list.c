@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/12 10:41:28 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:42:04 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_exec_linked_list(t_cmd_list *list)
 {
@@ -41,7 +41,7 @@ t_tokentype plag_pipe, t_tokentype plag_redi)
 	if (new == NULL)
 		return (NULL);
 	new->str = str;
-	if (plag_pipe == PIPE)
+	if (AND <= plag_pipe && plag_pipe <= PIPE)
 		new->type_pipe = plag_pipe;
 	else
 		new->type_pipe = NONE;

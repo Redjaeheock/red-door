@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linkedlist_to_matrix.c                             :+:      :+:    :+:   */
+/*   exec_commads_size.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:38:05 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/09 14:36:29 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:42:10 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	check_redirection_size(t_list **tmp, int *array_size)
 {
@@ -25,7 +25,8 @@ int	check_redirection_size(t_list **tmp, int *array_size)
 		(*array_size)++;
 		if ((*tmp) && (*tmp)->type == ARG)
 		{
-			if ((*tmp)->next != NULL && (*tmp)->next->type == PIPE)
+			if ((*tmp)->next != NULL && \
+			(AND <= (*tmp)->type && (*tmp)->type <= PIPE))
 				++(*array_size);
 			*tmp = tmp2;
 			++(*array_size);
@@ -46,7 +47,7 @@ int	get_double_string_array_size(t_list **tmp)
 		return (array_size);
 	while ((*tmp))
 	{
-		if ((*tmp)->type == PIPE)
+		if (AND <= (*tmp)->type && (*tmp)->type <= PIPE)
 		{
 			array_size++;
 			break ;
@@ -67,13 +68,13 @@ int	get_double_string_array_size_version_2(t_list **tmp)
 
 	tmp2 = *tmp;
 	array_size = 0;
-	if ((*tmp)->type == PIPE)
+	if (AND <= (*tmp)->type && (*tmp)->type <= PIPE)
 		*tmp = (*tmp)->next;
 	if (check_redirection_size(&(*tmp), &array_size) == 0)
 		return (array_size);
 	while ((*tmp))
 	{
-		if ((*tmp)->type == PIPE)
+		if (AND <= (*tmp)->type && (*tmp)->type <= PIPE)
 		{
 			array_size++;
 			break ;

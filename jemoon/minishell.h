@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:58:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/12 17:58:06 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 12:31:08 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 # include <stdlib.h> 
 # include <string.h>
 
-typedef enum
+typedef enum tokentype
 {
 	NONE,
+	AND,
+	OR,
 	PIPE,
 	REDIRECTION,
 	IN_REDEC,
 	OUT_REDEC,
 	GR_REDEC,
 	HEREDOC,
-	AND,
-	OR,
 	CMD,
 	OPTION,
 	ARG
@@ -49,6 +49,7 @@ typedef struct start_list
 	char				**str;
 	t_tokentype			type_pipe;
 	t_tokentype			type_re;
+	t_tokentype			type_ao;
 	struct start_list	*next;
 }	t_cmd_list;
 
@@ -63,7 +64,7 @@ t_list		*mn_split(char const *str);
 int			skip_leading_ifs(char *str);
 
 /* quote_parser.c */
-void		parsor(char const *str, int *start_index, int *index);
+void		parsor(char const *str, int *index);
 
 /* linked_list.c */
 void		free_linked_list(t_list *list);
@@ -78,6 +79,7 @@ void		set_tpye(t_list **tokens);
 
 /* validate_bash_syntax.c */
 t_cmd_list	*validate_bash_syntax(t_list **tokens);
+//void		validate_bash_syntax(t_list **tokens);
 
 /* validate_bash_syntax.c */
 int			check_is_valid_redirection(t_list **tokens);

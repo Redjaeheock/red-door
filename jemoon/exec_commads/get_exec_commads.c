@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 19:55:03 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/13 15:32:53 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:42:14 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	recycle_size(t_list *tokens, int *cmd_size, \
 t_tokentype *plag_pipe, t_tokentype *plag_redi)
@@ -20,13 +20,14 @@ t_tokentype *plag_pipe, t_tokentype *plag_redi)
 
 	i = 0;
 	size = *cmd_size;
-	if (tokens->type == PIPE)
+	if (AND <= tokens->type && tokens->type <= PIPE)
 		tokens = tokens->next;
 	if (tokens == NULL && *cmd_size == 1)
 		return ;
 	while (i < size)
 	{
-		if (tokens->type == PIPE && tokens->prev->type != PIPE)
+		if ((AND <= tokens->type && tokens->type <= PIPE) && \
+		!(AND <= tokens->prev->type && tokens->prev->type <= PIPE))
 		{
 			(*cmd_size)--;
 			(*plag_pipe) = tokens->type;
@@ -39,16 +40,13 @@ t_tokentype *plag_pipe, t_tokentype *plag_redi)
 		i++;
 		tokens = tokens->next;
 	}
-	return ;
 }
 
 char	*set_string(t_list *tokens)
 {
-	int		i;
 	int		string_len;
 	char	*str;
 
-	i = 0;
 	string_len = strlen(tokens->token);
 	str = (char *)malloc(sizeof(char) * (string_len + 1));
 	if (str == NULL)
@@ -64,17 +62,17 @@ void	fill_string_array(char **string_array, t_list *tokens, int cmd_size)
 	i = 0;
 	while (i < cmd_size)
 	{
-		if (tokens->type == PIPE && tokens->prev == NULL)
+		if ((AND <= tokens->type && tokens->type <= PIPE) && \
+		tokens->prev == NULL)
 		{
 			string_array[i] = set_string(tokens);
 			tokens = tokens->next;
 			i++;
 		}
-		else if (tokens->type == PIPE && tokens->prev->type != PIPE || \
+		else if (((AND <= tokens->type && tokens->type <= PIPE) && \
+		!(AND <= tokens->prev->type && tokens->prev->type <= PIPE)) || \
 		(REDIRECTION <= tokens->type && tokens->type <= HEREDOC))
-		{
 			tokens = tokens->next;
-		}
 		else
 		{
 			string_array[i] = set_string(tokens);
@@ -89,9 +87,7 @@ char	**set_string_array(t_list *tokens, int cmd_size, \
 t_tokentype *plag_pipe, t_tokentype *plag_redi)
 {
 	char	**string_array;
-	int		i;
 
-	i = 0;
 	recycle_size(tokens, &cmd_size, &(*plag_pipe), &(*plag_redi));
 	if (cmd_size == 0)
 		return (NULL);
@@ -99,6 +95,8 @@ t_tokentype *plag_pipe, t_tokentype *plag_redi)
 	if (string_array == NULL)
 		return (NULL);
 	if (tokens->type == PIPE && cmd_size != 1)
+		tokens = tokens->next;
+	else if ((tokens->type == AND || tokens->type == OR) && cmd_size != 1)
 		tokens = tokens->next;
 	fill_string_array(string_array, tokens, cmd_size);
 	return (string_array);

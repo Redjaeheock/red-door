@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:35:17 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/12 14:44:26 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:42:44 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	check_is_valid_redirection(t_list **tokens)
 {
@@ -33,7 +33,7 @@ int	check_is_valid_arg(t_list **tokens)
 	*tokens = (*tokens)->next;
 	while ((*tokens) != NULL)
 	{
-		if ((*tokens)->type == PIPE)
+		if (AND <= (*tokens)->type && (*tokens)->type <= PIPE)
 			return (1);
 		else if (REDIRECTION <= (*tokens)->type && (*tokens)->type <= HEREDOC)
 			return (1);
@@ -45,7 +45,7 @@ int	check_is_valid_arg(t_list **tokens)
 
 int	first_check_is_valid(t_list **tokens)
 {
-	if ((*tokens)->type == PIPE)
+	if (AND <= (*tokens)->type && (*tokens)->type <= PIPE)
 		return (0);
 	else if (REDIRECTION <= (*tokens)->type && (*tokens)->type <= HEREDOC)
 		return (check_is_valid_redirection(&(*tokens)));
@@ -57,9 +57,9 @@ int	first_check_is_valid(t_list **tokens)
 
 int	rest_check_is_valid(t_list **tokens)
 {
-	if ((*tokens)->type == PIPE)
+	if (AND <= (*tokens)->type && (*tokens)->type <= PIPE)
 	{
-		if ((*tokens)->prev->type == PIPE)
+		if (AND <= (*tokens)->prev->type && (*tokens)->prev->type <= PIPE)
 			return (0);
 		else if ((*tokens)->next == NULL)
 		{
