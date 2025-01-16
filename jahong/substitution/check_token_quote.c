@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:34:43 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/15 21:39:08 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/16 13:54:55 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*extract_partial_token(char *str, int idx, int *end, int *quote)
 	tmp = (char *)malloc(sizeof(char) * (len + 1));
 	if (tmp == NULL)
 		return (sndry_alloc_err(NULL));
-	while (idx <= *end)
+	while (idx <= *end && str[idx] != '\0')
 	{
 		tmp[i] = str[idx];
 		i++;
@@ -37,7 +37,6 @@ char	*extract_partial_token(char *str, int idx, int *end, int *quote)
 		*end += 1;
 	return (tmp);
 }
-
 char	*temporary_div_token(char *str, int *idx, int *quote)
 {
 	char	*tmp;
@@ -66,7 +65,6 @@ char	*temporary_div_token(char *str, int *idx, int *quote)
 		return (NULL);
 	return (tmp);
 }
-
 char	**temporary_copy_token(char *str, int len)
 {
 	char	**tmp;
@@ -88,7 +86,7 @@ char	**temporary_copy_token(char *str, int len)
 			return (free_sndry_arr((void **)tmp));
 		row++;
 	}
-	tmp[row] == NULL;
+	tmp[row] = NULL;
 	return (tmp);
 }
 int	measure_length_quote_set(char *str, int cnt)

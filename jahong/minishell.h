@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/15 12:01:46 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/16 16:38:49 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ void	*t_list_alloc_err(t_list *tmp);
 void	*sndry_alloc_err(void **arr);
 void	*t_data_alloc_err(t_data *meta);
 
-/* quote_character_check.c */
+/* token_character_check.c */
 int     check_quote_pair(char c, int quote);
+int     check_token_chr(char *token, int idx);
 
 /*special_character_check.c*/
 int		check_out_redirection(const char *str, int index);
@@ -117,8 +118,15 @@ char	**temporary_copy_token(char *str, int len);
 int	    measure_length_quote_set(char *str, int cnt);
 
 /* substitution_token.c*/
+int     count_dollar_sign(char *str);
 int     mapping_dollor_sign(t_list *tokens);
 int     check_quote_invalid(char *token);
-int     substitution_env_var(t_list *tokens);
+int     substitution_env_var(t_data *meata, t_list *tokens);
+
+/*split_criteria_dollar_sign.c*/
+char	*search_n_change_dollar_sign(t_data *meta, t_list *tokens, char *str);
+
+/*copy_n_div_token.c*/
+char	**div_copy_token(char *str, int len);
 
 #endif

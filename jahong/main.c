@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/12 16:05:50 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/16 16:38:55 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int check_operator_v1(const char *str, int index)
 		return (check_operator_v2(str, index));
     return (1);
 }
-t_list *mn_split(char **str)
+t_list *mn_split(t_data *meta, char **str)
 {
 	t_list	*words;
     int cmd_flag;
@@ -99,7 +99,7 @@ t_list *mn_split(char **str)
     if (cmd_flag == -1)
         return (NULL);
 	words = split_words(*str, cmd_flag);
-	if (substitution_env_var(words) == 0)
+	if (substitution_env_var(meta, words) == 0)
 		return (free_t_list(words));
 	return (words);
 }
@@ -116,7 +116,7 @@ int	main(int argc, char **argv, char **envp)
 	while(1)
 	{
 		str = readline("bash : ");
-		tokens = mn_split(&str);
+		tokens = mn_split(meta, &str);
 		if (tokens == NULL)
 			continue;
 		tmp = tokens;
