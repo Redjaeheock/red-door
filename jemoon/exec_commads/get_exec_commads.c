@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 19:55:03 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/15 15:42:14 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/16 11:46:24 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,7 @@ t_tokentype *plag_pipe, t_tokentype *plag_redi)
 	string_array = (char **)malloc(sizeof(char *) * (cmd_size + 1));
 	if (string_array == NULL)
 		return (NULL);
-	if (tokens->type == PIPE && cmd_size != 1)
-		tokens = tokens->next;
-	else if ((tokens->type == AND || tokens->type == OR) && cmd_size != 1)
+	if ((AND <= tokens->type && tokens->type <= PIPE) && cmd_size != 1)
 		tokens = tokens->next;
 	fill_string_array(string_array, tokens, cmd_size);
 	return (string_array);

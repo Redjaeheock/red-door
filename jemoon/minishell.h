@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:58:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/15 12:31:08 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/16 11:58:54 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int			get_double_string_array_size(t_list **tmp);
 int			get_double_string_array_size_version_2(t_list **tmp);
 
 /* exec_commads_liked_list.c */
+void	free_double_string_array(char **str);
 void		free_exec_linked_list(t_cmd_list *list);
 //t_cmd_list	*create_exec_linked_list(char **str);
 t_cmd_list	*create_exec_linked_list(char **str, \

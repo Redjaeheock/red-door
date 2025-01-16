@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:42:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/15 15:42:39 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 16:24:50 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	tpye_init(t_list **tokens)
 {
 	t_list	*tmp;
 
-	//tmp = NULL;
 	tmp = *tokens;
 	while ((*tokens) != NULL)
 	{

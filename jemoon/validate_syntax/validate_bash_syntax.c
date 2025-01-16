@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/15 15:42:48 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 21:02:21 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_cmd_list	*validate_bash_syntax(t_list **tokens)
 		if (check_is_valid(tokens, count_cmd_line) == 0)
 		{
 			printf_exec_commads(exec_commands);
+			printf("\033[31msyntax error\033[0m\n");
 			free_exec_linked_list(exec_commands);
 			*tokens = tmp;
 			return (NULL);
@@ -35,6 +36,7 @@ t_cmd_list	*validate_bash_syntax(t_list **tokens)
 		count_cmd_line++;
 	}
 	printf_exec_commads(exec_commands);
+	printf("\033[34mBash syntax is valid.\033[0m\n");
 	*tokens = tmp;
 	return (exec_commands);
 }

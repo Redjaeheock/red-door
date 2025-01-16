@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:40:49 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/15 12:25:52 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/15 20:52:58 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	main(int argc, char **argv, char **envp)
 	char		*str;
 	t_list		*tokens;
 	t_cmd_list	*exec_commands;
-	(void)argc; (void)argv; (void)envp;
 
+	(void)argc, (void)argv, (void)envp;
 	tokens = NULL;
 	while (1)
 	{
@@ -44,13 +44,8 @@ int	main(int argc, char **argv, char **envp)
 		tpye_init(&tokens);
 		printf_tokens(tokens);
 		exec_commands = validate_bash_syntax(&tokens);
-		if (exec_commands == NULL)
-			printf("\033[31mBash syntax is invalid.\033[0m\n");
-		else
-		{
-			printf("\033[34mBash syntax is valid.\033[0m\n");
+		if (exec_commands != NULL)
 			free_exec_linked_list(exec_commands);
-		}
 		free_linked_list(tokens);
 		add_history(str);
 		free(str);
