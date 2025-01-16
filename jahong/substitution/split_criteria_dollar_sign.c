@@ -6,38 +6,21 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:50:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/16 16:53:42 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/16 18:48:15 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*copy_env_value(char *str)
-{
-	char	*tmp;
-	int		idx;
-	int		len;
-
-	idx = 0;
-	len = ft_strlen(str);
-	tmp = (char *)malloc(sizeof(char) * (len + 1));
-	if (tmp == NULL)
-		return (sndry_alloc_err(NULL));
-	while (str[idx] != '\0')
-	{
-		tmp[idx] = str[idx];
-		idx++;
-	}
-	tmp[idx] = '\0';
-	return (tmp);
-}
-
 char	*searching_from_envval(t_data *meta, t_list *tokens, char *str)
 {
 	t_path	*tmp;
+	int		len;
 
 	tmp = meta->env;
-	// $ 가 한 개 또는 두 개일 경우 로직 처리리
+	len = ft_strlen(str);
+	if (str[len - 1] == '$')
+		return (copy_current_process_pid());
 	while (tmp != NULL)
 	{
 		if (ft_strncmp(&str[1], tmp->key, ft_strlen(&str[1])) == 0)
@@ -56,7 +39,7 @@ int	matching_env_val_n_change(t_data *meta, t_list *tokens, char **str)
 	row = 0;
 	while (str[row] != NULL)
 	{
-		if (count_dollar_sign(str[row]) == 1)
+		if (count_dollar_sign(str[row]) == 1 && ft_strlen(str[row]) > 1)
 		{
 			tmp = searching_from_envval(meta, tokens, str[row]);
 			if (tmp == NULL)
@@ -69,11 +52,6 @@ int	matching_env_val_n_change(t_data *meta, t_list *tokens, char **str)
 			}
 		}
 		row++;
-	}
-	while (str[cnt] != NULL)
-	{
-		printf("chnage path = %s\n", str[cnt]);
-		cnt++;
 	}
 	return (1);
 }

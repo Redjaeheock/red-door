@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/16 16:38:49 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/16 18:36:41 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,9 @@ char	*search_n_change_dollar_sign(t_data *meta, t_list *tokens, char *str);
 
 /*copy_n_div_token.c*/
 char	**div_copy_token(char *str, int len);
+
+/* change_dollar_sign.c */
+char	*copy_current_process_pid(void);
+char	*copy_env_value(char *str);
 
 #endif
