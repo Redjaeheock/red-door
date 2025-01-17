@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/16 16:44:36 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/17 16:01:57 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	substitution_dollar_sign_to_envval(t_data *meta, t_list *tokens, char **str)
 	row = 0;
 	while (str[row] != NULL)
 	{
-		if (check_quote_pair(str[row][0], 0) == 1)
-			continue ;
 		tmp = search_n_change_dollar_sign(meta, tokens, str[row]);
 		if (tmp == NULL)
 		{
@@ -73,7 +71,7 @@ int	mapping_dollar_sign(t_data *meta, t_list *tokens)
 		return (0);
 	while (tmp[cnt] != NULL)
 	{
-		printf("%s\n", tmp[cnt]);
+		printf("split quote %s\n", tmp[cnt]);
 		cnt++;
 	}
 	result = substitution_dollar_sign_to_envval(meta, tokens, tmp);
@@ -83,7 +81,7 @@ int	mapping_dollar_sign(t_data *meta, t_list *tokens)
 
 	return (0); // 1 로 전환
 }
-int	check_quote_invalid(char *token)
+int	check_quote_valid(char *token)
 {
 	int	idx;
 	int quote;
@@ -108,7 +106,7 @@ int	substitution_env_var(t_data *meta, t_list *tokens)
 {
 	while (tokens != NULL)
 	{
-		if (check_quote_invalid(tokens->token) == 0)
+		if (check_quote_valid(tokens->token) == 0)
 			return (0);
 		if (mapping_dollar_sign(meta, tokens) == 0);
 			return (0);

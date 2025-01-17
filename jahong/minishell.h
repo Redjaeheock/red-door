@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/17 09:31:35 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/17 16:52:27 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int		ft_strlen(const char *str);
 int		conditinal_strlen(const char *s, unsigned char condition);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
+int		ft_isdigit(int c);
+int		ft_isspecial_chr(int c);
 int		ft_strncmp(char *s1, const char *s2, unsigned int n);
 char	*ft_strdup(const char *s);
 int		sndry_arr_len(void **array);
@@ -83,6 +85,7 @@ void	*sndry_alloc_err(void **arr);
 void	*t_data_alloc_err(t_data *meta);
 
 /* token_character_check.c */
+int		check_valid_back(char *str, int idx);
 int		check_quote_pair(char c, int quote);
 int		check_token_chr(char *token, int idx);
 

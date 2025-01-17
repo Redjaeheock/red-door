@@ -6,11 +6,23 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:40:39 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/16 10:26:48 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/17 16:41:35 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int check_valid_back(char *str, int idx)
+{
+	if (idx > 0)
+	{
+		if (str[idx - 1] == '$' && ft_isdigit(str[idx]) != 0)
+			return (1);
+	}
+	if (str[idx] == '?')
+		return (1);
+	return (0);
+}
 
 int	check_quote_pair(char c, int quote)
 {
