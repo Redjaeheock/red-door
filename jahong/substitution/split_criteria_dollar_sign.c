@@ -6,22 +6,11 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:50:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/17 16:52:06 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/17 17:24:49 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*change_null_string(void)
-{
-	char	*tmp;
-
-	tmp = (char *)malloc(sizeof(char) * 1);
-	if (tmp == NULL)
-		return (sndry_alloc_err(NULL));
-	tmp[0] = '\0';
-	return (tmp);
-}
 
 char	*searching_from_envval(t_data *meta, t_list *tokens, char *str)
 {
@@ -32,6 +21,8 @@ char	*searching_from_envval(t_data *meta, t_list *tokens, char *str)
 	len = ft_strlen(str);
 	if (str[len - 1] == '$')
 		return (copy_current_process_pid());
+	if (str[0] == '$' && str[1] == '?')
+		return (get_exit_no());
 	while (tmp != NULL)
 	{
 		if (ft_strncmp(&str[1], tmp->key, ft_strlen(&str[1])) == 0)
@@ -91,7 +82,7 @@ char	*change_dollar_sign(t_data *meta, t_list *tokens, char *str, int len)
 	}
 	return (NULL);
 }
-int	dollar_sign_into_str(char *str, int idx, int flag, int quote)
+int	check_split_point_str(char *str, int idx, int flag)
 {
 	int	cnt;
 
@@ -107,7 +98,7 @@ int	dollar_sign_into_str(char *str, int idx, int flag, int quote)
 		{
 			cnt++;
 			flag = 2;
-			if (str[idx + 1] == '$')
+			if (str[idx + 1] == '$' || check_valid_back(str, idx + 1) != 0)
 			{
 				idx++;	
 				flag = 0;
@@ -117,7 +108,7 @@ int	dollar_sign_into_str(char *str, int idx, int flag, int quote)
 		{
 			if (check_quote_pair(str[idx], 0) != 0)
 				cnt++;
-			else if (str[idx] == ' ')
+			else if (str[idx] == ' ' || ft_isspecial_chr(str[idx]) != 0)
 			{
 				cnt++;
 				flag = 1;
@@ -126,48 +117,7 @@ int	dollar_sign_into_str(char *str, int idx, int flag, int quote)
 		idx++;
 	}
 	return (cnt);
-}
-
-int	check_split_point_str(char *str, int idx, int flag, int quote) // 줄 수 조정
-{
-	int	cnt;
-
-	cnt = 0;
-	// if (quote == 2)
-	// 	cnt = dollar_sign_into_string(str, idx, flag, quote);
-	// else
-	// {
-		while (str[idx] != '\0')
-		{
-			if (str[idx] != '$' && flag == 0)
-			{
-				cnt++;
-				flag = 1;
-			}
-			else if (str[idx] == '$')
-			{
-				cnt++;
-				flag = 2;
-				if (str[idx + 1] == '$' || check_valid_back(str, idx + 1) != 0)
-				{
-					idx++;	
-					flag = 0;
-				}
-			}
-			else if (flag == 2)
-			{
-				if (check_quote_pair(str[idx], 0) != 0)
-					cnt++;
-				else if (str[idx] == ' ' || ft_isspecial_chr(str[idx]) != 0)
-				{
-					cnt++;
-					flag = 1;
-				}
-			}
-			idx++;
-		}
-	// }
-	return (cnt);
+	// 줄 수 조정
 }
 char	*search_n_change_dollar_sign(t_data *meta, t_list *tokens, char *str)
 {
@@ -182,7 +132,7 @@ char	*search_n_change_dollar_sign(t_data *meta, t_list *tokens, char *str)
 	quote = check_quote_pair(str[0], 0);
 	if (quote == 1)
 		return (str);
-	cnt = check_split_point_str(str, idx, flag, quote);
+	cnt = check_split_point_str(str, idx, flag);
 	if (cnt == 0)
 		return (str);
 	tmp = change_dollar_sign(meta, tokens, str, cnt);

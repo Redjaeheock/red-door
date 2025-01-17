@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/17 16:52:27 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/17 17:18:53 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ int		measure_length_quote_set(char *str, int cnt);
 
 /* substitution_token.c*/
 int		count_dollar_sign(char *str);
-int		mapping_dollor_sign(t_list *tokens);
-int		check_quote_invalid(char *token);
+int		mapping_dollar_sign(t_data *meta, t_list *tokens);
+int		check_quote_valid(char *token);
 int		substitution_env_var(t_data *meata, t_list *tokens);
 
 /*split_criteria_dollar_sign.c*/
@@ -138,5 +138,9 @@ char	**div_copy_token(char *str, int len);
 /* change_dollar_sign.c */
 char	*copy_current_process_pid(void);
 char	*copy_env_value(char *str);
+char	*change_null_string(void);
+
+/* utils.c*/
+char	*get_exit_no(void);
 
 #endif

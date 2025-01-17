@@ -6,12 +6,22 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 18:35:13 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/17 16:02:49 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/17 17:10:51 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+char	*change_null_string(void)
+{
+	char	*tmp;
+
+	tmp = (char *)malloc(sizeof(char) * 1);
+	if (tmp == NULL)
+		return (sndry_alloc_err(NULL));
+	tmp[0] = '\0';
+	return (tmp);
+}
 char	*copy_current_process_pid(void)
 {
 	char	*tmp;
