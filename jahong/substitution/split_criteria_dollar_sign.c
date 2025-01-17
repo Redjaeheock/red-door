@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:50:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/16 18:48:15 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/17 09:03:23 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*change_dollar_sign(t_data *meta, t_list *tokens, char *str, int len)
 	return (NULL);
 }
 
-int	check_split_point_str(char *str, int idx, int flag)
+int	check_split_point_str(char *str, int idx, int flag) // 줄 수 조정
 {
 	int	cnt;
 
