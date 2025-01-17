@@ -11,7 +11,8 @@ SRC = main.c \
       set_tpye/set_tpye.c \
 	  validate_syntax/validate_bash_syntax.c \
       validate_syntax/validate_bash_syntax_utils.c \
-	  liked_list/linked_list.c
+	  liked_list/linked_list.c \
+	  readline_utils/readline_utils.c
 
 OBJ = $(SRC:.c=.o)
 

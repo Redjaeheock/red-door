@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:58:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/16 11:58:54 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/17 16:53:58 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,11 @@ void		get_exec_commads(t_list **tokens, t_cmd_list **exec_commads, int i);
 void		printf_exec_commads(t_cmd_list *exec_commands);
 const char	*token_type_to_str_1(t_tokentype type);
 void		printf_tokens(t_list *tokens);
+
+/* readline_utils.c */
+
+int			check_last_tokens(t_cmd_list *exec_commads);
+char		*make_str(char *str, char *add_str);
+char		*add_readline(t_cmd_list **exec_commads, char *str);
 
 #endif
