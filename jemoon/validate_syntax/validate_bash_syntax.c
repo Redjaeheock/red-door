@@ -6,12 +6,12 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/15 21:02:21 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/17 15:19:21 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+ 
 t_cmd_list	*validate_bash_syntax(t_list **tokens)
 {
 	int				count_cmd_line;

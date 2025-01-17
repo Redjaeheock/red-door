@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:38:05 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/15 15:42:10 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/17 15:18:52 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_redirection_size(t_list **tmp, int *array_size)
 		if ((*tmp) && (*tmp)->type == ARG)
 		{
 			if ((*tmp)->next != NULL && \
-			(AND <= (*tmp)->type && (*tmp)->type <= PIPE))
+			(AND <= (*tmp)->next->type && (*tmp)->next->type <= PIPE))
 				++(*array_size);
 			*tmp = tmp2;
 			++(*array_size);

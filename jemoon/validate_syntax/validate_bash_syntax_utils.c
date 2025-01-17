@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:35:17 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/15 15:42:44 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/16 15:32:11 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	rest_check_is_valid(t_list **tokens)
 		else if ((*tokens)->next == NULL)
 		{
 			*tokens = (*tokens)->next;
-			return (1);
+			return (2);
 		}
 		else if (REDIRECTION <= (*tokens)->next->type && \
 		(*tokens)->next->type <= HEREDOC)
