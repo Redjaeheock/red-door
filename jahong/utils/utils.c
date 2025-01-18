@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:17:50 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 21:00:18 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/18 22:55:19 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*str_join(char const *s1, char const *s2)
 	cat_arr[idx + cnt] = '\0';
 	return (cat_arr);
 }
-char	*join_div_tokens(char **tmp)
+char	*join_div_tokens(char **tmp, int quote, int flag)
 {
 	char	*str1;
 	char	*str2;

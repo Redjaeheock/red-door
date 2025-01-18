@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 17:42:00 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/18 22:54:34 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	substitution_dollar_sign_to_envval(t_data *meta, t_list *tokens, char **str)
+int	substitu_dollar_sign_to_envval(t_data *meta, t_list *tokens, char **str)
 {
 	char	*tmp;
 	int		row;
@@ -74,7 +74,7 @@ int	mapping_dollar_sign(t_data *meta, t_list *tokens)
 		printf("split quote %s\n", tmp[cnt]);
 		cnt++;
 	}
-	result = substitution_dollar_sign_to_envval(meta, tokens, tmp);
+	result = substitu_dollar_sign_to_envval(meta, tokens, tmp);
 	if (result == 0)
 		return (0);
 	cnt = 0;

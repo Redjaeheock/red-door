@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:40:39 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 18:51:26 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 01:59:17 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int check_valid_back(char *str, int idx)
 			return (1);
 	}
 	if (str[idx] == '?')
+		return (1);
+	if (str[idx] == '*')
 		return (1);
 	return (0);
 }

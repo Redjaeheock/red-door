@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:50:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 21:25:03 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 00:32:39 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,32 +102,37 @@ int	check_split_point_str(char *str, int quote)
 
 	cnt = 0;
 	idx = 0;
-	flag = 0;
+	flag = 2;
 	while (str[idx] != '\0')
 	{
-		if (str[idx] != '$' && flag == 0)
+		if (str[idx] != '$' && flag == 2)
 		{
 			cnt++;
-			flag = 1;
+			flag = 0;
 		}	
 		else if (str[idx] == '$')
 		{
 			cnt++;
-			flag = 2;
+			flag = 1;
 			if (str[idx + 1] == '$' || check_valid_back(str, idx + 1) != 0)
 			{
 				idx++;	
-				flag = 0;
+				flag = 2;
 			}
 		}
-		else if (flag == 2)
+		else if (flag == 1)
 		{
 			if (check_quote_pair(str[idx], 0) != 0)
 				cnt++;
 			else if (str[idx] == ' ' || ft_isspecial_chr(str[idx]) != 0)
 			{
 				cnt++;
-				flag = 1;
+				flag = 0;
+			}
+			else if (check_valid_back(str, idx) != 0)
+			{
+				cnt++;
+				flag = 2;
 			}
 		}
 		idx++;
