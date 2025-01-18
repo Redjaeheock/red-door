@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:50:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/17 17:24:49 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/18 21:25:03 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*searching_from_envval(t_data *meta, t_list *tokens, char *str)
+char	*search_from_envval(t_data *meta, t_list *tokens, char *str, int *flag)
 {
 	t_path	*tmp;
 	int		len;
@@ -25,8 +25,12 @@ char	*searching_from_envval(t_data *meta, t_list *tokens, char *str)
 		return (get_exit_no());
 	while (tmp != NULL)
 	{
-		if (ft_strncmp(&str[1], tmp->key, ft_strlen(&str[1])) == 0)
+		if (ft_strcmp(&str[1], tmp->key) == 0)
+		{
+			*flag = 1;
 			return (copy_env_value(tmp->value));
+		}
+		else if (str[0])
 		tmp = tmp->next;
 	}
 	return (change_null_string());
@@ -36,15 +40,17 @@ int	matching_env_val_n_change(t_data *meta, t_list *tokens, char **str)
 {
 	char	*tmp;
 	int		row;
+	int		flag;
 
 	row = 0;
+	flag = 0;
 	while (str[row] != NULL)
 	{
 		if (count_dollar_sign(str[row]) == 1 && ft_strlen(str[row]) > 1)
 		{
-			tmp = searching_from_envval(meta, tokens, str[row]);
+			tmp = search_from_envval(meta, tokens, str[row], &flag);
 			if (tmp == NULL)
-				return (0);
+				return (-1);
 			if (tmp != str[row])
 			{
 				free(str[row]);
@@ -54,16 +60,18 @@ int	matching_env_val_n_change(t_data *meta, t_list *tokens, char **str)
 		}
 		row++;
 	}
-	return (1);
+	return (flag);
 }
-
 char	*change_dollar_sign(t_data *meta, t_list *tokens, char *str, int len)
 {
 	char	**tmp;
+	char	*join;
 	int		result;
+	int		quote;
 	int cnt = 0;
 
-	tmp = div_copy_token(str, len);
+	quote = check_quote_pair(str[0], 0);
+	tmp = div_copy_token(str, len, quote);
 	if (tmp == NULL)
 		return (NULL);
 	while (tmp[cnt] != NULL)
@@ -72,7 +80,7 @@ char	*change_dollar_sign(t_data *meta, t_list *tokens, char *str, int len)
 		cnt++;
 	}
 	result = matching_env_val_n_change(meta, tokens, tmp);
-	if (result == 0)
+	if (result == -1)
 		return (free_sndry_arr((void **)tmp));
 	cnt = 0;
 	while (tmp[cnt] != NULL)
@@ -80,20 +88,28 @@ char	*change_dollar_sign(t_data *meta, t_list *tokens, char *str, int len)
 		printf("after div tmp = %s\n", tmp[cnt]);
 		cnt++;
 	}
-	return (NULL);
+	printf("\n");
+	join = join_div_tokens(tmp, quote, result);
+	if (join == NULL)
+		(free_sndry_arr((void **)tmp));
+	return (join);
 }
-int	check_split_point_str(char *str, int idx, int flag)
+int	check_split_point_str(char *str, int quote)
 {
-	int	cnt;
+	int		cnt;
+	int		idx;
+	int		flag;
 
 	cnt = 0;
+	idx = 0;
+	flag = 0;
 	while (str[idx] != '\0')
 	{
 		if (str[idx] != '$' && flag == 0)
 		{
 			cnt++;
 			flag = 1;
-		}
+		}	
 		else if (str[idx] == '$')
 		{
 			cnt++;
@@ -122,21 +138,20 @@ int	check_split_point_str(char *str, int idx, int flag)
 char	*search_n_change_dollar_sign(t_data *meta, t_list *tokens, char *str)
 {
 	char	*tmp;
-	int		idx;
-	int		flag;
 	int		cnt;
 	int		quote;
 
-	idx = 0;
-	flag = 0;
+
 	quote = check_quote_pair(str[0], 0);
 	if (quote == 1)
 		return (str);
-	cnt = check_split_point_str(str, idx, flag);
+	cnt = check_split_point_str(str, quote);
 	if (cnt == 0)
 		return (str);
+	printf("cnt =========================== %d\n", cnt);
 	tmp = change_dollar_sign(meta, tokens, str, cnt);
 	if (tmp == NULL)
 		return (NULL);
+	printf(">>>>>> after change str = %s\n", tmp);
 	return (tmp);
 }

@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   substitution_wildcard.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 14:30:28 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/03 15:00:37 by jahong           ###   ########.fr       */
+/*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
+/*   Updated: 2025/01/18 19:27:49 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_strncmp(char *s1, const char *s2, unsigned int n)
+int	substitution_wildcard(char **str, int quote, int flag)
 {
-	unsigned int	len;
+	char	*tmp;
+	int		row;
 
-	len = 0;
-	while (len < n && ((((unsigned char *)s1)[len] != '\0')
-			|| (((unsigned char *)s2)[len] != '\0')))
+	row = 0;
+	if (check_wild_card(str) == 0)
+		return (0);
+	while (str[row] != NULL)
 	{
-		if (((unsigned char *)s1)[len] - ((unsigned char *)s2)[len] != 0)
-			return (((unsigned char *)s1)[len] - ((unsigned char *)s2)[len]);
-		len++;
+		tmp = change_whild_card(str[row]);
+		if (tmp == NULL)
+			return ((sndry_alloc_err(NULL), -1));
+		row++;
 	}
-	return (0);
+	return (1);
 }

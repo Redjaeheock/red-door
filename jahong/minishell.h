@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/17 17:18:53 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/18 21:25:02 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isspecial_chr(int c);
-int		ft_strncmp(char *s1, const char *s2, unsigned int n);
+int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strdup(const char *s);
 int		sndry_arr_len(void **array);
 void	*free_sndry_arr(void **array);
@@ -85,6 +85,7 @@ void	*sndry_alloc_err(void **arr);
 void	*t_data_alloc_err(t_data *meta);
 
 /* token_character_check.c */
+int     check_valid_wildcard(char *str, int idx, int quote);
 int		check_valid_back(char *str, int idx);
 int		check_quote_pair(char c, int quote);
 int		check_token_chr(char *token, int idx);
@@ -133,14 +134,17 @@ int		substitution_env_var(t_data *meata, t_list *tokens);
 char	*search_n_change_dollar_sign(t_data *meta, t_list *tokens, char *str);
 
 /*copy_n_div_token.c*/
-char	**div_copy_token(char *str, int len);
+char	**div_copy_token(char *str, int len, int quote);
 
 /* change_dollar_sign.c */
+char    *copy_split_token(char *str, int idx, int end);
 char	*copy_current_process_pid(void);
 char	*copy_env_value(char *str);
 char	*change_null_string(void);
 
 /* utils.c*/
+char	*wild_card_substitution(void);
 char	*get_exit_no(void);
+char	*join_div_tokens(char **tmp, int quote, int flag);
 
 #endif

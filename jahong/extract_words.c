@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/10 12:13:34 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/18 19:58:49 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	**extract_path(char **envp, t_path *path)
 {
 	char	**paths;
 
-	while ((path != NULL) && (ft_strncmp(path->key, "PATH", 4) != 0))
+	while ((path != NULL) && (ft_strcmp(path->key, "PATH") != 0))
 		path = path->next;
 	paths = ft_split(path->value, ':');
 	if (paths == NULL)

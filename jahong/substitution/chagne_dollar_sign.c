@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 18:35:13 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/17 17:10:51 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/18 15:44:29 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,27 @@ char	*copy_env_value(char *str)
 		idx++;
 	}
 	tmp[idx] = '\0';
+	return (tmp);
+}
+char *copy_split_token(char *str, int idx, int end)
+{
+	char	*tmp;
+	int		i;
+	int		len;
+
+	i = 0;
+	len = end - idx;
+	if (end != ft_strlen(str))
+		len++;
+	tmp = (char *)malloc(sizeof(char) * (len + 1));
+	if (tmp == NULL)
+		return (sndry_alloc_err(NULL));
+	while (idx < end)
+	{
+		tmp[i] = str[idx];
+		idx++;
+		i++;
+	}
+	tmp[i] = '\0';
 	return (tmp);
 }

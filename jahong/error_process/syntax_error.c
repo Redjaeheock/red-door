@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 13:22:18 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/12 16:45:45 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/18 20:05:31 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 int error_syntax(char *str)
 {
-	if (ft_strncmp(str, "|", ft_strlen(str)) == 0)
+	if (ft_strcmp(str, "|") == 0)
 		printf("bash: syntax error near unexpected token `|'\n");
-	else if (ft_strncmp(str, "||", ft_strlen(str)) == 0)
+	else if (ft_strcmp(str, "||") == 0)
 		printf("bash: syntax error near unexpected token `||'\n");
-	else if (ft_strncmp(str, "&", ft_strlen(str)) == 0)
+	else if (ft_strcmp(str, "&") == 0)
 		printf("bash: syntax error near unexpected token `&'\n");
-	else if (ft_strncmp(str, "&&", ft_strlen(str)) == 0)
+	else if (ft_strcmp(str, "&&") == 0)
 		printf("bash: syntax error near unexpected token `&&'\n");
-	else if (ft_strncmp(str, "<", ft_strlen(str)) == 0)
+	else if (ft_strcmp(str, "<") == 0)
 		printf("bash: syntax error near unexpected token `<'\n");
-	else if (ft_strncmp(str, "<<", ft_strlen(str)) == 0)
+	else if (ft_strcmp(str, "<<") == 0)
 		printf("bash: syntax error near unexpected token `<<'\n");
-	else if (ft_strncmp(str, ">", ft_strlen(str)) == 0)
+	else if (ft_strcmp(str, ">") == 0)
 		printf("bash: syntax error near unexpected token `>'\n");
-	else if (ft_strncmp(str, ">>", ft_strlen(str)) == 0)
+	else if (ft_strcmp(str, ">>") == 0)
 		printf("bash: syntax error near unexpected token `>>'\n");
-	//exit no 설정
+	//exit no 설정 역슬래시 관련 문구 추가 필요
 	return (-1);
 }
 

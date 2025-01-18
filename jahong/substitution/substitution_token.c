@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/17 17:14:33 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/18 17:42:00 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,14 @@ int	mapping_dollar_sign(t_data *meta, t_list *tokens)
 		cnt++;
 	}
 	result = substitution_dollar_sign_to_envval(meta, tokens, tmp);
-//	free_sndry_arr((void **)tmp);
 	if (result == 0)
 		return (0);
-
+	cnt = 0;
+	while (tmp[cnt] != NULL)
+	{
+		printf("after change tmp = %s\n", tmp[cnt]);
+		cnt++;
+	}
 	return (0); // 1 로 전환
 }
 int	check_quote_valid(char *token)

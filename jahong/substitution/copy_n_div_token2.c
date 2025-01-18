@@ -1,55 +1,65 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   copy_n_div_token.c                                 :+:      :+:    :+:   */
+/*   copy_n_div_token2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 15:59:11 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 18:23:11 by jahong           ###   ########.fr       */
+/*   Created: 2025/01/18 16:03:17 by jahong            #+#    #+#             */
+/*   Updated: 2025/01/18 21:10:46 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	move_index(char *str, int idx, int quote, int num)
+// v1 파일 삭제하기
+
+int   check_the_rest(char *str, int idx)
 {
-	if (num == 1)
-	{
-		while (str[idx] != '$' && str[idx] != '\0')
-			idx++;
-	}
-	else
+   if (str[idx] == '$')
+      return (1);
+   if (check_quote_pair(str[idx], 0) != 0 || str[idx] == ' ')
+      return (1);
+   if (ft_isspecial_chr(str[idx]) != 0)
+      return (1);
+}
+int   increase_index(char *str, int idx, int quote)
+{
+   if (str[idx] == '$' && str[idx - 1] == '$')
+      return (1);
+   if (check_valid_back(str, idx) != 0)
+      return (1);
+//    else if (quote == 0 && check_valid_wildcard(str, idx, quote) == 1)
+//       return (1);
+//    else if (quote == 2 && check_valid_wildcard(str, idx, quote) == 1)
+//       return (1);
+   return (0);
+}
+
+int   move_index(char *str, int idx, int quote, int num)
+{
+   int inc_idx;
+
+   inc_idx = 0;
+    while (num == 1 && str[idx] != '$' && str[idx] != '\0')
+        idx++;
+	if (num == 2)
 	{
 		idx++;
 		while (str[idx] != '\0')
 		{
-			if (str[idx] == '$')
+			inc_idx = increase_index(str, idx, quote);
+			if (inc_idx != 0)
 			{
-				if (str[idx - 1] == '$')
-					idx++;
+				idx += inc_idx;
 				break ;
 			}
-			else if (check_valid_back(str, idx) != 0)
-			{
-				idx++;
+			else if (check_the_rest(str, idx) != 0)
 				break ;
-			}
-			else if (quote == 0 && check_valid_wildcard(str, idx, quote) == 1)
-			{
-				idx++;
-				break ;
-			}
-			else if (quote == 2 && check_valid_wildcard(str, idx, quote) == 1)
-			{
-				idx++;
-				break ;
-			}
-			else if (check_quote_pair(str[idx], 0) != 0 || str[idx] == ' ')
-				break ;
-			else if (ft_isspecial_chr(str[idx]) != 0)
+			else if (str[idx] == '*')
 				break ;
 			idx++;
+			inc_idx = 0;
 		}
 	}
 	return (idx);
