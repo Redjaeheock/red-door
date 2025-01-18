@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:38:05 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/17 15:18:52 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/18 15:14:38 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_redirection_size(t_list **tmp, int *array_size)
 	return (1);
 }
 
-int	get_double_string_array_size(t_list **tmp)
+int	get_first_double_string_array_size(t_list **tmp)
 {
 	t_list	*tmp2;
 	int		array_size;
@@ -61,7 +61,7 @@ int	get_double_string_array_size(t_list **tmp)
 	return (array_size);
 }
 
-int	get_double_string_array_size_version_2(t_list **tmp)
+int	get_rest_double_string_array_size(t_list **tmp)
 {
 	t_list	*tmp2;
 	int		array_size;

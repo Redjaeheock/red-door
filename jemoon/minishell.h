@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:58:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/17 16:53:58 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/18 15:18:45 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ int			check_is_valid(t_list **tokens, int count_cmd_line);
 
 /* linkedlist_to_matrix.c */
 int			check_redirection_size(t_list **tmp, int *array_size);
-int			get_double_string_array_size(t_list **tmp);
-int			get_double_string_array_size_version_2(t_list **tmp);
+int			get_first_double_string_array_size(t_list **tmp);
+int			get_rest_double_string_array_size(t_list **tmp);
 
 /* exec_commads_liked_list.c */
 void	free_double_string_array(char **str);
