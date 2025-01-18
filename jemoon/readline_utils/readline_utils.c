@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 10:33:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/17 17:05:37 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/18 11:51:39 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,17 @@ int	check_last_tokens(t_cmd_list *exec_commads)
 	return (i);
 }
 
-char	*make_str(char *str, char *add_str)
+void	combine_strings(char *return_str, char *str, char *add_str)
 {
-	int		i;
-	int		j;
-	int		str_len;
-	int		add_str_len;
-	char	*return_str;
+	int	i;
+	int	j;
+	int	str_len;
+	int	add_str_len;
 
 	i = 0;
 	j = 0;
 	str_len = strlen(str);
 	add_str_len = strlen(add_str);
-	return_str = (char *)malloc(sizeof(char) * (str_len + add_str_len + 2));
-	if (return_str == NULL)
-		return (str);
 	while (i < str_len + add_str_len + 1)
 	{
 		if (i < str_len)
@@ -56,6 +52,20 @@ char	*make_str(char *str, char *add_str)
 		i++;
 	}
 	return_str[i] = '\0';
+}
+
+char	*make_str(char *str, char *add_str)
+{
+	int		str_len;
+	int		add_str_len;
+	char	*return_str;
+
+	str_len = strlen(str);
+	add_str_len = strlen(add_str);
+	return_str = (char *)malloc(sizeof(char) * (str_len + add_str_len + 2));
+	if (return_str == NULL)
+		return (str);
+	combine_strings(return_str, str, add_str);
 	free(str);
 	free(add_str);
 	return (return_str);
@@ -85,7 +95,6 @@ char	*add_readline(t_cmd_list **exec_commads, char *str)
 	}
 	return (str);
 }
-
 
 /*
 #include <stdio.h>

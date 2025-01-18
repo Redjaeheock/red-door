@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:40:49 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/17 17:06:43 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/18 11:41:13 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ int	main(int argc, char **argv, char **envp)
 		tpye_init(&tokens);
 		printf_tokens(tokens);
 		exec_commands = validate_bash_syntax(&tokens);
-		str = add_readline(&exec_commands, str);
+		free_linked_list(tokens);
 		printf_exec_commads(exec_commands);
 		if (exec_commands != NULL)
+		{
+			str = add_readline(&exec_commands, str);
+			printf_exec_commads(exec_commands);
 			free_exec_linked_list(exec_commands);
-		free_linked_list(tokens);
+		}
 		add_history(str);
 		free(str);
 	}
