@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 18:35:13 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 15:44:29 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 14:46:04 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ char	*change_null_string(void)
 }
 char	*copy_current_process_pid(void)
 {
-	char	*tmp;
 	char	*nums;
-	int		len;
+	char	*tmp;
 	int		idx;
+	int		len;
 
 	nums = "54321"; //프로세스 ID itoa 처리
+	idx = 0;
 	len = ft_strlen(nums);
 	tmp = (char *)malloc(sizeof(char) * (len + 1));
-	idx = 0;
 	if (tmp == NULL)
 		return (sndry_alloc_err(NULL));
 	while (nums[idx] != '\0')

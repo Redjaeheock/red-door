@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 19:58:49 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 14:40:52 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**extract_path(char **envp, t_path *path)
 		path = path->next;
 	paths = ft_split(path->value, ':');
 	if (paths == NULL)
-		return (NULL);
+		return (memory_alloc_error());
 	return (paths);
 }
 char	*extract_from_envp(char *envp, int *idx, char condition)
@@ -52,7 +52,7 @@ int	extract_key_value(t_path *tmp, char *envp, int idx)
 	tmp->key = extract_from_envp(envp, &idx, '=');
 	tmp->value = extract_from_envp(envp, &idx, '\0');
 	tmp->set = extract_from_envp(envp, &start, '\0');
-	if ((tmp->key == NULL) || (tmp->key == NULL))
+	if ((tmp->key == NULL) || (tmp->key == NULL) || tmp->set == NULL)
 		return (0);
 	return (1);
 }
@@ -67,8 +67,8 @@ char	*extract_word(char const *str, int start_index, int end)
         return (NULL);
     len = (end - start_index);
     word_line = (char *)malloc(sizeof(char) * (len + 1));
-    if (!word_line)
-		return (NULL);
+    if (word_line == NULL)
+		return (memory_alloc_error());
 	while (idx < len && str[start_index + idx] != '\0')
 	{
 		word_line[idx] = str[start_index + idx];

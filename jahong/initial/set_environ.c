@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/10 12:37:34 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 14:41:09 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_path 	*init_key_value(char **envp)
 	row = 0;
 	env_path = make_t_path();
 	if (env_path == NULL)
-		return (NULL);
+		return (memory_alloc_error());
 	tmp = env_path;
 	while (envp[row] != NULL)
 	{
@@ -73,28 +73,36 @@ char	**copy_envp(char **envp)
 	cp_envp[idx] = NULL;
 	return (cp_envp);
 }
-t_data	*initial_env(char **envp)
+void	meta_token_set_null(t_data *meta)
+{
+	meta->tokens = NULL;
+	meta->env = NULL;
+	meta->exp = NULL;
+	meta->envm = NULL;
+	meta->path = NULL;
+	meta->exit_n = NULL;
+	meta->pid_n = NULL;
+	meta->lval = NULL;
+}	
+t_data	*initialize_meta_token(char **envp)
 {
 	t_data *meta;
 
 	meta = (t_data *)malloc(sizeof(t_data) * 1);
 	if (meta == NULL)
 		return(t_data_alloc_err(NULL));
-	meta->envm = NULL;
-	meta->env = NULL;
-	meta->exp = NULL;
-	meta->path = NULL;
+	meta_token_set_null(meta);
 	meta->envm = copy_envp(envp);
 	if (meta->envm == NULL)
-		return (free_env_resource(meta));
+		return (free_meta_token(meta));
 	meta->env = init_key_value(envp);
 	if (meta->env == NULL)
-		return (free_env_resource(meta));
+		return (free_meta_token(meta));
 	meta->exp = init_key_value(envp);
 	if (meta->exp == NULL)
-		return (free_env_resource(meta));
+		return (free_meta_token(meta));
 	meta->path = extract_path(envp, meta->env);
 	if (meta->path == NULL)
-		return (free_env_resource(meta));
+		return (free_meta_token(meta));
 	return (meta);
 }

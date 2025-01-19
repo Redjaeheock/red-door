@@ -6,33 +6,11 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:17:50 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 22:55:19 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 12:04:47 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*wild_card_substitution(void)
-{
-	char	*tmp;
-	char	*wild_card;
-	int		len;
-	int		idx;
-
-	idx = 0;
-	wild_card = "file file 42 test path";
-	len = ft_strlen(wild_card);
-	tmp = (char *)malloc(sizeof(char) * (len + 1));
-	if (tmp == NULL)
-		return (NULL);
-	while (wild_card[idx] != '\0')
-	{
-		tmp[idx] = wild_card[idx];
-		idx++;
-	}
-	tmp[idx] = '\0';
-	return (tmp);
-}
 
 char	*str_join(char const *s1, char const *s2)
 {
@@ -60,7 +38,7 @@ char	*str_join(char const *s1, char const *s2)
 	cat_arr[idx + cnt] = '\0';
 	return (cat_arr);
 }
-char	*join_div_tokens(char **tmp, int quote, int flag)
+char	*join_div_tokens(char **tmp, int flag)
 {
 	char	*str1;
 	char	*str2;

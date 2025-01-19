@@ -6,11 +6,29 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:40:39 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 01:59:17 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 22:09:51 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+int	search_wildcard_into_token(char *str)
+{
+	int	idx;
+	int	flag;
+
+	idx = 0;
+	flag = 1;
+	while (str[idx] != '\0')
+	{
+		if (str[idx] != '*')
+		{
+			flag = 1;
+			return (flag);
+		}
+		idx++;
+	}
+	return (flag);
+}
 
 int	check_valid_wildcard(char *str, int idx, int quote)
 {

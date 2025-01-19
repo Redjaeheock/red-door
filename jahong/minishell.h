@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 22:55:19 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 22:13:21 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,30 @@ typedef enum {
 
 typedef struct  cmd_list
 {
-    struct cmd_list     *prev;
-    struct cmd_list     *next;
-    t_tokentype		    type;
-    char                **path;
-    char		    	*token;
+	struct cmd_list     *prev;
+	struct cmd_list     *next;
+	t_tokentype		    type;
+	char		    	*token;
 }					    t_list;
 
 typedef struct	path_list
 {
-    struct path_list	*next;
+	struct path_list	*next;
 	char				*key;
 	char				*value;
-    char                *set;
+	char                *set;
 }						t_path;
 
 typedef struct meta_data
 {
-    struct cmd_list     *tokens;
-	struct cmd_list		*cmd;
+	struct cmd_list     *tokens;
 	struct path_list	*exp;
 	struct path_list	*env;
 	char				**envm;
-    char                **args;
-    char                **path;
+	char                **path;
+	char                *exit_n;
+	char                *pid_n;
+	char                *lval;
 }                      t_data;
 
 /* free_list.c*/
@@ -60,7 +60,7 @@ void	*free_key_value(t_path *path);
 void	*free_t_path(t_path *lsit);
 void	*free_t_list(t_list *list);
 void	*free_t_data(t_data *meta);
-void	*free_env_resource(t_data *meta);
+void	*free_meta_token(t_data *meta);
 
 /*libft*/
 int		ft_strlen(const char *str);
@@ -79,12 +79,14 @@ char	*ft_itoa(int n);
 /*error_process*/
 int		error_syntax(char *str);
 void	error_qoute(int qoute);
+void	*memory_alloc_error(void);
 void	*t_path_key_val_alloc_err(t_path *tmp);
 void	*t_list_alloc_err(t_list *tmp);
 void	*sndry_alloc_err(void **arr);
 void	*t_data_alloc_err(t_data *meta);
 
 /* token_character_check.c */
+int		search_wildcard_into_token(char *str);
 int     check_valid_wildcard(char *str, int idx, int quote);
 int		check_valid_back(char *str, int idx);
 int		check_quote_pair(char c, int quote);
@@ -116,7 +118,7 @@ void	add_back_linked_list(t_list *tokenize, t_list *new);
 void	make_node(t_list **tokenize, char *str);
 
 /* set_environ.c*/
-t_data  *initial_env(char **envp);
+t_data  *initialize_meta_token(char **envp);
 
 /* check_token_quote.c*/
 char	*extract_partial_token(char *str, int idx, int *end, int *quote);
@@ -125,10 +127,13 @@ char	**temporary_copy_token(char *str, int len);
 int		measure_length_quote_set(char *str, int cnt);
 
 /* substitution_token.c*/
-int		count_dollar_sign(char *str);
+int		search_dollar_sign_into_token(char *str);
 int		mapping_dollar_sign(t_data *meta, t_list *tokens);
 int		check_quote_valid(char *token);
 int		substitution_env_var(t_data *meata, t_list *tokens);
+
+/* substitutuib_wildcard */
+int		substitution_wildcard(t_data *meta, char **str, int quote, int flag);
 
 /*split_criteria_dollar_sign.c*/
 char	*search_n_change_dollar_sign(t_data *meta, t_list *tokens, char *str);
@@ -143,8 +148,7 @@ char	*copy_env_value(char *str);
 char	*change_null_string(void);
 
 /* utils.c*/
-char	*wild_card_substitution(void);
 char	*get_exit_no(void);
-char	*join_div_tokens(char **tmp, int quote, int flag);
+char	*join_div_tokens(char **tmp, int flag);
 
 #endif

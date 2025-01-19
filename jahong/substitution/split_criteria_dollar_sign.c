@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:50:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 00:32:39 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 22:13:21 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*search_from_envval(t_data *meta, t_list *tokens, char *str, int *flag)
 	}
 	return (change_null_string());
 }
-
 int	matching_env_val_n_change(t_data *meta, t_list *tokens, char **str)
 {
 	char	*tmp;
@@ -46,7 +45,7 @@ int	matching_env_val_n_change(t_data *meta, t_list *tokens, char **str)
 	flag = 0;
 	while (str[row] != NULL)
 	{
-		if (count_dollar_sign(str[row]) == 1 && ft_strlen(str[row]) > 1)
+		if (search_dollar_sign_into_token(str[row]) == 1 && ft_strlen(str[row]) > 1)
 		{
 			tmp = search_from_envval(meta, tokens, str[row], &flag);
 			if (tmp == NULL)
@@ -88,13 +87,16 @@ char	*change_dollar_sign(t_data *meta, t_list *tokens, char *str, int len)
 		printf("after div tmp = %s\n", tmp[cnt]);
 		cnt++;
 	}
+	result = substitution_wildcard(meta, tmp, quote, result);
+	if (result == -1)
+		return (free_sndry_arr((void **)tmp));
 	printf("\n");
-	join = join_div_tokens(tmp, quote, result);
+	join = join_div_tokens(tmp, result);
 	if (join == NULL)
 		(free_sndry_arr((void **)tmp));
 	return (join);
 }
-int	check_split_point_str(char *str, int quote)
+int	check_split_point_str(char *str)
 {
 	int		cnt;
 	int		idx;
@@ -146,11 +148,10 @@ char	*search_n_change_dollar_sign(t_data *meta, t_list *tokens, char *str)
 	int		cnt;
 	int		quote;
 
-
 	quote = check_quote_pair(str[0], 0);
 	if (quote == 1)
 		return (str);
-	cnt = check_split_point_str(str, quote);
+	cnt = check_split_point_str(str);
 	if (cnt == 0)
 		return (str);
 	printf("cnt =========================== %d\n", cnt);

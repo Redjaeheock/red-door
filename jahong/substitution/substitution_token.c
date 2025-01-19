@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 22:54:34 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 22:11:26 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ int	substitu_dollar_sign_to_envval(t_data *meta, t_list *tokens, char **str)
 	//join 코드
 	return (1);
 }
-
-int	count_dollar_sign(char *str)
+int	search_dollar_sign_into_token(char *str)
 {
 	int	idx;
 	int	flag;
@@ -63,7 +62,7 @@ int	mapping_dollar_sign(t_data *meta, t_list *tokens)
 	int		result;
 	int cnt = 0;
 
-	if (count_dollar_sign(tokens->token) == 0)
+	if (search_dollar_sign_into_token(tokens->token) == 0)
 		return (1);
 	row = measure_length_quote_set(tokens->token, row = 0);
 	tmp = temporary_copy_token(tokens->token, row);

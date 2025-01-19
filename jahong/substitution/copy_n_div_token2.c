@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 16:03:17 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 02:19:48 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 18:08:05 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ int   cmp_pre_next_chr(char *str, int idx)
 		{
 			if (str[idx] == '*')
 				return (1);
+			if (str[idx] == '?')
+				return (1);
 		}
 	}
 	return (0);
 }
 int   increase_index(char *str, int idx, int quote)
 {
-
 	if (str[idx] == '$' && str[idx - 1] == '$')
 		return (1);
 	if (cmp_pre_next_chr(str, idx) != 0)

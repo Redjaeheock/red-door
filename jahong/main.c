@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 22:24:55 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/19 19:03:25 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,26 +106,25 @@ t_list *mn_split(t_data *meta, char **str)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
-	t_list	*tokens;
 	t_data 	*meta;
 	t_list	*tmp; // 출력확인용
 
 
 	(void)argc, argv;
-	meta = initial_env(envp);
+	meta = initialize_meta_token(envp);
 	while(1)
 	{
 		str = readline("bash : ");
-		tokens = mn_split(meta, &str);
-		if (tokens == NULL)
+		meta->tokens = mn_split(meta, &str);
+		if (meta->tokens == NULL)
 			continue;
-		tmp = tokens;
+		tmp = meta->tokens;
 		while (tmp != NULL) // 확인용
 		{
 			printf("%s\n", tmp->token);
 			tmp = tmp->next;
 		}
-		free_t_list(tokens);
+		free_t_list(meta->tokens);
 //      add_history(str);
 		free(str);
 	}
