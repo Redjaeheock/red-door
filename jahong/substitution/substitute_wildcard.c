@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   substitution_wildcard.c                            :+:      :+:    :+:   */
+/*   substitute_wildcard.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 22:21:29 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 14:40:42 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	rest_wildcard(char **str, int quote, int len)
 			flag = 1;
 		path += keep;
 		if (str[row][0] == '*' && flag == 0)
-		 	path += search_wildcard_into_token(str[row]);
+		 	path += search_character_into_str(str[row], '*');
 		row++;
 	}
 	if (path - len == 1)
@@ -157,7 +157,7 @@ int	count_ck_wc(char *ck_wc, int len)
 	}
 	return (flag);
 }
-void	searching_wild_card(char **str, char *ck_wc)
+void	memo_wildcard_true_false(char **str, char *ck_wc)
 {
 	char	*tmp;
 	int		row;
@@ -169,20 +169,12 @@ void	searching_wild_card(char **str, char *ck_wc)
 	{
 		col = 0;
 		ck_wc[row] = 1;
-		while (str[row][col] != '\0')
-		{
-			if (str[row][col] != '*')
-			{
-				ck_wc[row] = 0;
-				break ;
-			}
-			col++;
-		}
+		ck_wc[row] = are_all_characters_same(str[row], '*');
 		row++;
 	}
 	return ;
 }
-int	substitution_wildcard(t_data *meta, char **str, int quote, int flag)
+int	substitute_wildcard(t_data *meta, char **str, int quote, int flag)
 {
 	char	*ck_wc;
 	int		len;
@@ -194,13 +186,16 @@ int	substitution_wildcard(t_data *meta, char **str, int quote, int flag)
 	ck_wc = (char *)malloc(sizeof(int) * (len));
 	if (ck_wc == NULL)
 		return ((memory_alloc_error(), -1));
-	searching_wild_card(str, ck_wc);
+	memo_wildcard_true_false(str, ck_wc);
 	temp = count_ck_wc(ck_wc, len);
-	if ((len == 1 && ck_wc[0] == 1) || temp == 1)
+	// if ((len == 1 && ck_wc[0] == 1) || temp == 1)
+	// 	return ((free(ck_wc), exchange_str_wildcard(str, len))); // quote 기준으로 나눴을 때 '$HOME'$**** 처리가 안됨
+	while (result < len)
 	{
-		result = exchange_str_wildcard(str, len);
-		return ((free(ck_wc), result));
+		printf("ck_wc[%d] = %d\n", result, ck_wc[result]);
+		result++; 
 	}
+	
 	if (temp != 1)
 	{
 		if (flag != 1)

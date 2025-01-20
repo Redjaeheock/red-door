@@ -1,71 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   substitution_token.c                               :+:      :+:    :+:   */
+/*   substitute_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 22:11:26 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 13:52:08 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	substitu_dollar_sign_to_envval(t_data *meta, t_list *tokens, char **str)
-{
-	char	*tmp;
-	int		row;
-
-	row = 0;
-	while (str[row] != NULL)
-	{
-		tmp = search_n_change_dollar_sign(meta, tokens, str[row]);
-		if (tmp == NULL)
-		{
-			free_sndry_arr((void **)str);
-			return (0);
-		}
-		if (tmp != str[row])
-		{
-			free(str[row]);
-			str[row] = tmp;
-			tmp = NULL;
-		}
-		row++;
-	}
-	//join 코드
-	return (1);
-}
-int	search_dollar_sign_into_token(char *str)
+int	measure_length_quote_set(char *str, int cnt)
 {
 	int	idx;
-	int	flag;
+	int qt;
 
 	idx = 0;
-	flag = 0;
+	qt = 0;
 	while (str[idx] != '\0')
 	{
-		if (str[idx] == '$')
+		if (qt == 0) 
 		{
-			flag = 1;
-			return (flag);
+			if (str[idx] == '\'')
+				qt = 1;
+			else if (str[idx] == '"')
+				qt = 2;
+			else if (idx == 0 || str[idx - 1] == '\'' || str[idx - 1] == '"')
+				cnt++;
+		}
+		else if ((qt == 1 && str[idx] == '\'') || (qt == 2 && str[idx] == '"'))
+		{
+			qt = 0;
+			cnt++;
 		}
 		idx++;
 	}
-	return (flag);
+	return (cnt);
 }
-int	mapping_dollar_sign(t_data *meta, t_list *tokens)
+int	subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens)
 {
 	char	**tmp;
 	int		row;
 	int		result;
 	int cnt = 0;
 
-	if (search_dollar_sign_into_token(tokens->token) == 0)
+	if (search_character_into_str(tokens->token, '$') == 0)
 		return (1);
 	row = measure_length_quote_set(tokens->token, row = 0);
-	tmp = temporary_copy_token(tokens->token, row);
+	tmp = dividing_sub_token(tokens->token, row);
 	if (tmp == NULL)
 		return (0);
 	while (tmp[cnt] != NULL)
@@ -73,7 +57,7 @@ int	mapping_dollar_sign(t_data *meta, t_list *tokens)
 		printf("split quote %s\n", tmp[cnt]);
 		cnt++;
 	}
-	result = substitu_dollar_sign_to_envval(meta, tokens, tmp);
+	result = substitute_dollar_sign(meta, tokens, tmp);
 	if (result == 0)
 		return (0);
 	cnt = 0;
@@ -82,7 +66,7 @@ int	mapping_dollar_sign(t_data *meta, t_list *tokens)
 		printf("after change tmp = %s\n", tmp[cnt]);
 		cnt++;
 	}
-	return (0); // 1 로 전환
+	return (1); // 1 로 전환
 }
 int	check_quote_valid(char *token)
 {
@@ -105,13 +89,13 @@ int	check_quote_valid(char *token)
 	}
 	return (1);
 }
-int	substitution_env_var(t_data *meta, t_list *tokens)
+int	substitute_tokens(t_data *meta, t_list *tokens)
 {
 	while (tokens != NULL)
 	{
 		if (check_quote_valid(tokens->token) == 0)
 			return (0);
-		if (mapping_dollar_sign(meta, tokens) == 0);
+		if (subtitute_dollar_sign_n_wlidcard(meta, tokens) == 0);
 			return (0);
 		tokens = tokens->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 19:03:25 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 13:28:02 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_list *mn_split(t_data *meta, char **str)
     if (cmd_flag == -1)
         return (NULL);
 	words = split_words(*str, cmd_flag);
-	if (substitution_env_var(meta, words) == 0)
+	if (substitute_tokens(meta, words) == 0)
 		return (free_t_list(words));
 	return (words);
 }

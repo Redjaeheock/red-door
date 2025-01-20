@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 22:13:21 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 14:33:29 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		search_wildcard_into_token(char *str);
 int     check_valid_wildcard(char *str, int idx, int quote);
 int		check_valid_back(char *str, int idx);
 int		check_quote_pair(char c, int quote);
-int		check_token_chr(char *token, int idx);
+// int		check_token_chr(char *token, int idx);
 
 /*operator_character_check.c*/
 int		check_out_redirection(const char *str, int index);
@@ -117,38 +117,40 @@ t_list	*create_linked_list(char *str);
 void	add_back_linked_list(t_list *tokenize, t_list *new);
 void	make_node(t_list **tokenize, char *str);
 
-/* set_environ.c*/
+/* initialize_meta_token.c*/
 t_data  *initialize_meta_token(char **envp);
 
-/* check_token_quote.c*/
+/* devideing_sub_token.c*/
 char	*extract_partial_token(char *str, int idx, int *end, int *quote);
 char	*temporary_div_token(char *str, int *idx, int *quote);
-char	**temporary_copy_token(char *str, int len);
-int		measure_length_quote_set(char *str, int cnt);
+char	**dividing_sub_token(char *str, int len);
 
-/* substitution_token.c*/
-int		search_dollar_sign_into_token(char *str);
-int		mapping_dollar_sign(t_data *meta, t_list *tokens);
+/* substitute_token.c*/
+int		subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens);
 int		check_quote_valid(char *token);
-int		substitution_env_var(t_data *meata, t_list *tokens);
+int		substitute_tokens(t_data *meata, t_list *tokens);
 
-/* substitutuib_wildcard */
-int		substitution_wildcard(t_data *meta, char **str, int quote, int flag);
+/* substitute_wildcard.c */
+int		substitute_wildcard(t_data *meta, char **str, int quote, int flag);
 
-/*split_criteria_dollar_sign.c*/
-char	*search_n_change_dollar_sign(t_data *meta, t_list *tokens, char *str);
+/*substitute_dollar_sign.c*/
+int		substitute_dollar_sign(t_data *meta, t_list *tokens, char **str);
 
-/*copy_n_div_token.c*/
-char	**div_copy_token(char *str, int len, int quote);
+/*deviding_copied_token.c*/
+char	**dividing_copied_token(char *str, int len, int quote);
 
 /* change_dollar_sign.c */
-char    *copy_split_token(char *str, int idx, int end);
 char	*copy_current_process_pid(void);
-char	*copy_env_value(char *str);
 char	*change_null_string(void);
 
 /* utils.c*/
+char	search_character_into_str(char *str, char c);
+char	are_all_characters_same(char *str, char c);
 char	*get_exit_no(void);
 char	*join_div_tokens(char **tmp, int flag);
+
+/*utils2.c*/
+char    *copy_index_range(char *str, int idx, int end);
+int		ck_part_of_special_chr(int c);
 
 #endif

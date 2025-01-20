@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 09:46:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/17 09:31:26 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 14:34:17 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int check_out_redirection(const char *str, int index)
 		index++;
 	return (index - start_index);
 }
-
 int check_in_redirection(const char *str, int index)
 {
 	int start_index;
@@ -31,7 +30,6 @@ int check_in_redirection(const char *str, int index)
 		index++;
 	return (index - start_index);
 }
-
 int check_ampersand(const char *str, int index)
 {
 	int start_index;
@@ -41,7 +39,6 @@ int check_ampersand(const char *str, int index)
 		index++;
 	return (index - start_index);
 }
-
 int check_vartical_bar(const char *str, int index)
 {
 	int start_index;

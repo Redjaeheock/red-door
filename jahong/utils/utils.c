@@ -6,12 +6,47 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:17:50 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 12:04:47 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 12:59:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+char	search_character_into_str(char *str, char c)
+{
+	int	idx;
+	int	flag;
 
+	idx = 0;
+	flag = 0;
+	while (str[idx] != '\0')
+	{
+		if (str[idx] == c)
+		{
+			flag = 1;
+			break ;
+		}
+		idx++;
+	}
+	return (flag);
+}
+char	are_all_characters_same(char *str, char c)
+{
+	int	idx;
+	int	flag;
+
+	idx = 0;
+	flag = 1;
+	while (str[idx] != '\0')
+	{
+		if (str[idx] != c)
+		{
+			flag = 0;
+			break ;
+		}
+		idx++;
+	}
+	return (flag);
+}
 char	*str_join(char const *s1, char const *s2)
 {
 	int		len;

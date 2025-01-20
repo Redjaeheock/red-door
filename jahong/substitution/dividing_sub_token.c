@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_token_quote.c                                :+:      :+:    :+:   */
+/*   dividing_sub_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:34:43 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 19:09:42 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 14:14:20 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*temporary_div_token(char *str, int *idx, int *quote)
 		return (NULL);
 	return (tmp);
 }
-char	**temporary_copy_token(char *str, int len)
+char	**dividing_sub_token(char *str, int len)
 {
 	char	**tmp;
 	int		row;
@@ -88,31 +88,4 @@ char	**temporary_copy_token(char *str, int len)
 	}
 	tmp[row] = NULL;
 	return (tmp);
-}
-int	measure_length_quote_set(char *str, int cnt)
-{
-	int	idx;
-	int qt;
-
-	idx = 0;
-	qt = 0;
-	while (str[idx] != '\0')
-	{
-		if (qt == 0) 
-		{
-			if (str[idx] == '\'')
-				qt = 1;
-			else if (str[idx] == '"')
-				qt = 2;
-			else if (idx == 0 || str[idx - 1] == '\'' || str[idx - 1] == '"')
-				cnt++;
-		}
-		else if ((qt == 1 && str[idx] == '\'') || (qt == 2 && str[idx] == '"'))
-		{
-			qt = 0;
-			cnt++;
-		}
-		idx++;
-	}
-	return (cnt);
 }

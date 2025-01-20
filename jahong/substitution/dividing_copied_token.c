@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   copy_n_div_token2.c                                :+:      :+:    :+:   */
+/*   dividing_copied_token.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 16:03:17 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 18:08:05 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 14:33:30 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int   increase_index(char *str, int idx, int quote)
 		return (1);
 	if (check_quote_pair(str[idx], 0) != 0 || str[idx] == ' ')
 		return (2);
-	if (ft_isspecial_chr(str[idx]) != 0)
+	if (ck_part_of_special_chr(str[idx]) != 0)
 		return (2);
    return (0);
 }
@@ -69,7 +69,7 @@ int   move_index(char *str, int idx, int quote, int num)
 	}
 	return (idx);
 }
-char	*split_token(char *str, int *idx, int quote)
+char	*split_copied_token(char *str, int *idx, int quote)
 {
 	char	*tmp;
 	int		start;
@@ -80,12 +80,12 @@ char	*split_token(char *str, int *idx, int quote)
 	else
 		*idx = move_index(str, *idx, quote, 2);
 	printf("start = %d *idx = %d\n", start, *idx);
-	tmp = copy_split_token(str, start, *idx);
+	tmp = copy_index_range(str, start, *idx);
 	if (tmp == NULL)
 		return (NULL);
 	return (tmp);
 }
-char	**div_copy_token(char *str, int len, int quote)
+char	**dividing_copied_token(char *str, int len, int quote)
 {
 	char	**tmp;
 	int		row;
@@ -98,7 +98,7 @@ char	**div_copy_token(char *str, int len, int quote)
 		return (sndry_alloc_err(NULL));
 	while (row < len)
 	{
-		tmp[row] = split_token(str, &idx, quote);
+		tmp[row] = split_copied_token(str, &idx, quote);
 		if (tmp[row] == NULL)
 			return (sndry_alloc_err((void **)tmp));
 		row++;
