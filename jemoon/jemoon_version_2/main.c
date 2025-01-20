@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 14:38:00 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 17:25:16 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,12 @@ int	main(int argc, char **argv, char **envp)
 		if (tokens == NULL)
 			continue ;
 		trade_exce_cmd(meta, &exec_commads, &tokens, &str);
-		printf_exec_commads(meta->exec_commads);
-		free_exec_linked_list(meta->exec_commads);
+		if (meta->exec_commads)
+		{
+			printf_exec_commads(meta->exec_commads);
+			free_exec_linked_list(meta->exec_commads);
+			meta->exec_commads = NULL;
+		}
 		add_history(str);
 		free(str);
 	}

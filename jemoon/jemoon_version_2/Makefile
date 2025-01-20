@@ -4,6 +4,7 @@ SRC = main.c \
       exec_commads/exec_commads_liked_list.c \
       exec_commads/exec_commads_size.c \
       exec_commads/get_exec_commads.c \
+	  exec_commads/get_exec_commads_2.c \
 	  printf_utils/printf_utils.c \
 	  set_tpye/set_tpye.c \
 	  validate_syntax/validate_bash_syntax.c \

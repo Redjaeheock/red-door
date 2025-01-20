@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 10:33:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 15:51:07 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 16:44:17 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	combine_strings(char *return_str, char *str, char *add_str)
 
 	i = 0;
 	j = 0;
-	str_len = strlen(str);
-	add_str_len = strlen(add_str);
+	str_len = ft_strlen(str);
+	add_str_len = ft_strlen(add_str);
 	while (i < str_len + add_str_len + 1)
 	{
 		if (i < str_len)
@@ -60,8 +60,8 @@ char	*make_str(char *str, char *add_str)
 	int		add_str_len;
 	char	*return_str;
 
-	str_len = strlen(str);
-	add_str_len = strlen(add_str);
+	str_len = ft_strlen(str);
+	add_str_len = ft_strlen(add_str);
 	return_str = (char *)malloc(sizeof(char) * (str_len + add_str_len + 2));
 	if (return_str == NULL)
 		return (str);
@@ -84,16 +84,13 @@ char	*add_readline(t_cmd_list **exec_commads, t_data *meta, char *str)
 		if (add_str[0] == '\0')
 			continue ;
 		add_tokens = mn_split(meta, &add_str);
+		str = make_str(str, add_str);
 		if (add_tokens == NULL)
-		{
-			str = make_str(str, add_str);
 			return (str);
-		}
 		tpye_init(&add_tokens);
 		printf_tokens(add_tokens);
 		validate_bash_syntax(&add_exec_commads, &add_tokens);
 		free_linked_list(add_tokens);
-		str = make_str(str, add_str);
 		if (add_exec_commads == NULL)
 			return (str);
 		add_back_exec_linked_list(exec_commads, add_exec_commads);

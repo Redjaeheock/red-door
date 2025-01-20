@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 20:51:54 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 16:28:01 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,16 @@ char		*set_string(t_list *tokens);
 char		**set_string_array(t_list *tokens, int cmd_size, \
 t_tokentype *plag_pipe, t_tokentype *plag_redi);
 void		get_exec_commads(t_list **tokens, t_cmd_list **exec_commads, int i);
+
+/* get_exec_commads_2.c*/
+void		exec_make_node_2(t_cmd_list **exec_commads, char **string_array, \
+t_tokentype plag_pipe, t_tokentype plag_redi);
+void		fill_string_array_2(char **string_array, t_list **tokens, \
+int cmd_size);
+char		**set_string_array_2(t_list **tokens, int cmd_size);
+int			get_double_string_array_size(t_list *tokens, int *check_redi, \
+t_tokentype *plag_pipe, t_tokentype *plag_redi);
+void		get_exec_commads_2(t_list *tokens, t_cmd_list **exec_commands);
 
 /* printf_utils.c */
 void		printf_exec_commads(t_cmd_list *exec_commands);
