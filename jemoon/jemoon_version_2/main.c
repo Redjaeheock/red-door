@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 17:25:16 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:44:36 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_list	*split_words(char const *str)
 	}
 	return (words);
 }
+
 int	check_operator_v2(const char *str, int index)
 {
 	int	num;
@@ -61,7 +62,8 @@ int	check_operator_v2(const char *str, int index)
 	}
 	return (1);
 }
-int check_operator_v1(const char *str, int index)
+
+int	check_operator_v1(const char *str, int index)
 {
 	if (str[index] == '|')
 	{
@@ -81,6 +83,7 @@ int check_operator_v1(const char *str, int index)
 		return (check_operator_v2(str, index));
 	return (1);
 }
+
 t_list	*mn_split(t_data *meta, char **str)
 {
 	t_list	*words;
@@ -108,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 	char		*str;
 	t_list		*tokens;
 	t_data		*meta;
-	t_cmd_list	*exec_commads;
+	t_cmd_list	*exec_cmd;
 
 	(void)argc, (void)argv;
 	meta = initial_env(envp);
@@ -118,12 +121,13 @@ int	main(int argc, char **argv, char **envp)
 		tokens = mn_split(meta, &str);
 		if (tokens == NULL)
 			continue ;
-		trade_exce_cmd(meta, &exec_commads, &tokens, &str);
-		if (meta->exec_commads)
+		trade_exec_cmd(meta, &exec_cmd, &tokens, &str);
+		if (meta->exec_cmd)
 		{
-			printf_exec_commads(meta->exec_commads);
-			free_exec_linked_list(meta->exec_commads);
-			meta->exec_commads = NULL;
+			exec_cmd_set_tpye(&(*meta).exec_cmd);
+			printf_exec_commads(meta->exec_cmd);
+			free_exec_linked_list(meta->exec_cmd);
+			meta->exec_cmd = NULL;
 		}
 		add_history(str);
 		free(str);

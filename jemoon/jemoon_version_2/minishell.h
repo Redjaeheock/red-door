@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 16:28:01 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:38:56 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ typedef struct cmd_list
 
 typedef struct start_list
 {
-	char				**str;
+	struct start_list	*prev;
+	struct start_list	*next;
 	t_tokentype			type_pipe;
 	t_tokentype			type_re;
-	struct start_list	*next;
+	char				**str;
 }	t_cmd_list;
 
 typedef struct path_list
@@ -66,7 +67,7 @@ typedef struct meta_data
 	struct cmd_list		*cmd;
 	struct path_list	*exp;
 	struct path_list	*env;
-	struct start_list	*exec_commads;
+	struct start_list	*exec_cmd;
 	char				**envm;
 	char				**args;
 	char				**path;
@@ -168,7 +169,7 @@ void		tpye_init(t_list **tokens);
 void		set_tpye(t_list **tokens);
 
 /* validate_bash_syntax.c */
-void		validate_bash_syntax(t_cmd_list **exec_commands, t_list **tokens);
+void		validate_bash_syntax(t_cmd_list **exec_cmd, t_list **tokens);
 
 /* validate_bash_syntax.c */
 int			check_is_valid_redirection(t_list **tokens);
@@ -187,9 +188,9 @@ void		free_double_string_array(char **str);
 void		free_exec_linked_list(t_cmd_list *list);
 t_cmd_list	*create_exec_linked_list(char **str, \
 t_tokentype plag_pipe, t_tokentype plag_redi);
-void		add_back_exec_linked_list(t_cmd_list **exec_commads, \
+void		add_back_exec_linked_list(t_cmd_list **exec_cmd, \
 t_cmd_list *new);
-void		exec_make_node(t_cmd_list **exec_commads, char **string_array, \
+void		exec_make_node(t_cmd_list **exec_cmd, char **string_array, \
 t_tokentype plag_pipe, t_tokentype plag_redi);
 
 /* get_exec_commads.c */
@@ -199,14 +200,21 @@ t_tokentype *plag_pipe, t_tokentype *plag_redi);
 void		get_exec_commads(t_list **tokens, t_cmd_list **exec_commads, int i);
 
 /* get_exec_commads_2.c*/
-void		exec_make_node_2(t_cmd_list **exec_commads, char **string_array, \
+void		exec_make_node_2(t_cmd_list **exec_cmd, char **string_array, \
 t_tokentype plag_pipe, t_tokentype plag_redi);
 void		fill_string_array_2(char **string_array, t_list **tokens, \
 int cmd_size);
 char		**set_string_array_2(t_list **tokens, int cmd_size);
 int			get_double_string_array_size(t_list *tokens, int *check_redi, \
 t_tokentype *plag_pipe, t_tokentype *plag_redi);
-void		get_exec_commads_2(t_list *tokens, t_cmd_list **exec_commands);
+void		get_exec_cmd_2(t_list *tokens, t_cmd_list **exec_cmd);
+
+/* exec_commads_size_2.c*/
+int			calculate_array_size(t_list *tokens);
+int			handle_previous_redirection(int *check_redi);
+int			handle_pipe_case(t_list *tokens, t_tokentype *plag_pipe);
+int			handle_redirection_case(t_list *tokens, int *check_redi, \
+t_tokentype *plag_redi);
 
 /* printf_utils.c */
 void		printf_exec_commads(t_cmd_list *exec_commands);
@@ -215,12 +223,13 @@ void		printf_tokens(t_list *tokens);
 
 /* readline_utils.c */
 
-int			check_last_tokens(t_cmd_list *exec_commads);
+int			check_last_tokens(t_cmd_list *exec_cmd);
 char		*make_str(char *str, char *add_str);
-char		*add_readline(t_cmd_list **exec_commads, t_data *meta, char *str);
+char		*add_readline(t_cmd_list **exec_cmd, t_data *meta, char *str);
 
 t_list		*mn_split(t_data *meta, char **str);
-void		trade_exce_cmd(t_data *meta, t_cmd_list **exec_commdas, \
+void		trade_exec_cmd(t_data *meta, t_cmd_list **exec_cmd, \
 t_list **tokens, char **str);
+void		exec_cmd_set_tpye(t_cmd_list **exec_cmd);
 
 #endif

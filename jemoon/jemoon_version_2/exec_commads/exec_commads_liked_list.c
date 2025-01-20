@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/16 11:57:28 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:14:48 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ void	free_exec_linked_list(t_cmd_list *list)
 	{
 		temp = list;
 		list = list->next;
+		temp->prev = NULL;
 		free_double_string_array(temp->str);
 		free(temp);
 	}
+	list = NULL;
 }
 
 t_cmd_list	*create_exec_linked_list(char **str, \
@@ -55,22 +57,24 @@ t_tokentype plag_pipe, t_tokentype plag_redi)
 		new->type_re = plag_redi;
 	else
 		new->type_re = NONE;
+	new->prev = NULL;
 	new->next = NULL;
 	return (new);
 }
 
-void	add_back_exec_linked_list(t_cmd_list **exec_commads, \
+void	add_back_exec_linked_list(t_cmd_list **exec_cmd, \
 t_cmd_list *new)
 {
 	t_cmd_list	*temp;
 
-	temp = *exec_commads;
+	temp = *exec_cmd;
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new;
+	new->prev = temp;
 }
 
-void	exec_make_node(t_cmd_list **exec_commads, char **string_array, \
+void	exec_make_node(t_cmd_list **exec_cmd, char **string_array, \
 t_tokentype plag_pipe, t_tokentype plag_redi)
 {
 	t_cmd_list	*new_node;
@@ -78,8 +82,8 @@ t_tokentype plag_pipe, t_tokentype plag_redi)
 	new_node = create_exec_linked_list(string_array, plag_pipe, plag_redi);
 	if (new_node == NULL)
 		return (free_exec_linked_list(new_node));
-	if (*exec_commads == NULL)
-		*exec_commads = new_node;
+	if (*exec_cmd == NULL)
+		*exec_cmd = new_node;
 	else
-		add_back_exec_linked_list(exec_commads, new_node);
+		add_back_exec_linked_list(exec_cmd, new_node);
 }

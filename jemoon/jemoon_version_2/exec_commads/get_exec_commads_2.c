@@ -6,13 +6,13 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 16:28:33 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:13:17 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	exec_make_node_2(t_cmd_list **exec_commads, char **string_array, \
+void	exec_make_node_2(t_cmd_list **exec_cmd, char **string_array, \
 t_tokentype plag_pipe, t_tokentype plag_redi)
 {
 	t_cmd_list	*new_node;
@@ -20,10 +20,10 @@ t_tokentype plag_pipe, t_tokentype plag_redi)
 	new_node = create_exec_linked_list(string_array, plag_pipe, plag_redi);
 	if (new_node == NULL)
 		return (free_exec_linked_list(new_node));
-	if (*exec_commads == NULL)
-		*exec_commads = new_node;
+	if (*exec_cmd == NULL)
+		*exec_cmd = new_node;
 	else
-		add_back_exec_linked_list(exec_commads, new_node);
+		add_back_exec_linked_list(exec_cmd, new_node);
 }
 
 void	fill_string_array_2(char **string_array, t_list **tokens, int cmd_size)
@@ -58,38 +58,25 @@ char	**set_string_array_2(t_list **tokens, int cmd_size)
 int	get_double_string_array_size(t_list *tokens, int *check_redi, \
 t_tokentype *plag_pipe, t_tokentype *plag_redi)
 {
-	int	array_size;
-
-	array_size = 0;
 	if (REDIRECTION <= tokens->type && tokens->type <= HEREDOC)
 	{
-		(*check_redi) = 1;
-		(*plag_redi) = tokens->type;
-		return (1); 
+		return (handle_redirection_case(tokens, check_redi, plag_redi));
 	}
 	else if (AND <= tokens->type && tokens->type <= PIPE)
 	{
-		(*plag_pipe) = tokens->type;
-		return (1);
+		return (handle_pipe_case(tokens, plag_pipe));
 	}
 	else if (*check_redi == 1)
 	{
-		(*check_redi) = 0;
-		return (1); 
+		return (handle_previous_redirection(check_redi));
 	}
 	else
 	{
-		while (tokens && !(AND <= tokens->type && tokens->type <= HEREDOC))
-		{
-			array_size++;
-			tokens = tokens->next;
-		}
-		return (array_size);
+		return (calculate_array_size(tokens));
 	}
-	return (array_size);
 }
 
-void	get_exec_commads_2(t_list *tokens, t_cmd_list **exec_commands)
+void	get_exec_cmd_2(t_list *tokens, t_cmd_list **exec_cmd)
 {
 	t_tokentype	plag_pipe;
 	t_tokentype	plag_redi;
@@ -111,7 +98,7 @@ void	get_exec_commads_2(t_list *tokens, t_cmd_list **exec_commands)
 		string_array = set_string_array_2(&tokens, cmd_size);
 		if (string_array == NULL)
 			return ;
-		exec_make_node_2(&(*exec_commands), string_array, \
+		exec_make_node_2(&(*exec_cmd), string_array, \
 		plag_pipe, plag_redi);
 	}
 }

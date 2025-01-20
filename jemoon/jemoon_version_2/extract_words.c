@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 20:08:04 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 17:46:54 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	**extract_path(t_path *path)
 		return (NULL);
 	return (paths);
 }
+
 char	*extract_from_envp(char *envp, int *idx, char condition)
 {
 	char	*str;
@@ -33,7 +34,7 @@ char	*extract_from_envp(char *envp, int *idx, char condition)
 	len = conditinal_strlen(envp, condition);
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (str == NULL)
-		return (NULL /*리스트의 멤버 변수 free 작업 추가*/);
+		return (NULL);
 	while ((envp[*idx] != condition) && (envp[*idx] != '\0'))
 	{
 		str[col] = envp[*idx];
@@ -44,9 +45,10 @@ char	*extract_from_envp(char *envp, int *idx, char condition)
 	str[col] = '\0';
 	return (str);
 }
+
 int	extract_key_value(t_path *tmp, char *envp, int idx)
 {
-	int start;
+	int	start;
 
 	start = 0;
 	tmp->key = extract_from_envp(envp, &idx, '=');
@@ -56,18 +58,19 @@ int	extract_key_value(t_path *tmp, char *envp, int idx)
 		return (0);
 	return (1);
 }
+
 char	*extract_word(char const *str, int start_index, int end)
 {
 	char	*word_line;
 	int		idx;
-    int     len;
+	int		len;
 
 	idx = 0;
-    if (str == NULL)
-        return (NULL);
-    len = (end - start_index);
-    word_line = (char *)malloc(sizeof(char) * (len + 1));
-    if (!word_line)
+	if (str == NULL)
+		return (NULL);
+	len = (end - start_index);
+	word_line = (char *)malloc(sizeof(char) * (len + 1));
+	if (!word_line)
 		return (NULL);
 	while (idx < len && str[start_index + idx] != '\0')
 	{

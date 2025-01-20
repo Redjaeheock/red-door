@@ -6,24 +6,31 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 10:33:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 16:44:17 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:55:46 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_last_tokens(t_cmd_list *exec_commads)
+char	*handle_error(t_cmd_list **exec_cmd, char *str)
+{
+	free_exec_linked_list(*exec_cmd);
+	*exec_cmd = NULL;
+	return (str);
+}
+
+int	check_last_tokens(t_cmd_list *exec_cmd)
 {
 	int			i;
 	t_cmd_list	*temp;
 
 	i = 0;
-	temp = exec_commads;
-	while (exec_commads->next != NULL)
-		exec_commads = exec_commads->next;
-	if (AND <= exec_commads->type_pipe && exec_commads->type_pipe <= PIPE)
+	temp = exec_cmd;
+	while (exec_cmd->next != NULL)
+		exec_cmd = exec_cmd->next;
+	if (AND <= exec_cmd->type_pipe && exec_cmd->type_pipe <= PIPE)
 		i = 1;
-	exec_commads = temp;
+	exec_cmd = temp;
 	return (i);
 }
 
@@ -71,14 +78,14 @@ char	*make_str(char *str, char *add_str)
 	return (return_str);
 }
 
-char	*add_readline(t_cmd_list **exec_commads, t_data *meta, char *str)
+char	*add_readline(t_cmd_list **exec_cmd, t_data *meta, char *str)
 {
 	char		*add_str;
 	t_list		*add_tokens;
-	t_cmd_list	*add_exec_commads;
+	t_cmd_list	*add_exec_cmd;
 
 	add_tokens = NULL;
-	while (check_last_tokens(*exec_commads) == 1)
+	while (check_last_tokens(*exec_cmd) == 1)
 	{
 		add_str = readline("> ");
 		if (add_str[0] == '\0')
@@ -86,14 +93,13 @@ char	*add_readline(t_cmd_list **exec_commads, t_data *meta, char *str)
 		add_tokens = mn_split(meta, &add_str);
 		str = make_str(str, add_str);
 		if (add_tokens == NULL)
-			return (str);
+			return (handle_error(exec_cmd, str));
 		tpye_init(&add_tokens);
-		printf_tokens(add_tokens);
-		validate_bash_syntax(&add_exec_commads, &add_tokens);
+		validate_bash_syntax(&add_exec_cmd, &add_tokens);
 		free_linked_list(add_tokens);
-		if (add_exec_commads == NULL)
-			return (str);
-		add_back_exec_linked_list(exec_commads, add_exec_commads);
+		if (add_exec_cmd == NULL)
+			return (handle_error(exec_cmd, str));
+		add_back_exec_linked_list(exec_cmd, add_exec_cmd);
 	}
 	return (str);
 }

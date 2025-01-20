@@ -1,8 +1,10 @@
 NAME = minishell
 
 SRC = main.c \
+      exec_commads_set_tpye/exec_commads_set_tpye.c \
       exec_commads/exec_commads_liked_list.c \
       exec_commads/exec_commads_size.c \
+	  exec_commads/exec_commads_size_2.c \
       exec_commads/get_exec_commads.c \
 	  exec_commads/get_exec_commads_2.c \
 	  printf_utils/printf_utils.c \
@@ -38,8 +40,6 @@ SRC = main.c \
 	  token_character_check.c \
 	  extract_words.c
 
-
-
 OBJ = $(SRC:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror
@@ -50,17 +50,20 @@ HEADER = minishell.h
 .PHONY: all clean fclean re
 
 all: $(NAME)
+	@echo "Compiling $(NAME)..."
 
 $(NAME): $(OBJ)
 	@cc $(OBJ) $(LDFLAGS) -o $(NAME)
 
 %.o: %.c $(HEADER)
 	@cc $(CFLAGS) -c $< -o $@
-
+	
 clean:
-	rm -f $(OBJ)
+	@echo "Cleaning object files..."
+	@rm -f $(OBJ)
 
 fclean: clean
+	@echo "Removing executable $(NAME)..."
 	@rm -f $(NAME)
 
 re: fclean all

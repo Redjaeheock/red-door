@@ -6,20 +6,20 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 17:14:34 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:11:57 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	validate_bash_syntax(t_cmd_list **exec_commands, t_list **tokens)
+void	validate_bash_syntax(t_cmd_list **exec_cmd, t_list **tokens)
 {
 	int		count_cmd_line;
 	t_list	*tmp;
 
 	tmp = *tokens;
 	count_cmd_line = 0;
-	*exec_commands = NULL;
+	*exec_cmd = NULL;
 	while (*tokens != NULL)
 	{
 		if (check_is_valid(tokens, count_cmd_line) == 0)
@@ -31,5 +31,5 @@ void	validate_bash_syntax(t_cmd_list **exec_commands, t_list **tokens)
 		count_cmd_line++;
 	}
 	*tokens = tmp;
-	get_exec_commads_2(*tokens, exec_commands);
+	get_exec_cmd_2(*tokens, exec_cmd);
 }

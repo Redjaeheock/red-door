@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/09 13:05:41 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 17:47:45 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	string_div(t_list **words, char const *str, int index)
 {
@@ -38,6 +38,7 @@ int	string_div(t_list **words, char const *str, int index)
 		return (-1);
 	return (--index);
 }
+
 int	ampersand_div(t_list **words, const char *str, int index)
 {
 	int	start_index;
@@ -52,6 +53,7 @@ int	ampersand_div(t_list **words, const char *str, int index)
 		return (-1);
 	return (--index);
 }
+
 int	in_redirec_div(t_list **words, const char *str, int index)
 {
 	int	start_index;
@@ -66,6 +68,7 @@ int	in_redirec_div(t_list **words, const char *str, int index)
 		return (-1);
 	return (--index);
 }
+
 int	out_redirec_div(t_list **words, const char *str, int index)
 {
 	int	start_index;
@@ -80,6 +83,7 @@ int	out_redirec_div(t_list **words, const char *str, int index)
 		return (-1);
 	return (--index);
 }
+
 int	pipe_div(t_list	**words, const char	*str, int index)
 {
 	int	start_index;

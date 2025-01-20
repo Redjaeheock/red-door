@@ -6,15 +6,15 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 20:10:03 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 17:48:56 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_path *make_t_path(void)
+t_path	*make_t_path(void)
 {
-	t_path *tmp;
+	t_path	*tmp;
 
 	tmp = (t_path *)malloc(sizeof(t_path));
 	if (tmp == NULL)
@@ -25,7 +25,8 @@ t_path *make_t_path(void)
 	tmp->set = NULL;
 	return (tmp);
 }
-t_path 	*init_key_value(char **envp)
+
+t_path	*init_key_value(char **envp)
 {
 	t_path	*env_path;
 	t_path	*tmp;
@@ -52,6 +53,7 @@ t_path 	*init_key_value(char **envp)
 	}
 	return (env_path);
 }
+
 char	**copy_envp(char **envp)
 {
 	char	**cp_envp;
@@ -73,13 +75,14 @@ char	**copy_envp(char **envp)
 	cp_envp[idx] = NULL;
 	return (cp_envp);
 }
+
 t_data	*initial_env(char **envp)
 {
-	t_data *meta;
+	t_data	*meta;
 
 	meta = (t_data *)malloc(sizeof(t_data) * 1);
 	if (meta == NULL)
-		return(t_data_alloc_err(NULL));
+		return (t_data_alloc_err(NULL));
 	meta->envm = NULL;
 	meta->env = NULL;
 	meta->exp = NULL;

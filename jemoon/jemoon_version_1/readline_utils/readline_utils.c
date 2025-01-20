@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 10:33:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/19 11:57:30 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 20:24:28 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,11 @@ char	*add_readline(t_cmd_list **exec_commads, char *str)
 		free_linked_list(add_tokens);
 		str = make_str(str, add_str);
 		if (add_exec_commads == NULL)
+		{
+			free_exec_linked_list(*exec_commads);
+			*exec_commads = NULL;
 			return (str);
+		}
 		add_back_exec_linked_list(exec_commads, add_exec_commads);
 	}
 	return (str);

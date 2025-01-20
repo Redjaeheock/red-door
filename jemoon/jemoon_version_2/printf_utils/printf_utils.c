@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:58:04 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/15 15:42:35 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 20:26:29 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	printf_exec_commads(t_cmd_list *exec_commands)
 		token_type_to_str_1(exec_commands->type_re));
 		exec_commands = exec_commands->next;
 	}
+	printf("성공!\n");
 }
 
 const char	*token_type_to_str_1(t_tokentype type)
