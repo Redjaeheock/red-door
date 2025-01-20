@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:35:17 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/16 15:32:11 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 13:10:33 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ int	rest_check_is_valid(t_list **tokens)
 			return (0);
 		else if ((*tokens)->next == NULL)
 		{
-			*tokens = (*tokens)->next;
-			return (2);
+			return ((*tokens = (*tokens)->next), 2);
 		}
 		else if (REDIRECTION <= (*tokens)->next->type && \
 		(*tokens)->next->type <= HEREDOC)
@@ -72,20 +71,18 @@ int	rest_check_is_valid(t_list **tokens)
 			*tokens = (*tokens)->next;
 			return (check_is_valid_redirection(&(*tokens)));
 		}
-		else
-			return (check_is_valid_arg(&(*tokens)));
+		return (check_is_valid_arg(&(*tokens)));
 	}
 	else if (REDIRECTION <= (*tokens)->type && (*tokens)->type <= HEREDOC)
 		return (check_is_valid_redirection(&(*tokens)));
 	else if (CMD <= (*tokens)->type && (*tokens)->type <= ARG)
 		return (check_is_valid_arg(&(*tokens)));
-	else
-		return (0);
+	return (0);
 }
 
 int	check_is_valid(t_list **tokens, int count_cmd_line)
 {
-	if (count_cmd_line == 0)
+	if (count_cmd_line == -1)
 	{
 		return (first_check_is_valid(&(*tokens)));
 	}

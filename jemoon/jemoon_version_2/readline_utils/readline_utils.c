@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 10:33:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/18 11:51:39 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/20 15:51:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*make_str(char *str, char *add_str)
 	return (return_str);
 }
 
-char	*add_readline(t_cmd_list **exec_commads, char *str)
+char	*add_readline(t_cmd_list **exec_commads, t_data *meta, char *str)
 {
 	char		*add_str;
 	t_list		*add_tokens;
@@ -83,10 +83,15 @@ char	*add_readline(t_cmd_list **exec_commads, char *str)
 		add_str = readline("> ");
 		if (add_str[0] == '\0')
 			continue ;
-		add_tokens = mn_split(add_str + skip_leading_ifs(add_str));
+		add_tokens = mn_split(meta, &add_str);
+		if (add_tokens == NULL)
+		{
+			str = make_str(str, add_str);
+			return (str);
+		}
 		tpye_init(&add_tokens);
 		printf_tokens(add_tokens);
-		add_exec_commads = validate_bash_syntax(&add_tokens);
+		validate_bash_syntax(&add_exec_commads, &add_tokens);
 		free_linked_list(add_tokens);
 		str = make_str(str, add_str);
 		if (add_exec_commads == NULL)

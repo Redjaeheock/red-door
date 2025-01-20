@@ -11,6 +11,7 @@ SRC = main.c \
       set_tpye/set_tpye.c \
 	  validate_syntax/validate_bash_syntax.c \
       validate_syntax/validate_bash_syntax_utils.c \
+	  validate_syntax/trade_exce_cmd.c \
 	  liked_list/linked_list.c \
 	  readline_utils/readline_utils.c
 

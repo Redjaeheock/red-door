@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:58:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/18 15:18:45 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/19 11:48:12 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ void		tpye_init(t_list **tokens);
 void		set_tpye(t_list **tokens);
 
 /* validate_bash_syntax.c */
-t_cmd_list	*validate_bash_syntax(t_list **tokens);
+//t_cmd_list	*validate_bash_syntax(t_list **tokens);
 //void		validate_bash_syntax(t_list **tokens);
+void		validate_bash_syntax(t_cmd_list **exec_commands, t_list **tokens);
 
 /* validate_bash_syntax.c */
 int			check_is_valid_redirection(t_list **tokens);
@@ -121,5 +122,7 @@ void		printf_tokens(t_list *tokens);
 int			check_last_tokens(t_cmd_list *exec_commads);
 char		*make_str(char *str, char *add_str);
 char		*add_readline(t_cmd_list **exec_commads, char *str);
+
+void		trade_exce_cmd(t_cmd_list **exec_commdas, t_list **tokens, char **str);
 
 #endif
