@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 10:50:13 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 17:35:04 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,21 @@ void	*free_key_value(t_path *path)
 	}
 	return (NULL);
 }
-void	*free_t_list(t_list *list)
+void	*free_t_list(t_list *node)
 {
 	t_list	*temp;
 
 	// 구조체 멤버 해제 후 리스트 해제
 
-	while (list != NULL)
+	while (node != NULL)
 	{
-		temp = list;
-		list = list->next;
+		temp = node;
+		node = node->next;
 		temp->prev = NULL;
-		free(temp->token);
+		if (temp->token != NULL)
+			free(temp->token);
 		free(temp);
+		temp = NULL;
 	}
 	return (NULL);
 }

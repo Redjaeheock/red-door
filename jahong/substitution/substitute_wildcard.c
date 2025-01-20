@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 14:40:42 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 14:51:06 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	rest_wildcard(char **str, int quote, int len)
 			flag = 1;
 		path += keep;
 		if (str[row][0] == '*' && flag == 0)
-		 	path += search_character_into_str(str[row], '*');
+		 	path += search_chr_in_str(str[row], '*');
 		row++;
 	}
 	if (path - len == 1)

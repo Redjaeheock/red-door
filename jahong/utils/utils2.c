@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:28:07 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 14:35:57 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 19:00:56 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 char *copy_index_range(char *str, int idx, int end)
 {
 	char	*tmp;
-	int		i;
+	int		n;
 	int		len;
 
-	i = 0;
+	n = 0;
 	len = end - idx;
 	if (end != ft_strlen(str))
 		len++;
@@ -27,11 +27,11 @@ char *copy_index_range(char *str, int idx, int end)
 		return (sndry_alloc_err(NULL));
 	while (idx < end)
 	{
-		tmp[i] = str[idx];
+		tmp[n] = str[idx];
 		idx++;
-		i++;
+		n++;
 	}
-	tmp[i] = '\0';
+	tmp[n] = '\0';
 	return (tmp);
 }
 int	ck_part_of_special_chr(int c)

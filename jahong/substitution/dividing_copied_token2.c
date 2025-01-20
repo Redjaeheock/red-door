@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dividing_copied_token.c                            :+:      :+:    :+:   */
+/*   dividing_copied_token2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 16:03:17 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 22:21:26 by jahong           ###   ########.fr       */
+/*   Created: 2025/01/20 18:54:01 by jahong            #+#    #+#             */
+/*   Updated: 2025/01/20 22:15:01 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// v1 파일 삭제하기
 
 int   cmp_pre_next_chr(char *str, int idx)
 {
@@ -85,24 +83,18 @@ char	*split_copied_token(char *str, int *idx, int quote)
 		return (NULL);
 	return (tmp);
 }
-char	**dividing_copied_token(char *str, int len, int quote)
+t_tmp	*dividing_copied_token(char *str, int quote)
 {
-	char	**tmp;
-	int		row;
+	t_tmp	*tmp;
 	int		idx;
 
-	row = 0;
 	idx = 0;
-	tmp = (char **)malloc(sizeof(char *) * (len + 1));
-	if (tmp == NULL)
-		return (sndry_alloc_err(NULL));
-	while (row < len)
+	tmp = NULL;
+	while (str[idx] != '\0')
 	{
-		tmp[row] = split_copied_token(str, &idx, quote);
-		if (tmp[row] == NULL)
-			return (sndry_alloc_err((void **)tmp));
-		row++;
+		tmp = make_tmp_node(tmp, split_copied_token(str, &idx, quote), NULL);
+		if (tmp == NULL)
+			return (free_tmp_list(tmp));
 	}
-	tmp[row] = NULL;
 	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 14:33:29 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 22:20:55 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ typedef enum {
     OPTION,
     ARG
 }	t_tokentype;
+
+typedef struct	temp_list
+{
+	struct temp_list	*next;
+	char				*key;
+	char				*value;
+}						t_tmp;
 
 typedef struct  cmd_list
 {
@@ -62,19 +69,8 @@ void	*free_t_list(t_list *list);
 void	*free_t_data(t_data *meta);
 void	*free_meta_token(t_data *meta);
 
-/*libft*/
-int		ft_strlen(const char *str);
-int		conditinal_strlen(const char *s, unsigned char condition);
-int		ft_isalnum(int c);
-int		ft_isalpha(int c);
-int		ft_isdigit(int c);
-int		ft_isspecial_chr(int c);
-int		ft_strcmp(const char *s1, const char *s2);
-char	*ft_strdup(const char *s);
-int		sndry_arr_len(void **array);
-void	*free_sndry_arr(void **array);
-char	**ft_split(char const *s, char c);
-char	*ft_itoa(int n);
+/* free_tmp_list.c */
+void	*free_tmp_list(t_tmp *node);
 
 /*error_process*/
 int		error_syntax(char *str);
@@ -84,22 +80,35 @@ void	*t_path_key_val_alloc_err(t_path *tmp);
 void	*t_list_alloc_err(t_list *tmp);
 void	*sndry_alloc_err(void **arr);
 void	*t_data_alloc_err(t_data *meta);
+void	*t_tmp_alloc_err(t_tmp *node);
 
-/* token_character_check.c */
-int		search_wildcard_into_token(char *str);
-int     check_valid_wildcard(char *str, int idx, int quote);
-int		check_valid_back(char *str, int idx);
-int		check_quote_pair(char c, int quote);
-// int		check_token_chr(char *token, int idx);
+/* initialize_meta_token.c*/
+t_data  *initialize_meta_token(char **envp);
 
-/*operator_character_check.c*/
-int		check_out_redirection(const char *str, int index);
-int		check_in_redirection(const char *str, int index);
-int		check_ampersand(const char *str, int index);
-int		check_vartical_bar(const char *str, int index);
-int		check_operator_set(char const *str, int index);
+/* linked_list.c */
+t_list	*create_linked_list(char *str);
+void	add_back_linked_list(t_list *tokenize, t_list *new);
+void	make_node(t_list **tokenize, char *str);
 
-/*extradt_words.c*/
+/* linked_tmp_list */
+t_tmp	*last_tmp_list(t_tmp *node);
+t_tmp	*create_new_tmp_list(char *str1, char *str2);
+t_tmp	*make_tmp_node(t_tmp *node, char *str1, char *str2);
+
+/*libft*/
+int		ft_strlen(const char *str);
+int		conditinal_strlen(const char *s, unsigned char condition);
+int		ft_isalnum(int c);
+int		ft_isalpha(int c);
+int		ft_isdigit(int c);
+int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strdup(const char *s);
+int		sndry_arr_len(void **array);
+void	*free_sndry_arr(void **array);
+char	**ft_split(char const *s, char c);
+char	*ft_itoa(int n);
+
+/* extradt_words.c */
 char	*extract_word(char const *str, int start_index, int end);
 char	*extract_from_envp(char *envp, int *idx, char condition);
 int		extract_key_value(t_path *tmp, char *envp, int idx);
@@ -112,42 +121,51 @@ int		in_redirec_div(t_list **words, const char *str, int index);
 int		out_redirec_div(t_list **words, const char *str, int index);
 int		pipe_div(t_list **words, const char *str, int index);
 
-/* linked_list.c */
-t_list	*create_linked_list(char *str);
-void	add_back_linked_list(t_list *tokenize, t_list *new);
-void	make_node(t_list **tokenize, char *str);
+/* token_character_check.c */
+int		search_wildcard_into_token(char *str);
+int     check_valid_wildcard(char *str, int idx, int quote);
+int		check_valid_back(char *str, int idx);
+int		check_quote_pair(char c, int quote);
+// int		check_token_chr(char *token, int idx);
 
-/* initialize_meta_token.c*/
-t_data  *initialize_meta_token(char **envp);
+/* operator_character_check.c */
+int		check_out_redirection(const char *str, int index);
+int		check_in_redirection(const char *str, int index);
+int		check_ampersand(const char *str, int index);
+int		check_vartical_bar(const char *str, int index);
+int		check_operator_set(char const *str, int index);
 
 /* devideing_sub_token.c*/
 char	*extract_partial_token(char *str, int idx, int *end, int *quote);
 char	*temporary_div_token(char *str, int *idx, int *quote);
 char	**dividing_sub_token(char *str, int len);
 
+
+/* deviding_copied_token.c */
+t_tmp	*dividing_copied_token(char *str, int quote);
+// char	**dividing_copied_token(char *str, int len, int quote);
+
 /* substitute_token.c*/
 int		subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens);
 int		check_quote_valid(char *token);
 int		substitute_tokens(t_data *meata, t_list *tokens);
 
+/* substitute_dollar_sign.c */
+int		substitute_dollar_sign(t_data *meta, char **str);
+
 /* substitute_wildcard.c */
 int		substitute_wildcard(t_data *meta, char **str, int quote, int flag);
-
-/*substitute_dollar_sign.c*/
-int		substitute_dollar_sign(t_data *meta, t_list *tokens, char **str);
-
-/*deviding_copied_token.c*/
-char	**dividing_copied_token(char *str, int len, int quote);
 
 /* change_dollar_sign.c */
 char	*copy_current_process_pid(void);
 char	*change_null_string(void);
 
 /* utils.c*/
-char	search_character_into_str(char *str, char c);
+char	search_chr_in_str(char *str, char c);
 char	are_all_characters_same(char *str, char c);
-char	*get_exit_no(void);
+char	*str_join(char const *s1, char const *s2);
 char	*join_div_tokens(char **tmp, int flag);
+char	*get_exit_no(void);
 
 /*utils2.c*/
 char    *copy_index_range(char *str, int idx, int end);

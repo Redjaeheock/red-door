@@ -6,12 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:17:50 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 12:59:18 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 15:57:26 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-char	search_character_into_str(char *str, char c)
+
+char	search_chr_in_str(char *str, char c)
 {
 	int	idx;
 	int	flag;
@@ -49,13 +50,13 @@ char	are_all_characters_same(char *str, char c)
 }
 char	*str_join(char const *s1, char const *s2)
 {
-	int		len;
 	char	*cat_arr;
+	int		len;
 	int		idx;
-	int		cnt;
+	int		n;
 
 	idx = 0;
-	cnt = 0;
+	n = 0;
 	len = ft_strlen((char *)s1) + ft_strlen((char *)s2);
 	cat_arr = (char *)malloc(sizeof(char) * (len + 1));
 	if (cat_arr == NULL)
@@ -65,12 +66,12 @@ char	*str_join(char const *s1, char const *s2)
 		cat_arr[idx] = s1[idx];
 		idx++;
 	}
-	while (s2 != NULL && (s2[cnt] != '\0'))
+	while (s2 != NULL && (s2[n] != '\0'))
 	{
-		(cat_arr)[idx + cnt] = s2[cnt];
-		cnt++;
+		(cat_arr)[idx + n] = s2[n];
+		n++;
 	}
-	cat_arr[idx + cnt] = '\0';
+	cat_arr[idx + n] = '\0';
 	return (cat_arr);
 }
 char	*join_div_tokens(char **tmp, int flag)

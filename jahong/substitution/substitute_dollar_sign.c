@@ -6,13 +6,96 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:50:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 14:42:24 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/20 20:19:03 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*search_from_envpath(t_data *meta, t_list *tokens, char *str, int *flag)
+void	conditinal_change_address(char **str1, char **str2)
+{
+	if (are_all_characters_same(*str1, '*') == 1)
+		*str1 = NULL;
+	else if (are_all_characters_same(*str2, '*') == 1)
+		*str2 = NULL;
+	return ;
+}
+
+char	*join_wildcard_exception(char *str1, char *str2)
+{
+	char	*tmp;
+	int		len;
+	int		idx;
+	int		n;
+
+	idx = 0;
+	n = 0;
+	conditinal_change_address(&str1, &str2);
+	len = ft_strlen(str1) + ft_strlen(str2);
+	tmp = (char *)malloc(sizeof(char) * (len + 1));
+	if (tmp == NULL)
+		return (memory_alloc_error());
+	while (str1 != NULL && str1[idx] != '\0')
+	{
+		tmp[idx] = str1[idx];
+		idx++;
+	}
+	while (str2 != NULL && str2[n] != '\0')
+	{
+		tmp[idx + n] = str2[n];
+		n++;
+	}
+	tmp[idx + n] = '\0';
+	return (tmp);
+}
+
+int	measure_length_copied_sub_token(char **str)
+{
+	int	row;
+	int	cnt;
+
+	row = 0;
+	cnt = 0;
+	while (str[row] != NULL)
+	{
+		if (are_all_characters_same(str[row], '*') == 1)
+		{
+			row++;
+			continue ;
+		}
+		row++;
+	}
+	return (row);
+}
+
+char	**join_diveded_copied_token(char **str)
+{
+	printf("\nstart jing tmp\n");
+	char	**ttmp;
+	char	*tmp;
+	int		row;
+	int		len;
+
+	row = 0;
+	len =  measure_length_copied_sub_token(str);
+	tmp = str[row++];
+	ttmp = (char **)malloc(sizeof(char *) * (len + 1));
+	if (ttmp == NULL)
+		return (sndry_alloc_err(NULL));
+	while (row < len)
+	{
+		ttmp[row] = join_wildcard_exception(tmp, str[row + 1]);
+		if (tmp == NULL)
+			return (free_sndry_arr((void **)ttmp));
+		
+		
+		row++;
+	}
+	ttmp[row] = NULL;
+	return (ttmp);
+}
+
+char	*search_in_envpath(t_data *meta, char *str, int *flag)
 {
 	t_path	*tmp;
 	int		len;
@@ -35,7 +118,7 @@ char	*search_from_envpath(t_data *meta, t_list *tokens, char *str, int *flag)
 	}
 	return (change_null_string());
 }
-int	mapping_dollar_sign_to_env(t_data *meta, t_list *tokens, char **str)
+int	mapping_dollar_sign_to_env(t_data *meta, char **str)
 {
 	char	*tmp;
 	int		row;
@@ -45,9 +128,9 @@ int	mapping_dollar_sign_to_env(t_data *meta, t_list *tokens, char **str)
 	flag = 0;
 	while (str[row] != NULL)
 	{
-		if (search_character_into_str(str[row], '$') == 1 && ft_strlen(str[row]) > 1)
+		if (search_chr_in_str(str[row], '$') == 1 && ft_strlen(str[row]) > 1)
 		{
-			tmp = search_from_envpath(meta, tokens, str[row], &flag);
+			tmp = search_in_envpath(meta, str[row], &flag);
 			if (tmp == NULL)
 				return ((sndry_alloc_err(NULL), -1));
 			if (tmp != str[row])
@@ -61,10 +144,10 @@ int	mapping_dollar_sign_to_env(t_data *meta, t_list *tokens, char **str)
 	}
 	return (flag);
 }
-char	*change_dollar_sign(t_data *meta, t_list *tokens, char *str, int len)
+char	**change_dollar_sign(t_data *meta, char *str, int len)
 {
 	char	**tmp;
-	char	*join;
+	char	**join;
 	int		result;
 	int		quote;
 	int cnt = 0;
@@ -78,7 +161,7 @@ char	*change_dollar_sign(t_data *meta, t_list *tokens, char *str, int len)
 		printf("before div tmp = %s\n", tmp[cnt]);
 		cnt++;
 	}
-	result = mapping_dollar_sign_to_env(meta, tokens, tmp);
+	result = mapping_dollar_sign_to_env(meta, tmp);
 	if (result == -1)
 		return (free_sndry_arr((void **)tmp));
 	cnt = 0;
@@ -87,11 +170,17 @@ char	*change_dollar_sign(t_data *meta, t_list *tokens, char *str, int len)
 		printf("after div tmp = %s\n", tmp[cnt]);
 		cnt++;
 	}
-	// result = substitute_wildcard(meta, tmp, quote, result);
-	// if (result == -1)
-	// 	return (free_sndry_arr((void **)tmp));
-	// printf("\n");
-	// join = join_div_tokens(tmp, result);
+	result = substitute_wildcard(meta, tmp, quote, result);
+	if (result == -1)
+		return (free_sndry_arr((void **)tmp));
+	cnt = 0;
+	while (tmp[cnt] != NULL)
+	{
+		printf("substituted v1 tmp = %s\n", tmp[cnt]);
+		cnt++;
+	}
+	printf("\n");
+	// join = join_diveded_copied_token(tmp);
 	// if (join == NULL)
 	// 	(free_sndry_arr((void **)tmp));
 	// return (join);
@@ -143,9 +232,9 @@ int	check_split_point_str(char *str)
 	return (cnt);
 	// 줄 수 조정
 }
-char	*search_n_change_dollar_sign(t_data *meta, t_list *tokens, char *str)
+char	*search_n_change_dollar_sign(t_data *meta, char *str)
 {
-	char	*tmp;
+	char	**tmp;
 	int		cnt;
 	int		quote;
 
@@ -156,13 +245,18 @@ char	*search_n_change_dollar_sign(t_data *meta, t_list *tokens, char *str)
 	if (cnt == 0)
 		return (str);
 	printf("cnt =========================== %d\n", cnt);
-	tmp = change_dollar_sign(meta, tokens, str, cnt);
+	tmp = change_dollar_sign(meta, str, cnt);
 	if (tmp == NULL)
 		return (NULL);
-	printf(">>>>>> after change str = %s\n", tmp);
-	return (tmp);
+	cnt = 0;
+	while (tmp[cnt] != NULL)
+	{
+		printf(">>>>>> join the tmp string = %s\n", tmp[cnt]);
+		cnt++;
+	}
+	return (NULL);
 }
-int	substitute_dollar_sign(t_data *meta, t_list *tokens, char **str)
+int	substitute_dollar_sign(t_data *meta, char **str)
 {
 	char	*tmp;
 	int		row;
@@ -170,7 +264,7 @@ int	substitute_dollar_sign(t_data *meta, t_list *tokens, char **str)
 	row = 0;
 	while (str[row] != NULL)
 	{
-		tmp = search_n_change_dollar_sign(meta, tokens, str[row]);
+		tmp =  search_n_change_dollar_sign(meta, str[row]);
 		if (tmp == NULL)
 		{
 			free_sndry_arr((void **)str);
