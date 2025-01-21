@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 15:20:14 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/21 10:11:26 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	measure_length_quote_set(char *str, int cnt)
 }
 int	subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens)
 {
+	t_tmp	*node;
 	char	**tmp;
 	int		row;
 	int		result;
@@ -57,9 +58,9 @@ int	subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens)
 		printf("split quote %s\n", tmp[cnt]);
 		cnt++;
 	}
-	result = substitute_dollar_sign(meta, tmp);
-	if (result == 0)
-		return (0);
+	node = substitute_dollar_sign(meta, tmp);
+	if (node == NULL)
+		return ((free_sndry_arr((void **)tmp), 0));
 	cnt = 0;
 	while (tmp[cnt] != NULL)
 	{

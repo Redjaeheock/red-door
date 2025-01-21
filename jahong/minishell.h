@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 22:20:55 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/21 10:03:59 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int		check_quote_valid(char *token);
 int		substitute_tokens(t_data *meata, t_list *tokens);
 
 /* substitute_dollar_sign.c */
-int		substitute_dollar_sign(t_data *meta, char **str);
+t_tmp	*substitute_dollar_sign(t_data *meta, char **str);
 
 /* substitute_wildcard.c */
 int		substitute_wildcard(t_data *meta, char **str, int quote, int flag);

@@ -6,58 +6,67 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 19:09:16 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 22:28:01 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/21 12:23:56 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// int	measure_length_copied_sub_token(char **str)
-// {
-// 	int	row;
-// 	int	cnt;
+void	remove_null_string(t_tmp *node)
+{
+	t_tmp	*tmp;
+	t_tmp	*keep;
 
-// 	row = 0;
-// 	cnt = 0;
-// 	while (str[row] != NULL)
-// 	{
-// 		if (are_all_characters_same(str[row], '*') == 1)
-// 		{
-// 			row++;
-// 			continue ;
-// 		}
-// 		row++;
-// 	}
-// 	return (row);
-// }
-
-// char	**join_diveded_copied_token(char **str)
-// {
-// 	printf("\nstart jing tmp\n");
-// 	char	**ttmp;
-// 	char	*tmp;
-// 	int		row;
-// 	int		len;
-
-// 	row = 0;
-// 	len =  measure_length_copied_sub_token(str);
-// 	tmp = str[row++];
-// 	ttmp = (char **)malloc(sizeof(char *) * (len + 1));
-// 	if (ttmp == NULL)
-// 		return (sndry_alloc_err(NULL));
-// 	while (row < len)
-// 	{
-// 		ttmp[row] = join_wildcard_exception(tmp, str[row + 1]);
-// 		if (tmp == NULL)
-// 			return (free_sndry_arr((void **)ttmp));
-		
-		
-// 		row++;
-// 	}
-// 	ttmp[row] = NULL;
-// 	return (ttmp);
-// }
-
+	while (node != NULL)
+	{
+		keep = node;
+		if (node->key[0] == '\0')
+		{
+			if (keep == node)
+			{
+				keep = NULL;
+				tmp = node;
+				node = node->next;
+				if (tmp->key != NULL)
+				{
+					free(tmp->key);
+					tmp->key = NULL;
+				}
+				if (tmp->value != NULL)
+				{
+					free(tmp->value);
+					tmp->value = NULL;
+				}
+				free(tmp);
+				tmp = NULL;
+				keep = node;
+			}
+			else
+			{
+				while (keep != node && keep != NULL)
+					keep = keep->next;
+				tmp = node;
+				node = node->next;
+				if (keep != NULL)
+					keep->next = node;
+				if (tmp->key != NULL)
+				{
+					free(tmp->key);
+					tmp->key = NULL;
+				}
+				if (tmp->value != NULL)
+				{
+					free(tmp->value);
+					tmp->value = NULL;
+				}
+				free(tmp);
+				tmp = NULL;
+			}
+		}
+		node = node->next;
+	}
+	return ;
+}
 int	check_except_substitution(t_tmp	*node)
 {
 	int		len;
@@ -247,7 +256,7 @@ t_tmp	*search_n_change_dollar_sign(t_data *meta, char *str)
 	}
 	return (tmp);
 }
-int	substitute_dollar_sign(t_data *meta, char **str)
+t_tmp	*substitute_dollar_sign(t_data *meta, char **str)
 {
 	t_tmp	*node;
 	t_tmp	*tmp;
@@ -256,31 +265,26 @@ int	substitute_dollar_sign(t_data *meta, char **str)
 	row = 0;
 	node = create_new_tmp_list(NULL, NULL);
 	if (node == NULL)
-		return ((memory_alloc_error(), 0));
+		return (memory_alloc_error());
 	tmp = node;
 	while (str[row] != NULL)
 	{
 		tmp->next =  search_n_change_dollar_sign(meta, str[row]);
 		if (tmp->next == NULL)
-		{
-			free_tmp_list(node);
-			return (0);
-		}
+			return (free_tmp_list(node));
 		tmp = last_tmp_list(tmp);
 		row++;
 	}
+	remove_null_string(node->next);
 	tmp = node;
 	node = node->next;
 	free(tmp);
-	tmp = NULL;
 	tmp = node;
 	while (tmp != NULL)
 	{
-		printf("finale tokens check key = %s\n", tmp->key);
-		printf("finale tokens check value = %s\n", tmp->value);
+		printf("after remove token key = %s\n", tmp->key);
+		printf("after remove token value = %s\n", tmp->value);
 		tmp = tmp->next;
 	}
-
-	//join 코드
-	return (1);
+	return (node);
 }
