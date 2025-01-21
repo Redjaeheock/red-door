@@ -6,66 +6,38 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 19:09:16 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/21 12:23:56 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/21 19:25:55 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	remove_null_string(t_tmp *node)
+void	remove_null_string(t_tmp **head, t_tmp *keep)
 {
-	t_tmp	*tmp;
-	t_tmp	*keep;
+	t_tmp	*node;
+	t_tmp	*del;
 
+	node = *head;
 	while (node != NULL)
 	{
-		keep = node;
 		if (node->key[0] == '\0')
 		{
-			if (keep == node)
+			del = node;
 			{
-				keep = NULL;
-				tmp = node;
+				if (keep == NULL)
+					*head = node->next;
+				else
+					keep->next = node->next;
 				node = node->next;
-				if (tmp->key != NULL)
-				{
-					free(tmp->key);
-					tmp->key = NULL;
-				}
-				if (tmp->value != NULL)
-				{
-					free(tmp->value);
-					tmp->value = NULL;
-				}
-				free(tmp);
-				tmp = NULL;
-				keep = node;
-			}
-			else
-			{
-				while (keep != node && keep != NULL)
-					keep = keep->next;
-				tmp = node;
-				node = node->next;
-				if (keep != NULL)
-					keep->next = node;
-				if (tmp->key != NULL)
-				{
-					free(tmp->key);
-					tmp->key = NULL;
-				}
-				if (tmp->value != NULL)
-				{
-					free(tmp->value);
-					tmp->value = NULL;
-				}
-				free(tmp);
-				tmp = NULL;
+				free_single_tmp_node(del);
 			}
 		}
-		node = node->next;
+		else
+		{
+			keep = node;
+			node = node->next;
+		}
 	}
-	return ;
 }
 int	check_except_substitution(t_tmp	*node)
 {
@@ -247,13 +219,6 @@ t_tmp	*search_n_change_dollar_sign(t_data *meta, char *str)
 	tmp = change_dollar_sign(meta, str);
 	if (tmp == NULL)
 		return (NULL);
-	node = tmp;
-	while (node != NULL)
-	{
-		printf("return func after list key = %s\n", node->key);
-		printf("return funcafter list value = %s\n", node->value);
-		node = node->next;
-	}
 	return (tmp);
 }
 t_tmp	*substitute_dollar_sign(t_data *meta, char **str)
@@ -275,16 +240,9 @@ t_tmp	*substitute_dollar_sign(t_data *meta, char **str)
 		tmp = last_tmp_list(tmp);
 		row++;
 	}
-	remove_null_string(node->next);
 	tmp = node;
 	node = node->next;
 	free(tmp);
-	tmp = node;
-	while (tmp != NULL)
-	{
-		printf("after remove token key = %s\n", tmp->key);
-		printf("after remove token value = %s\n", tmp->value);
-		tmp = tmp->next;
-	}
+	remove_null_string(&node, NULL);
 	return (node);
 }

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/21 10:11:26 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/21 21:51:39 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens)
 	int		row;
 	int		result;
 	int cnt = 0;
+	t_tmp	*keep;
 
 	if (search_chr_in_str(tokens->token, '$') == 0)
 		return (1);
@@ -59,14 +60,28 @@ int	subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens)
 		cnt++;
 	}
 	node = substitute_dollar_sign(meta, tmp);
+	free_sndry_arr((void **)tmp);
 	if (node == NULL)
-		return ((free_sndry_arr((void **)tmp), 0));
-	cnt = 0;
-	while (tmp[cnt] != NULL)
+		return (0);
+	keep = node;
+	while (keep != NULL)
 	{
-		printf("after change tmp = %s\n", tmp[cnt]);
-		cnt++;
+		printf("final subtitute toekens key = %s\n", keep->key);
+		printf("final subtitute toekens value = %s\n", keep->value);
+		keep = keep->next;
 	}
+	result = substitute_wildcard(node);
+	if (result == 0)
+		return (0);
+	keep = node;
+	while (keep != NULL)
+	{
+		printf("after change whildcard key = %s\n", keep->key);
+		printf("after change whildcard value = %s\n", keep->value);
+		keep = keep->next;
+	}
+	
+	
 	return (1); // 1 로 전환
 }
 int	check_quote_valid(char *token)
