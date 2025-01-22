@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:54:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 22:15:01 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/22 21:33:50 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*split_copied_token(char *str, int *idx, int quote)
 		*idx = move_index(str, *idx, quote, 1);
 	else
 		*idx = move_index(str, *idx, quote, 2);
-	printf("start = %d *idx = %d\n", start, *idx);
+	printf("start = %d *idx = %d\n\n", start, *idx);
 	tmp = copy_index_range(str, start, *idx);
 	if (tmp == NULL)
 		return (NULL);

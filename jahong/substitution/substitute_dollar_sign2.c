@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 19:09:16 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/21 19:25:55 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/22 23:38:13 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,19 @@ void	remove_null_string(t_tmp **head, t_tmp *keep)
 		}
 	}
 }
+int	choice_null_case(t_tmp *node, int quote)
+{
+	if (quote != 0)
+	{
+		node->value = change_null_string();
+		if (node->value == NULL)
+			return (0);
+	}
+	else
+		node->value = NULL;
+	return (1);
+}
+
 int	check_except_substitution(t_tmp	*node)
 {
 	int		len;
@@ -46,24 +59,45 @@ int	check_except_substitution(t_tmp	*node)
 	len = ft_strlen(node->key);
 	if (node->key[len - 1] == '$')
 	{
-		free(node->key);
-		node->key = copy_current_process_pid();
-		if (node->key == NULL)
+		node->value = copy_current_process_pid();
+		if (node->value == NULL)
 			return (-1);
 		return (1);
 	}
 	if (node->key[0] == '$' && node->key[1] == '?')
 	{
-		free(node->key);
-		node->key = get_exit_no();
-		if (node->key == NULL)
+		node->value = get_exit_no();
+		if (node->value == NULL)
 			return (-1);
 		return (1);
 	}
 	return (0);
 }
+// int	check_except_substitution(t_tmp	*node)
+// {
+// 	int		len;
 
-int	search_in_envpath(t_data *meta, t_tmp	*node)
+// 	len = ft_strlen(node->key);
+// 	if (node->key[len - 1] == '$')
+// 	{
+// 		free(node->key);
+// 		node->key = copy_current_process_pid();
+// 		if (node->key == NULL)
+// 			return (-1);
+// 		return (1);
+// 	}
+// 	if (node->key[0] == '$' && node->key[1] == '?')
+// 	{
+// 		free(node->key);
+// 		node->key = get_exit_no();
+// 		if (node->key == NULL)
+// 			return (-1);
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+
+int	search_in_envpath(t_data *meta, t_tmp*node, int	quote)
 {
 	t_path	*tmp;
 	int		result;
@@ -83,10 +117,10 @@ int	search_in_envpath(t_data *meta, t_tmp	*node)
 		}
 		tmp = tmp->next;
 	}
-	if (node->value == NULL)
+	if (node->value == NULL && node->key[0] != '"')
 	{
-		node->key = change_null_string();
-		if (node->key == NULL)
+		result = choice_null_case(node, quote);
+		if (result == 0)
 			return (-1);
 	}
 	return (1);
@@ -94,14 +128,18 @@ int	search_in_envpath(t_data *meta, t_tmp	*node)
 int	mapping_dollar_sign_to_env(t_data *meta, t_tmp *node)
 {
 	t_tmp	*tmp;
+	int		quote;
 	int		result;
 
 	tmp = node;
+	quote = 0;
 	while (tmp != NULL)
 	{
+		if (tmp->key[0] == '"')
+			quote = check_quote_pair(tmp->key[0], quote);
 		if (search_chr_in_str(tmp->key, '$') == 1 && ft_strlen(tmp->key) > 1)
 		{
-			result = search_in_envpath(meta, tmp);
+			result = search_in_envpath(meta, tmp, quote);
 			if (result == -1)
 				return (-1);
 		}
@@ -115,7 +153,6 @@ t_tmp	*change_dollar_sign(t_data *meta, char *str)
 	t_tmp	*node;
 	int		result;
 	int		quote;
-	int cnt = 0;
 
 	quote = check_quote_pair(str[0], 0);
 	tmp = dividing_copied_token(str, quote);
@@ -124,11 +161,10 @@ t_tmp	*change_dollar_sign(t_data *meta, char *str)
 	node = tmp;
 	while (node != NULL)
 	{
-		printf("list key = %s\n", node->key);
-		printf("list value = %s\n", node->value);
+		printf("befor mappeing dollar sign key = %s\n", node->key);
+		printf("befor mappeing dollar sign value = %s\n", node->value);
 		node = node->next;
 	}
-	printf("\n");
 	result = mapping_dollar_sign_to_env(meta, tmp);
 	if (result == -1)
 		return (free_tmp_list(tmp));
@@ -202,7 +238,7 @@ int	check_pass_substitute(char *str)
 	if (quote == 1)
 		return (1);
 	cnt = check_split_point_str(str);
-	printf("cnt =========================== %d\n", cnt);
+	printf("cnt = %d\n", cnt);
 	if (cnt == 0)
 		return (1);
 	return (0);
@@ -243,6 +279,6 @@ t_tmp	*substitute_dollar_sign(t_data *meta, char **str)
 	tmp = node;
 	node = node->next;
 	free(tmp);
-	remove_null_string(&node, NULL);
+	// remove_null_string(&node, NULL);
 	return (node);
 }

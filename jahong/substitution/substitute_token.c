@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/21 21:51:39 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/22 22:13:59 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,46 +43,44 @@ int	subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens)
 {
 	t_tmp	*node;
 	char	**tmp;
-	int		row;
-	int		result;
-	int cnt = 0;
-	t_tmp	*keep;
+	char	*str;
+	int		var;
+	t_tmp	*test;
 
 	if (search_chr_in_str(tokens->token, '$') == 0)
 		return (1);
-	row = measure_length_quote_set(tokens->token, row = 0);
-	tmp = dividing_sub_token(tokens->token, row);
+	var = measure_length_quote_set(tokens->token, var = 0);
+	tmp = dividing_sub_token(tokens->token, var);
 	if (tmp == NULL)
 		return (0);
-	while (tmp[cnt] != NULL)
-	{
-		printf("split quote %s\n", tmp[cnt]);
-		cnt++;
-	}
 	node = substitute_dollar_sign(meta, tmp);
+	test = node;
+	while (test != NULL)
+	{
+		printf("reset substitue key = %s\n", test->key);
+		printf("reset substitue value = %s\n", test->value);
+		test = test->next;
+	}
+	printf("\n");
 	free_sndry_arr((void **)tmp);
 	if (node == NULL)
 		return (0);
-	keep = node;
-	while (keep != NULL)
-	{
-		printf("final subtitute toekens key = %s\n", keep->key);
-		printf("final subtitute toekens value = %s\n", keep->value);
-		keep = keep->next;
-	}
-	result = substitute_wildcard(node);
-	if (result == 0)
+	var = substitute_wildcard(node);
+	if (var == 0)
 		return (0);
-	keep = node;
-	while (keep != NULL)
+	test = node;
+	while (test != NULL)
 	{
-		printf("after change whildcard key = %s\n", keep->key);
-		printf("after change whildcard value = %s\n", keep->value);
-		keep = keep->next;
+		printf("reset substitue wc key = %s\n", test->key);
+		printf("reset substitue wc value = %s\n", test->value);
+		test = test->next;
 	}
-	
-	
-	return (1); // 1 로 전환
+	str = join_splited_sub_token(node);
+	if (str == NULL)
+		return (0);
+	free(tokens->token);
+	tokens->token = str;
+	return (1);
 }
 int	check_quote_valid(char *token)
 {
@@ -107,12 +105,16 @@ int	check_quote_valid(char *token)
 }
 int	substitute_tokens(t_data *meta, t_list *tokens)
 {
+	t_list	*tmp;
+
+	tmp = tokens;
 	while (tokens != NULL)
 	{
 		if (check_quote_valid(tokens->token) == 0)
 			return (0);
-		if (subtitute_dollar_sign_n_wlidcard(meta, tokens) == 0);
+		if (subtitute_dollar_sign_n_wlidcard(meta, tokens) == 0)
 			return (0);
+		printf("after substitued token = %s\n", tokens->token);
 		tokens = tokens->next;
 	}
 	return (1);

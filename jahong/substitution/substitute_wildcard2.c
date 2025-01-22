@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/21 23:17:32 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/22 23:50:35 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*change_wild_card()
 
 int	remove_wildcard_in_node(t_tmp *node)
 {
-	printf("remove wildcard\n");
 	t_tmp	*head;
 	t_tmp	*tmp;
 
@@ -59,41 +58,20 @@ int	check_remove_wildcard(t_tmp *node)
 	flag = 1;
 	while (node != NULL)
 	{
-		if (node->value != NULL)
+		if (node->value != NULL && node->value[0] != '\0')
 		{
 			flag = 0;
 			break ;
 		}
-		if (node->key[0] != '*')
+		if (node->key[0] != '$' && node->key[0] != '*')
 		{
 			flag = 0;
 			break;
 		}
 		node = node->next;
 	}
-	printf("whie is flag = %d\n", flag);
 	return (flag);
 	
-}
-
-int	check_valid_change_wildcard(t_tmp *node)
-{
-	int		cnt;
-	int		cyc;
-	int		result;
-
-	cnt = 0;
-	cyc = 0;
-	result = 0;
-	while (node != NULL)
-	{
-		cnt += are_all_characters_same(node->key, '*');
-		node = node->next;
-		cyc++;
-	}
-	if (cyc == cnt)
-		result = 1;
-	return (result);
 }
 
 int	change_all_node(t_tmp *node)
@@ -116,7 +94,25 @@ int	change_all_node(t_tmp *node)
 		return (0);
 	return (1);
 }
+int	check_valid_change_wildcard(t_tmp *node)
+{
+	int		cnt;
+	int		cyc;
+	int		result;
 
+	cnt = 0;
+	cyc = 0;
+	result = 0;
+	while (node != NULL)
+	{
+		cnt += are_all_characters_same(node->key, '*');
+		node = node->next;
+		cyc++;
+	}
+	if (cyc == cnt)
+		result = 1;
+	return (result);
+}
 int	search_wildcard_all_node(t_tmp *node)
 {
 	int	cnt;
@@ -134,18 +130,11 @@ int	search_wildcard_all_node(t_tmp *node)
 
 int	substitute_wildcard(t_tmp *node)
 {
-	t_tmp	*tmp;
-	int		result;
-
 	if (search_wildcard_all_node(node) != 1)
 		return (1);
 	if (check_valid_change_wildcard(node) == 1)
 		return (change_all_node(node));
-	printf("value = %s\n", node->value);
 	if (node->value != NULL && check_remove_wildcard(node->next) == 1)
-	{
 		return (remove_wildcard_in_node(node));
-	}
-
 	return (1);
 }

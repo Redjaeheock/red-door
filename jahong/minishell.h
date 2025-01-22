@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/21 19:58:31 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/22 19:20:33 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct meta_data
 	struct cmd_list     *tokens;
 	struct path_list	*exp;
 	struct path_list	*env;
+	struct temp_list	*tmp;
 	char				**envm;
 	char                **path;
 	char                *exit_n;
@@ -108,6 +109,7 @@ int		sndry_arr_len(void **array);
 void	*free_sndry_arr(void **array);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
+char	*ft_strjoin_v2(const char *s1, const char *s2);
 
 /* extradt_words.c */
 char	*extract_word(char const *str, int start_index, int end);
@@ -127,7 +129,6 @@ int		search_wildcard_into_token(char *str);
 int     check_valid_wildcard(char *str, int idx, int quote);
 int		check_valid_back(char *str, int idx);
 int		check_quote_pair(char c, int quote);
-// int		check_token_chr(char *token, int idx);
 
 /* operator_character_check.c */
 int		check_out_redirection(const char *str, int index);
@@ -144,7 +145,6 @@ char	**dividing_sub_token(char *str, int len);
 
 /* deviding_copied_token.c */
 t_tmp	*dividing_copied_token(char *str, int quote);
-// char	**dividing_copied_token(char *str, int len, int quote);
 
 /* substitute_token.c*/
 int		subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens);
@@ -156,17 +156,17 @@ t_tmp	*substitute_dollar_sign(t_data *meta, char **str);
 
 /* substitute_wildcard.c */
 int		substitute_wildcard(t_tmp *node);
-// int		substitute_wildcard(t_data *meta, char **str, int quote, int flag);
 
 /* change_dollar_sign.c */
 char	*copy_current_process_pid(void);
 char	*change_null_string(void);
 
+/* join_sub_tokens*/
+char	*join_splited_sub_token(t_tmp *tmp);
+
 /* utils.c*/
 char	search_chr_in_str(char *str, char c);
 char	are_all_characters_same(char *str, char c);
-char	*str_join(char const *s1, char const *s2);
-char	*join_div_tokens(char **tmp, int flag);
 char	*get_exit_no(void);
 
 /*utils2.c*/

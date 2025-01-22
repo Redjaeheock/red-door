@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:26:20 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/09 19:59:31 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/22 18:38:19 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int main(int ac, char **av, char **envp)
 
     str = readline("> : ");
     printf(">>> %s\n", str);
-    arr = (char **)malloc(sizeof(char*) * 2);
-    arr[0] = "a.out";
-    arr[1] = NULL;
+    arr = (char **)malloc(sizeof(char*) * 3);
+    arr[0] = '\0';
+    arr[2] = NULL;
 
-    if (execve(".", arr, envp) == -1)
+    if (execve('\0', arr, envp) == -1)
         printf("%s: command not found\n", str);
     return (0);
 
