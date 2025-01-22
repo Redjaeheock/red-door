@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 21:38:56 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/22 19:13:22 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct start_list
 	struct start_list	*next;
 	t_tokentype			type_pipe;
 	t_tokentype			type_re;
+	char				*key; // 리다이렉션 str**이 NULL 포인트시, $aa key값 넣기
 	char				**str;
 }	t_cmd_list;
 
@@ -231,5 +232,18 @@ t_list		*mn_split(t_data *meta, char **str);
 void		trade_exec_cmd(t_data *meta, t_cmd_list **exec_cmd, \
 t_list **tokens, char **str);
 void		exec_cmd_set_tpye(t_cmd_list **exec_cmd);
+
+/* built_in */
+int			check_built_in_cmd(char *cmd, char *exec_cmd);
+void		builtin(t_data *meta);
+void		minishell_exit(t_cmd_list **exec_cmd);
+void		minishell_echo(t_cmd_list **exec_cmd);
+void		minishell_pwd(t_data *meta);
+void		minishell_env(t_data *meta);
+void		minishell_export(t_data *meta);
+
+
+int			ft_strcmp(const char *s1, const char *s2);
+char	*searching_from_envval(t_data *meta, char *str);
 
 #endif

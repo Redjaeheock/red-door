@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:38:05 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/18 15:14:38 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 11:26:51 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 int	check_redirection_size(t_list **tmp, int *array_size)
 {

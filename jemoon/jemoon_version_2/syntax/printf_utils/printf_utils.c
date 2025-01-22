@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:58:04 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 20:26:29 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 11:27:16 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	printf_exec_commads(t_cmd_list *exec_commands)
 {

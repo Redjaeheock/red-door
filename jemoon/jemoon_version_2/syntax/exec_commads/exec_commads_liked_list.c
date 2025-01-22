@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 21:14:48 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 11:26:43 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	free_double_string_array(char **str)
 {

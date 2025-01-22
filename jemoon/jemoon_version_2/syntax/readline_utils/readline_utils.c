@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 10:33:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 21:55:46 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 11:27:21 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 char	*handle_error(t_cmd_list **exec_cmd, char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 19:55:03 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 16:03:51 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 11:27:04 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	recycle_size(t_list *tokens, int *cmd_size, \
 t_tokentype *plag_pipe, t_tokentype *plag_redi)

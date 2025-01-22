@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:50:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 19:57:22 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 22:27:11 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 char	*searching_from_envval(t_data *meta, char *str)
 {
 	t_path	*tmp;
-	int		len;
+//	int		len;
 
 	tmp = meta->env;
-	len = ft_strlen(str);
+//	len = ft_strlen(str);
+	/*
 	if (str[len - 1] == '$')
 		return (copy_current_process_pid());
 	if (str[0] == '$' && str[1] == '?')
 		return (get_exit_no());
+	*/
 	while (tmp != NULL)
 	{
-		if (ft_strncmp(&str[1], tmp->key, ft_strlen(&str[1])) == 0)
+		if (ft_strncmp(str, tmp->key, ft_strlen(str)) == 0)
 			return (copy_env_value(tmp->value));
 		tmp = tmp->next;
 	}

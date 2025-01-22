@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:35:17 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 17:12:31 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 11:27:39 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 int	check_is_valid_redirection(t_list **tokens)
 {

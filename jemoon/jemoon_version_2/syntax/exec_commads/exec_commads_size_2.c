@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 19:12:08 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 19:23:03 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 11:26:47 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 int	handle_redirection_case(t_list *tokens, int *check_redi, \
 t_tokentype *plag_redi)

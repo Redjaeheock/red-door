@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 14:30:28 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/22 15:33:15 by jemoon           ###   ########.fr       */
+/*   Created: 2025/01/21 13:32:11 by jemoon            #+#    #+#             */
+/*   Updated: 2025/01/21 22:38:21 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+# include "../minishell.h"
 
-int	ft_strncmp(char *s1, const char *s2, unsigned int n)
+void	builtin(t_data *meta)
 {
-	unsigned int	len;
-
-	len = 0;
-	while (len < n && ((((unsigned char *)s1)[len] != '\0')
-			|| (((unsigned char *)s2)[len] != '\0')))
-	{
-		if (((unsigned char *)s1)[len] - ((unsigned char *)s2)[len] != 0)
-			return (((unsigned char *)s1)[len] - ((unsigned char *)s2)[len]);
-		len++;
-	}
-	return (0);
+	minishell_exit(&(*meta).exec_cmd);
+	minishell_echo(&(*meta).exec_cmd);
+	minishell_pwd(meta);
+	minishell_env(meta);
+	minishell_export(meta);
 }

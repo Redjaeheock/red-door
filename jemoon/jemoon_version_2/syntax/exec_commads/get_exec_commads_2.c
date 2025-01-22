@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 21:13:17 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 11:26:54 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	exec_make_node_2(t_cmd_list **exec_cmd, char **string_array, \
 t_tokentype plag_pipe, t_tokentype plag_redi)

@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 20:41:02 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 21:55:01 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 11:27:10 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	exec_cmd_set_tpye(t_cmd_list **exec_cmd)
 {

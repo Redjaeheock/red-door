@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 10:58:16 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/20 22:08:43 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 11:27:36 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	trade_exec_cmd(t_data *meta, t_cmd_list **exec_cmd, \
 t_list **tokens, char **str)

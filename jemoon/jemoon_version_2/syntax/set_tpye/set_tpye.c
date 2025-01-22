@@ -6,32 +6,32 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:42:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/15 16:24:50 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/21 21:52:11 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	is_first_node_type(t_list **tokens)
 {
-	if (((*tokens)->token[0] == '<' && (*tokens)->token[1] == '\0'))
-		(*tokens)->type = IN_REDEC;
-	else if (((*tokens)->token[0] == '>' && (*tokens)->token[1] == '\0'))
-		(*tokens)->type = OUT_REDEC;
-	else if (((*tokens)->token[0] == '<' && (*tokens)->token[1] == '<'))
-		(*tokens)->type = HEREDOC;
-	else if (((*tokens)->token[0] == '>' && (*tokens)->token[1] == '>'))
-		(*tokens)->type = GR_REDEC;
-	else if (((*tokens)->token[0] == '|' && (*tokens)->token[1] == '\0'))
-		(*tokens)->type = PIPE;
-	else if (((*tokens)->token[0] == '&' && (*tokens)->token[1] == '&'))
-		(*tokens)->type = AND;
-	else if (((*tokens)->token[0] == '|' && (*tokens)->token[1] == '|'))
-		(*tokens)->type = OR;
-	else if (((*tokens)->token[0] != '<' || (*tokens)->token[0] != '>'))
+	if (ft_strcmp((*tokens)->token, "\0") == 0)
 		(*tokens)->type = CMD;
-	else
-		(*tokens)->type = NONE;
+	else if (ft_strcmp((*tokens)->token, "<") == 0)
+		(*tokens)->type = IN_REDEC;
+	else if (ft_strcmp((*tokens)->token, ">") == 0)
+		(*tokens)->type = OUT_REDEC;
+	else if (ft_strcmp((*tokens)->token, "<<") == 0)
+		(*tokens)->type = HEREDOC;
+	else if (ft_strcmp((*tokens)->token, ">>") == 0)
+		(*tokens)->type = GR_REDEC;
+	else if (ft_strcmp((*tokens)->token, "|") == 0)
+		(*tokens)->type = PIPE;
+	else if (ft_strcmp((*tokens)->token, "&&") == 0)
+		(*tokens)->type = AND;
+	else if (ft_strcmp((*tokens)->token, "||") == 0)
+		(*tokens)->type = OR;
+	else /*if (((*tokens)->token[0] != '<' || (*tokens)->token[0] != '>'))*/
+		(*tokens)->type = CMD;
 }
 
 void	set_tpye(t_list **tokens)
@@ -41,19 +41,19 @@ void	set_tpye(t_list **tokens)
 	else if ((*tokens)->prev->type == PIPE && ((*tokens)->token[0] != '<' && \
 	(*tokens)->token[0] != '>' && (*tokens)->token[0] != '|'))
 		(*tokens)->type = CMD;
-	else if ((*tokens)->token[0] == '|' && (*tokens)->token[1] == '\0')
+	else if (ft_strcmp((*tokens)->token, "|") == 0)
 		(*tokens)->type = PIPE;
-	else if ((*tokens)->token[0] == '<' && (*tokens)->token[1] == '\0')
+	else if (ft_strcmp((*tokens)->token, "<") == 0)
 		(*tokens)->type = IN_REDEC;
-	else if ((*tokens)->token[0] == '>' && (*tokens)->token[1] == '\0')
+	else if (ft_strcmp((*tokens)->token, ">") == 0)
 		(*tokens)->type = OUT_REDEC;
-	else if ((*tokens)->token[0] == '<' && (*tokens)->token[1] == '<')
+	else if (ft_strcmp((*tokens)->token, "<<") == 0)
 		(*tokens)->type = HEREDOC;
-	else if ((*tokens)->token[0] == '>' && (*tokens)->token[1] == '>')
+	else if (ft_strcmp((*tokens)->token, ">>") == 0)
 		(*tokens)->type = GR_REDEC;
-	else if ((*tokens)->token[0] == '&' && (*tokens)->token[1] == '&')
+	else if (ft_strcmp((*tokens)->token, "&&") == 0)
 		(*tokens)->type = AND;
-	else if ((*tokens)->token[0] == '|' && (*tokens)->token[1] == '|')
+	else if (ft_strcmp((*tokens)->token, "||") == 0)
 		(*tokens)->type = OR;
 	else if ((*tokens)->prev != NULL && (*tokens)->token[0] == '-')
 		(*tokens)->type = OPTION;

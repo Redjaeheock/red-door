@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   check_built_in_cmd.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 14:30:28 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/22 15:33:15 by jemoon           ###   ########.fr       */
+/*   Created: 2025/01/21 12:59:10 by jemoon            #+#    #+#             */
+/*   Updated: 2025/01/21 21:32:28 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-int	ft_strncmp(char *s1, const char *s2, unsigned int n)
+int	check_built_in_cmd(char *cmd, char *exec_cmd)
 {
-	unsigned int	len;
+	int	i;
 
-	len = 0;
-	while (len < n && ((((unsigned char *)s1)[len] != '\0')
-			|| (((unsigned char *)s2)[len] != '\0')))
+	i = 0;
+	if (ft_strlen(cmd) != ft_strlen(exec_cmd))
+		return (0);
+	while (cmd[i] != '\0' || exec_cmd[i] != '\0')
 	{
-		if (((unsigned char *)s1)[len] - ((unsigned char *)s2)[len] != 0)
-			return (((unsigned char *)s1)[len] - ((unsigned char *)s2)[len]);
-		len++;
+		if (cmd[i] == exec_cmd[i])
+			i++;
+		else
+			return (0);
 	}
-	return (0);
+	if (cmd[i] != exec_cmd[i])
+		return (0);
+	return (1);
 }
