@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:54:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/22 21:33:50 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/23 23:54:04 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int   cmp_pre_next_chr(char *str, int idx)
 	}
 	return (0);
 }
-int   increase_index(char *str, int idx, int quote)
+int   increase_index(char *str, int idx)
 {
 	if (str[idx] == '$' && str[idx - 1] == '$')
 		return (1);
@@ -41,19 +41,21 @@ int   increase_index(char *str, int idx, int quote)
    return (0);
 }
 
-int   move_index(char *str, int idx, int quote, int num)
+int   move_index(char *str, int idx, int num)
 {
 	int inc_idx;
 
 	inc_idx = 0;
+	printf("start str c = %c\n", str[idx]);
     while (num == 1 && str[idx] != '$' && str[idx] != '\0')
         idx++;
 	if (num == 2)
 	{
+		printf("num2\n");
 		idx++;
 		while (str[idx] != '\0')
 		{
-			inc_idx = increase_index(str, idx, quote);
+			inc_idx = increase_index(str, idx);
 			if (inc_idx == 1)
 			{
 				idx += inc_idx;
@@ -67,32 +69,38 @@ int   move_index(char *str, int idx, int quote, int num)
 	}
 	return (idx);
 }
-char	*split_copied_token(char *str, int *idx, int quote)
+char	*split_copied_token(char *str, int *idx, int *quote)
 {
 	char	*tmp;
 	int		start;
 
+	printf("quote = %d\n", *quote);
 	start = *idx;
 	if (str[*idx] != '$')
-		*idx = move_index(str, *idx, quote, 1);
+		*idx = move_index(str, *idx, 1);
 	else
-		*idx = move_index(str, *idx, quote, 2);
-	printf("start = %d *idx = %d\n\n", start, *idx);
+		*idx = move_index(str, *idx, 2);
+	if (*idx == ft_strlen(str) && str[*idx] == '"')
+		*idx -= 1;
+	*quote = check_quote_pair(str[*idx], *quote);
+	printf("start = %d *idx = %d\n", start, *idx);
 	tmp = copy_index_range(str, start, *idx);
 	if (tmp == NULL)
 		return (NULL);
 	return (tmp);
 }
-t_tmp	*dividing_copied_token(char *str, int quote)
+t_tmp	*dividing_copied_token(char *str)
 {
 	t_tmp	*tmp;
 	int		idx;
+	int		quote;
 
 	idx = 0;
 	tmp = NULL;
+	quote = check_quote_pair(str[idx], 0);
 	while (str[idx] != '\0')
 	{
-		tmp = make_tmp_node(tmp, split_copied_token(str, &idx, quote), NULL);
+		tmp = make_tmp_node(tmp, split_copied_token(str, &idx, &quote), NULL);
 		if (tmp == NULL)
 			return (free_tmp_list(tmp));
 	}

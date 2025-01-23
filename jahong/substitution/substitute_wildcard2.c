@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/22 23:50:35 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/23 15:08:56 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,83 +39,66 @@ int	remove_wildcard_in_node(t_tmp *node)
 	t_tmp	*head;
 	t_tmp	*tmp;
 
-	head = node->next;
-	node->next = NULL;
-	while (head != NULL)
-	{
-		tmp = head;
+	head = node;
+	while (head->value == NULL && head->value[0] == '\0')
 		head = head->next;
-		free_single_tmp_node(tmp);
+	tmp = head->next;
+	head->next = NULL;
+	while (tmp != NULL)
+	{
+		head = tmp;
+		tmp = tmp->next;
+		free_single_tmp_node(head);
 	}
 	return (1);
 }
 int	check_remove_wildcard(t_tmp *node)
 {
 	t_tmp	*head;
+	t_tmp	*tmp;
 	int		flag;
 
 	head = node;
+	tmp = node;
 	flag = 1;
-	while (node != NULL)
+	while (tmp->value == NULL || tmp->value[0] == '\0')
+		tmp = tmp->next;
+	tmp = tmp->next;
+	while (tmp != NULL)
 	{
-		if (node->value != NULL && node->value[0] != '\0')
+		if (tmp->value != NULL && tmp->value[0] != '\0')
 		{
 			flag = 0;
 			break ;
 		}
-		if (node->key[0] != '$' && node->key[0] != '*')
+		if (tmp->key[0] != '$' && tmp->key[0] != '*')
 		{
 			flag = 0;
 			break;
 		}
-		node = node->next;
+		tmp = tmp->next;
 	}
 	return (flag);
-	
 }
-
-int	change_all_node(t_tmp *node)
-{
-	t_tmp	*head;
-	t_tmp	*tmp;
-
-	head = node;
-	node = node->next;
-	head->next = NULL;
-	while (node != NULL)
-	{
-		tmp = node;
-		node = node->next;
-		free_single_tmp_node(tmp);
-	}
-	free(head->key);
-	head->key = change_wild_card();
-	if (head ->key == NULL)
-		return (0);
-	return (1);
-}
-int	check_valid_change_wildcard(t_tmp *node)
+int	check_valid_wildcard_in_nodes(t_tmp *node)
 {
 	int		cnt;
-	int		cyc;
 	int		result;
 
 	cnt = 0;
-	cyc = 0;
 	result = 0;
 	while (node != NULL)
 	{
 		cnt += are_all_characters_same(node->key, '*');
 		node = node->next;
-		cyc++;
-	}
-	if (cyc == cnt)
-		result = 1;
+	}	
+	if (cnt == 0)
+		result = 0;
 	return (result);
 }
-int	search_wildcard_all_node(t_tmp *node)
+int	substitute_wildcard(t_tmp *node)
 {
-	int	cnt;
+	int		cnt;
 
 	cnt = 0;
 	while (node != NULL)
@@ -124,17 +107,6 @@ int	search_wildcard_all_node(t_tmp *node)
 		node = node->next;
 	}
 	if (cnt == 0)
-		return (0);
-	return (1);
-}
-
-int	substitute_wildcard(t_tmp *node)
-{
-	if (search_wildcard_all_node(node) != 1)
 		return (1);
-	if (check_valid_change_wildcard(node) == 1)
-		return (change_all_node(node));
-	if (node->value != NULL && check_remove_wildcard(node->next) == 1)
-		return (remove_wildcard_in_node(node));
 	return (1);
 }

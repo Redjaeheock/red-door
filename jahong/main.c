@@ -6,30 +6,29 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/22 22:33:20 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/23 21:59:49 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*split_words(char const *str, int cmd_flag)
+t_list	*split_words(char const *str, char c)
 {
 	t_list	*words;
 	int		index;
-	char	*word_line;
 
 	index = 0;
 	words = NULL;
 	while (str[index] != '\0')
 	{   
         if (str[index] == '|')
-            index = pipe_div(&words, str, index);
+            index = pipe_div(&words, str, index, c);
         else if (str[index] == '<')
-            index = in_redirec_div(&words, str, index);
+            index = in_redirec_div(&words, str, index, c);
         else if (str[index] == '>')
-            index = out_redirec_div(&words, str, index);
+            index = out_redirec_div(&words, str, index, c);
         else if (str[index] == '&')
-            index = ampersand_div(&words, str, index);
+            index = ampersand_div(&words, str, index, c);
         else if (str[index] != 32)
             index = string_div(&words, str, index);
         if (index == -1)
@@ -82,7 +81,7 @@ int check_operator_v1(const char *str, int index)
 		return (check_operator_v2(str, index));
     return (1);
 }
-t_list *mn_split(t_data *meta, char **str)
+t_list *mn_split(t_data *meta, char **str, char c)
 {
 	t_list	*words;
     int cmd_flag;
@@ -95,11 +94,16 @@ t_list *mn_split(t_data *meta, char **str)
 		*str = NULL;
 		return (NULL);
 	}
-    cmd_flag = check_operator_v1(*str, 0);
-    if (cmd_flag == -1)
-        return (NULL);
-	words = split_words(*str, cmd_flag);
-	if (substitute_tokens(meta, words) == 0)
+	if (c == 'c')
+	{
+		cmd_flag = check_operator_v1(*str, 0);
+		if (cmd_flag == -1)
+			return (NULL);
+	}
+	words = split_words(*str, c);
+	if (words == NULL)
+		return (NULL);
+	if (substitute_tokens(meta, words, c) == 0)
 		return (free_t_list(words));
 	return (words);
 }
@@ -115,7 +119,7 @@ int	main(int argc, char **argv, char **envp)
 	while(1)
 	{
 		str = readline("bash : ");
-		meta->tokens = mn_split(meta, &str);
+		meta->tokens = mn_split(meta, &str, 'c');
 		if (meta->tokens == NULL)
 			continue;
 		tmp = meta->tokens;

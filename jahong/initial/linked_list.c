@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:21 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/20 19:17:28 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/23 14:13:26 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ t_list	*create_linked_list(char *str)
 	new = (t_list *)malloc(sizeof(t_list));
 	if (new == NULL)
 		return (NULL);
-	new->token = str;
+	new->prev = NULL;
 	new->next = NULL;
+	new->key = NULL;
+	new->token = str;
+
 	return (new);
 }
 void	add_back_linked_list(t_list *tokenize, t_list *new)

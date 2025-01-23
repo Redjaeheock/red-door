@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/22 19:20:34 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/23 20:29:37 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	meta_token_set_null(t_data *meta)
 	meta->tokens = NULL;
 	meta->exp = NULL;
 	meta->env = NULL;
-	meta->tmp = NULL;
 	meta->envm = NULL;
 	meta->path = NULL;
 	meta->exit_n = NULL;

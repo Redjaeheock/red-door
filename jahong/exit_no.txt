@@ -97,3 +97,39 @@ $HOME * , $HOME ***** 은 하나의 와일드 카드로 인식되서 처리된�
 $HOME * * * ... 은 각각이 와일드 카드로 인식되서 처리된다.
 
 ---------------------------------------------------
+
+< "$1" => null 문자로 치환되나 파일 서칭이 가능 ("" 느낌으로 no search directory or file)
+< $1   => null 문자로 치환되어 리다이렉션 자체가 고장 (NULL 느낌으로 bash: $1: ambiguous redirect)
+
+--------------------------------------------------
+
+명령어와 heredoc 이 동시에 있을 경우 heredoc 우선 입력 받아 임시 버퍼에 저장된 후 이 후 명령어 실행
+
+red_h@LAPTOP-2E1IM6UM:~$ file < $1 << o > file2
+> $***$1$HOME
+> o
+bash: $1: ambiguous redirect
+
+red_h@LAPTOP-2E1IM6UM:~$ cat << o > file2
+> $****
+> o
+red_h@LAPTOP-2E1IM6UM:~$ cat file2
+***
+red_h@LAPTOP-2E1IM6UM:~$ cat << o > file2
+> $1
+> o
+red_h@LAPTOP-2E1IM6UM:~$ cat file2
+
+-----------------------------------------------------
+red_h@LAPTOP-2E1IM6UM:~$ cat file2
+testtesttest
+red_h@LAPTOP-2E1IM6UM:~$ cat | << o > file2
+> hello word
+> o
+o
+red_h@LAPTOP-2E1IM6UM:~$ cat file2
+red_h@LAPTOP-2E1IM6UM:~$
+------------------------------------------------------
+위 같은 경우 히어독 입력이 우선적으로 받고, fd 처리 할 곳 이 없어 종료되며
+그 다음 cat 의 입력을 받지만 파이프의 출력이 닫혀 있기 때문에 하나의 스트링을 받고 종료됨
+?? 그런데 왜 file2 의 내용은 지워졌는가?

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/22 19:27:23 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/23 14:09:12 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ void	*free_meta_token(t_data *meta)
 		free_sndry_arr((void **)meta->envm);
 	if (meta->tokens != NULL)
 		free_t_list(meta->tokens);
-	if (meta->tmp != NULL)
-		free_tmp_list(meta->tmp);
 	if (meta != NULL)
 		free_t_data(meta);
 	return (NULL);

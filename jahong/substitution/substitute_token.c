@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/22 22:13:59 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/23 22:34:30 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,32 +54,12 @@ int	subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens)
 	if (tmp == NULL)
 		return (0);
 	node = substitute_dollar_sign(meta, tmp);
-	test = node;
-	while (test != NULL)
-	{
-		printf("reset substitue key = %s\n", test->key);
-		printf("reset substitue value = %s\n", test->value);
-		test = test->next;
-	}
-	printf("\n");
 	free_sndry_arr((void **)tmp);
 	if (node == NULL)
 		return (0);
-	var = substitute_wildcard(node);
+	var = join_sub_tokens(tokens, node);
 	if (var == 0)
 		return (0);
-	test = node;
-	while (test != NULL)
-	{
-		printf("reset substitue wc key = %s\n", test->key);
-		printf("reset substitue wc value = %s\n", test->value);
-		test = test->next;
-	}
-	str = join_splited_sub_token(node);
-	if (str == NULL)
-		return (0);
-	free(tokens->token);
-	tokens->token = str;
 	return (1);
 }
 int	check_quote_valid(char *token)
@@ -103,19 +83,20 @@ int	check_quote_valid(char *token)
 	}
 	return (1);
 }
-int	substitute_tokens(t_data *meta, t_list *tokens)
+int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 {
 	t_list	*tmp;
-
+	
 	tmp = tokens;
-	while (tokens != NULL)
+	while (tmp != NULL)
 	{
-		if (check_quote_valid(tokens->token) == 0)
+		if (check_quote_valid(tmp->token) == 0)
 			return (0);
-		if (subtitute_dollar_sign_n_wlidcard(meta, tokens) == 0)
+		if (subtitute_dollar_sign_n_wlidcard(meta, tmp) == 0)
 			return (0);
-		printf("after substitued token = %s\n", tokens->token);
-		tokens = tokens->next;
+		printf("after substitued key = %s\n", tmp->key);
+		printf("after substitued token = %s\n", tmp->token);
+		tmp = tmp->next;
 	}
 	return (1);
 }

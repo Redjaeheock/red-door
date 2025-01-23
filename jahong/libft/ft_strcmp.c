@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:40 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 19:58:22 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/23 19:45:10 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 	s1_len = (int)ft_strlen(s1);
 	s2_len = (int)ft_strlen(s2);
-	if (s1_len > s2_len)
+	if (s2 == NULL || s1_len > s2_len)
 		return (1);
-	else if (s1_len < s2_len)
+	else if (s1 == NULL || s1_len < s2_len)
 		return (-1);
 	idx = 0;
 	while (s1[idx] != '\0' && s2[idx] != '\0')

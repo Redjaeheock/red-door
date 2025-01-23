@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/22 19:20:33 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/23 23:31:23 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct  cmd_list
 	struct cmd_list     *prev;
 	struct cmd_list     *next;
 	t_tokentype		    type;
+	char				*key;
 	char		    	*token;
 }					    t_list;
 
@@ -55,7 +56,6 @@ typedef struct meta_data
 	struct cmd_list     *tokens;
 	struct path_list	*exp;
 	struct path_list	*env;
-	struct temp_list	*tmp;
 	char				**envm;
 	char                **path;
 	char                *exit_n;
@@ -111,6 +111,9 @@ char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_strjoin_v2(const char *s1, const char *s2);
 
+/* main.c */
+int		check_operator_v1(const char *str, int index);
+
 /* extradt_words.c */
 char	*extract_word(char const *str, int start_index, int end);
 char	*extract_from_envp(char *envp, int *idx, char condition);
@@ -119,10 +122,10 @@ char	**extract_path(char **envp, t_path *path);
 
 /* split_words.c */
 int		string_div(t_list **words, char const *str, int index);
-int		ampersand_div(t_list **words, const char *str, int index);
-int		in_redirec_div(t_list **words, const char *str, int index);
-int		out_redirec_div(t_list **words, const char *str, int index);
-int		pipe_div(t_list **words, const char *str, int index);
+int		ampersand_div(t_list **words, const char *str, int index, char c);
+int		in_redirec_div(t_list **words, const char *str, int index, char c);
+int		out_redirec_div(t_list **words, const char *str, int index, char c);
+int		pipe_div(t_list **words, const char *str, int index, char c);
 
 /* token_character_check.c */
 int		search_wildcard_into_token(char *str);
@@ -144,12 +147,12 @@ char	**dividing_sub_token(char *str, int len);
 
 
 /* deviding_copied_token.c */
-t_tmp	*dividing_copied_token(char *str, int quote);
+t_tmp	*dividing_copied_token(char *str);
 
 /* substitute_token.c*/
 int		subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens);
 int		check_quote_valid(char *token);
-int		substitute_tokens(t_data *meata, t_list *tokens);
+int		substitute_tokens(t_data *meata, t_list *tokens, char c);
 
 /* substitute_dollar_sign.c */
 t_tmp	*substitute_dollar_sign(t_data *meta, char **str);
@@ -162,7 +165,8 @@ char	*copy_current_process_pid(void);
 char	*change_null_string(void);
 
 /* join_sub_tokens*/
-char	*join_splited_sub_token(t_tmp *tmp);
+int		join_sub_tokens(t_list *tokens, t_tmp *node);
+// char	*join_splited_sub_token(t_tmp *tmp);
 
 /* utils.c*/
 char	search_chr_in_str(char *str, char c);

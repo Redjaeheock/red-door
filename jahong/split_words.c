@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/09 13:05:41 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/23 21:59:23 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,52 +35,75 @@ int	string_div(t_list **words, char const *str, int index)
 	}
 	make_node(&(*words), extract_word(str, start_index, index));
 	if (words == NULL)
-		return (-1);
+		return ((memory_alloc_error(), -1));
 	return (--index);
 }
-int	ampersand_div(t_list **words, const char *str, int index)
+int	ampersand_div(t_list **words, const char *str, int index, char c)
 {
 	int	start_index;
+	int	len;
 
 	start_index = index;
 	while (str[index] == '&')
 		index++;
-	if ((index - start_index) != 2)
-		return (index);
+	if (c == 'c')
+	{
+		len = index - start_index;
+		if (len == 1)
+			return (error_syntax("&"));
+		if (len == 3)
+			return (error_syntax("&"));
+		if (4 <= len)
+			return (error_syntax("&&"));
+	}
 	make_node(&(*words), extract_word(str, start_index, index));
 	if (words == NULL)
-		return (-1);
+		return ((memory_alloc_error(), -1));
 	return (--index);
 }
-int	in_redirec_div(t_list **words, const char *str, int index)
+int	in_redirec_div(t_list **words, const char *str, int index, char c)
 {
 	int	start_index;
+	int	len;
 
 	start_index = index;
 	while (str[index] == '<')
 		index++;
-	if ((index - start_index) > 2)
-		return (-1);
+	if (c == 'c')
+	{
+		len = index - start_index;
+		if (len == 3)
+			return (error_syntax("<"));
+		else if (4 <= len)
+			return (error_syntax("<<"));
+	}
 	make_node(&(*words), extract_word(str, start_index, index));
 	if (words == NULL)
-		return (-1);
+		return ((memory_alloc_error(), -1));
 	return (--index);
 }
-int	out_redirec_div(t_list **words, const char *str, int index)
+int	out_redirec_div(t_list **words, const char *str, int index, char c)
 {
 	int	start_index;
+	int	len;
 
 	start_index = index;
 	while (str[index] == '>')
 		index++;
-	if ((index - start_index) > 2)
-		return (-1);
+	if (c == 'c')
+	{
+		len = index - start_index;
+		if (len == 3)
+			return (error_syntax(">"));
+		else if (4 <= len)
+			return (error_syntax(">>"));
+	}
 	make_node(&(*words), extract_word(str, start_index, index));
 	if (words == NULL)
-		return (-1);
+		return ((memory_alloc_error(), -1));
 	return (--index);
 }
-int	pipe_div(t_list	**words, const char	*str, int index)
+int	pipe_div(t_list	**words, const char	*str, int index, char c)
 {
 	int	start_index;
 
@@ -88,10 +111,10 @@ int	pipe_div(t_list	**words, const char	*str, int index)
 	while (str[index] == '|')
 		index++;
 	if ((index - start_index) > 2)
-		return (-1);
+		return (error_syntax("||"));
 	make_node(&(*words), extract_word(str, start_index, index));
 	if (words == NULL)
-		return (-1);
+		return ((memory_alloc_error(), -1));
 	return (--index);
 }
 //	1. 더블 쿼터나 싱글 쿼터 중 하나가 보이면 해당 plag 지정.
