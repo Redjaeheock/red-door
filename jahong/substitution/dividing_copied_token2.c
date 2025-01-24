@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:54:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 23:54:04 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 21:10:44 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ int   move_index(char *str, int idx, int num)
 	int inc_idx;
 
 	inc_idx = 0;
-	printf("start str c = %c\n", str[idx]);
-    while (num == 1 && str[idx] != '$' && str[idx] != '\0')
+    while ((num == 1) && str[idx] != '$' && str[idx] != '\0')
+	{
         idx++;
+	}
 	if (num == 2)
 	{
-		printf("num2\n");
 		idx++;
 		while (str[idx] != '\0')
 		{
@@ -74,16 +74,17 @@ char	*split_copied_token(char *str, int *idx, int *quote)
 	char	*tmp;
 	int		start;
 
-	printf("quote = %d\n", *quote);
 	start = *idx;
 	if (str[*idx] != '$')
 		*idx = move_index(str, *idx, 1);
 	else
 		*idx = move_index(str, *idx, 2);
-	if (*idx == ft_strlen(str) && str[*idx] == '"')
-		*idx -= 1;
+	if (*quote != 0 && str[*idx - 1] == '"')
+	{
+		if (*idx == ft_strlen(str))
+			*idx -= 1;
+	}
 	*quote = check_quote_pair(str[*idx], *quote);
-	printf("start = %d *idx = %d\n", start, *idx);
 	tmp = copy_index_range(str, start, *idx);
 	if (tmp == NULL)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 22:34:30 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 21:10:38 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ int	subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens)
 {
 	t_tmp	*node;
 	char	**tmp;
-	char	*str;
 	int		var;
-	t_tmp	*test;
 
 	if (search_chr_in_str(tokens->token, '$') == 0)
 		return (1);
@@ -66,11 +64,9 @@ int	check_quote_valid(char *token)
 {
 	int	idx;
 	int quote;
-	int	cnt;
 
 	idx = 0;
 	quote = 0;
-	cnt = 0;
 	while (token[idx] != '\0')
 	{
 		quote = check_quote_pair(token[idx], quote);
@@ -90,13 +86,20 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 	tmp = tokens;
 	while (tmp != NULL)
 	{
-		if (check_quote_valid(tmp->token) == 0)
-			return (0);
+		if (c == 'c')
+		{
+			if (check_quote_valid(tmp->token) == 0)
+				return (0);
+		}
 		if (subtitute_dollar_sign_n_wlidcard(meta, tmp) == 0)
 			return (0);
-		printf("after substitued key = %s\n", tmp->key);
-		printf("after substitued token = %s\n", tmp->token);
 		tmp = tmp->next;
+	}
+	if (c == 'c')
+	{
+		printf("start substitute wildcard\n");
+		if (substitute_wildcard(meta, tokens) == 0)
+			return (0);
 	}
 	return (1);
 }

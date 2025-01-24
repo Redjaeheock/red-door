@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 18:35:13 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 10:49:04 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:46:15 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*change_null_string(void)
 
 	tmp = (char *)malloc(sizeof(char) * 1);
 	if (tmp == NULL)
-		return (sndry_alloc_err(NULL));
+		return (memory_alloc_error());
 	tmp[0] = '\0';
 	return (tmp);
 }

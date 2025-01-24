@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:34:43 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 10:49:06 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 21:10:39 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*extract_partial_token(char *str, int idx, int *end, int *quote)
 char	*temporary_div_token(char *str, int *idx, int *quote)
 {
 	char	*tmp;
-	int		len;
 	int		start;
 
 	start = *idx;

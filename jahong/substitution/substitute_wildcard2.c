@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 15:08:56 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 21:10:37 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*change_wild_card()
+char	*change_wild_card(t_data *meta)
 {
 	char	*tmp;
 	char	*wild_card;
@@ -34,79 +34,107 @@ char	*change_wild_card()
 	return (tmp);
 }
 
-int	remove_wildcard_in_node(t_tmp *node)
+int	remove_wildcard_in_node(t_list *node)
 {
-	t_tmp	*head;
-	t_tmp	*tmp;
+	char	*str;
+	int		idx;
 
-	head = node;
-	while (head->value == NULL && head->value[0] == '\0')
-		head = head->next;
-	tmp = head->next;
-	head->next = NULL;
+	idx = 0;
+	while (node->token[idx] != '\0')
+	{
+		if (node->token[idx] == '*')
+			break ;
+		idx++;
+	}
+	str = copy_index_range(node->token, 0, idx);
+	if (str == NULL)
+		return (0);
+	free(node->token);
+	node->token = str;
+	return (1);
+}
+int	check_remove_wildcard(t_data *meta, t_list *tokens)
+{
+	t_list	*tmp;
+	int		wildcard;
+	int		flag;
+	int		idx;
+
+	tmp = tokens;
 	while (tmp != NULL)
 	{
-		head = tmp;
+		wildcard = 1;
+		flag = 0;
+		idx = 0;
+		while (tmp->token != NULL && tmp->token[idx] != '\0')
+		{
+			if (wildcard == 1 && tmp->token[idx] == '*')
+				flag = 1;
+			if (tmp->token[idx] != '*')
+				wildcard = 0;
+			if (wildcard == 0 && tmp->token[idx] == '*')
+			{
+				if (flag == 0)
+					flag = 2;
+				else if (flag == 1)
+					flag = 3;
+			}
+			idx++;
+		}
+		if (flag == 1 && wildcard == 1)
+		{
+			if (tokens->token != NULL)
+			{
+				free(tokens->token);
+				tokens->token = change_wild_card(meta);
+				if (tokens->token != NULL)
+					return (0);
+			}
+		}
+		else if (flag == 3)
+			remove_wildcard_in_node(tmp);
 		tmp = tmp->next;
-		free_single_tmp_node(head);
 	}
 	return (1);
 }
-int	check_remove_wildcard(t_tmp *node)
-{
-	t_tmp	*head;
-	t_tmp	*tmp;
-	int		flag;
-
-	head = node;
-	tmp = node;
-	flag = 1;
-	while (tmp->value == NULL || tmp->value[0] == '\0')
-		tmp = tmp->next;
-	tmp = tmp->next;
-	while (tmp != NULL)
-	{
-		if (tmp->value != NULL && tmp->value[0] != '\0')
-		{
-			flag = 0;
-			break ;
-		}
-		if (tmp->key[0] != '$' && tmp->key[0] != '*')
-		{
-			flag = 0;
-			break;
-		}
-		tmp = tmp->next;
-	}
-	return (flag);
-}
-int	check_valid_wildcard_in_nodes(t_tmp *node)
+int	check_valid_wildcard_in_tokens(t_list *tokens)
 {
 	int		cnt;
-	int		result;
+	int		valid;
 
 	cnt = 0;
-	result = 0;
-	while (node != NULL)
+	valid = 1;
+	while (tokens != NULL)
 	{
-		cnt += are_all_characters_same(node->key, '*');
-		node = node->next;
+		if (tokens->token != NULL)
+			cnt += search_chr_in_str(tokens->key, '*');
+		tokens = tokens->next;
 	}	
 	if (cnt == 0)
-		result = 0;
-	return (result);
+		valid = 0;
+	return (valid);
 }
-int	substitute_wildcard(t_tmp *node)
+int	substitute_wildcard(t_data *meta, t_list *tokens)
 {
-	int		cnt;
+	t_list	*tmp;
+	int		var;
 
-	cnt = 0;
-	while (node != NULL)
+	tmp = tokens;
+	var = check_valid_wildcard_in_tokens(tokens);
+	printf("1 var = %d\n", var);
+	if (var == 0)
+		return (0);
+	var = check_remove_wildcard(meta, tokens);
+	printf("2 var = %d\n", var);
+	if (var == 0)
+		return (0);
+	tmp = tokens;
+	while (tmp != NULL)
 	{
-		cnt += are_all_characters_same(node->key, '*');
-		node = node->next;
+		printf("subsituted whildcard key = %s\n", tmp->key);
+		printf("subsituted whildcard token = %s\n", tmp->token);
+		tmp = tmp->next;
 	}
-	if (cnt == 0)
-		return (1);
+	
 	return (1);
 }

@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/19 14:40:52 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 21:10:56 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**extract_path(char **envp, t_path *path)
+char	**extract_path(t_path *path)
 {
 	char	**paths;
 

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 23:31:23 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 21:10:49 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int		check_operator_v1(const char *str, int index);
 char	*extract_word(char const *str, int start_index, int end);
 char	*extract_from_envp(char *envp, int *idx, char condition);
 int		extract_key_value(t_path *tmp, char *envp, int idx);
-char	**extract_path(char **envp, t_path *path);
+char	**extract_path(t_path *path);
 
 /* split_words.c */
 int		string_div(t_list **words, char const *str, int index);
@@ -158,7 +158,7 @@ int		substitute_tokens(t_data *meata, t_list *tokens, char c);
 t_tmp	*substitute_dollar_sign(t_data *meta, char **str);
 
 /* substitute_wildcard.c */
-int		substitute_wildcard(t_tmp *node);
+int		substitute_wildcard(t_data *meta, t_list *tokens);
 
 /* change_dollar_sign.c */
 char	*copy_current_process_pid(void);

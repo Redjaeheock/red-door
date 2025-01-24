@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 21:59:49 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 21:10:40 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	main(int argc, char **argv, char **envp)
 	t_list	*tmp; // 출력확인용
 
 
-	(void)argc, argv;
+	(void)argc, (void)argv;
 	meta = initialize_meta_token(envp);
 	while(1)
 	{
@@ -125,7 +125,8 @@ int	main(int argc, char **argv, char **envp)
 		tmp = meta->tokens;
 		while (tmp != NULL) // 확인용
 		{
-			printf("%s\n", tmp->token);
+			printf("check key = %s\n", tmp->key);
+			printf("check token = %s\n", tmp->token);
 			tmp = tmp->next;
 		}
 		free_t_list(meta->tokens);

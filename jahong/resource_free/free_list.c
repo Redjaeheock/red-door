@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 14:09:12 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 21:10:52 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,12 @@ void	*free_t_list(t_list *node)
 	{
 		temp = node;
 		node = node->next;
-		temp->prev = NULL;
+		if (node != NULL)
+			node->prev = NULL;
 		if (temp->token != NULL)
 			free(temp->token);
+		if (temp->key != NULL)
+			free(temp->key);
 		free(temp);
 	}
 	return (NULL);

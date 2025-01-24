@@ -6,60 +6,24 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 19:09:16 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 23:51:10 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 21:10:55 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	remove_null_string(t_tmp **head, t_tmp *keep)
+int	choice_null_case(t_tmp *node)
 {
-	t_tmp	*node;
-	t_tmp	*del;
-
-	node = *head;
-	while (node != NULL)
+	if (node->key[0] == '$' && node->key[1] != '\0')
+		node->value = NULL;
+	else if (are_all_characters_same(node->key, '*') == 1)
+		node->value = NULL;
+	else
 	{
-		if (node->key[0] == '\0')
-		{
-			del = node;
-			{
-				if (keep == NULL)
-					*head = node->next;
-				else
-					keep->next = node->next;
-				node = node->next;
-				free_single_tmp_node(del);
-			}
-		}
-		else
-		{
-			keep = node;
-			node = node->next;
-		}
+		node->value = ft_strdup(node->key);
+		if (node->value == NULL)
+			return ((memory_alloc_error(), 0));
 	}
-}
-int	choice_null_case(t_tmp *node, int quote)
-{
-	// if (quote != 0)
-	// {
-	// 	node->value = change_null_string();
-	// 	if (node->value == NULL)
-	// 		return (0);
-	// }
-	// else
-	// {
-		if (node->key[0] == '$' && node->key[1] != '\0')
-			node->value = NULL;
-		else if (are_all_characters_same(node->key, '*') == 1)
-			node->value = NULL;
-		else
-		{
-			node->value = ft_strdup(node->key);
-			if (node->value == NULL)
-				return ((memory_alloc_error(), 0));
-		}
-	// }
 	return (1);
 }
 int	check_except_substitution(t_tmp	*node)
@@ -80,45 +44,20 @@ int	check_except_substitution(t_tmp	*node)
 	}
 	return (0);
 }
-// int	check_except_substitution(t_tmp	*node)
-// {
-// 	int		len;
-
-// 	len = ft_strlen(node->key);
-// 	if (node->key[len - 1] == '$')
-// 	{
-// 		free(node->key);
-// 		node->key = copy_current_process_pid();
-// 		if (node->key == NULL)
-// 			return (-1);
-// 		return (1);
-// 	}
-// 	if (node->key[0] == '$' && node->key[1] == '?')
-// 	{
-// 		free(node->key);
-// 		node->key = get_exit_no();
-// 		if (node->key == NULL)
-// 			return (-1);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-int	search_in_envpath(t_data *meta, t_tmp*node, int	quote)
+int	search_in_envpath(t_data *meta, t_tmp*node)
 {
 	t_path	*tmp;
 	int		result;
 
 	tmp = meta->env;
 	result = check_except_substitution(node);
-	printf("=====111===check key = %s / value %s ============\n", node->key, node->value);
 	if (result != 0)
 		return (result);
 	while (tmp != NULL)
 	{
 		if (ft_strcmp(&node->key[1], tmp->key) == 0)
 		{
-			node->value = "1";
+			node->value = "";
 			node->value =  ft_strdup(tmp->value);
 			if (node->value == NULL)
 				return (-1);
@@ -127,8 +66,7 @@ int	search_in_envpath(t_data *meta, t_tmp*node, int	quote)
 	}
 	if (node->value == NULL && node->key[0] != '"')
 	{
-		printf("===========check key = %s / value %s ============\n", node->key, node->value);
-		result = choice_null_case(node, quote);
+		result = choice_null_case(node);
 		if (result == 0)
 			return (-1);
 	}
@@ -137,27 +75,14 @@ int	search_in_envpath(t_data *meta, t_tmp*node, int	quote)
 int	mapping_dollar_sign_to_env(t_data *meta, t_tmp *node)
 {
 	t_tmp	*tmp;
-	int		quote;
 	int		result;
 
 	tmp = node;
-	quote = 0;
 	while (tmp != NULL)
 	{
-		if (tmp->key[0] == '"')
-			quote = check_quote_pair(tmp->key[0], quote);
-		// if (search_chr_in_str(tmp->key, '$') == 1 && ft_strlen(tmp->key) > 1)
-		// {
-			result = search_in_envpath(meta, tmp, quote);
-			if (result == -1)
-				return (-1);
-		// }
-		// else
-		// {
-		
-		// 	tmp->value = ft_strdup(tmp->key);
-
-		// }
+		result = search_in_envpath(meta, tmp);
+		if (result == -1)
+			return (-1);
 		tmp = tmp->next;
 	}
 	return (1);
@@ -165,29 +90,12 @@ int	mapping_dollar_sign_to_env(t_data *meta, t_tmp *node)
 t_tmp	*change_dollar_sign(t_data *meta, char *str)
 {
 	t_tmp	*tmp;
-	t_tmp	*node;
 	int		result;
 
-	printf("check check str = %s\n", str);
 	tmp = dividing_copied_token(str);
 	if (tmp == NULL)
 		return (NULL);
-	node = tmp;
-	while (node != NULL)
-	{
-		printf("befor mappeing dollar sign key = %s\n", node->key);
-		printf("befor mappeing dollar sign value = %s\n", node->value);
-		node = node->next;
-	}
-	printf("\n");
 	result = mapping_dollar_sign_to_env(meta, tmp);
-	node = tmp;
-	while (node != NULL)
-	{
-		printf("after mappeing dollar sign key = %s\n", node->key);
-		printf("after mappeing dollar sign value = %s\n", node->value);
-		node = node->next;
-	}
 	if (result == -1)
 		return (free_tmp_list(tmp));
 	return (tmp);
@@ -250,7 +158,6 @@ t_tmp	*pass_substitute(char *str)
 		return (memory_alloc_error());
 	return (tmp);
 }
-
 int	check_pass_substitute(char *str)
 {
 	int		cnt;
@@ -260,7 +167,6 @@ int	check_pass_substitute(char *str)
 	if (quote == 1)
 		return (1);
 	cnt = check_split_point_str(str);
-	printf("cnt = %d\n", cnt);
 	if (cnt == 0)
 		return (1);
 	return (0);
@@ -268,7 +174,6 @@ int	check_pass_substitute(char *str)
 t_tmp	*search_n_change_dollar_sign(t_data *meta, char *str)
 {
 	t_tmp	*tmp;
-	t_tmp	*node;
 	int		result;
 
 	result = check_pass_substitute(str);
@@ -292,7 +197,6 @@ t_tmp	*substitute_dollar_sign(t_data *meta, char **str)
 	tmp = node;
 	while (str[row] != NULL)
 	{
-		printf("start str[%d] = %s\n", row, str[row]);
 		tmp->next =  search_n_change_dollar_sign(meta, str[row]);
 		if (tmp->next == NULL)
 			return (free_tmp_list(node));
@@ -302,6 +206,5 @@ t_tmp	*substitute_dollar_sign(t_data *meta, char **str)
 	tmp = node;
 	node = node->next;
 	free(tmp);
-	// remove_null_string(&node, NULL);
 	return (node);
 }

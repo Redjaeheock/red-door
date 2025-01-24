@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:40 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 19:45:10 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 18:54:30 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,3 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return (0);
 }
-/*
-int main()
-{
-	printf("%d", ft_strcmp("", ""));
-	return 0;
-}*/

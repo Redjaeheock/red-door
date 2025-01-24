@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 20:29:37 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 21:10:51 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	**copy_envp(char **envp)
 	cp_envp[idx] = NULL;
 	return (cp_envp);
 }
-void	meta_token_set_null(t_data *meta)
+void	meta_token_init_memvar(t_data *meta)
 {
 	meta->tokens = NULL;
 	meta->exp = NULL;
@@ -90,8 +90,8 @@ t_data	*initialize_meta_token(char **envp)
 
 	meta = (t_data *)malloc(sizeof(t_data) * 1);
 	if (meta == NULL)
-		return(t_data_alloc_err(NULL));
-	meta_token_set_null(meta);
+		return((memory_alloc_error(), NULL));
+	meta_token_init_memvar(meta);
 	meta->envm = copy_envp(envp);
 	if (meta->envm == NULL)
 		return (free_meta_token(meta));
@@ -101,7 +101,7 @@ t_data	*initialize_meta_token(char **envp)
 	meta->exp = init_key_value(envp);
 	if (meta->exp == NULL)
 		return (free_meta_token(meta));
-	meta->path = extract_path(envp, meta->env);
+	meta->path = extract_path(meta->env);
 	if (meta->path == NULL)
 		return (free_meta_token(meta));
 	return (meta);

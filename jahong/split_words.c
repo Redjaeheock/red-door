@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 21:59:23 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/24 21:10:43 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,11 @@ int	pipe_div(t_list	**words, const char	*str, int index, char c)
 	start_index = index;
 	while (str[index] == '|')
 		index++;
-	if ((index - start_index) > 2)
-		return (error_syntax("||"));
+	if (c == 'c')
+	{
+		if ((index - start_index) > 2)
+			return (error_syntax("||"));
+	}
 	make_node(&(*words), extract_word(str, start_index, index));
 	if (words == NULL)
 		return ((memory_alloc_error(), -1));
