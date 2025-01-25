@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/25 21:32:48 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/25 21:53:21 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ int	check_valid_wlidcard(t_path *env, t_list *node)
 	int result;
 
 	idx = 0;
+	printf("node->key = %s\n", node->key);
+	printf("node->token = %s\n", node->token);
 	if (node->token[idx] == '*')
 	{
-		while (node->token[idx] == '*' && node->key[idx] != '\0')
+		while (node->token[idx] == '*')
 			idx++;
 		if (idx == ft_strlen(node->token))
 		{
