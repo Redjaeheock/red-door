@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:06:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/24 21:10:59 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/25 11:16:40 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	change_null_string_n_null_point(t_list *tokens, char *str)
 {
-	if (tokens->key[0] == '$' && tokens->token[0] == '\0')
+	if (tokens->key[0] == '$' && str[0] == '\0')
 	{
 		free(tokens->token);
 		tokens->token = NULL;
 	}
-	else if (ft_strcmp(tokens->token, "\"\"") == 0)
+	else if (ft_strcmp(str, "\"\"") == 0)
 	{
 		free(tokens->token);
 		tokens->token = "";
@@ -78,47 +78,6 @@ char	*alloc_tokens_key(t_tmp *tmp)
 	}
 	return (str1);
 }
-// void	join_remove_wildcard(t_list *tokens, t_tmp *node)
-// {
-// 	t_tmp	*head;
-// 	t_tmp	*tmp;
-
-// 	head = node;
-// 	while (head != NULL && (head->value == NULL || head->value[0] == '\0'))
-// 		head = head->next;
-// 	tmp = head->next;
-// 	head->next = NULL;
-// 	while (tmp != NULL)
-// 	{
-// 		head = tmp;
-// 		tmp = tmp->next;
-// 		free_single_tmp_node(head);
-// 	}
-// }
-
-// int	check_remove_wildcard(t_tmp *node)
-// {
-// 	int		cnt;
-// 	int		wildcard;
-
-// 	cnt = 0;
-// 	wildcard = 0;
-// 	while (node != NULL)
-// 	{
-// 		if (cnt == 0 && are_all_characters_same(node->key, '*') == 1)
-// 			wildcard++;
-// 		if (node->value != NULL && node->value[0] != '\0')
-// 			cnt++;
-// 		if (cnt == 1  && 1 <= wildcard)
-// 			return (0);
-// 		if (1 < cnt)
-// 			return (0);
-// 		node = node->next;
-// 	}
-// 	if (cnt != 1)
-// 		return (0);
-// 	return (1);
-// }
 int	join_sub_tokens(t_list *tokens, t_tmp *node)
 {
 	char	*str;

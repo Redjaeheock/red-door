@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/24 21:10:49 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/25 10:41:59 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ int		out_redirec_div(t_list **words, const char *str, int index, char c);
 int		pipe_div(t_list **words, const char *str, int index, char c);
 
 /* token_character_check.c */
-int		search_wildcard_into_token(char *str);
 int     check_valid_wildcard(char *str, int idx, int quote);
 int		check_valid_back(char *str, int idx);
 int		check_quote_pair(char c, int quote);

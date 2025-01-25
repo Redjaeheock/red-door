@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/24 21:10:40 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/25 09:59:02 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int check_operator_v1(const char *str, int index)
 }
 t_list *mn_split(t_data *meta, char **str, char c)
 {
-	t_list	*words;
+	t_list	*tokens;
+	t_list	*tmp;
     int cmd_flag;
 
 	if (*str == NULL)
@@ -100,12 +101,19 @@ t_list *mn_split(t_data *meta, char **str, char c)
 		if (cmd_flag == -1)
 			return (NULL);
 	}
-	words = split_words(*str, c);
-	if (words == NULL)
+	tokens = split_words(*str, c);
+	if (tokens == NULL)
 		return (NULL);
-	if (substitute_tokens(meta, words, c) == 0)
-		return (free_t_list(words));
-	return (words);
+	if (substitute_tokens(meta, tokens, c) == 0)
+		return (free_t_list(tokens));
+	tmp = tokens;
+	while (tmp != NULL)
+	{
+		printf("check_mnsplit_token_key = %s\n", tmp->key);
+		printf("check_mnsplit_token_token = %s\n", tmp->token);
+		tmp = tmp->next;
+	}
+	return (tokens);
 }
 int	main(int argc, char **argv, char **envp)
 {

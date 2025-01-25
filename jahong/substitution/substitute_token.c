@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/24 21:10:38 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/25 11:17:46 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,14 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 	}
 	if (c == 'c')
 	{
+		tmp = tokens;
 		printf("start substitute wildcard\n");
-		if (substitute_wildcard(meta, tokens) == 0)
-			return (0);
+		while (tmp != NULL)
+		{
+			if (substitute_wildcard(meta, tokens) == 0)
+				return (0);
+			tmp = tmp->next;
+		}
 	}
 	return (1);
 }
