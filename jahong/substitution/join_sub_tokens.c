@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:06:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/25 11:16:40 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/25 18:37:42 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,41 @@ char	*alloc_tokens_token(t_tmp *tmp)
 	}
 	return (str1);
 }
+int	is_token_all_null_after_join(t_tmp *tmp)
+{
+	int	cnt;
+	int	cyc;
+
+	cnt = 0;
+	cyc = 0;
+	while (tmp != NULL)
+	{
+		if (tmp->value == NULL)
+			cnt++;
+		tmp = tmp->next;
+		cyc++;
+	}
+	if (cnt == cyc)
+		return (1);
+	return (0);
+}
+
 char	*alloc_tokens_key(t_tmp *tmp)
 {
 	char	*str1;
 	char	*str2;
+	int		flag;
 
 	str1 = NULL;
 	str2 = NULL;
+	flag = is_token_all_null_after_join(tmp);
 	while (tmp != NULL)
 	{
+		if (flag != 1 && tmp->value == NULL)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
 		str2 = ft_strjoin_v2(str1, tmp->key);
 		if (str1 != NULL)
 			free(str1);

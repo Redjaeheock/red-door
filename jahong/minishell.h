@@ -6,17 +6,18 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/25 10:41:59 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/25 21:21:27 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <readline/readline.h>    /* readline함수를 사용하기위한 헤더 */
-# include <readline/history.h>     /* add_history함수를 사용하기위한 헤더 */
-# include <stdio.h>                /* printf함수를 사용하기위한 헤더 */
+# include <readline/readline.h>    /* readline 함수를 사용하기위한 헤더 */
+# include <readline/history.h>     /* add_history 함수를 사용하기위한 헤더 */
+# include <stdio.h>                /* printf 함수를 사용하기위한 헤더 */
 # include <stdlib.h>
+# include <dirent.h>               /* opendir, readdir, closedir 함수를 사용하기 위한 헤더*/
 
 typedef enum {
     NONE,
@@ -128,7 +129,6 @@ int		out_redirec_div(t_list **words, const char *str, int index, char c);
 int		pipe_div(t_list **words, const char *str, int index, char c);
 
 /* token_character_check.c */
-int     check_valid_wildcard(char *str, int idx, int quote);
 int		check_valid_back(char *str, int idx);
 int		check_quote_pair(char c, int quote);
 
@@ -173,6 +173,9 @@ char	are_all_characters_same(char *str, char c);
 char	*get_exit_no(void);
 
 /*utils2.c*/
+int		open_n_read_filenames1(t_list *node, char *path, int len);
+int		count_list_current_directory(char *path);
+
 char    *copy_index_range(char *str, int idx, int end);
 int		ck_part_of_special_chr(int c);
 

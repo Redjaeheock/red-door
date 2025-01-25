@@ -6,38 +6,12 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:40:39 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/24 16:04:35 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/25 18:50:30 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_valid_wildcard(char *str, int idx, int quote)
-{
-	int	flag;
-	int	cnt;
-
-	flag = 1;
-	cnt = 0;
-	while (str[idx] != '\0' && str[idx] != ' ' && str[idx] != '\"')
-	{
-		if (str[idx] == '*')
-			cnt++;
-		else
-			flag = 0;
-		idx++;
-	}
-	if (quote == 2 && cnt >= 1 )
-		return (1);
-	if (quote == 0)
-	{
-		if (flag == 1 && cnt >= 1)
-			return (1);
-		if (flag == 0 && cnt >= 1)
-			return (1);
-	}
-	return (0);
-}
 int check_valid_back(char *str, int idx)
 {
 	if (idx > 0)
