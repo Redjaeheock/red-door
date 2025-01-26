@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dividing_copied_token2.c                           :+:      :+:    :+:   */
+/*   dividing_copied_token.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:54:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/25 09:15:35 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/26 21:20:25 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	*split_copied_token(char *str, int *idx, int *quote)
 	*quote = check_quote_pair(str[*idx], *quote);
 	printf(">>>>>>>>>>>>>>>>> start = %d | *idx = %d\n", start, *idx);
 	tmp = copy_index_range(str, start, *idx);
+	printf("after tmp = %s\n\n", tmp);
 	if (tmp == NULL)
 		return (NULL);
 	return (tmp);
@@ -94,6 +95,8 @@ char	*split_copied_token(char *str, int *idx, int *quote)
 t_tmp	*dividing_copied_token(char *str)
 {
 	t_tmp	*tmp;
+	t_tmp	*keep;
+	char	*copy;
 	int		idx;
 	int		quote;
 
@@ -102,9 +105,13 @@ t_tmp	*dividing_copied_token(char *str)
 	quote = check_quote_pair(str[idx], 0);
 	while (str[idx] != '\0')
 	{
-		tmp = make_tmp_node(tmp, split_copied_token(str, &idx, &quote), NULL);
-		if (tmp == NULL)
+		copy = split_copied_token(str, &idx, &quote);
+		if (copy == NULL)
 			return (free_tmp_list(tmp));
+		keep = make_tmp_node(tmp, copy, NULL);
+		if (keep == NULL)
+			return (free_tmp_list(tmp));
+		tmp = keep;
 	}
 	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/25 11:17:10 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/26 20:52:15 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,13 @@ void	*free_t_path(t_path	*path)
 	{
 		tmp = path;
 		path = path->next;
-		free(tmp);
-	}
-	return (NULL);
-}
-void	*free_key_value(t_path *path)
-{
-	t_path *tmp;
-
-	tmp = path;
-	while (tmp != NULL)
-	{
 		if (tmp->key != NULL)
 			free(tmp->key);
 		if (tmp->value != NULL)
 			free(tmp->value);
 		if (tmp->set != NULL)
 			free(tmp->set);
-		tmp = tmp->next;
+		free(tmp);
 	}
 	return (NULL);
 }
@@ -45,14 +34,14 @@ void	*free_t_list(t_list *node)
 {
 	t_list	*temp;
 
-	// 구조체 멤버 해제 후 리스트 해제
-
 	while (node != NULL)
 	{
 		temp = node;
 		node = node->next;
 		if (node != NULL)
 			node->prev = NULL;
+		if (temp->f_list != NULL)
+			free_sndry_arr((void **)temp->f_list);
 		if (temp->token != NULL)
 			free(temp->token);
 		if (temp->key != NULL)
@@ -77,11 +66,11 @@ void	*free_meta_token(t_data *meta)
 	if (meta->exit_n != NULL)
 		free(meta->exit_n);
 	if (meta->path != NULL)
-		free(meta->path);
+		free_sndry_arr((void **)meta->path);
 	if (meta->exp != NULL)
-		free_key_value(meta->exp);
+		free_t_path(meta->exp);
 	if (meta->env != NULL)
-		free_key_value(meta->env);
+		free_t_path(meta->env);
 	if (meta->envm != NULL)
 		free_sndry_arr((void **)meta->envm);
 	if (meta->tokens != NULL)

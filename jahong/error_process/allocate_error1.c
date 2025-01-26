@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:42:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/24 19:39:03 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/26 18:43:27 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	*memory_alloc_error(void)
 void	*t_path_key_val_alloc_err(t_path *tmp)
 {
 	printf("Error: Memory allocation failed! Not Found envp\n");
-	free_key_value(tmp);
 	free_t_path(tmp);
 	// exit 12
 	return (NULL);

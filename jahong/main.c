@@ -6,11 +6,12 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/25 09:59:02 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/26 21:01:46 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 
 t_list	*split_words(char const *str, char c)
 {
@@ -121,26 +122,32 @@ int	main(int argc, char **argv, char **envp)
 	t_data 	*meta;
 	t_list	*tmp; // 출력확인용
 
-
+	signal(SIGINT, SIG_IGN);
 	(void)argc, (void)argv;
 	meta = initialize_meta_token(envp);
 	while(1)
 	{
 		str = readline("bash : ");
+		if(str == NULL)
+			break ;
 		meta->tokens = mn_split(meta, &str, 'c');
 		if (meta->tokens == NULL)
 			continue;
 		tmp = meta->tokens;
 		while (tmp != NULL) // 확인용
 		{
-			printf("check key = %s\n", tmp->key);
-			printf("check token = %s\n", tmp->token);
+			printf("final check key = %s\n", tmp->key);
+			printf("final check token = %s\n", tmp->token);
+			if (tmp->f_list != NULL)
+				printf("final check filelist[0] = %s\n", tmp->f_list[0]);
 			tmp = tmp->next;
 		}
-		free_t_list(meta->tokens);
+		meta->tokens = free_t_list(meta->tokens);
 //      add_history(str);
 		free(str);
 	}
+	free_meta_token(meta);
+	return (0);
 }
 // mini shell parsing을 통해서, 들어온 인자값들을 우선 정제시킬 필요가 있음.
 // 싱글쿼터, 더블쿼터가 들어왔을 때, 쓸모없는 글들을 탈락시키고, 유요한 값들만 문자열.

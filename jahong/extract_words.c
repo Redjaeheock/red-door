@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/24 21:10:56 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/26 20:55:39 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*extract_from_envp(char *envp, int *idx, char condition)
 	len = conditinal_strlen(envp, condition);
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (str == NULL)
-		return (NULL /*리스트의 멤버 변수 free 작업 추가*/);
+		return (NULL);
 	while ((envp[*idx] != condition) && (envp[*idx] != '\0'))
 	{
 		str[col] = envp[*idx];
@@ -44,15 +44,17 @@ char	*extract_from_envp(char *envp, int *idx, char condition)
 	str[col] = '\0';
 	return (str);
 }
-int	extract_key_value(t_path *tmp, char *envp, int idx)
+int	extract_key_value(t_path *tmp, char *envp)
 {
+	int	idx;
 	int start;
 
-	start = 0;
+	idx = 0;
+	start = idx;
 	tmp->key = extract_from_envp(envp, &idx, '=');
 	tmp->value = extract_from_envp(envp, &idx, '\0');
 	tmp->set = extract_from_envp(envp, &start, '\0');
-	if ((tmp->key == NULL) || (tmp->key == NULL) || tmp->set == NULL)
+	if (tmp->key == NULL || tmp->value == NULL || tmp->set == NULL)
 		return (0);
 	return (1);
 }

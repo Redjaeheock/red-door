@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/25 21:21:27 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/26 19:41:28 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct  cmd_list
 	struct cmd_list     *prev;
 	struct cmd_list     *next;
 	t_tokentype		    type;
+	char				**f_list;
 	char				*key;
 	char		    	*token;
 }					    t_list;
@@ -65,7 +66,6 @@ typedef struct meta_data
 }                      t_data;
 
 /* free_list.c*/
-void	*free_key_value(t_path *path);
 void	*free_t_path(t_path *lsit);
 void	*free_t_list(t_list *list);
 void	*free_t_data(t_data *meta);
@@ -111,6 +111,8 @@ void	*free_sndry_arr(void **array);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_strjoin_v2(const char *s1, const char *s2);
+char	*ft_str_tail_str(const char *big, const char *little);
+
 
 /* main.c */
 int		check_operator_v1(const char *str, int index);
@@ -118,7 +120,7 @@ int		check_operator_v1(const char *str, int index);
 /* extradt_words.c */
 char	*extract_word(char const *str, int start_index, int end);
 char	*extract_from_envp(char *envp, int *idx, char condition);
-int		extract_key_value(t_path *tmp, char *envp, int idx);
+int		extract_key_value(t_path *tmp, char *envp);
 char	**extract_path(t_path *path);
 
 /* split_words.c */
@@ -144,20 +146,24 @@ char	*extract_partial_token(char *str, int idx, int *end, int *quote);
 char	*temporary_div_token(char *str, int *idx, int *quote);
 char	**dividing_sub_token(char *str, int len);
 
-
 /* deviding_copied_token.c */
 t_tmp	*dividing_copied_token(char *str);
 
 /* substitute_token.c*/
-int		subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens);
+int		subtitute_dollar_sign(t_data *meta, t_list *tokens);
 int		check_quote_valid(char *token);
 int		substitute_tokens(t_data *meata, t_list *tokens, char c);
 
 /* substitute_dollar_sign.c */
 t_tmp	*substitute_dollar_sign(t_data *meta, char **str);
 
-/* substitute_wildcard.c */
+/* substitute_wildcard1.c */
 int		substitute_wildcard(t_data *meta, t_list *tokens);
+
+/* substitute_wildcard2.c */
+int		change_only_wildcard_token(t_path *env, t_list *node);
+int		change_partial_wildcard2(t_path *env, t_list *node, int	idx, int end);
+int		change_partial_wildcard1(t_path *env, t_list *node, int	idx, int end);
 
 /* change_dollar_sign.c */
 char	*copy_current_process_pid(void);
@@ -165,7 +171,6 @@ char	*change_null_string(void);
 
 /* join_sub_tokens*/
 int		join_sub_tokens(t_list *tokens, t_tmp *node);
-// char	*join_splited_sub_token(t_tmp *tmp);
 
 /* utils.c*/
 char	search_chr_in_str(char *str, char c);
@@ -173,10 +178,15 @@ char	are_all_characters_same(char *str, char c);
 char	*get_exit_no(void);
 
 /*utils2.c*/
-int		open_n_read_filenames1(t_list *node, char *path, int len);
-int		count_list_current_directory(char *path);
-
 char    *copy_index_range(char *str, int idx, int end);
 int		ck_part_of_special_chr(int c);
+
+/* utils_directory.c */
+int		count_valid_filename(char **list, char *str);
+int		search_str_in_f_list(t_list *node, char **list, char *str);
+char	**take_filenames1(struct dirent *entry, DIR *dir, char *path, int len);
+int		open_n_read_filenames2(t_list *node, char *path, char *str, int len);
+int		open_n_read_filenames1(t_list *node, char *path, int len);
+int		count_list_current_directory(void);
 
 #endif

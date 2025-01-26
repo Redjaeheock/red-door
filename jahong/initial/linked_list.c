@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:21 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 14:13:26 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/26 09:41:51 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_list	*create_linked_list(char *str)
 		return (NULL);
 	new->prev = NULL;
 	new->next = NULL;
+	new->f_list = NULL;
 	new->key = NULL;
 	new->token = str;
 

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/25 11:17:46 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/26 21:22:43 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	measure_length_quote_set(char *str, int cnt)
 	}
 	return (cnt);
 }
-int	subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens)
+int	subtitute_dollar_sign(t_data *meta, t_list *tokens)
 {
 	t_tmp	*node;
 	char	**tmp;
@@ -58,6 +58,7 @@ int	subtitute_dollar_sign_n_wlidcard(t_data *meta, t_list *tokens)
 	var = join_sub_tokens(tokens, node);
 	if (var == 0)
 		return (0);
+	free_tmp_list(node);
 	return (1);
 }
 int	check_quote_valid(char *token)
@@ -91,7 +92,7 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 			if (check_quote_valid(tmp->token) == 0)
 				return (0);
 		}
-		if (subtitute_dollar_sign_n_wlidcard(meta, tmp) == 0)
+		if (subtitute_dollar_sign(meta, tmp) == 0)
 			return (0);
 		tmp = tmp->next;
 	}
@@ -101,7 +102,7 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 		printf("start substitute wildcard\n");
 		while (tmp != NULL)
 		{
-			if (substitute_wildcard(meta, tokens) == 0)
+			if (substitute_wildcard(meta, tokens) == -1)
 				return (0);
 			tmp = tmp->next;
 		}

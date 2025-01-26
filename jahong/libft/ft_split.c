@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:50:35 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 10:49:38 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/26 21:06:23 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static void *free_arr(char **arr)
 {
-	int	idx;
+	int	row;
 
-	idx = 0;
+	row = 0;
 	if (arr == NULL)
 		return (NULL);
-	while (arr[idx] != NULL)
+	while (arr[row] != NULL)
 	{
-		free(arr[idx]);
-		arr[idx] = NULL;
-		idx++;
+		free(arr[row]);
+		arr[row] = NULL;
+		row++;
 	}
 	free(arr);
 	return (NULL);

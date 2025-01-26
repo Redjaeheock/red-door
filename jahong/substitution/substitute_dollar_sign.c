@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   substitute_dollar_sign2.c                          :+:      :+:    :+:   */
+/*   substitute_dollar_sign.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 19:09:16 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/25 18:37:44 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/26 21:18:33 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	choice_null_case(t_tmp *node)
 }
 int	check_except_substitution(t_tmp	*node)
 {
+	if (node->key == NULL)
+	printf("key is NULL");
 	if (ft_strcmp(node->key, "$$") == 0)
 	{
 		node->value = copy_current_process_pid();

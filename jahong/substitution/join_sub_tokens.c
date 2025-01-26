@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:06:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/25 18:37:42 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/26 17:09:23 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	change_null_string_n_null_point(t_list *tokens, char *str)
 	else if (ft_strcmp(str, "\"\"") == 0)
 	{
 		free(tokens->token);
-		tokens->token = "";
 		tokens->token = change_null_string();
 		if (tokens->token == NULL)
 			return (0);
@@ -77,7 +76,6 @@ int	is_token_all_null_after_join(t_tmp *tmp)
 		return (1);
 	return (0);
 }
-
 char	*alloc_tokens_key(t_tmp *tmp)
 {
 	char	*str1;
@@ -89,7 +87,7 @@ char	*alloc_tokens_key(t_tmp *tmp)
 	flag = is_token_all_null_after_join(tmp);
 	while (tmp != NULL)
 	{
-		if (flag != 1 && tmp->value == NULL)
+		if (flag != 1 && tmp->value == NULL && tmp->key[0] == '$')
 		{
 			tmp = tmp->next;
 			continue ;
@@ -107,7 +105,7 @@ char	*alloc_tokens_key(t_tmp *tmp)
 int	join_sub_tokens(t_list *tokens, t_tmp *node)
 {
 	char	*str;
-	
+
 	str = alloc_tokens_key(node);
 	if (str == NULL)
 		return (0);

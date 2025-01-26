@@ -5,82 +5,61 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/25 21:53:21 by jahong           ###   ########.fr       */
+/*   Created: 2025/01/26 16:44:50 by jahong            #+#    #+#             */
+/*   Updated: 2025/01/26 16:45:25 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	change_wild_card(t_path *env, t_list *node, char *src)
+int	change_only_wildcard_token(t_path *env, t_list *node)
 {
-	int				result;
-	int				cnt;
-
-	if (src == NULL)
-	{
-		cnt = count_list_current_directory(".");
-		if (cnt < 1)
-			return (cnt);
-		result = open_n_read_filenames1(node, ".", cnt);
-		return (result);
-	}
-	return (1);
-}
-int	check_valid_wlidcard(t_path *env, t_list *node)
-{
-	int	idx;
-	int result;
-
-	idx = 0;
-	printf("node->key = %s\n", node->key);
-	printf("node->token = %s\n", node->token);
-	if (node->token[idx] == '*')
-	{
-		while (node->token[idx] == '*')
-			idx++;
-		if (idx == ft_strlen(node->token))
-		{
-			printf("all wildcard\n");
-			return (change_wild_card(env, node, NULL));
-		}
-	}
-}
-
-int	search_wildcard_in_token(t_list *node)
-{
+	int		result;
 	int		cnt;
-	int		valid;
-	int		idx;
 
-	cnt = 0;
-	valid = 1;
-	idx = 0;
-	while (node->token != NULL && node->token[idx] != '\0')
-	{
-		if (node->token[idx] == '*')
-			cnt++;
-		idx++;
-	}
-	if (cnt == 0)
-		valid = 0;
-	return (valid);
+	cnt = count_list_current_directory();
+	if (cnt == -1)
+		return (cnt);
+	result = open_n_read_filenames1(node, ".", cnt);
+	return (result);
 }
-int	substitute_wildcard(t_data *meta, t_list *node)
+int	change_partial_wildcard2(t_path *env, t_list *node, int	idx, int end)
 {
-	t_list	*tmp;
-	int		var;
-
-	tmp = node;
-	var = search_wildcard_in_token(node);
-	printf("1 var = %d\n", var);
-	if (var == 0)
-		return (1);
-	var = check_valid_wlidcard(meta->env, node);
-	printf("after wildcard substitued key = %s\n", node->key);
-	printf("after wildcard substitued token = %s\n", node->token);
-
-
+	char	**tmp;
+	char	*str;
+	int		cnt;
+	int		result;
 	
-	return (1);
+	str = copy_index_range(node->token, idx, end);
+	if (str == NULL)
+		return (-1);
+	cnt = count_list_current_directory();
+	if (cnt == -1)
+	{
+		free(str);
+		return (cnt);
+	}
+	result = open_n_read_filenames2(node, ".", str, cnt);
+	free(str);
+	return (result);
+}
+int	change_partial_wildcard1(t_path *env, t_list *node, int	idx, int end)
+{
+	char	**tmp;
+	char	*str;
+	int		cnt;
+	int		result;
+	
+	str = copy_index_range(node->key, idx, end);
+	if (str == NULL)
+		return (-1);
+	cnt = count_list_current_directory();
+	if (cnt == -1)
+	{
+		free(str);
+		return (cnt);
+	}
+	result = open_n_read_filenames2(node, ".", str, cnt);
+	free(str);
+	return (result);
 }
