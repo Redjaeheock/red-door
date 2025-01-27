@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/22 19:13:22 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/27 12:45:38 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,10 @@ void		trade_exec_cmd(t_data *meta, t_cmd_list **exec_cmd, \
 t_list **tokens, char **str);
 void		exec_cmd_set_tpye(t_cmd_list **exec_cmd);
 
+int			ft_strcmp(const char *s1, const char *s2);
+char		*searching_from_envval(t_data *meta, char *str);
+t_path		*make_t_path(void);
+
 /* built_in */
 int			check_built_in_cmd(char *cmd, char *exec_cmd);
 void		builtin(t_data *meta);
@@ -242,8 +246,28 @@ void		minishell_pwd(t_data *meta);
 void		minishell_env(t_data *meta);
 void		minishell_export(t_data *meta);
 
+/* built_in_export_sort.c */
+void		sort_export(t_path **exp);
+void		swap_export(t_path **exp, t_path *exp_prev);
 
-int			ft_strcmp(const char *s1, const char *s2);
-char	*searching_from_envval(t_data *meta, char *str);
+/* built_in_export_utils.c */
+int			char_arr_len(char **array);
+int			ft_test(char *s1, const char *s2);
+
+/* built_in_export_list_utils.c */
+int			ft_lstsize(t_path *lst);
+t_path		*add_export(char *str);
+void		add_back_export_linked_list(t_path **old_export, t_path *new);
+
+/* built_in_export_export_firest.c */
+void		frist_export(t_data *meta);
+
+/* built_in_export_export_rest.c */
+int			search_special_characters(char *str);
+void		update_node(t_path **old_exp, t_path *prev, \
+t_path *current, t_path *new_node);
+int			check_key(t_path **old_exp, t_path *export_add);
+void		rest_export(t_data *meta, int export_len);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/22 19:23:38 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/27 12:42:38 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	main(int argc, char **argv, char **envp)
 		trade_exec_cmd(meta, &exec_cmd, &tokens, &str);
 		if (meta->exec_cmd)
 		{
-			//builtin(meta);
+			builtin(meta);
 			printf_exec_commads(meta->exec_cmd);
 			free_exec_linked_list(meta->exec_cmd);
 			meta->exec_cmd = NULL;

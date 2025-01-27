@@ -20,6 +20,11 @@ SRC = main.c \
 	  built_in/env/env.c \
 	  built_in/pwd/pwd.c \
 	  built_in/export/export.c \
+	  built_in/export/export_frist.c \
+	  built_in/export/export_rest.c \
+	  built_in/export/export_sort.c \
+	  built_in/export/export_utils.c \
+	  built_in/export/export_list_utils.c \
 	  liked_list/linked_list.c \
 	  resource_free/free_list.c \
 	  resource_free/secondary_array_free.c \
@@ -50,8 +55,8 @@ SRC = main.c \
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
-LDFLAGS = -fsanitize=address -lreadline
+CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -lreadline
 
 HEADER = minishell.h
 

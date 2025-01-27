@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   export_frist.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/22 14:05:29 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/27 12:45:12 by jemoon           ###   ########.fr       */
+/*   Created: 2025/01/26 18:02:43 by jemoon            #+#    #+#             */
+/*   Updated: 2025/01/27 12:47:01 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	minishell_export(t_data *meta)
+void	frist_export(t_data *meta)
 {
-	int		export_len;
+	int		i;
+	t_path	*temp;
 
-	if (ft_strcmp(meta->exec_cmd->str[0], "export") != 0)
-		return ;
-	export_len = char_arr_len(meta->exec_cmd->str);
-	if (export_len == 1)
-		frist_export(meta);
-	else
-		rest_export(meta, export_len);
+	i = 1;
+	sort_export(&meta->exp);
+	temp = meta->exp;
+	while (temp != NULL)
+	{
+		printf("declare -x %s\n", temp->set);
+		temp = temp->next;
+		i++;
+	}
+	printf("환경변수의 개수눈 = %d 입니다 \n", i);
 }
