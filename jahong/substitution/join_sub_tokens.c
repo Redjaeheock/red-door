@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:06:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/29 09:32:58 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/29 20:20:21 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,7 @@ int	conditional_jump_t_tmp(t_tmp **tmp, int flag, int quote)
 	}
 	else if ((*tmp)->key != NULL && (*tmp)->key[0] == '$')
 	{
-		if((*tmp)->next != NULL && (*tmp)->next->key[0] == '"' && quote == 0)
-		{
-			(*tmp) = (*tmp)->next;
-			return (1);
-		}
-		else if((*tmp)->next != NULL && (*tmp)->next->key[0] == '\'')
+		if(quote == 0 && ft_strlen((*tmp)->key) == 1)
 		{
 			(*tmp) = (*tmp)->next;
 			return (1);
@@ -57,7 +52,7 @@ int	conditional_jump_t_tmp(t_tmp **tmp, int flag, int quote)
 	}
 	return (0);
 }
-char	*alloc_tokens_token(t_tmp *tmp)
+char	*alloc_tokens_token(t_tmp *tmp, char c)
 {
 	char	*str1;
 	char	*str2;
@@ -71,7 +66,7 @@ char	*alloc_tokens_token(t_tmp *tmp)
 			quote = check_quote_pair(tmp->key[0], quote);
 		if (tmp->value == NULL && tmp->key[0] != '$')
 			str2 = ft_strjoin_v2(str1, tmp->key);
-		else if (conditional_jump_t_tmp(&tmp, 1, quote) == 1)
+		else if (c == 'c' && conditional_jump_t_tmp(&tmp, 1, quote) == 1)
 			continue ;
 		else
 			str2 = ft_strjoin_v2(str1, tmp->value);
@@ -84,7 +79,7 @@ char	*alloc_tokens_token(t_tmp *tmp)
 	}
 	return (str1);
 }
-char	*alloc_tokens_key(t_tmp *tmp)
+char	*alloc_tokens_key(t_tmp *tmp, char c)
 {
 	char	*str1;
 	char	*str2;
@@ -98,7 +93,7 @@ char	*alloc_tokens_key(t_tmp *tmp)
 	{
 		if (tmp->key != NULL && tmp->key[0] == '"')
 			quote = check_quote_pair(tmp->key[0], quote);
-		if (conditional_jump_t_tmp(&tmp, flag, quote) == 1)
+		if (c == 'c' && conditional_jump_t_tmp(&tmp, flag, quote) == 1)
 			continue ;
 		str2 = ft_strjoin_v2(str1, tmp->key);
 		if (str1 != NULL)
@@ -110,18 +105,18 @@ char	*alloc_tokens_key(t_tmp *tmp)
 	}
 	return (str1);
 }
-int	join_sub_tokens(t_list *tokens, t_tmp *node)
+int	join_sub_tokens(t_list *tokens, t_tmp *node, char c)
 {
 	char	*str;
 	printf("node->key = %s\n", node->key);
 	printf("node->value = %s\n", node->value);
-	str = alloc_tokens_key(node);
+	str = alloc_tokens_key(node, c);
 	if (str == NULL)
 		return (0);
 	if (tokens->key != NULL)
 		free(tokens->key);
 	tokens->key = str;
-	str = alloc_tokens_token(node);
+	str = alloc_tokens_token(node, c);
 	if (str == NULL) 
 		return (0);
 	if (change_null_string_n_null_point(tokens, str) == 0)

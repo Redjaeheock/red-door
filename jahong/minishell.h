@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/29 09:34:11 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/29 17:41:46 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ char	**dividing_sub_token(char *str, int len);
 t_tmp	*dividing_copied_token(char *str);
 
 /* substitute_token.c*/
-int		subtitute_dollar_sign(t_data *meta, t_list *tokens);
+int		subtitute_dollar_sign(t_data *meta, t_list *tokens, char c);
 int		check_quote_valid(char *token);
 int		substitute_tokens(t_data *meata, t_list *tokens, char c);
 
@@ -164,14 +164,14 @@ int		substitute_wildcard(t_data *meta, t_list *tokens);
 /* substitute_wildcard2.c */
 int		change_only_wildcard_token(t_list *node);
 int		change_partial_wildcard2(t_path *env, t_list *node, int	idx, int end);
-int		change_partial_wildcard1(t_list *node, int	idx, int end);
+int		change_partial_wildcard1(t_list *node, char *str);
 
 /* change_dollar_sign.c */
 char	*copy_current_process_pid(void);
 char	*change_null_string(void);
 
 /* join_sub_tokens*/
-int		join_sub_tokens(t_list *tokens, t_tmp *node);
+int		join_sub_tokens(t_list *tokens, t_tmp *node, char c);
 
 /* utils.c*/
 char	search_chr_in_str(char *str, char c);

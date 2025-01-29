@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/28 09:51:04 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/29 19:37:30 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ int	measure_length_quote_set(char *str, int cnt)
 	}
 	return (cnt);
 }
-int	subtitute_dollar_sign(t_data *meta, t_list *tokens)
+int	subtitute_dollar_sign(t_data *meta, t_list *tokens,  char c)
 {
 	t_tmp	*node;
 	char	**tmp;
 	int		var;
 	t_tmp	*temp;
+	t_list *tk;
 
 	if (search_chr_in_str(tokens->token, '$') == 0)
 		return (1);
@@ -64,7 +65,15 @@ int	subtitute_dollar_sign(t_data *meta, t_list *tokens)
 		printf("after subtitued dollsr sign value = %s\n", temp->value);
 		temp = temp->next;
 	}
-	var = join_sub_tokens(tokens, node);
+	var = join_sub_tokens(tokens, node, c);
+	printf("\n");
+	tk = tokens;
+	while (tk != NULL)
+	{
+		printf("after join node key = %s\n", tk->key);
+		printf("after join node token = %s\n", tk->token);
+		tk = tk->next;
+	}
 	if (var == 0)
 		return (0);
 	free_tmp_list(node);
@@ -101,7 +110,7 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 			if (check_quote_valid(tmp->token) == 0)
 				return (0);
 		}
-		if (subtitute_dollar_sign(meta, tmp) == 0)
+		if (subtitute_dollar_sign(meta, tmp, c) == 0)
 			return (0);
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:44:50 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/29 09:34:10 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/29 16:38:08 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,18 @@ int	change_partial_wildcard2(t_path *env, t_list *node, int	idx, int end)
 	result  = 0;
 	return (result);
 }
-int	change_partial_wildcard1(t_list *node, int	idx, int end)
+int	change_partial_wildcard1(t_list *node, char *str)
 {
 	char	**tmp;
-	char	*str;
 	int		cnt;
 	int		result;
 	
-	str = copy_conditional_index_range(node->token, idx, end, '"');
 	printf("after contion jump copy str = %s\n", str);
-	if (str == NULL)
-		return (-1);
+	// if (str == NULL)
+	// 	return (-1);
 	cnt = count_list_current_directory();
 	if (cnt == -1)
-	{
-		free(str);
 		return (cnt);
-	}
 	result = open_n_filter_current_filenames(node, str, cnt);
-	free(str);
-	return (0);
+	return (1);
 }
