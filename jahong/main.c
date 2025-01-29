@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 21:01:46 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/28 09:56:34 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int	main(int argc, char **argv, char **envp)
 		meta->tokens = free_t_list(meta->tokens);
 //      add_history(str);
 		free(str);
+		printf("\n");
 	}
 	free_meta_token(meta);
 	return (0);

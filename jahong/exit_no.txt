@@ -157,6 +157,18 @@ hong/hong/home/home/hong 자체가 커맨드 명령어가 되되어
 < "$1" => null 문자로 치환되나 파일 서칭이 가능 ("" 느낌으로 no search directory or file)
 < $1   => null 문자로 치환되어 리다이렉션 자체가 고장 (NULL 느낌으로 bash: $1: ambiguous redirect)
 
+또한 
+
+< *txt
+< *2
+
+등 뒤의 매칭 매턴이 두 개 이상상 일 경우도 고장
+(bash: *txt: ambiguous redirect)
+(bash: *2: ambiguous redirect)
+
+또한 파일이 디렉토리거나 권한이 없어도 일단 FD 연결을 해준다.
+
+이 후에 cat 같이 직접 읽는 명령어등의 인자로 전달 될 경우 오류를 뱉는다.
 --------------------------------------------------
 
 명령어와 heredoc 이 동시에 있을 경우 heredoc 우선 입력 받아 임시 버퍼에 저장된 후 이 후 명령어 실행

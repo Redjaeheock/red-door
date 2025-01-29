@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:06:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 17:09:23 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/29 09:32:58 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,44 @@ int	change_null_string_n_null_point(t_list *tokens, char *str)
 	}
 	return (1);
 }
-
+int	conditional_jump_t_tmp(t_tmp **tmp, int flag, int quote)
+{
+	if (flag != 1 && (*tmp)->value == NULL &&  (*tmp)->key[0] == '$')
+	{
+		(*tmp) = (*tmp)->next;
+		return (1);
+	}
+	else if ((*tmp)->key != NULL && (*tmp)->key[0] == '$')
+	{
+		if((*tmp)->next != NULL && (*tmp)->next->key[0] == '"' && quote == 0)
+		{
+			(*tmp) = (*tmp)->next;
+			return (1);
+		}
+		else if((*tmp)->next != NULL && (*tmp)->next->key[0] == '\'')
+		{
+			(*tmp) = (*tmp)->next;
+			return (1);
+		}
+	}
+	return (0);
+}
 char	*alloc_tokens_token(t_tmp *tmp)
 {
 	char	*str1;
 	char	*str2;
+	int		quote;
 
 	str1 = NULL;
-	str2 = NULL;
+	quote = 0;
 	while (tmp != NULL)
 	{
+		if (tmp->key != NULL && tmp->key[0] == '"')
+			quote = check_quote_pair(tmp->key[0], quote);
 		if (tmp->value == NULL && tmp->key[0] != '$')
 			str2 = ft_strjoin_v2(str1, tmp->key);
+		else if (conditional_jump_t_tmp(&tmp, 1, quote) == 1)
+			continue ;
 		else
 			str2 = ft_strjoin_v2(str1, tmp->value);
 		if (str1 != NULL)
@@ -58,40 +84,22 @@ char	*alloc_tokens_token(t_tmp *tmp)
 	}
 	return (str1);
 }
-int	is_token_all_null_after_join(t_tmp *tmp)
-{
-	int	cnt;
-	int	cyc;
-
-	cnt = 0;
-	cyc = 0;
-	while (tmp != NULL)
-	{
-		if (tmp->value == NULL)
-			cnt++;
-		tmp = tmp->next;
-		cyc++;
-	}
-	if (cnt == cyc)
-		return (1);
-	return (0);
-}
 char	*alloc_tokens_key(t_tmp *tmp)
 {
 	char	*str1;
 	char	*str2;
 	int		flag;
+	int		quote;
 
 	str1 = NULL;
-	str2 = NULL;
+	quote = 0;
 	flag = is_token_all_null_after_join(tmp);
 	while (tmp != NULL)
 	{
-		if (flag != 1 && tmp->value == NULL && tmp->key[0] == '$')
-		{
-			tmp = tmp->next;
+		if (tmp->key != NULL && tmp->key[0] == '"')
+			quote = check_quote_pair(tmp->key[0], quote);
+		if (conditional_jump_t_tmp(&tmp, flag, quote) == 1)
 			continue ;
-		}
 		str2 = ft_strjoin_v2(str1, tmp->key);
 		if (str1 != NULL)
 			free(str1);
@@ -105,7 +113,8 @@ char	*alloc_tokens_key(t_tmp *tmp)
 int	join_sub_tokens(t_list *tokens, t_tmp *node)
 {
 	char	*str;
-
+	printf("node->key = %s\n", node->key);
+	printf("node->value = %s\n", node->value);
 	str = alloc_tokens_key(node);
 	if (str == NULL)
 		return (0);

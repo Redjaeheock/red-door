@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 20:55:39 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/27 09:49:47 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*extract_from_envp(char *envp, int *idx, char condition)
 	int		len;
 
 	col = 0;
-	len = conditinal_strlen(envp, condition);
+	len = conditional_strlen(envp, condition);
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (str == NULL)
 		return (NULL);

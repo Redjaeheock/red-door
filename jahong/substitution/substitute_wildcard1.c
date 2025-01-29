@@ -6,16 +6,43 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 16:48:29 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/29 08:08:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	token_start_wildcard(t_list *node, int idx)
+{
+	int	start;
+	int	flag;
+
+	flag = 0;
+	start = idx;
+	if (node->key != NULL)
+	{	
+		while (node->key[idx] != '$' && node->token[idx] != '\0')
+		{
+			if (node->key[idx] == '"')
+			{
+				flag++;
+				if (flag % 2 == 0 && node->key[idx + 1] == '&')
+					break ;
+			}
+			idx++;
+		}	
+	}
+	else
+		while (node->token[idx] != '$' && node->token[idx] != '\0')
+			idx++;
+	if (start != idx)
+		return (change_partial_wildcard1(node, start, idx));	
+	return (0);
+}
+
 int	check_valid_wlidcard(t_path *env, t_list *node)
 {
 	int	idx;
-	int	start;
 	int result;
 
 	idx = 0;
@@ -24,34 +51,12 @@ int	check_valid_wlidcard(t_path *env, t_list *node)
 		while (node->token[idx] == '*')
 			idx++;
 		if (node->token[idx] == '\0')
-			return (change_only_wildcard_token(env, node));
-		start = idx;
-		if (node->key != NULL)
-		{	
-			while (node->key[idx] != '$' && node->token[idx] != '\0')
-			{
-				if (node->key[idx] == '"' || node->key[idx] == '\'')
-					break ;
-				idx++;
-			}	
-			if (start != idx)
-				return (change_partial_wildcard1(env, node, start, idx));
-		}
-		else
-		{
-			printf("go to else\n");
-			while (node->token[idx] != '$' && node->token[idx] != '\0')
-			{
-				if (node->token[idx] == '"' || node->token[idx] == '\'')
-					break ;
-				idx++;
-			}
-			if (start != idx)
-				return (change_partial_wildcard2(env, node, start, idx));	
-		}
+			return (change_only_wildcard_token(node));
+		result = token_start_wildcard(node, idx);
+		return (result);
 	}
+	return (0);
 }
-
 int	search_wildcard_in_token(t_list *node)
 {
 	int		cnt;

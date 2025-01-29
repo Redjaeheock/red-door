@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:12:51 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 17:34:37 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/28 14:16:14 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	search_str_in_f_list(t_list *node, char **list, char *str)
 char	**take_filenames1(struct dirent *entry, DIR *dir, char *path, int len)
 {
 	char	**tmp;
-	char	*join;
 	int		row;
 
 	row = 0;
@@ -83,41 +82,36 @@ char	**take_filenames1(struct dirent *entry, DIR *dir, char *path, int len)
 	tmp[row] = NULL;
 	return (tmp);
 }
-int	open_n_read_filenames2(t_list *node, char *path, char *str, int len)
-{
-	DIR				*dir;
-	struct dirent	*entry;
-	char			**f_list;
-	int				result;
-
-	dir = opendir(path);
-	if (dir == NULL)
-		return ((printf("system error: fail open directory\n"), -1));
-	entry = readdir(dir);
-	f_list = take_filenames1(entry, dir, path, len);
-	if (f_list == NULL)
-		return (closedir(dir), -1);
-	result = search_str_in_f_list(node, f_list, str);
-	free_sndry_arr((void **)f_list);
-	closedir(dir);
-	return (result);
-}
-int	open_n_read_filenames1(t_list *node, char *path, int len)
+int	open_n_read_current_filenames(t_list *node, int len)
 {
 	DIR				*dir;
 	struct dirent	*entry;
 	char			**f_list;
 
-	dir = opendir(path);
+	dir = opendir(".");
 	if (dir == NULL)
 		return ((printf("system error: fail open directory\n"), -1)); // . 으로 연 경로가 실패하는 건 시스템 문제제
 	entry = readdir(dir);
-	f_list = take_filenames1(entry, dir, path, len);
+	f_list = take_filenames1(entry, dir, ".", len);
 	if (f_list == NULL)
-		return (closedir(dir), -1);
+		return ((closedir(dir), -1));
 	node->f_list = f_list;
 	closedir(dir);
 	return (1);
+}
+int	open_n_filter_current_filenames(t_list *node, char *str, int len)
+{
+	char	**f_list;
+	int		result;
+
+	result = open_n_read_current_filenames(node, len);
+	if (node->f_list == NULL)
+		return (-1);
+	f_list = node->f_list;
+	result = search_str_in_f_list(node, f_list, str);
+	printf("^*^*^*^*^*^*NMNM node->f_list[0] = %s|MNMMNNM\n", node->f_list[0]);
+	sndry_alloc_err((void **)f_list);
+	return (result);
 }
 int	count_list_current_directory(void)
 {

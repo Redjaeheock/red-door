@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 14:34:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 19:01:10 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/27 09:49:12 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int ft_strlen(const char *str)
 		len++;
 	return (len);
 }
-int	conditinal_strlen(const char *s, unsigned char condition)
+int	conditional_strlen(const char *s, unsigned char condition)
 {
 	int	len;
 
@@ -32,5 +32,23 @@ int	conditinal_strlen(const char *s, unsigned char condition)
 		return (0);
 	while ((s[len] != condition) && (s[len] != '\0'))
 		len++;
+	return (len);
+}
+
+int	conditional_jump_len(const char *s, unsigned char condition)
+{
+	int	idx;
+	int	len;
+
+	idx = 0;
+	len = 0;
+	if (s == NULL)
+		return (0);
+	while (s[idx] != '\0')
+	{
+		if (s[idx] == condition)
+			len++;
+		idx++;
+	}
 	return (len);
 }

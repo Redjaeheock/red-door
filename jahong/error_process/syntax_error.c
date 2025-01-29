@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 13:22:18 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/18 20:05:31 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/27 13:05:21 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int error_syntax(char *str)
 	//exit no 설정 역슬래시 관련 문구 추가 필요
 	return (-1);
 }
-
 void	error_qoute(int quote)
 {
 	if (quote == 1)

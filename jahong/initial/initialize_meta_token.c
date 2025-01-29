@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 20:49:44 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/27 07:23:37 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_path 	*init_key_value(char **envp)
 	t_path	*env_path;
 	t_path	*tmp;
 	int		row;
-	int		idx;
 
 	row = 0;
 	env_path = make_t_path();
