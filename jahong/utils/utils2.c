@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:28:07 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/29 19:06:21 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 15:08:53 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ char	*search_value_using_key(t_path *path, char *src)
 {
 	char *str;
 
-	str = "";
+	str = NULL;
 	while (path != NULL)
 	{
-		if (strcmp(path->key, src) == 0)
+		if (ft_strcmp(path->key, src) == 0)
 		{
 			str = ft_strdup(src);
 			if (str == NULL)
@@ -69,13 +69,11 @@ char *copy_index_range(char *str, int idx, int end)
 	len = end - idx;
 	if (end != ft_strlen(str))
 		len++;
-	printf("len = %d | idx = %d | end = %d\n", len, idx , end);
 	tmp = (char *)malloc(sizeof(char) * (len + 1));
 	if (tmp == NULL)
 		return (sndry_alloc_err(NULL));
 	while (idx < end)
 	{
-		printf("tmp[%d] = %c | str[%d] = %c\n", n, tmp[n], idx, str[idx]);
 		tmp[n] = str[idx];
 		idx++;
 		n++;

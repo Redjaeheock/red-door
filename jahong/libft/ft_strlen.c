@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 14:34:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/27 09:49:12 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 10:27:38 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,30 @@ int	conditional_jump_len(const char *s, unsigned char condition)
 		idx++;
 	}
 	return (len);
+}
+
+int	quote_set_jump_len(const char *s)
+{
+	int	idx;
+	int	quote;
+	int	cnt;
+
+	idx = 0;
+	quote = 0;
+	cnt = 0;
+	if (s == NULL)
+		return (0);
+	while (s[idx] != '\0')
+	{
+		quote = check_quote_pair(s[idx], quote);
+		if ((s[idx] == '\'' && quote == 1) || (s[idx] == '"' && quote == 2) ||
+			(quote == 0 && (s[idx] == '"' || s[idx] == '\'')))
+		{
+			idx++;
+			continue ;
+		}
+		idx++;
+		cnt++;
+	}
+	return (cnt);
 }

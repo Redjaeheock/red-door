@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 19:09:16 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/27 13:14:16 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 15:12:48 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ int	search_in_envpath(t_data *meta, t_tmp*node)
 		}
 		tmp = tmp->next;
 	}
+	// node->value = search_value_using_key(meta->env, &node->key[1]);
+	// if (node->value == NULL)
+	// 	return (-1);
 	if (node->value == NULL && node->key[0] != '"')
 	{
 		result = choice_null_case(node);
@@ -160,25 +163,25 @@ t_tmp	*pass_substitute(char *str)
 		return (memory_alloc_error());
 	return (tmp);
 }
-int	check_pass_substitute(char *str)
+int	check_pass_substitute(char *str, char c)
 {
 	int		cnt;
 	int		quote;
 
 	quote = check_quote_pair(str[0], 0);
-	if (quote == 1)
+	if (quote == 1 && c == 'c')
 		return (1);
 	cnt = check_split_point_str(str);
 	if (cnt == 0)
 		return (1);
 	return (0);
 }
-t_tmp	*search_n_change_dollar_sign(t_data *meta, char *str)
+t_tmp	*search_n_change_dollar_sign(t_data *meta, char *str, char c)
 {
 	t_tmp	*tmp;
 	int		result;
 
-	result = check_pass_substitute(str);
+	result = check_pass_substitute(str, c);
 	if (result == 1)
 		return (pass_substitute(str));
 	tmp = change_dollar_sign(meta, str);
@@ -186,7 +189,7 @@ t_tmp	*search_n_change_dollar_sign(t_data *meta, char *str)
 		return (NULL);
 	return (tmp);
 }
-t_tmp	*do_substitute_dollar_sign(t_data *meta, char **str)
+t_tmp	*do_substitute_dollar_sign(t_data *meta, char **str, char c)
 {
 	t_tmp	*node;
 	t_tmp	*tmp;
@@ -199,7 +202,7 @@ t_tmp	*do_substitute_dollar_sign(t_data *meta, char **str)
 	tmp = node;
 	while (str[row] != NULL)
 	{
-		tmp->next =  search_n_change_dollar_sign(meta, str[row]);
+		tmp->next =  search_n_change_dollar_sign(meta, str[row], c);
 		if (tmp->next == NULL)
 			return (free_tmp_list(node));
 		tmp = last_tmp_list(tmp);

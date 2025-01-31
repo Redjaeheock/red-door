@@ -6,20 +6,20 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:06:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/29 20:20:21 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 07:48:44 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	change_null_string_n_null_point(t_list *tokens, char *str)
+int	change_null_string_n_null_point(t_list *tokens, char *str, char c)
 {
 	if (tokens->key[0] == '$' && str[0] == '\0')
 	{
 		free(tokens->token);
 		tokens->token = NULL;
 	}
-	else if (ft_strcmp(str, "\"\"") == 0)
+	else if (ft_strcmp(str, "\"\"") == 0 && c == 'c')
 	{
 		free(tokens->token);
 		tokens->token = change_null_string();
@@ -119,7 +119,7 @@ int	join_sub_tokens(t_list *tokens, t_tmp *node, char c)
 	str = alloc_tokens_token(node, c);
 	if (str == NULL) 
 		return (0);
-	if (change_null_string_n_null_point(tokens, str) == 0)
+	if (change_null_string_n_null_point(tokens, str, c) == 0)
 		return ((free(str), 0));
 	return ((free(str), 1));
 }

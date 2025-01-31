@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/29 17:41:46 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 15:07:32 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ t_tmp	*make_tmp_node(t_tmp *node, char *str1, char *str2);
 int		ft_strlen(const char *str);
 int		conditional_strlen(const char *s, unsigned char condition);
 int		conditional_jump_len(const char *s, unsigned char condition);
+int		quote_set_jump_len(const char *s);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -156,7 +157,7 @@ int		check_quote_valid(char *token);
 int		substitute_tokens(t_data *meata, t_list *tokens, char c);
 
 /* substitute_dollar_sign.c */
-t_tmp	*do_substitute_dollar_sign(t_data *meta, char **str);
+t_tmp	*do_substitute_dollar_sign(t_data *meta, char **str, char c);
 
 /* substitute_wildcard1.c */
 int		substitute_wildcard(t_data *meta, t_list *tokens);
@@ -194,5 +195,6 @@ int		count_list_current_directory(void);
 
 /* othoer_functions.c*/
 int		is_token_all_null_after_join(t_tmp *tmp);
+char	*copy_quote_set_jump(char *s, char *tmp, int len);
 
 #endif

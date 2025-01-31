@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/29 21:09:22 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/30 19:58:31 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,6 @@ int	check_valid_wildcard(t_data *meta, t_list *node)
 		free(str);
 		//printf("remake check_valid_wlidcard f_list[0] = %s\n", node->f_list[0]);
 	}
-
 	return (result);
 }
 int	search_wildcard_in_token(t_list *node)
