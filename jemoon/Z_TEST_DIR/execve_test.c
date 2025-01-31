@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:41:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/10 14:31:42 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/27 14:50:31 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@ int	main(int ac, char **av, char **envp)
 	char	*str;
 	char	**arr;
 
-	str = readline("> : ");
-	printf(">>> %s\n", str);
-	arr = (char **)malloc(sizeof(char *) * 2);
-	arr[0] = "./a.out";
-	arr[1] = NULL;
-	if (execve("/usr/bin/", arr, envp) == -1)
-		printf("%s: command not found\n", str);
+	arr = (char **)malloc(sizeof(char *) * 3);
+	arr[0] = "env";
+	arr[1] = "ls";
+	arr[2] = NULL;
+	if (execve("/usr/bin/env", arr, envp) == -1)
+		printf("command not found\n");
 	return (0);
 }

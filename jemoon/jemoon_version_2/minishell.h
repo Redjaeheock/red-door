@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/27 12:45:38 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/31 10:47:25 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,7 @@ void		minishell_echo(t_cmd_list **exec_cmd);
 void		minishell_pwd(t_data *meta);
 void		minishell_env(t_data *meta);
 void		minishell_export(t_data *meta);
+void		minishell_unset(t_data *meta);
 
 /* built_in_export_sort.c */
 void		sort_export(t_path **exp);
@@ -269,5 +270,12 @@ t_path *current, t_path *new_node);
 int			check_key(t_path **old_exp, t_path *export_add);
 void		rest_export(t_data *meta, int export_len);
 
+/* built_in_unset_utils.c */
+int			search_special_characters_unset(char *str);
+
+/* built_in_unset_export */
+void		remove_node(t_path **exp, t_path *prev, t_path *current);
+int			unset_key(t_path **exp, char *str);
+void		unset_export(t_data *meta, int unset_len);
 
 #endif

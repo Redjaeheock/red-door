@@ -25,6 +25,9 @@ SRC = main.c \
 	  built_in/export/export_sort.c \
 	  built_in/export/export_utils.c \
 	  built_in/export/export_list_utils.c \
+	  built_in/unset/unset.c \
+	  built_in/unset/unset_export.c \
+	  built_in/unset/unset_utils.c \
 	  liked_list/linked_list.c \
 	  resource_free/free_list.c \
 	  resource_free/secondary_array_free.c \
@@ -80,3 +83,5 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+rec: all clean

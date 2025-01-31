@@ -16,9 +16,9 @@ void	minishell_export(t_data *meta)
 {
 	int		export_len;
 
+	export_len = char_arr_len(meta->exec_cmd->str);
 	if (ft_strcmp(meta->exec_cmd->str[0], "export") != 0)
 		return ;
-	export_len = char_arr_len(meta->exec_cmd->str);
 	if (export_len == 1)
 		frist_export(meta);
 	else
