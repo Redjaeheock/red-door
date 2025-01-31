@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 16:36:53 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/31 15:58:52 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	*free_t_path(t_path	*path)
 	}
 	return (NULL);
 }
+
 void	*free_key_value(t_path *path)
 {
 	t_path *tmp;
@@ -41,6 +42,7 @@ void	*free_key_value(t_path *path)
 	}
 	return (NULL);
 }
+
 void	*free_t_list(t_list *list)
 {
 	t_list	*temp;
@@ -75,6 +77,8 @@ void	*free_env_resource(t_data *meta)
 		free_key_value(meta->env);
 	if (meta->envm != NULL)
 		free_sndry_arr((void **)meta->envm);
+	if (meta->exec_cmd != NULL)
+		free_exec_linked_list(meta->exec_cmd);
 	if (meta != NULL)
 		free_t_data(meta);
 	return (NULL);

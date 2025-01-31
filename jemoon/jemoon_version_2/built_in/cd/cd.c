@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:32:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/31 15:13:30 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/31 15:45:32 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*get_env(t_path *env, char *home)
 
 void	redefine_export(t_path	**exp, char *home)
 {
+	
 }
 
 void	cd_home(t_data *meta)

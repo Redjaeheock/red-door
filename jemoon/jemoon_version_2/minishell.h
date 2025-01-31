@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 10:47:25 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:00:10 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>                /* printf함수를 사용하기위한 헤더 */
 # include <stdlib.h>
 # include <string.h>
+# include <signal.h>
 
 typedef enum tokentype
 {

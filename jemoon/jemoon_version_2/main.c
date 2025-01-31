@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/27 12:42:38 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/01/31 15:59:54 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,14 @@ int	main(int argc, char **argv, char **envp)
 	t_data		*meta;
 	t_cmd_list	*exec_cmd;
 
+	signal(SIGINT, SIG_IGN);
 	(void)argc, (void)argv;
 	meta = initial_env(envp);
 	while (1)
 	{
 		str = readline("bash : ");
+		if (str == NULL)
+			break ;
 		tokens = mn_split(meta, &str);
 		if (tokens == NULL)
 			continue ;
@@ -132,6 +135,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(str);
 		free(str);
 	}
+	free_env_resource(meta);
 }
 
 // mini shell parsing을 통해서, 들어온 인자값들을 우선 정제시킬 필요가 있음.
