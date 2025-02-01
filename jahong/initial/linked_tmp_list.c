@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:26:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 21:21:40 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:58:53 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	add_back_tmp_list(t_tmp *node, t_tmp *new)
 	temp->next = new;
 	return ;
 }
+
 t_tmp	*create_new_tmp_list(char *str1, char *str2)
 {
 	t_tmp	*new;
@@ -44,6 +45,7 @@ t_tmp	*create_new_tmp_list(char *str1, char *str2)
 	new->value = str2;
 	return (new);
 }
+
 t_tmp	*make_tmp_node(t_tmp *node, char *str1, char *str2)
 {
 	t_tmp	*new_node;

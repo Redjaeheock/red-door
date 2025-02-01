@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:06:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 07:48:44 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/01 15:23:54 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	change_null_string_n_null_point(t_list *tokens, char *str, char c)
 		free(tokens->token);
 		tokens->token = NULL;
 	}
-	else if (ft_strcmp(str, "\"\"") == 0 && c == 'c')
+	else if (ft_strcmp(str, "\"\"") == 0)
 	{
 		free(tokens->token);
 		tokens->token = change_null_string();
@@ -35,6 +35,7 @@ int	change_null_string_n_null_point(t_list *tokens, char *str, char c)
 	}
 	return (1);
 }
+
 int	conditional_jump_t_tmp(t_tmp **tmp, int flag, int quote)
 {
 	if (flag != 1 && (*tmp)->value == NULL &&  (*tmp)->key[0] == '$')
@@ -44,7 +45,7 @@ int	conditional_jump_t_tmp(t_tmp **tmp, int flag, int quote)
 	}
 	else if ((*tmp)->key != NULL && (*tmp)->key[0] == '$')
 	{
-		if(quote == 0 && ft_strlen((*tmp)->key) == 1)
+		if((quote == 0 && ft_strlen((*tmp)->key) == 1) && (*tmp)->next != NULL)
 		{
 			(*tmp) = (*tmp)->next;
 			return (1);
@@ -52,6 +53,7 @@ int	conditional_jump_t_tmp(t_tmp **tmp, int flag, int quote)
 	}
 	return (0);
 }
+
 char	*alloc_tokens_token(t_tmp *tmp, char c)
 {
 	char	*str1;
@@ -79,6 +81,7 @@ char	*alloc_tokens_token(t_tmp *tmp, char c)
 	}
 	return (str1);
 }
+
 char	*alloc_tokens_key(t_tmp *tmp, char c)
 {
 	char	*str1;
@@ -105,6 +108,7 @@ char	*alloc_tokens_key(t_tmp *tmp, char c)
 	}
 	return (str1);
 }
+
 int	join_sub_tokens(t_list *tokens, t_tmp *node, char c)
 {
 	char	*str;
@@ -119,6 +123,7 @@ int	join_sub_tokens(t_list *tokens, t_tmp *node, char c)
 	str = alloc_tokens_token(node, c);
 	if (str == NULL) 
 		return (0);
+	printf("copied str = %s\n", str);
 	if (change_null_string_n_null_point(tokens, str, c) == 0)
 		return ((free(str), 0));
 	return ((free(str), 1));

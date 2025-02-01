@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:50:35 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 21:06:23 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:57:50 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void *free_arr(char **arr)
+static void	*free_arr(char **arr)
 {
 	int	row;
 
@@ -28,6 +28,7 @@ static void *free_arr(char **arr)
 	free(arr);
 	return (NULL);
 }
+
 static char	**allocate_secondary_array(int len)
 {
 	char	**arr;
@@ -37,6 +38,7 @@ static char	**allocate_secondary_array(int len)
 		return (NULL);
 	return (arr);
 }
+
 static char	*copy_str(char *str, char c, int *idx)
 {
 	char	*cp_str;
@@ -60,6 +62,7 @@ static char	*copy_str(char *str, char c, int *idx)
 	cp_str[cnt] = '\0';
 	return (cp_str);
 }
+
 static char	**div_word(char *s, char c, int cnt)
 {
 	char	**array;
@@ -81,6 +84,7 @@ static char	**div_word(char *s, char c, int cnt)
 	array[row] = NULL;
 	return (array);
 }
+
 char	**ft_split(char const *s, char c)
 {
 	char	**arr;

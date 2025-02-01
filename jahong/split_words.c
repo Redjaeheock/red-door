@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/24 21:10:43 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:44:49 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	string_div(t_list **words, char const *str, int index)
 		return ((memory_alloc_error(), -1));
 	return (--index);
 }
+
 int	ampersand_div(t_list **words, const char *str, int index, char c)
 {
 	int	start_index;
@@ -61,6 +62,7 @@ int	ampersand_div(t_list **words, const char *str, int index, char c)
 		return ((memory_alloc_error(), -1));
 	return (--index);
 }
+
 int	in_redirec_div(t_list **words, const char *str, int index, char c)
 {
 	int	start_index;
@@ -82,6 +84,7 @@ int	in_redirec_div(t_list **words, const char *str, int index, char c)
 		return ((memory_alloc_error(), -1));
 	return (--index);
 }
+
 int	out_redirec_div(t_list **words, const char *str, int index, char c)
 {
 	int	start_index;
@@ -103,6 +106,7 @@ int	out_redirec_div(t_list **words, const char *str, int index, char c)
 		return ((memory_alloc_error(), -1));
 	return (--index);
 }
+
 int	pipe_div(t_list	**words, const char	*str, int index, char c)
 {
 	int	start_index;

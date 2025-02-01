@@ -6,41 +6,11 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 15:07:33 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/01 16:22:28 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	remove_quote_tokens(t_list *node, char c)
-{
-	char	*str;
-	int		len;
-
-	len = quote_set_jump_len(node->token);
-	if (len == 0 && node->token == NULL)
-		return (1);
-	printf("jump quote len = %d\n", len);
-	if (c == 'h')
-	{
-		if ((node->token[0] == '"' && ft_strcmp(node->token, "\"\"")))
-			return (1);
-		else if ((node->token[0] == '\'' && ft_strcmp(node->token, "''")))
-			return (1);
-	}
-	else
-	{
-		str = (char *)malloc(sizeof(char) * (len + 1));
-		if (str == NULL)
-			return (0);
-		str = copy_quote_set_jump(node->token, str, len);
-	}
-	if (node->token != NULL)
-		free(node->token);
-	printf("after_remove_str = %s\n", str);
-	node->token = str;
-	return (1);
-}
 
 int	measure_length_quote_set(char *str, int cnt)
 {
@@ -69,11 +39,14 @@ int	measure_length_quote_set(char *str, int cnt)
 	}
 	return (cnt);
 }
+
 int	subtitute_dollar_sign(t_data *meta, t_list *tokens,  char c)
 {
 	t_tmp	*node;
 	char	**tmp;
 	int		var;
+	t_list	*keep;
+	int	idx = 0;
 
 	if (search_chr_in_str(tokens->token, '$') == 0)
 		return (1);
@@ -81,16 +54,31 @@ int	subtitute_dollar_sign(t_data *meta, t_list *tokens,  char c)
 	tmp = dividing_sub_token(tokens->token, var);
 	if (tmp == NULL)
 		return (0);
+	while (tmp[idx] != NULL)
+	{
+		printf("tmp str[%d] = %s\n", idx , tmp[idx]);
+		idx++;
+	}
 	node = do_substitute_dollar_sign(meta, tmp, c);
 	free_sndry_arr((void **)tmp);
 	if (node == NULL)
 		return (0);
 	var = join_sub_tokens(tokens, node, c);
+	keep = tokens;
+	while (keep != NULL)
+	{
+		if (keep->key != NULL)
+			printf("substutite join key = %s\n", keep->key);
+		if (keep->token != NULL)
+			printf("substutite join token = %s\n", keep->token);
+		keep = keep->next;
+	}
 	if (var == 0)
 		return (0);
 	free_tmp_list(node);
 	return (1);
 }
+
 int	check_quote_valid(char *token)
 {
 	int	idx;
@@ -110,6 +98,7 @@ int	check_quote_valid(char *token)
 	}
 	return (1);
 }
+
 int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 {
 	t_list	*tmp;
@@ -124,13 +113,22 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 		}
 		if (subtitute_dollar_sign(meta, tmp, c) == 0)
 			return (0);
-		if (remove_quote_tokens(tmp, c) == 0)
-			return (0);
-		// if (c == 'c')
-		// {
-		// 	if (substitute_wildcard(meta, tokens) == -1)
-		// 		return (0);
-		// }
+		if (c == 'c')
+		{
+			printf("try remove\n");
+			printf("tmp -> key = %s\n", tmp->key);
+			printf("tmp -> token = %s\n", tmp->token);
+			if (remove_quote_tokens(tmp, c) == 0)
+			{
+				printf("hrer\n");
+				return (0);
+			}
+		}
+		if (c == 'c')
+		{
+			if (substitute_wildcard(meta, tokens) == -1)
+				return (0);
+		}
 		tmp = tmp->next;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:04:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 14:40:00 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:56:41 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,3 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	ltl_idx = ft_strlen(little);
 	return (incycle((char *)big, (char *)little, ltl_idx, len));
 }
-
-/*
-#include <stdio.h>
-int main (){
-
-	char *a = "";
-	char *b = "";
-	printf("%s, %s\n-> %s", a, b, ft_strnstr(a,b,3));
-	return 0;
-}*/

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/30 19:58:31 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 18:56:21 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ char	*copy_next_dollar(t_data *meta, t_list *node, char *str, int *idx)
 {
 	char	*keep1;
 	char	*keep2;
-	int		start;
+	//int		start;
 
 	keep2 = NULL;
 	*idx += 1;
-	start = *idx;
+	//start = *idx;
 	if (node->key[*idx] == '$')
 	{
 		keep1 = copy_current_process_pid();
@@ -65,7 +65,7 @@ char	*copy_next_dollar(t_data *meta, t_list *node, char *str, int *idx)
 		keep2 = ft_strjoin_v2(str, keep1);
 		free(keep1);
 		if (keep2 == NULL)
-			(NULL);
+			return (NULL);
 		*idx += 1;
 	}
 	else
@@ -104,6 +104,7 @@ char	*copy_before_dollar(t_list *node, char *str, int idx, int end)
 	free(copy);
 	return (keep);
 }
+
 char	*change_partial_envvar(t_data *meta, t_list *node, int idx, int end)
 {
 	char	*str;
@@ -147,7 +148,7 @@ char	*change_partial_envvar(t_data *meta, t_list *node, int idx, int end)
 
 char	*token_start_wildcard(t_data *meta, t_list *node, int idx)
 {
-	char	*str;
+	//char	*str;
 	int		start;
 	int		flag;
 
@@ -173,6 +174,7 @@ char	*token_start_wildcard(t_data *meta, t_list *node, int idx)
 	// 	retu
 	return (0);
 }
+
 int	check_valid_wildcard(t_data *meta, t_list *node)
 {
 	char	*str;
@@ -198,6 +200,7 @@ int	check_valid_wildcard(t_data *meta, t_list *node)
 	}
 	return (result);
 }
+
 int	search_wildcard_in_token(t_list *node)
 {
 	int		cnt;
@@ -217,6 +220,7 @@ int	search_wildcard_in_token(t_list *node)
 		valid = 0;
 	return (valid);
 }
+
 int	substitute_wildcard(t_data *meta, t_list *node)
 {
 	int		var;

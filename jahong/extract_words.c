@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/27 09:49:47 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:03:54 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	**extract_path(t_path *path)
 		return (memory_alloc_error());
 	return (paths);
 }
+
 char	*extract_from_envp(char *envp, int *idx, char condition)
 {
 	char	*str;
@@ -44,6 +45,7 @@ char	*extract_from_envp(char *envp, int *idx, char condition)
 	str[col] = '\0';
 	return (str);
 }
+
 int	extract_key_value(t_path *tmp, char *envp)
 {
 	int	idx;
@@ -58,6 +60,7 @@ int	extract_key_value(t_path *tmp, char *envp)
 		return (0);
 	return (1);
 }
+
 char	*extract_word(char const *str, int start_index, int end)
 {
 	char	*word_line;
@@ -65,11 +68,11 @@ char	*extract_word(char const *str, int start_index, int end)
     int     len;
 
 	idx = 0;
-    if (str == NULL)
-        return (NULL);
-    len = (end - start_index);
-    word_line = (char *)malloc(sizeof(char) * (len + 1));
-    if (word_line == NULL)
+	if (str == NULL)
+		return (NULL);
+	len = (end - start_index);
+	word_line = (char *)malloc(sizeof(char) * (len + 1));
+	if (word_line == NULL)
 		return (memory_alloc_error());
 	while (idx < len && str[start_index + idx] != '\0')
 	{

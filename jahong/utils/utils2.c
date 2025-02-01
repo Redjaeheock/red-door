@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:28:07 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 15:08:53 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:37:26 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char *copy_index_range(char *str, int idx, int end)
 	tmp[n] = '\0';
 	return (tmp);
 }
+
 int	ck_part_of_special_chr(int c)
 {
 	if ('!' <= c && c <= '/')

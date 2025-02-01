@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:17:50 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/24 21:10:50 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:05:35 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	search_chr_in_str(char *str, char c)
 	}
 	return (flag);
 }
+
 char	are_all_characters_same(char *str, char c)
 {
 	int	idx;
@@ -48,6 +49,7 @@ char	are_all_characters_same(char *str, char c)
 	}
 	return (flag);
 }
+
 char	*get_exit_no(void)
 {
 	char *tmp;

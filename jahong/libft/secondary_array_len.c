@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:57:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 10:49:21 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:55:36 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	sndry_arr_len(void **array)
 {
-	int     len;
+	int	len;
 
 	len = 0;
 	if (array == NULL)

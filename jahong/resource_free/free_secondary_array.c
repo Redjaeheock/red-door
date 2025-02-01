@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:56:30 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 10:49:18 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:54:57 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*free_sndry_arr(void **array)
 {
-	int     row;
+	int	row;
 
 	row = 0;
 	if (array == NULL)

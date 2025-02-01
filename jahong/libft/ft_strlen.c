@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 14:34:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 10:27:38 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:56:31 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
 	int	len;
 
@@ -23,6 +23,7 @@ int ft_strlen(const char *str)
 		len++;
 	return (len);
 }
+
 int	conditional_strlen(const char *s, unsigned char condition)
 {
 	int	len;

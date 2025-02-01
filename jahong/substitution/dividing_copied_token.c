@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:54:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/27 12:24:27 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/01 13:33:47 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int   cmp_pre_next_chr(char *str, int idx)
+int	cmp_pre_next_chr(char *str, int idx)
 {
 	if (idx > 0)
 	{
@@ -26,7 +26,8 @@ int   cmp_pre_next_chr(char *str, int idx)
 	}
 	return (0);
 }
-int   increase_index(char *str, int idx)
+
+int	increase_index(char *str, int idx)
 {
 	if (str[idx] == '$' && str[idx - 1] == '$')
 		return (1);
@@ -41,7 +42,7 @@ int   increase_index(char *str, int idx)
    return (0);
 }
 
-int   move_index(char *str, int idx, int num)
+int	move_index(char *str, int idx, int num)
 {
 	int inc_idx;
 
@@ -69,6 +70,7 @@ int   move_index(char *str, int idx, int num)
 	}
 	return (idx);
 }
+
 char	*split_copied_token(char *str, int *idx, int *quote)
 {
 	char	*tmp;
@@ -87,10 +89,12 @@ char	*split_copied_token(char *str, int *idx, int *quote)
 	*quote = check_quote_pair(str[*idx], *quote);
 	printf(">>>>>>>>>>>>>>>>> start = %d | *idx = %d\n", start, *idx);
 	tmp = copy_index_range(str, start, *idx);
+	printf("after split tmp = %s\n",tmp);
 	if (tmp == NULL)
 		return (NULL);
 	return (tmp);
 }
+
 t_tmp	*dividing_copied_token(char *str)
 {
 	t_tmp	*tmp;

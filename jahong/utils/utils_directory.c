@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:12:51 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/29 16:35:18 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 18:53:48 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	search_str_in_f_list(t_list *node, char **list, char *str)
 	return (1);
 }
 
-char	**take_filenames1(struct dirent *entry, DIR *dir, char *path, int len)
+char	**take_filenames1(struct dirent *entry, DIR *dir, int len)
 {
 	char	**tmp;
 	int		row;
@@ -82,6 +82,7 @@ char	**take_filenames1(struct dirent *entry, DIR *dir, char *path, int len)
 	tmp[row] = NULL;
 	return (tmp);
 }
+
 int	open_n_read_current_filenames(t_list *node, int len)
 {
 	DIR				*dir;
@@ -92,13 +93,14 @@ int	open_n_read_current_filenames(t_list *node, int len)
 	if (dir == NULL)
 		return ((printf("system error: fail open directory\n"), -1)); // . 으로 연 경로가 실패하는 건 시스템 문제제
 	entry = readdir(dir);
-	f_list = take_filenames1(entry, dir, ".", len);
+	f_list = take_filenames1(entry, dir, len);
 	if (f_list == NULL)
 		return ((closedir(dir), -1));
 	node->f_list = f_list;
 	closedir(dir);
 	return (1);
 }
+
 int	open_n_filter_current_filenames(t_list *node, char *str, int len)
 {
 	char	**f_list;
@@ -113,6 +115,7 @@ int	open_n_filter_current_filenames(t_list *node, char *str, int len)
 	sndry_alloc_err((void **)f_list);
 	return (result);
 }
+
 int	count_list_current_directory(void)
 {
 	DIR				*dir;

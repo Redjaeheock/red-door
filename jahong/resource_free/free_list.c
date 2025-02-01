@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/26 20:52:15 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:55:09 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	*free_t_path(t_path	*path)
 	}
 	return (NULL);
 }
+
 void	*free_t_list(t_list *node)
 {
 	t_list	*temp;
@@ -50,6 +51,7 @@ void	*free_t_list(t_list *node)
 	}
 	return (NULL);
 }
+
 void	*free_t_data(t_data *meta)
 {
 	if (meta == NULL)
@@ -57,6 +59,7 @@ void	*free_t_data(t_data *meta)
 	free(meta);
 	return (NULL);
 }
+
 void	*free_meta_token(t_data *meta)
 {
 	if (meta->lval != NULL)

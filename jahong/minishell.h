@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 15:07:32 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/01 11:08:59 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 # include <dirent.h>               /* opendir, readdir, closedir 함수를 사용하기 위한 헤더*/
 
 typedef enum {
-    NONE,
-    PIPE,
-    REDIRECTION,
-    CMD,
-    OPTION,
-    ARG
+	NONE,
+	PIPE,
+	REDIRECTION,
+	CMD,
+	OPTION,
+	ARG
 }	t_tokentype;
 
 typedef struct	temp_list
@@ -37,33 +37,33 @@ typedef struct	temp_list
 
 typedef struct  cmd_list
 {
-	struct cmd_list     *prev;
-	struct cmd_list     *next;
-	t_tokentype		    type;
+	struct cmd_list		*prev;
+	struct cmd_list		*next;
+	t_tokentype			type;
 	char				**f_list;
 	char				*key;
-	char		    	*token;
-}					    t_list;
+	char				*token;
+}						t_list;
 
 typedef struct	path_list
 {
 	struct path_list	*next;
 	char				*key;
 	char				*value;
-	char                *set;
+	char				*set;
 }						t_path;
 
 typedef struct meta_data
 {
-	struct cmd_list     *tokens;
+	struct cmd_list		*tokens;
 	struct path_list	*exp;
 	struct path_list	*env;
 	char				**envm;
-	char                **path;
-	char                *exit_n;
-	char                *pid_n;
-	char                *lval;
-}                      t_data;
+	char				**path;
+	char				*exit_n;
+	char				*pid_n;
+	char				*lval;
+}						t_data;
 
 /* free_list.c*/
 void	*free_t_path(t_path *lsit);
@@ -86,7 +86,7 @@ void	*t_data_alloc_err(t_data *meta);
 void	*t_tmp_alloc_err(t_tmp *node);
 
 /* initialize_meta_token.c*/
-t_data  *initialize_meta_token(char **envp);
+t_data	*initialize_meta_token(char **envp);
 
 /* linked_list.c */
 t_list	*create_linked_list(char *str);
@@ -159,6 +159,21 @@ int		substitute_tokens(t_data *meata, t_list *tokens, char c);
 /* substitute_dollar_sign.c */
 t_tmp	*do_substitute_dollar_sign(t_data *meta, char **str, char c);
 
+/* substitute_dollar_sign2.c*/
+int		check_split_point_str(char *str);
+
+/* substitute_dollar_sing3.c */
+t_tmp	*change_dollar_sign(t_data *meta, char *str);
+
+/* substitute_dollar_sign_check.c */
+t_tmp	*pass_substitute(char *str);
+int		check_pass_substitute(char *str, char c);
+
+/* change_dollar_sign.c */
+int		check_except_substitution(t_tmp	*node);
+char	*copy_current_process_pid(void);
+char	*change_null_string(void);
+
 /* substitute_wildcard1.c */
 int		substitute_wildcard(t_data *meta, t_list *tokens);
 
@@ -167,12 +182,11 @@ int		change_only_wildcard_token(t_list *node);
 int		change_partial_wildcard2(t_path *env, t_list *node, int	idx, int end);
 int		change_partial_wildcard1(t_list *node, char *str);
 
-/* change_dollar_sign.c */
-char	*copy_current_process_pid(void);
-char	*change_null_string(void);
-
 /* join_sub_tokens*/
 int		join_sub_tokens(t_list *tokens, t_tmp *node, char c);
+
+/* remove_quote_set */
+int		remove_quote_tokens(t_list *node, char c);
 
 /* utils.c*/
 char	search_chr_in_str(char *str, char c);
@@ -182,19 +196,18 @@ char	*get_exit_no(void);
 /*utils2.c*/
 char	*search_value_using_key(t_path *path, char *src);
 char	*copy_conditional_index_range(char *str, int idx, int end, char c);
-char    *copy_index_range(char *str, int idx, int end);
+char	*copy_index_range(char *str, int idx, int end);
 int		ck_part_of_special_chr(int c);
 
 /* utils_directory.c */
 int		count_valid_filename(char **list, char *str);
 int		search_str_in_f_list(t_list *node, char **list, char *str);
-char	**take_filenames1(struct dirent *entry, DIR *dir, char *path, int len);
+char	**take_filenames1(struct dirent *entry, DIR *dir, int len);
 int		open_n_filter_current_filenames(t_list *node, char *str, int len);
 int		open_n_read_current_filenames(t_list *node, int len);
 int		count_list_current_directory(void);
 
 /* othoer_functions.c*/
 int		is_token_all_null_after_join(t_tmp *tmp);
-char	*copy_quote_set_jump(char *s, char *tmp, int len);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 11:12:13 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/01 16:11:24 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,25 @@ t_list	*split_words(char const *str, char c)
 	words = NULL;
 	while (str[index] != '\0')
 	{   
-        if (str[index] == '|')
-            index = pipe_div(&words, str, index, c);
-        else if (str[index] == '<')
-            index = in_redirec_div(&words, str, index, c);
-        else if (str[index] == '>')
-            index = out_redirec_div(&words, str, index, c);
-        else if (str[index] == '&')
-            index = ampersand_div(&words, str, index, c);
-        else if (str[index] != 32)
-            index = string_div(&words, str, index);
-        if (index == -1)
-            return (NULL);
-        else if (str[index] == '\0')
-            break ;
-        index++;
+		if (str[index] == '|')
+			index = pipe_div(&words, str, index, c);
+		else if (str[index] == '<')
+			index = in_redirec_div(&words, str, index, c);
+		else if (str[index] == '>')
+			index = out_redirec_div(&words, str, index, c);
+		else if (str[index] == '&')
+			index = ampersand_div(&words, str, index, c);
+		else if (str[index] != 32)
+			index = string_div(&words, str, index);
+		if (index == -1)
+			return (NULL);
+		else if (str[index] == '\0')
+			break ;
+		index++;
 	}
 	return (words);
 }
+
 int	check_operator_v2(const char *str, int index)
 {
 	int	num;
@@ -62,6 +63,7 @@ int	check_operator_v2(const char *str, int index)
 	}
 	return (1);
 }
+
 int check_operator_v1(const char *str, int index)
 {
 	if (str[index] == '|')
@@ -82,6 +84,7 @@ int check_operator_v1(const char *str, int index)
 		return (check_operator_v2(str, index));
     return (1);
 }
+
 t_list *mn_split(t_data *meta, char **str, char c)
 {
 	t_list	*tokens;
@@ -105,6 +108,13 @@ t_list *mn_split(t_data *meta, char **str, char c)
 	tokens = split_words(*str, c);
 	if (tokens == NULL)
 		return (NULL);
+	tmp = tokens;
+	while (tmp != NULL)
+	{
+		printf("first_token_key = %s\n", tmp->key);
+		printf("first_mnsplit_token = %s\n", tmp->token);
+		tmp = tmp->next;
+	}
 	if (substitute_tokens(meta, tokens, c) == 0)
 		return (free_t_list(tokens));
 	tmp = tokens;
@@ -116,6 +126,7 @@ t_list *mn_split(t_data *meta, char **str, char c)
 	}
 	return (tokens);
 }
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;

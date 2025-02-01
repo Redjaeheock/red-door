@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:40:39 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 10:23:52 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:44:56 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int check_valid_back(char *str, int idx)
 		return (1);
 	return (0);
 }
+
 int	check_quote_pair(char c, int quote)
 {
 	if (c == '\'' && quote == 0)

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:18:07 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/28 14:13:34 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 18:45:38 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static char	*check_big_tail(char *base, char *str, int base_len, int str_len)
 {
-	size_t	b_idx;
-	size_t	s_idx;
-	int		cnt;
+	int	b_idx;
+	int	s_idx;
+	int	cnt;
 
 	b_idx = base_len - 1;
 	s_idx = str_len - 1;
@@ -36,11 +36,12 @@ static char	*check_big_tail(char *base, char *str, int base_len, int str_len)
 	}
 	return (NULL);
 }
+
 char	*ft_str_tail_str(const char *big, const char *little)
 {
 
-	size_t	big_len;
-	size_t	little_len;
+	int	big_len;
+	int	little_len;
 
 	if (little == NULL || little[0] == '\0')
 		return (NULL);

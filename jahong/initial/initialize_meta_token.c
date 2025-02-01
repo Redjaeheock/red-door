@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/27 07:23:37 by jahong           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:00:11 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_path *make_t_path(void)
+t_path	*make_t_path(void)
 {
 	t_path *tmp;
 
@@ -25,7 +25,8 @@ t_path *make_t_path(void)
 	tmp->set = NULL;
 	return (tmp);
 }
-t_path 	*init_key_value(char **envp)
+
+t_path	*init_key_value(char **envp)
 {
 	t_path	*env_path;
 	t_path	*tmp;
@@ -48,6 +49,7 @@ t_path 	*init_key_value(char **envp)
 	}
 	return (env_path);
 }
+
 char	**copy_envp(char **envp)
 {
 	char	**cp_envp;
@@ -69,6 +71,7 @@ char	**copy_envp(char **envp)
 	cp_envp[idx] = NULL;
 	return (cp_envp);
 }
+
 void	meta_token_init_memvar(t_data *meta)
 {
 	meta->tokens = NULL;
@@ -79,7 +82,8 @@ void	meta_token_init_memvar(t_data *meta)
 	meta->exit_n = NULL;
 	meta->pid_n = NULL;
 	meta->lval = NULL;
-}	
+}
+
 t_data	*initialize_meta_token(char **envp)
 {
 	t_data *meta;
