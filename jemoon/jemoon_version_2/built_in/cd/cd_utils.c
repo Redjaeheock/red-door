@@ -1,24 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/21 13:32:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/31 18:10:03 by jemoon           ###   ########.fr       */
+/*   Created: 2025/02/01 10:57:08 by jemoon            #+#    #+#             */
+/*   Updated: 2025/02/01 11:14:16 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-void	builtin(t_data *meta)
+char	*get_env(t_path *env, char *home)
 {
-	minishell_exit(&(*meta).exec_cmd);
-	minishell_echo(&(*meta).exec_cmd);
-	minishell_pwd(meta);
-	minishell_env(meta);
-	minishell_export(meta);
-	minishell_unset(meta);
-	minishell_cd(meta);
+	t_path	*temp;
+
+	temp = env;
+	while (temp)
+	{
+		if (ft_strcmp(temp->key, home) == 0)
+			return (temp->value);
+		temp = temp->next;
+	}
+	return (NULL);
 }
+
+int	find_node(t_path *env, char *key)
+{
+	t_path	*temp;
+
+	temp = env;
+	while (temp)
+	{
+		if (ft_strcmp(temp->key, key) == 0)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
+}
+

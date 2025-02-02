@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 16:00:10 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/02 12:51:42 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdlib.h>
 # include <string.h>
 # include <signal.h>
+# include <unistd.h>
+# include <dirent.h>
 
 typedef enum tokentype
 {
@@ -95,6 +97,9 @@ int			sndry_arr_len(void **array);
 void		*free_sndry_arr(void **array);
 char		**ft_split(char const *s, char c);
 char		*ft_itoa(int n);
+char		*ft_strjoin_v2(const char *s1, const char *s2);
+char		*ft_strjoin(char *s1, char *s2);
+char		**ft_split(char const *s, char c);
 
 /*error_process*/
 int			error_syntax(char *str);
@@ -247,6 +252,7 @@ void		minishell_pwd(t_data *meta);
 void		minishell_env(t_data *meta);
 void		minishell_export(t_data *meta);
 void		minishell_unset(t_data *meta);
+void		minishell_cd(t_data *meta);
 
 /* built_in_export_sort.c */
 void		sort_export(t_path **exp);
@@ -278,5 +284,24 @@ int			search_special_characters_unset(char *str);
 void		remove_node(t_path **exp, t_path *prev, t_path *current);
 int			unset_key(t_path **exp, char *str);
 void		unset_export(t_data *meta, int unset_len);
+void		*memory_alloc_error(void);
+
+/* built_in_cd_utils.c */
+char		*get_env(t_path *env, char *home);
+int			find_node(t_path *env, char *key);
+
+/* built_in_cd_frist.c */
+int			set_null_by_key(t_path **exp, char *key);
+int			set_value_by_key(t_path **exp, char *key, char *value);
+void		redefine_export(t_path	**exp, char *home);
+void		cd_home(t_data *meta);
+void		cd_rest(t_data *meta, char *dir);
+
+/* built_in_cd_utils_path.c */
+int			count_slash(char *str, char c);
+int			count_back_path_len(char *str, int slash_len);
+char		*remove_back_path(char *pwd, int len);
+char		*add_path(char *pwd, char *dir);
+char		*back_path(char *pwd);
 
 #endif
