@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/01 11:08:59 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/03 19:59:56 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ t_tmp	*make_tmp_node(t_tmp *node, char *str1, char *str2);
 /*libft*/
 int		ft_strlen(const char *str);
 int		conditional_strlen(const char *s, unsigned char condition);
+int		reverse_conditiona_strlen(const char *s, unsigned char condition);
 int		conditional_jump_len(const char *s, unsigned char condition);
 int		quote_set_jump_len(const char *s);
 int		ft_isalnum(int c);
@@ -113,7 +114,10 @@ void	*free_sndry_arr(void **array);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_strjoin_v2(const char *s1, const char *s2);
+char	*ft_str_head_str(const char *big, const char *little);
 char	*ft_str_tail_str(const char *big, const char *little);
+char	**ft_add_str_to_2d_arr(char **arr, char *str);
+// char	**ft_merge_2d_arr(char **arr1, char **arr2);
 
 
 /* main.c */
@@ -175,18 +179,18 @@ char	*copy_current_process_pid(void);
 char	*change_null_string(void);
 
 /* substitute_wildcard1.c */
-int		substitute_wildcard(t_data *meta, t_list *tokens);
+int		substitute_wildcard(t_list *tokens);
 
 /* substitute_wildcard2.c */
 int		change_only_wildcard_token(t_list *node);
-int		change_partial_wildcard2(t_path *env, t_list *node, int	idx, int end);
+// int		change_partial_wildcard2(t_list *node, char *pattrn);
 int		change_partial_wildcard1(t_list *node, char *str);
 
 /* join_sub_tokens*/
 int		join_sub_tokens(t_list *tokens, t_tmp *node, char c);
 
 /* remove_quote_set */
-int		remove_quote_tokens(t_list *node, char c);
+int		remove_quote_tokens(t_list *node);
 
 /* utils.c*/
 char	search_chr_in_str(char *str, char c);
@@ -200,12 +204,12 @@ char	*copy_index_range(char *str, int idx, int end);
 int		ck_part_of_special_chr(int c);
 
 /* utils_directory.c */
-int		count_valid_filename(char **list, char *str);
+int		count_valid_head_pattern_filename(char **list, char *str);
+int		count_valid_tail_pattern_filename(char **list, char *str);
 int		search_str_in_f_list(t_list *node, char **list, char *str);
-char	**take_filenames1(struct dirent *entry, DIR *dir, int len);
-int		open_n_filter_current_filenames(t_list *node, char *str, int len);
-int		open_n_read_current_filenames(t_list *node, int len);
-int		count_list_current_directory(void);
+char	**take_filenames_basic(struct dirent *entry, DIR *dir, int len);
+char	**open_n_read_filenames(char *path, int len);
+int		count_file_in_directory(char *path);
 
 /* othoer_functions.c*/
 int		is_token_all_null_after_join(t_tmp *tmp);

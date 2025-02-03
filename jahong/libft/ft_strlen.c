@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 14:34:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 16:56:31 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/03 05:23:08 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,22 @@ int	conditional_strlen(const char *s, unsigned char condition)
 		return (0);
 	while ((s[len] != condition) && (s[len] != '\0'))
 		len++;
+	return (len);
+}
+
+int	reverse_conditiona_strlen(const char *s, unsigned char condition)
+{
+	int	len;
+
+	if (s == NULL)
+		return (-1);
+	len = ft_strlen(s);
+	while (0 <= len)
+	{
+		if (s[len] == condition)
+			break ;
+		len--;
+	}
 	return (len);
 }
 

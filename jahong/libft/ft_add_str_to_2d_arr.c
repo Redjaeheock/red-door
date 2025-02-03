@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_add_str_to_2d_arr.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/06 15:45:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/03 18:38:39 by jahong           ###   ########.fr       */
+/*   Created: 2025/02/03 17:19:11 by jahong            #+#    #+#             */
+/*   Updated: 2025/02/03 17:38:46 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_strdup(const char *s)
+char	**ft_add_str_to_2d_arr(char **arr, char *str)
 {
-	char	*copy_str;
+	char	**join;
 	int		len;
-	int		idx;
+	int		row;
 
-	if (s == NULL)
+	len = sndry_arr_len((void **)arr);
+	join = (char **)malloc(sizeof(char *) * (len + 1));
+	if (join == NULL)
 		return (NULL);
-	len = ft_strlen(s);
-	copy_str = (char *)malloc(sizeof(char) * (len + 1));
-	if (copy_str == NULL)
-		return (NULL);
-	idx = 0;
-	while (((char *)s)[idx] != '\0')
+	row = 0;
+	while (arr[row] != NULL)
 	{
-		copy_str[idx] = ((char *)s)[idx];
-		idx++;
+		join[row] = ft_strjoin_v2(arr[row], str);
+		if (join[row] == NULL)
+			return (free_sndry_arr((void **)arr));
+		row++;
 	}
-	copy_str[idx] = '\0';
-	return (copy_str);
+	join[row] = NULL;
+	return (join);
 }

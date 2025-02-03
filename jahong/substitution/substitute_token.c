@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/01 16:22:28 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/02 22:43:08 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,18 +115,9 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 			return (0);
 		if (c == 'c')
 		{
-			printf("try remove\n");
-			printf("tmp -> key = %s\n", tmp->key);
-			printf("tmp -> token = %s\n", tmp->token);
-			if (remove_quote_tokens(tmp, c) == 0)
-			{
-				printf("hrer\n");
+			if (substitute_wildcard(tmp) == -1)
 				return (0);
-			}
-		}
-		if (c == 'c')
-		{
-			if (substitute_wildcard(meta, tokens) == -1)
+			if (remove_quote_tokens(tmp) == 0)
 				return (0);
 		}
 		tmp = tmp->next;

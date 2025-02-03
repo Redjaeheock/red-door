@@ -6,13 +6,29 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:12:51 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 18:53:48 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/03 23:27:14 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	count_valid_filename(char **list, char *str)
+int	count_valid_head_pattern_filename(char **list, char *str)
+{
+	int	row;
+	int	cnt;
+
+	row = 0;
+	cnt = 0;
+	while (list[row] != NULL)
+	{
+		if (ft_str_head_str(list[row], str) != NULL)
+			cnt++;
+		row++;
+	}
+	return (cnt);
+}
+
+int	count_valid_tail_pattern_filename(char **list, char *str)
 {
 	int	row;
 	int	cnt;
@@ -37,7 +53,7 @@ int	search_str_in_f_list(t_list *node, char **list, char *str)
 	row = 0;
 	n = 0;
 	printf("[[[[[[[[[ searching filename = %s ]]]]]]]]\n", str);
-	len = count_valid_filename(list, str);
+	len = count_valid_tail_pattern_filename(list, str);
 	node->f_list = (char **)malloc(sizeof(char *) * (len + 1));
 	if (node->f_list == NULL)
 		return ((memory_alloc_error(), -1));
@@ -58,9 +74,10 @@ int	search_str_in_f_list(t_list *node, char **list, char *str)
 	return (1);
 }
 
-char	**take_filenames1(struct dirent *entry, DIR *dir, int len)
+char	**take_filenames_basic(struct dirent *entry, DIR *dir, int len)
 {
 	char	**tmp;
+	char	*keep;
 	int		row;
 
 	row = 0;
@@ -71,10 +88,12 @@ char	**take_filenames1(struct dirent *entry, DIR *dir, int len)
 	{
 		if (entry->d_name[0] != '.')
 		{
-			tmp[row] = ft_strdup(entry->d_name);
-			// printf("-0--0-0--0-0--0-0--0-tmp[row] = %s\n", tmp[row]);
-			if (tmp[row] == NULL)
+			keep = ft_strdup(entry->d_name);
+			//printf("-0--0-0--0-0--0-0--0-tmp[%d] = %s\n", row, tmp[row]);
+			if (keep == NULL)
 				return (sndry_alloc_err((void **)tmp));
+			tmp[row] = keep;
+			keep = NULL;
 			row++;
 		}
 		entry = readdir(dir);
@@ -83,48 +102,50 @@ char	**take_filenames1(struct dirent *entry, DIR *dir, int len)
 	return (tmp);
 }
 
-int	open_n_read_current_filenames(t_list *node, int len)
+char	**open_n_read_filenames(char *path, int len)
 {
 	DIR				*dir;
 	struct dirent	*entry;
 	char			**f_list;
+	char			**fail;
 
-	dir = opendir(".");
+	fail = (char **)malloc(sizeof(char *) * 2);
+	if (fail == NULL)
+		return (NULL);
+	fail[0] = ft_strdup("no such path");
+	fail[1] = NULL;
+	dir = opendir(path);
 	if (dir == NULL)
-		return ((printf("system error: fail open directory\n"), -1)); // . 으로 연 경로가 실패하는 건 시스템 문제제
+	{
+		if (ft_strcmp(path, ".") == 0 || ft_strcmp(path, "/") == 0)
+		{
+			printf("system error: fail open directory\n");
+			return (free_sndry_arr((void **)fail));
+		}
+		return (fail);
+	}
+	free_sndry_arr((void **)fail);
 	entry = readdir(dir);
-	f_list = take_filenames1(entry, dir, len);
+	f_list = take_filenames_basic(entry, dir, len);
 	if (f_list == NULL)
-		return ((closedir(dir), -1));
-	node->f_list = f_list;
+		return ((closedir(dir), NULL));
 	closedir(dir);
-	return (1);
+	return (f_list);
 }
 
-int	open_n_filter_current_filenames(t_list *node, char *str, int len)
-{
-	char	**f_list;
-	int		result;
-
-	result = open_n_read_current_filenames(node, len);
-	if (node->f_list == NULL)
-		return (-1);
-	f_list = node->f_list;
-	result = search_str_in_f_list(node, f_list, str);
-	printf("^*^*^*^*^*^*NMNM node->f_list[0] = %s|MNMMNNM\n", node->f_list[0]);
-	sndry_alloc_err((void **)f_list);
-	return (result);
-}
-
-int	count_list_current_directory(void)
+int	count_file_in_directory(char	*path)
 {
 	DIR				*dir;
 	struct dirent	*entry;
 	int				cnt;
 
-	dir = opendir(".");
+	dir = opendir(path);
 	if (dir == NULL)
-		return ((printf("system error fail open directory\n"), -1));
+	{
+		if (ft_strcmp(path, ".") == 0 || ft_strcmp(path, "/") == 0)
+			return ((printf("system error: fail open directory\n"), -1));
+		return (0);
+	}
 	entry = readdir(dir);
 	if (entry == NULL)
 		return ((closedir(dir), 0));

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 10:56:37 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/01 16:20:33 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/02 12:01:39 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*copy_quote_set_jump(char *s, char *tmp)
 	return (tmp);
 }
 
-int	keep_quote_set(t_list *node, char c)
+int	keep_quote_set(t_list *node)
 {
 
 	if (node->token[0] == '"' && ft_strcmp(node->token, "\"\"") == 0)
@@ -62,7 +62,7 @@ int	keep_quote_set(t_list *node, char c)
 	return (1);
 }
 
-int	remove_quote_tokens(t_list *node, char c)
+int	remove_quote_tokens(t_list *node)
 {
 	char	*str;
 	int		len;
@@ -71,7 +71,7 @@ int	remove_quote_tokens(t_list *node, char c)
 	printf("jump quote len = %d\n", len);
 	if (len == 0 && node->token == NULL)
 		return (1);
-	if (keep_quote_set(node, c) == 0)
+	if (keep_quote_set(node) == 0)
 		return (0);
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (str == NULL)
