@@ -1,0 +1,205 @@
+<쉘 종료값>
+
+0 = 커맨드 및 ctrl d 또는 실행한 실행 파일의 정상 종료료(명령어의 성공적 종료)
+
+1 = 파일 읽어오기 실패시
+
+2 = syntax error(| , <, >, &) (오퍼레이터로 cmd_line 시작)
+
+126 = 실행 파일은 존재하지만 실행할 수 없음 (권한 문제 등)
+
+127 = command not found
+
+130 = ctrl c 종료시
+
+131 = ctrl \ 종료시
+
+
+<<< + string = 에러가 아니다 (bash 환경에 따라 달라지는 것으로 보임)
+
+
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ |
+bash: syntax error near unexpected token `|'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ ||
+bash: syntax error near unexpected token `||'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ |||
+bash: syntax error near unexpected token `||'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ ||||||
+bash: syntax error near unexpected token `||'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ ||||||||
+bash: syntax error near unexpected token `||'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ &
+bash: syntax error near unexpected token `&'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ &&
+bash: syntax error near unexpected token `&&'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ &&&&&&
+bash: syntax error near unexpected token `&&'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ &&&&&&&
+bash: syntax error near unexpected token `&&'
+
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<
+bash: syntax error near unexpected token `newline' (내 컴퓨터 환경)
+bash: syntax error near unexpected token `<<' (클러스터 환경)
+
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ >>>
+bash: syntax error near unexpected token `>' (내 컴퓨터 환경)
+bash: syntax error near unexpected token `>>' (클러스터 환경)
+
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ >>>>
+bash: syntax error near unexpected token `>>'
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ >>>>>>>
+bash: syntax error near unexpected token `>>'
+
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<
+bash: syntax error near unexpected token `<' (내 컴퓨터 환경)
+bash: syntax error near unexpected token `<<' (클러스터 환경)
+
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<<
+bash: syntax error near unexpected token `<<'
+
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<<<
+bash: syntax error near unexpected token `<<<' (내 컴퓨터 환경)
+bash: syntax error near unexpected token `<<' (클러스터 환경경)
+
+red_h@LAPTOP-2E1IM6UM:~/github/red-door/jahong$ <<<<<<<<
+bash: syntax error near unexpected token `<<<' (내 컴퓨터 환경)
+bash: syntax error near unexpected token `<<' (클러스터 환경)
+
+
+--------------------------------------------------
+
+$_ -> 명령어의 마지막 인수를 저장
+
+현재 내 컴퓨터 환경
+
+< 명령어는 "" 로 갱신신
+
+| 라인으로는 $_ 이 갱신되지 않음
+
+터미널에 $_ 입력시 저장된 인수가 명령어로 인식
+
+저장된 인수가 alias 설정됐을 경우 alias 의 인수로 설정됨
+
+
+
+"$HOME<" 와 $HOME< 동작은 다르다 (후자는 syntax 에러 처리된다.)
+
+나아기 "$HOME" 은 실행 명령 파일을 찾으려 하고,
+
+'$HOME' 은 해당 문자가 명령어인지를 확인하려 한다.
+
+"$HOME*" , "HOME****" 은 * 가 문자열 취급된다
+
+$HOME* , $HOME***** 은 모든 *들이 하나의 널문자 취급된다
+
+$HOME * , $HOME ***** 은 하나의 와일드 카드로 인식되서 처리된다.
+
+$HOME * * * ... 은 각각이 와일드 카드로 인식되서 처리된다.
+
+
+위 내용은 헛소리다
+
+**$HOME***$PWD*** 라는 명령어가 들어왔을 떄 ($HOME = /home/user | $PWD = /home/user)
+
+제일 앞의 ** 부터 와일드카드 치환을 try 하려고 한다.
+
+하지만 ** 앞에 경로가 없기 때문에 ** 뒤의 $HOME 값을 패턴 매칭으로 사용하려 한다
+
+즉 '/home/user' 로 끝나는 파일이나 디렉토리를 매칭하려고 한다.
+
+하지만 / 는 파일명으로 사용하 수 없기 떄문에 매칭이 되지 않고, 
+
+**$HOME***$PWD 를 전체 경로로 재해석해서 **/home/user/***/home/user 를 경로로해서 매치하려 하지만
+
+이런 경로는 없으니 결국 No search file or directory 라는 문구를 뱉는다
+
+그럼 정말 제일 앞의 ** 가 경로가 없다고 뒤를 매칭 패턴으로 사용하는지 알아 보기 위해 
+
+테스트 파일 구조를 만들어 봤다
+
+그전에 $test=/hong/home 이라는 환경 변수를 만든다
+
+그 다음 파일 구조는 다음과 같다다
+
+home - hong - hong - hong - home - home - hong
+	 - user
+
+이라는 구조에서 위치는 처음 hong 디렉토리로 이동한다.
+
+그럼 현재 PWD 는 /home/hong 이 된다.
+
+여기서 **hong$test***$PWD*** 를 입력하면 
+
+** 는 현재 경로에서 hong 이라는 패턴을 찾는다.
+
+현재 경로에 hong 이 있으니 매칭이 완료 되어 뒤 와일드 카드의 경로에 사용된다.
+
+그럼 그러면 hong/$test***$PWD*** 가 될 것이고
+
+$test 는 아까 /hong/home 이라고 설정했으니 
+
+hong/hong/home***$PWD*** 이라는 경로로 완성이 된다.
+
+여기서 두 번째 *** 는 앞의 경로 hong/hong/home 에서 뒤의 $PWD 의 치환값인 /home/hong 을 패턴 매칭으로 사용하려고 한다.
+
+이 역시 경로는 이름으로 사용할 수 없기 떄문에 NULL 처리 돼서 
+
+hong/hong/home$PWD*** 가 될 것이고, 이를 다시 치환하면
+
+hong/hong/home/home/hong*** 가 돼서 모든 파일을 찾으려 하지만 아무 파일도 없기 떄문에 
+
+hong/hong/home/home/hong 자체가 커맨드 명령어가 되되어 
+
+'hong/hong/home/home/hong Is a directory' 라는 문구를 내뱉는다
+
+---------------------------------------------------
+
+< "$1" => null 문자로 치환되나 파일 서칭이 가능 ("" 느낌으로 no search directory or file)
+< $1   => null 문자로 치환되어 리다이렉션 자체가 고장 (NULL 느낌으로 bash: $1: ambiguous redirect)
+
+또한 
+
+< *txt
+< *2
+
+등 뒤의 매칭 매턴이 두 개 이상상 일 경우도 고장
+(bash: *txt: ambiguous redirect)
+(bash: *2: ambiguous redirect)
+
+또한 파일이 디렉토리거나 권한이 없어도 일단 FD 연결을 해준다.
+
+이 후에 cat 같이 직접 읽는 명령어등의 인자로 전달 될 경우 오류를 뱉는다.
+--------------------------------------------------
+
+명령어와 heredoc 이 동시에 있을 경우 heredoc 우선 입력 받아 임시 버퍼에 저장된 후 이 후 명령어 실행
+
+red_h@LAPTOP-2E1IM6UM:~$ file < $1 << o > file2
+> $***$1$HOME
+> o
+bash: $1: ambiguous redirect
+
+red_h@LAPTOP-2E1IM6UM:~$ cat << o > file2
+> $****
+> o
+red_h@LAPTOP-2E1IM6UM:~$ cat file2
+***
+red_h@LAPTOP-2E1IM6UM:~$ cat << o > file2
+> $1
+> o
+red_h@LAPTOP-2E1IM6UM:~$ cat file2
+
+-----------------------------------------------------
+red_h@LAPTOP-2E1IM6UM:~$ cat file2
+testtesttest
+red_h@LAPTOP-2E1IM6UM:~$ cat | << o > file2
+> hello word
+> o
+o
+red_h@LAPTOP-2E1IM6UM:~$ cat file2
+red_h@LAPTOP-2E1IM6UM:~$
+------------------------------------------------------
+위 같은 경우 히어독 입력이 우선적으로 받고, fd 처리 할 곳 이 없어 종료되며
+그 다음 cat 의 입력을 받지만 파이프의 출력이 닫혀 있기 때문에 하나의 스트링을 받고 종료됨
+?? 그런데 왜 file2 의 내용은 지워졌는가?
+
+

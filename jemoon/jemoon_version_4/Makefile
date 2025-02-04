@@ -93,7 +93,7 @@ NAME = minishell
 SRC := $(shell find . -name "*.c")
 OBJ := $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -Iincludes -Isyntax
+CFLAGS = -Iincludes -Isyntax
 LDFLAGS = -lreadline
 
 HEADER = minishell.h

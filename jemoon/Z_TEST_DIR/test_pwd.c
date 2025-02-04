@@ -29,7 +29,8 @@ int	main(void)
 	if( ch == 0 )
 	{
 		printf("Change directory\n");
-	}else
+	}
+	else
 	{
 		printf("Failed change directory!\n");
 	}

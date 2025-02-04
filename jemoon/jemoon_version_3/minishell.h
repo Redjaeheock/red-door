@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/23 14:24:42 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/03 10:45:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct start_list
 	struct start_list	*next;
 	t_tokentype			type_pipe;
 	t_tokentype			type_re;
-	char				*key; // 리다이렉션 str**이 NULL 포인트시, $aa key값 넣기
+	char				*key;
 	char				**str;
 }	t_cmd_list;
 

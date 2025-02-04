@@ -6,13 +6,15 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/03 10:23:52 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/03 18:47:08 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "syntax/syntax.h"
+#include <signal.h>
 
-t_list	*split_words(char const *str)
+t_list	*split_words(char const *str, char c)
 {
 	t_list	*words;
 	int		index;
@@ -22,13 +24,13 @@ t_list	*split_words(char const *str)
 	while (str[index] != '\0')
 	{
 		if (str[index] == '|')
-			index = pipe_div(&words, str, index);
+			index = pipe_div(&words, str, index, c);
 		else if (str[index] == '<')
-			index = in_redirec_div(&words, str, index);
+			index = in_redirec_div(&words, str, index, c);
 		else if (str[index] == '>')
-			index = out_redirec_div(&words, str, index);
+			index = out_redirec_div(&words, str, index, c);
 		else if (str[index] == '&')
-			index = ampersand_div(&words, str, index);
+			index = ampersand_div(&words, str, index, c);
 		else if (str[index] != 32)
 			index = string_div(&words, str, index);
 		if (index == -1)
@@ -84,9 +86,10 @@ int	check_operator_v1(const char *str, int index)
 	return (1);
 }
 
-t_list	*mn_split(t_data *meta, char **str)
+t_list	*mn_split(t_data *meta, char **str, char c)
 {
-	t_list	*words;
+	t_list	*tokens;
+	t_list	*tmp;
 	int		cmd_flag;
 
 	if (*str == NULL)
@@ -97,39 +100,56 @@ t_list	*mn_split(t_data *meta, char **str)
 		*str = NULL;
 		return (NULL);
 	}
-	cmd_flag = check_operator_v1(*str, 0);
-	if (cmd_flag == -1)
+	if (c == 'c')
+	{
+		cmd_flag = check_operator_v1(*str, 0);
+		if (cmd_flag == -1)
+			return (NULL);
+	}
+	tokens = split_words(*str, c);
+	if (tokens == NULL)
 		return (NULL);
-	words = split_words(*str);
-	if (substitution_env_var(meta, words) == 0)
-		return (free_t_list(words));
-	return (words);
+	if (substitute_tokens(meta, tokens, c) == 0)
+		return (free_t_list(tokens));
+	tmp = tokens;
+	while (tmp != NULL)
+	{
+		printf("check_mnsplit_token_key = %s\n", tmp->key);
+		printf("check_mnsplit_token_token = %s\n", tmp->token);
+		tmp = tmp->next;
+	}
+	return (tokens);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*str;
-	t_list		*tokens;
-	t_data		*meta;
-	t_cmd_list	*exec_cmd;
+	char	*str;
+	t_data	*meta;
 
+	signal(SIGINT, SIG_IGN);
 	(void)argc, (void)argv;
-	meta = initial_env(envp);
+	meta = initialize_meta_token(envp);
 	while (1)
 	{
 		str = readline("bash : ");
-		tokens = mn_split(meta, &str);
-		if (tokens == NULL)
+		if (str == NULL)
+			break ;
+		meta->tokens = mn_split(meta, &str, 'c');
+		if (meta->tokens == NULL)
 			continue ;
-		trade_exec_cmd(meta, &exec_cmd, &tokens, &str);
+		printf("여기서부터정진이문제\n");
+		trade_exec_cmd(meta, &meta->exec_cmd, &meta->tokens, &str);
 		if (meta->exec_cmd)
 		{
-			//builtin(meta);
 			printf_exec_commads(meta->exec_cmd);
 			free_exec_linked_list(meta->exec_cmd);
 			meta->exec_cmd = NULL;
 		}
+		meta->tokens = free_t_list(meta->tokens);
 		add_history(str);
 		free(str);
+		printf("\n");
 	}
+	free_meta_token(meta);
+	return (0);
 }
