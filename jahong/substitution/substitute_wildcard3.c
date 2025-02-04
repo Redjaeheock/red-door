@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/03 23:51:14 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/04 11:23:41 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,12 @@ char	**exclusive_use_wildcard_split(t_list *node, int len)
 			while (node->token[idx] == '*' && node->token[idx] != '\0')
 				idx++;
 		}
+		printf("start = %d idx = %d\n", start, idx);
 		str[row] = copy_index_range_jump_quote(node->token, start, idx);
 		if (str[row] == NULL)
 			return (free_sndry_arr((void **)str));
-		printf("str = %s\n", str[row]);
 		row++;
 	}
-	printf("row = %d str[[%d]] = %s\n", row, row, str[row]);
 	str[row] = NULL;
 	return (str);
 }
@@ -242,6 +241,12 @@ int	try_substitute_wildcard(t_list *node, int len)
 		return (-1);
 	while (str[row] != NULL)
 	{
+		printf("aaaaa split exclusive wildcart str = %s\n", str[row]);
+		row++;
+	}
+	row = 0;
+	while (str[row] != NULL)
+	{
 		printf("split exclusive wildcart str = %s\n", str[row]);
 		if (row != 0 && str[row][0] == '*')
 		{
@@ -250,9 +255,12 @@ int	try_substitute_wildcard(t_list *node, int len)
 		}
 		keep = file_open_preprocess(node, str, keep, row);
 		if (ft_strcmp(keep[0], "no such path") == 0)
-			return((free_sndry_arr((void **)keep), 0));
+		{
+			printf("return here\n");
+			return((free_sndry_arr((void **)keep), free_sndry_arr((void **)str), 0));
+		}
 		else if (keep == NULL)
-			return (-1);
+			return (free_sndry_arr((void **)str), -1);
 		row++;
 	}
 	return ((free_sndry_arr((void **)keep), free_sndry_arr((void **)str), 0));
