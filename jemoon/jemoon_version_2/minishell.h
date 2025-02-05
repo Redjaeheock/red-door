@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/02 12:51:42 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 16:22:49 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,7 @@ t_path		*make_t_path(void);
 /* built_in */
 int			check_built_in_cmd(char *cmd, char *exec_cmd);
 void		builtin(t_data *meta);
-void		minishell_exit(t_cmd_list **exec_cmd);
+void		minishell_exit(t_data *meta);
 void		minishell_echo(t_cmd_list **exec_cmd);
 void		minishell_pwd(t_data *meta);
 void		minishell_env(t_data *meta);
