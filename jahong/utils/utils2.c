@@ -6,29 +6,41 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:28:07 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 16:37:26 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/05 10:25:36 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+char	**change_system_error_msg(void)
+{
+	char	**msg;
+
+	msg = (char **)malloc(sizeof(char *) * 2);
+	if (msg == NULL)
+		return (memory_alloc_error());
+	msg[0] = ft_strdup("Not valid path");
+	msg[1] = NULL;
+	return (msg);
+}
+
 char	*search_value_using_key(t_path *path, char *src)
 {
-	char *str;
+	char *value;
 
-	str = NULL;
+	value = NULL;
 	while (path != NULL)
 	{
 		if (ft_strcmp(path->key, src) == 0)
 		{
-			str = ft_strdup(src);
-			if (str == NULL)
+			value = ft_strdup(src);
+			if (value == NULL)
 				return (memory_alloc_error());
 			break ;
 		}
 		path = path->next;
 	}
-	return (str);
+	return (value);
 }
 
 char	*copy_conditional_index_range(char *str, int idx, int end, char c)

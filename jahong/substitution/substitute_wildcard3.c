@@ -6,39 +6,115 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/04 11:23:41 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/06 00:18:56 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**mapping_pattern_start_filname(char **f_list, char *keep)
+char	**modify_least_matched_pattern(char **f_list, char *memo)
 {
-	char	**save;
-	char	*str;
-	int		row;
-	int		n;
+	char	**modify;
 	int		len;
+	int		idx;
+	int		row;
 
+	len = conditional_jump_len(memo, '1');
+	idx = 0;
+	modify = (char **)malloc(sizeof(char *) * (len + 1));
+	if (modify == NULL)
+		return (NULL);
 	row = 0;
-	n = 0;
-	len = count_valid_head_pattern_filename(f_list, keep);
-	save = (char **)malloc(sizeof(char *) * (len + 1));
-	if (save == NULL)
-		return (memory_alloc_error());
+	idx = 0;
 	while (f_list[row] != NULL)
 	{
-		if (ft_str_head_str(f_list[row], keep) != NULL)
+		if (memo[row] == '1')
 		{
-			save[n] = ft_strdup(f_list[row]);
-			if (save[n] == NULL)
-				return (sndry_alloc_err((void **)save));
-			n++;
+			modify[idx] = ft_strdup(f_list[row]);
+			if (modify[idx] == NULL)
+				return (sndry_alloc_err((void **)modify));
+			idx++;
 		}
 		row++;
 	}
-	save[n] = NULL;
-	return (save);
+	modify[idx] = NULL;
+	return (modify);
+}
+
+int	compare_word(char *f_list, int idx, char **path, int *row)
+{
+	int	col;
+	int	len;
+
+	col = 0;
+	len = ft_strlen(path[*row]);
+	while ((f_list[idx] != '\0' && path[*row][col] != '\0'))
+	{
+		if (f_list[idx] == path[*row][col])
+		{
+			col++;
+			idx++;
+			if (col == len)
+			{
+				*row += 1;
+				return (col - 1);
+			}
+		}
+		else
+		{
+			idx += 1 - col;
+			col = 0;
+		}
+	}
+	return (ft_strlen(f_list));
+}
+
+int	matching_fisrt_pattern(char *f_list, char **path)
+{
+	int	row;
+	int	idx;
+
+	row = 0;
+	idx = 0;
+	if (f_list[0] != path[row][0])
+		return (0);
+	while (f_list[idx] != '\0')
+	{
+		idx = compare_word(f_list, idx, path, &row);
+		if (idx == ft_strlen(f_list))
+			return (0);
+		if (row == sndry_arr_len((void **)path))
+			break ;
+		idx++;
+	}
+	if (idx == ft_strlen(f_list) && row != sndry_arr_len((void **)path))
+		return (0);
+	return (1);
+}
+
+char	**mapping_pattern_start_filname(char **path, char **f_list)
+{
+	char	**modify;
+	char	*memo;
+	int		row;
+	int		result;
+	int		len;
+
+	len = sndry_arr_len((void **)f_list);
+	memo = (char *)malloc(sizeof(char) * (len + 1));
+	if (memo == NULL)
+		return (memory_alloc_error());
+	row = 0;
+	while (f_list[row] != NULL)
+	{
+		result = matching_fisrt_pattern(f_list[row], path);
+		memo[row] = result + 48;
+		row++;
+	}
+	memo[row] = '\0';
+	modify = modify_least_matched_pattern(f_list, memo);
+	free(memo);
+	return (modify);
 }
 
 char	*copy_index_range_jump_quote(char *str, int idx, int end)
@@ -66,46 +142,117 @@ char	*copy_index_range_jump_quote(char *str, int idx, int end)
 	copy[n] = '\0';
 	return (copy);
 }
+int	exclusive_use_wildcard_jon_len(char **paths)
+{
+	int	row;
+	int	cnt;
+	int	flag;
 
+	row = 0;
+	cnt = 0;
+	flag = 0;
+	while (paths[row] != NULL)
+	{
+		if (search_chr_in_str(paths[row], '*') == 1)
+		{
+			cnt++;
+			flag = 0;
+		}
+		else
+		{
+			if (flag == 0)
+			{
+				cnt++;
+				flag = 1;
+			}
+		}
+		row++;
+	}
+	return (cnt);
+}
+char	*exclusive_use_wildcar_join2(char **paths, int *row)
+{
+	char	*keep1;
+	char	*keep2;
 
-char	**exclusive_use_wildcard_split(t_list *node, int len)
+	keep1 = NULL;
+	while (paths[*row] != NULL)
+	{
+		if (search_chr_in_str(paths[*row], '*') == 1)
+			break ;
+		keep2 = ft_strjoin_v2(keep1, paths[*row]);
+		if (keep1 != NULL)
+			free(keep1);
+		if (keep2 == NULL)
+			return (NULL);
+		keep1 = keep2;
+		*row += 1;
+	}
+	*row -= 1;
+	return (keep1);
+}
+
+char	**exclusive_use_wildcard_join1(char **paths, int len)
+{
+	char	**join;
+	char	*keep;
+	int		row;
+	int		n;
+
+	join = (char **)malloc(sizeof(char *) * (len + 1));
+	if (join == NULL)
+		return (memory_alloc_error());
+	n = 0;
+	row = 0;
+	while (paths[row] != NULL)
+	{
+		if (search_chr_in_str(paths[row], '*') == 0)
+			keep = exclusive_use_wildcar_join2(paths, &row);
+		else
+			keep = ft_strdup(paths[row]);
+		if (keep == NULL)
+			return(free_multi_2d_arrs((void **)paths, (void **)join));
+		join[n] = keep;
+		n++;
+		row++;
+	}
+	join[n] = NULL;
+	free_sndry_arr((void **)paths);
+	return (join);
+}
+
+char	**exclusive_use_wildcard_split(char *src, int len, int row, int idx)
 {
 	char	**str;
-	int		idx;
-	int		start;
 	int		quote;
-	int		row;
+	int		start;
 
+	start = 0;
 	str = (char **)malloc(sizeof(char *) * (len + 1));
 	if (str == NULL)
 		return (NULL);
-	idx = 0;
 	quote = 0;
-	row = 0;
-	while (node->token[idx] != '\0' && row < len)
+	while (src[idx] != '\0' && row < len)
 	{
-		if (node->token[idx] != '*')
+		start = idx;
+		if (src[idx] != '/')
 		{
-			start = idx;
-			while (node->token[idx] != '\0')
+			while (src[idx] != '\0')
 			{
-				if (node->token[idx] == '\'' || node->token[idx] == '"')
-					quote = check_quote_pair(node->token[idx], quote);
-				if (quote == 0 && node->token[idx] == '*')
-					break;
+				quote = check_quote_pair(src[idx], quote);
+				if (quote == 0 && src[idx] == '/')
+					break ;
 				idx++;
 			}
 		}
 		else
 		{
-			start = idx;
-			while (node->token[idx] == '*' && node->token[idx] != '\0')
+			while (src[idx] == '/' && src[idx] != '\0')
 				idx++;
 		}
-		printf("start = %d idx = %d\n", start, idx);
-		str[row] = copy_index_range_jump_quote(node->token, start, idx);
+		str[row] = copy_index_range_jump_quote(src, start, idx);
 		if (str[row] == NULL)
-			return (free_sndry_arr((void **)str));
+			return (NULL);
 		row++;
 	}
 	str[row] = NULL;
@@ -124,6 +271,18 @@ char	**get_root_filelist(void)
 	return (f_list);
 }
 
+char	**get_current_filelist(void)
+{
+	char	**f_list;
+	int		len;
+
+	len = count_file_in_directory(".");
+	if (len == -1)
+		return (NULL);
+	f_list = open_n_read_filenames(".", len);
+	return (f_list);
+}
+
 char	**get_path_filelist(char *path)
 {
 	char	**f_list;
@@ -135,135 +294,150 @@ char	**get_path_filelist(char *path)
 	return (f_list);
 }
 
-char	**divide_path_n_pattern(char *str, int idx)
+// char	**divide_path_n_pattern(char *str, int idx)
+// {
+// 	char	**f_list;
+// 	char	**keep;
+// 	char	*copy;
+
+// 	copy = copy_index_range(str, 0, idx + 1);
+// 	if (copy == NULL)
+// 		return (NULL);
+// 	f_list = get_path_filelist(copy);
+// 	free(copy);
+// 	if (f_list == NULL || ft_strcmp(f_list[0], "Not valid path") == 0)
+// 		return (f_list);
+// 	keep = f_list;
+// 	f_list = NULL;
+// 	copy = copy_index_range(str, idx + 1, ft_strlen(str));
+// 	if (copy == NULL)
+// 		return (free_sndry_arr((void **)keep));
+// 	f_list = mapping_pattern_start_filname(keep, copy);
+// 	free(copy);
+// 	free_sndry_arr((void **)keep);
+// 	return (f_list);
+// }
+
+char	**open_root_directory(char *str)
 {
 	char	**f_list;
-	char	*keep;
-	keep = copy_index_range(str, 0, idx + 1);
-	if (keep == NULL)
-		return (NULL);
-	f_list = get_path_filelist(keep);
-	free(keep);
-	if (f_list == NULL || ft_strcmp(f_list[0], "no such path") == 0)
-		return (f_list);
-	keep = copy_index_range(str, idx + 1, ft_strlen(str));
-	// if (keep == NULL)
-	// 	return (NULL);
-	// f_list = mapping_pattern_start_filname(f_list, keep);
-	free(keep);
-	return (f_list);
-}
 
-char	**open_root_directory(char **str, int row, int idx)
-{
-	char	**f_list;
-
-	if (ft_strlen(str[row]) == 1)
+	if (ft_strlen(str) == 1)
 		f_list = get_root_filelist();
-	else if (idx != 0 && ft_strlen(str[row]) - 1 == idx)
-		f_list = get_path_filelist(str[row]);
-	else if (idx == 0 || ft_strlen(str[row]) - 1 != idx)
-	{
-		if (str[row + 1] == NULL)
-			f_list = get_path_filelist(str[row]);
-		else
-			f_list = divide_path_n_pattern(str[row], idx);
-	}
+	else
+		f_list = get_path_filelist(str);
 	return (f_list);
 }
 
-char	**open_multi_directory(char **str, char **path, int row, int idx)
+// char	**open_current_directory(char **str, int row, int idx)
+// {
+// 	char	**f_list;
+// 	char	**keep;
+
+// 	f_list = get_current_filelist();
+// 	if (str[row][0] == '*' && str[row + 1] == NULL)
+// 		return (f_list);
+// 	else if (str[row + 1] != NULL)
+// 	{
+// 		if (search_chr_in_str(str[row + 1], '/') == 0)
+// 		{
+// 			keep = f_list;
+// 			f_list = mapping_pattern_start_filname(keep, str[row]);
+
+// 		}
+
+// 	}
+// 	return (NULL);
+
+// }
+
+char	**open_multi_directory(char *path, char **f_list)
 {
-	char 	**f_list;
-	char	*join;
+	char 	**keep;
+	char	**div;;
 	int		result;
+	int		len;
 
-	if (idx != 0 || ft_strlen(str[row]) - 1 == idx)
+	len = ft_strlen(path);
+	if (search_chr_in_str(path, '*') == 1)
 	{
-		f_list = ft_add_str_to_2d_arr(path, str[row]);
-		if (f_list == NULL)
-			return (memory_alloc_error());
+		div = ft_split(path, '*');
+		if (div == NULL)
+			return (NULL);
+		if (path[0] != '*' && path[len - 1] == '*')
+			keep = mapping_pattern_start_filname(div, f_list);
+		// else if (str[0] == '*' && str[len - 1] != '*')
+
+		// else if (str[0] != '*' && str[len - 1] != '*')
+
+		// else if (str[0] == '*' && str[len - 1] == '*')
+		free_sndry_arr((void **)div);
+		if (keep == NULL)
+			return (NULL);
 	}
-	else if (ft_strlen(str[row]) - 1 != idx)
-	{
-		if (str[row + 1] == NULL)
-			f_list = get_path_filelist(str[row]);
-		else
-			f_list = divide_path_n_pattern(str[row], idx);
-	}
-	return (f_list);
+	return (keep);
 }
 
-char	**file_open_preprocess(t_list *node, char **str, char **path, int row)
+char	**file_open_preprocess(char *path, char **f_list, int row)
 {
-	char	**f_list;
-	int		slash;
+	char	**keep;
 	int		result;
 	int	idx = 0;
 
-	slash = reverse_conditiona_strlen(str[row], '/');
 	if (row == 0)
 	{
-		if (str[row][0] == '/')
-			f_list = open_root_directory(str, row, slash);
+		if (path[0] == '/')
+			keep = open_root_directory(path);
 		// else if (str[row][0] == '*')
-		// 	result = open_current_directory(str, &tmp, row, slash);
+		// 	f_list = open_current_directory(str, row, slash);
 		// else
 		// 	result = open_path_directory(str, &tmp, row, slash);
-		if (f_list == NULL || ft_strcmp(f_list[0], "no such path") == 0)
-			return (f_list);
-		while (f_list[idx] != NULL)
+		while (keep[idx] != NULL)
 		{
-			printf("get_file_list = %s\n", f_list[idx]);
+			printf("get_file_list = %s\n", keep[idx]);
 			idx++;
 		}
 	}
 	else
-	{
-		f_list = open_multi_directory(str, path, row, slash); //
-		if (path != NULL)
-			free(path);
-	}
-	return (f_list);
+		keep = open_multi_directory(path, f_list); //
+	return (keep);
 }
 
 
-int	try_substitute_wildcard(t_list *node, int len)
+int	try_substitute_wildcard(t_list *node, char **paths)
 {
-	char	**str;
-	char	**keep;
+	char	**keep1;
+	char	**keep2;
 	int		row;
 
 	row = 0;
-	keep = NULL;
-	str = exclusive_use_wildcard_split(node, len);
-	if (str == NULL)
-		return (-1);
-	while (str[row] != NULL)
+	keep1 = NULL;
+	while (paths[row] != NULL)
 	{
-		printf("aaaaa split exclusive wildcart str = %s\n", str[row]);
-		row++;
-	}
-	row = 0;
-	while (str[row] != NULL)
-	{
-		printf("split exclusive wildcart str = %s\n", str[row]);
-		if (row != 0 && str[row][0] == '*')
+		printf("split exclusive wildcart str = %s\n", paths[row]);
+		if (row != 0 && are_all_characters_same(paths[row], '*') == 1)
 		{
 			row++;
 			continue ;
 		}
-		keep = file_open_preprocess(node, str, keep, row);
-		if (ft_strcmp(keep[0], "no such path") == 0)
-		{
-			printf("return here\n");
-			return((free_sndry_arr((void **)keep), free_sndry_arr((void **)str), 0));
-		}
-		else if (keep == NULL)
-			return (free_sndry_arr((void **)str), -1);
+		keep2 = file_open_preprocess(paths[row], keep1, row);
+		free_sndry_arr((void **)keep1);
+		if (keep2 == NULL)
+			return (-1);
+		if (ft_strcmp(keep2[0], "Not valid path") == 0)
+			return(free_sndry_arr((void **)keep2), 0);
+		keep1 = keep2;
 		row++;
 	}
-	return ((free_sndry_arr((void **)keep), free_sndry_arr((void **)str), 0));
+	row = 0;
+	printf("keep1 total len = %d\n", sndry_arr_len((void **)keep1));
+	while (keep1[row] != NULL)
+	{
+		printf("keep in %d =  %s\n", row, keep1[row]);
+		row++;
+	}
+	node->f_list = keep1;
+	return (1);
 }
 
 int	exclusive_use_wildcard_len(char *str)
@@ -277,43 +451,57 @@ int	exclusive_use_wildcard_len(char *str)
 	quote = 0;
 	while (str[idx] != 0)
 	{
-		if (str[idx] != '*')
+		if (str[idx] != '/')
 		{
 			cnt++;
 			while (str[idx] != '\0')
 			{
-				if (str[idx] == '\'' || str[idx] == '"')
-					quote = check_quote_pair(str[idx], quote);
-				if (quote == 0 && str[idx] == '*')
-					break;
+				quote = check_quote_pair(str[idx], quote);
+				if (quote == 0 && str[idx] == '/')
+					break ;
 				idx++;
 			}
 		}
 		else
 		{
 			cnt++;
-			while (str[idx] == '*' && str[idx] != '\0')
+			while (str[idx] == '/' && str[idx] != '\0')
 				idx++;
 		}
+			
 	}
 	return (cnt);
 }
 int	substitute_wildcard(t_list *node)
 {
+	printf("try subtutite wildcart func\n");
+	char	**paths;
 	int		var;
+	int	row = 0;
 
-	// var = checK_valid_wildcard_in_token(node);
-	// if (var == 0)
-	// 	return (1);
 	if (node->token == NULL)
 		return (0);
 	var = exclusive_use_wildcard_len(node->token);
-	printf("1 var = %d\n", var);
-	if (var == 1 && node->token[0] != '*')
-		return (0);
+	printf("split len = %d\n", var);
+	// if (var == 1 && node->token[0] != '*')
+	// 	return (0);
 	if (var == 1 && node->token[0] == '*')
 		return (change_only_wildcard_token(node));
-	var = try_substitute_wildcard(node, var);
+	paths = exclusive_use_wildcard_split(node->token, var, 0, 0);
+	if (paths == NULL)
+		return (0);
+	var = exclusive_use_wildcard_jon_len(paths);
+	printf("join len = %d\n", var);
+	paths = exclusive_use_wildcard_join1(paths, var);
+	if (paths == NULL)
+		return (0);
+	while (paths[row] != NULL)
+	{
+		printf("jion after split paths str = %s\n", paths[row]);
+		row++;
+	}
+	var = try_substitute_wildcard(node, paths);
+	free_sndry_arr((void **)paths);
 	// if (var == -1)
 	// 	return (0);
 

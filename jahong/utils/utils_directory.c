@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:12:51 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/03 23:27:14 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/05 10:11:06 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	search_str_in_f_list(t_list *node, char **list, char *str)
 char	**take_filenames_basic(struct dirent *entry, DIR *dir, int len)
 {
 	char	**tmp;
-	char	*keep;
 	int		row;
 
 	row = 0;
@@ -88,17 +87,16 @@ char	**take_filenames_basic(struct dirent *entry, DIR *dir, int len)
 	{
 		if (entry->d_name[0] != '.')
 		{
-			keep = ft_strdup(entry->d_name);
-			//printf("-0--0-0--0-0--0-0--0-tmp[%d] = %s\n", row, tmp[row]);
-			if (keep == NULL)
+			tmp[row] = ft_strdup(entry->d_name);
+			if (tmp[row] == NULL)
 				return (sndry_alloc_err((void **)tmp));
-			tmp[row] = keep;
-			keep = NULL;
 			row++;
 		}
 		entry = readdir(dir);
 	}
 	tmp[row] = NULL;
+	if (row != len)
+		return (sndry_alloc_err((void **)tmp));
 	return (tmp);
 }
 
@@ -127,9 +125,9 @@ char	**open_n_read_filenames(char *path, int len)
 	free_sndry_arr((void **)fail);
 	entry = readdir(dir);
 	f_list = take_filenames_basic(entry, dir, len);
-	if (f_list == NULL)
-		return ((closedir(dir), NULL));
 	closedir(dir);
+	if (f_list == NULL)
+		return (NULL);
 	return (f_list);
 }
 

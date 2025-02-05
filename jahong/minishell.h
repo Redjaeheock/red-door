@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/03 19:59:56 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/05 23:05:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ void	*free_meta_token(t_data *meta);
 void	free_single_tmp_node(t_tmp *node);
 void	*free_tmp_list(t_tmp *node);
 
+/* free_secondary_array.c */
+void	*free_sndry_arr(void **array);
+void	*free_multi_2d_arrs(void **array1, void **array2);
+
 /*error_process*/
 int		error_syntax(char *str);
 void	error_qoute(int qoute);
@@ -110,7 +114,6 @@ int		ft_isdigit(int c);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strdup(const char *s);
 int		sndry_arr_len(void **array);
-void	*free_sndry_arr(void **array);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_strjoin_v2(const char *s1, const char *s2);
@@ -118,7 +121,6 @@ char	*ft_str_head_str(const char *big, const char *little);
 char	*ft_str_tail_str(const char *big, const char *little);
 char	**ft_add_str_to_2d_arr(char **arr, char *str);
 // char	**ft_merge_2d_arr(char **arr1, char **arr2);
-
 
 /* main.c */
 int		check_operator_v1(const char *str, int index);

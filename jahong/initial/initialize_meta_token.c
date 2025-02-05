@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 17:00:11 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/05 23:40:15 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ t_path	*init_key_value(char **envp)
 	{
 		if (extract_key_value(tmp, envp[row]) != 1)
 			return (t_path_key_val_alloc_err(env_path));
+		row++;
+		if (envp[row] == NULL)
+			break ;
 		tmp->next = make_t_path();
 		if (tmp->next == NULL)
 			return (t_path_key_val_alloc_err(env_path));
-		row++;
 		tmp = tmp->next;
 	}
 	return (env_path);
