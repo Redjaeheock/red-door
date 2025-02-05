@@ -6,11 +6,13 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 10:42:16 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/31 10:43:09 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 18:39:15 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include "../../syntax/syntax.h"
+#include "../built_in.h"
 
 int	search_special_characters_unset(char *str)
 {

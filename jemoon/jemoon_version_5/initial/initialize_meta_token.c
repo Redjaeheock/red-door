@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_meta_token.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/27 07:23:37 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/05 21:06:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ t_path 	*init_key_value(char **envp)
 	{
 		if (extract_key_value(tmp, envp[row]) != 1)
 			return (t_path_key_val_alloc_err(env_path));
+		row++;
+		if (envp[row] == NULL)
+			break ;
 		tmp->next = make_t_path();
 		if (tmp->next == NULL)
 			return (t_path_key_val_alloc_err(env_path));
-		row++;
 		tmp = tmp->next;
 	}
 	return (env_path);

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:47:07 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 17:13:57 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 20:38:28 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	minishell_env(t_data *meta)
 	tmp = meta->env;
 	while (tmp != NULL)
 	{
-		printf("%s\n", tmp->set);
+		if (tmp->set != NULL)
+			printf("%s\n", tmp->set);
 		tmp = tmp->next;
 	}
 }

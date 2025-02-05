@@ -6,11 +6,13 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:32:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 16:22:24 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 18:48:34 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "../syntax/syntax.h"
+#include "built_in.h"
 
 void	builtin(t_data *meta)
 {

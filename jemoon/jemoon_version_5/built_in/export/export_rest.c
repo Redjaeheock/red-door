@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:02:43 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 17:17:40 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 22:05:02 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,17 @@ t_path *current, t_path *new_node)
 {
 	if (prev == NULL)
 	{
-		new_node->next = current->next;
+		new_node->next = (*old_exp)->next;
 		current->next = NULL;
-		free_key_value(current);
 		*old_exp = new_node;
+		free_t_path(current);
 	}
 	else
 	{
 		prev->next = new_node;
 		new_node->next = current->next;
 		current->next = NULL;
-		free_key_value(current);
+		free_t_path(current);
 	}
 }
 

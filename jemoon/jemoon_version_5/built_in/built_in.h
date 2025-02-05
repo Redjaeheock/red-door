@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 17:19:56 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 19:06:06 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_path	*add_export(char *str);
 void	add_back_export_linked_list(t_path **old_export, t_path *new);
 
 /* export_rest.c */
-int	search_special_characters(char *str);
+int	    search_special_characters(char *str);
 void	update_node(t_path **old_exp, t_path *prev, t_path *current, t_path *new_node);
 int	    check_key(t_path **old_exp, t_path *export_add);
 int	    search_equal(char *str);
@@ -95,8 +95,22 @@ int	    ft_test(char *s1, const char *s2);
 /* export.c */
 void	minishell_export(t_data *meta);
 
+/* pwd */
+/* pwd.c */
+void	minishell_pwd(t_data *meta);
 
-/* pwd */
-/* pwd */
 /* unset */
+/* unset_export*/
+void	remove_node(t_path **exp, t_path *prev, t_path *current);
+int	    unset_key(t_path **exp, char *str);
+void	unset_export(t_data *meta, int unset_len);
+
+/* unset_utils.c */
+int     search_special_characters_unset(char *str);
+
+/* unset.c */
+void	minishell_unset(t_data *meta);
+
+void	builtin(t_data *meta);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:47:07 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 17:15:00 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 20:41:34 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void	minishell_exit(t_data *meta)
 	if (check_built_in_cmd("exit", meta->exec_cmd->str[0]) == 0)
 		return ;
 	printf("exit\n");
-	free_env_resource(meta);
+	free_meta_token(meta);
 	exit (1);
 }

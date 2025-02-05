@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 16:35:26 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 20:57:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,13 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, SIG_IGN);
 	(void)argc, (void)argv;
 	meta = initial_env(envp);
+	while (meta->env != NULL)
+	{
+		printf("set = %s\n", meta->env->set);
+		printf("key = %s\n", meta->env->key);
+		printf("value = %s\n\n", meta->env->value);
+		meta->env = meta->env->next;
+	}
 	while (1)
 	{
 		str = readline("bash : ");

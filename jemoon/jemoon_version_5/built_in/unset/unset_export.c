@@ -6,11 +6,13 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 10:45:22 by jemoon            #+#    #+#             */
-/*   Updated: 2025/01/31 11:06:06 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 19:26:09 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include "../../syntax/syntax.h"
+#include "../built_in.h"
 
 void	remove_node(t_path **exp, t_path *prev, t_path *current)
 {
@@ -18,13 +20,13 @@ void	remove_node(t_path **exp, t_path *prev, t_path *current)
 	{
 		*exp = current->next;
 		current->next = NULL;
-		free_key_value(current);
+		free_t_path(current);
 	}
 	else
 	{
 		prev->next = current->next;
 		current->next = NULL;
-		free_key_value(current);
+		free_t_path(current);
 	}
 }
 

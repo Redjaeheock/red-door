@@ -6,12 +6,13 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/05 16:34:01 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 21:07:55 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "syntax/syntax.h"
+#include "built_in/built_in.h"
 #include <signal.h>
 
 t_list	*split_words(char const *str, char c)
@@ -141,6 +142,7 @@ int	main(int argc, char **argv, char **envp)
 		trade_exec_cmd(meta, &meta->exec_cmd, &meta->tokens, &str);
 		if (meta->exec_cmd)
 		{
+			builtin(meta);
 			printf_exec_commads(meta->exec_cmd);
 			free_exec_linked_list(meta->exec_cmd);
 			meta->exec_cmd = NULL;

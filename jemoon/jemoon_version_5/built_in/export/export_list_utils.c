@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:43:58 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 17:16:57 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 21:44:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ int	ft_lstsize(t_path *lst)
 t_path	*add_export(char *str)
 {
 	t_path	*add_export_tokens;
-	int		idx;
 
-	idx = 0;
 	add_export_tokens = make_t_path();
 	if (add_export_tokens == NULL)
 		return (NULL);
-	if (extract_key_value(add_export_tokens, str, idx) != 1)
+	if (extract_key_value(add_export_tokens, str) != 1)
 		return (t_path_key_val_alloc_err(add_export_tokens));
 	return (add_export_tokens);
 }

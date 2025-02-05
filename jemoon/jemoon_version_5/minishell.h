@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/03 15:28:57 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/05 19:05:02 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdlib.h>
 # include <dirent.h>               /* opendir, readdir, closedir 함수를 사용하기 위한 헤더*/
 # include <string.h>
+# include <unistd.h>
+
 typedef enum tokentype
 {
 	NONE,
@@ -104,6 +106,10 @@ void	*t_data_alloc_err(t_data *meta);
 void	*t_tmp_alloc_err(t_tmp *node);
 
 /* initialize_meta_token.c*/
+t_path	*make_t_path(void);
+t_path 	*init_key_value(char **envp);
+char	**copy_envp(char **envp);
+void	meta_token_init_memvar(t_data *meta);
 t_data  *initialize_meta_token(char **envp);
 
 /* linked_list.c */
@@ -130,6 +136,7 @@ int		sndry_arr_len(void **array);
 void	*free_sndry_arr(void **array);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
+char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strjoin_v2(const char *s1, const char *s2);
 char	*ft_str_tail_str(const char *big, const char *little);
 
