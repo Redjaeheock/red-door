@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:28:07 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/05 21:27:14 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/06 13:54:12 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*search_value_using_key(t_path *path, char *src)
 	{
 		if (ft_strcmp(path->key, src) == 0)
 		{
-			str = ft_strdup(src);
+			str = ft_strdup(path->value);
 			if (str == NULL)
 				return (memory_alloc_error());
 			break ;

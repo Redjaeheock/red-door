@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 11:01:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 17:13:35 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/06 15:18:46 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*remove_back_path(char *pwd, int len)
 	int		i;
 
 	i = 0;
-	back_path = (char *)malloc(sizeof(char) * (len));
+	back_path = (char *)malloc(sizeof(char) * (len + 1));
 	if (back_path == NULL)
 		return (NULL);
 	while (i < len)
@@ -76,7 +76,7 @@ char	*remove_back_path(char *pwd, int len)
 
 char	*add_path(char *pwd, char *dir)
 {
-	return (ft_strjoin(pwd, dir));
+	return (ft_strjoin_front_slash(pwd, dir));
 }
 
 char	*back_path(char *pwd)

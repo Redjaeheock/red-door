@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:04:54 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 17:13:34 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/06 14:37:53 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ void	cd_rest(t_data *meta, char *dir)
 		pwd = redefine_pwd(meta, dir);
 		redefine_export(&meta->exp, pwd);
 		redefine_export(&meta->env, pwd);
+		free(pwd);
+		pwd = NULL;
 	}
 	else
 		printf("bash: cd:%s not set\n", dir);

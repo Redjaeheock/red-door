@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:07:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 17:11:12 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/06 14:17:21 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	set_null_by_key(t_path **exp, char *key)
 	{
 		if (ft_strcmp((temp)->key, key) == 0)
 		{
+			free(temp->value);
 			temp->value = NULL;
 			return (1);
 		}
@@ -42,6 +43,7 @@ int	set_value_by_key(t_path **exp, char *key, char *value)
 		{
 			temp->value = ft_strdup(value);
 			free(temp->set);
+			temp->set = NULL;
 			temp->set = ft_strjoin_v2(temp->key, temp->value);
 			return (1);
 		}

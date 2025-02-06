@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/05 19:05:02 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/06 15:13:16 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ char	*ft_itoa(int n);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strjoin_v2(const char *s1, const char *s2);
 char	*ft_str_tail_str(const char *big, const char *little);
+char	*ft_strjoin_front_slash(char *s1, char *s2);
 
 
 /* main.c */

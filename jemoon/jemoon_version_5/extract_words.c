@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_words.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/27 09:49:47 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/06 13:45:06 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ char	*extract_from_envp(char *envp, int *idx, char condition)
 		*idx += 1;
 		col++;
 	}
-	*idx += 1;
+	if (envp[*idx] != '\0')
+		*idx += 1;
 	str[col] = '\0';
 	return (str);
 }

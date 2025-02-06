@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:02:43 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 22:05:02 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/06 13:49:35 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ void	rest_export(t_data *meta, int export_len)
 	int		i;
 	int		equal;
 	t_path	*export_add;
-
+	t_path	*env_add;
+	
 	i = 1;
 	while (i < export_len)
 	{
@@ -112,17 +113,21 @@ void	rest_export(t_data *meta, int export_len)
 			export_add = add_export(meta->exec_cmd->str[i]);
 			if (export_add == NULL)
 				return ;
+			env_add = add_export(meta->exec_cmd->str[i]);
+			if (env_add == NULL)
+				return ;
 			if (equal == 1)
 			{
 				if (check_key(&meta->exp, export_add) == 0)
 					add_back_export_linked_list(&meta->exp, export_add);
-				if (check_key(&meta->env, export_add) == 0)
-					add_back_export_linked_list(&meta->env, export_add);
+				if (check_key(&meta->env, env_add) == 0)
+					add_back_export_linked_list(&meta->env, env_add);
 			}
 			else
 			{
 				if (check_key(&meta->exp, export_add) == 0)
 					add_back_export_linked_list(&meta->exp, export_add);
+				free_t_path(env_add);
 			}
 		}
 		i++;

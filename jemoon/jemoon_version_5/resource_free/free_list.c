@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/05 14:56:33 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/06 11:31:45 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,22 @@ void	*free_t_path(t_path	*path)
 		tmp = path;
 		path = path->next;
 		if (tmp->key != NULL)
+		{
 			free(tmp->key);
+			tmp->key = NULL;
+		}
 		if (tmp->value != NULL)
+		{
 			free(tmp->value);
+			tmp->value = NULL;
+		}
 		if (tmp->set != NULL)
+		{
 			free(tmp->set);
+			tmp->set = NULL;
+		}
 		free(tmp);
+		tmp = NULL;
 	}
 	return (NULL);
 }
