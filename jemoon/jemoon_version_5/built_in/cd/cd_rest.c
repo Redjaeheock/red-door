@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:04:54 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/06 14:37:53 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/06 18:51:16 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,21 +108,65 @@ char	*redefine_pwd(t_data *meta, char *dir)
 	if (sp_dir == NULL)
 		return (NULL);
 	if (is_absolute_path(dir) == 1)
-	{
 		pwd = get_absolute_path(sp_dir);
-	}
 	else
-	{
 		pwd = get_relative_path(meta, sp_dir);
-	}
 	free_double_string_array(sp_dir);
 	return (pwd);
 }
 
-void	cd_rest(t_data *meta, char *dir)
+int	start_c(char *str, char c)
+{
+	if (str == NULL)
+		return (0);
+	if (str[0] == c)
+		return (1);
+	return (0);
+}
+
+char	*set_dir(t_data *meta, char *str)
+{
+	char *dir;
+
+	if (ft_strcmp(str, "-") == 0)
+	{	
+		dir = search_value_using_key(meta->exp, "OLDPWD");
+		if (dir == NULL)
+		{
+			printf("-bash: cd: OLDPWD not set\n");
+			return (NULL);
+		}
+		printf("%s\n", dir);
+		return (dir);
+	}
+	else if (ft_strcmp(str, "--") == 0)
+		return (search_value_using_key(meta->exp, "HOME"));
+	else if (ft_strcmp(str, "~") == 0)
+		return (ft_strdup(meta->home));
+	else if (start_c(str, '-') == 1)
+	{
+		printf("-bash: cd: %s: invalid option\n", str);
+		printf("cd: usage: cd [-L|[-P [-e]] [-@]] [dir]\n");
+		return (NULL);
+	}
+	else if (start_c(str, '~') == 1)
+	{
+		printf("-bash: cd: %s: invalid option\n", str);
+		printf("cd: usage: cd [-L|[-P [-e]] [-@]] [dir]\n");
+		return (NULL);
+	}
+	else
+		return (ft_strdup(str));
+}
+
+void	cd_rest(t_data *meta, char *str)
 {
 	char	*pwd;
-
+	char	*dir;
+	
+	dir = set_dir(meta, str);
+	if (dir == NULL)
+		return ;
 	if (chdir(dir) == 0)
 	{
 		pwd = redefine_pwd(meta, dir);
@@ -133,4 +177,5 @@ void	cd_rest(t_data *meta, char *dir)
 	}
 	else
 		printf("bash: cd:%s not set\n", dir);
+	free(dir);
 }

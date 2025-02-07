@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 19:06:06 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/07 10:52:04 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 /* cd_frist_utils.c */
 int     set_null_by_key(t_path **exp, char *key);
 int     set_value_by_key(t_path **exp, char *key, char *value);
-int	    set_free_by_key(t_path **exp, char *key);
+int     set_free_by_key(t_path **exp, char *key);
 int	    set_oldpwd(t_path *temp, char *str);
 void    redefine_export(t_path	**exp, char *home);
 
@@ -34,7 +34,7 @@ int	    is_absolute_path(char *dir);
 char	*get_absolute_path(char **sp_dir);
 char	*get_relative_path(t_data *meta, char **sp_dir);
 char	*redefine_pwd(t_data *meta, char *dir);
-void	cd_rest(t_data *meta, char *dir);
+void	cd_rest(t_data *meta, char *str);
 
 /* cd_utils_path.c */
 int	    count_slash(char *str, char c);
@@ -65,7 +65,6 @@ void	minishell_env(t_data *meta);
 
 /* exit */
 /* exit.c */
-
 void	minishell_exit(t_data *meta);
 
 /* export */
@@ -77,20 +76,30 @@ int	    ft_lstsize(t_path *lst);
 t_path	*add_export(char *str);
 void	add_back_export_linked_list(t_path **old_export, t_path *new);
 
-/* export_rest.c */
+/* export_rets_utils.c */
 int	    search_special_characters(char *str);
-void	update_node(t_path **old_exp, t_path *prev, t_path *current, t_path *new_node);
+void	update_node(t_path **old_exp, t_path *prev, \
+    t_path *current, t_path *new_node);
 int	    check_key(t_path **old_exp, t_path *export_add);
 int	    search_equal(char *str);
+void	process_export_entry(t_data *meta, \
+	t_path *export_add, t_path *env_add, int equal);
+
+/* export_rest.c */
 void	rest_export(t_data *meta, int export_len);
 
+/* export_sort_uitls.c */
+int	    ft_test(char *s1, const char *s2);
+
 /* export_sort.c */
+void	swap_first_two(t_path **exp);
+void	swap_middle_two(t_path *exp_prev);
 void	swap_export(t_path **exp, t_path *exp_prev);
+void	bubble_sort(t_path **exp, int *swapped);
 void	sort_export(t_path **exp);
 
 /* export_utils.c */
 int     char_arr_len(char **array);
-int	    ft_test(char *s1, const char *s2);
 
 /* export.c */
 void	minishell_export(t_data *meta);

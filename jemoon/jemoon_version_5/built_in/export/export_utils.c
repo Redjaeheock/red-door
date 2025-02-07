@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:41:12 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 20:34:21 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/07 10:45:53 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,4 @@ int	char_arr_len(char **array)
 	while (array[len] != NULL)
 		len++;
 	return (len);
-}
-
-int	ft_test(char *s1, const char *s2)
-{
-	unsigned int	len;
-
-	len = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (-1);
-	while (((((unsigned char *)s1)[len] != '\0') \
-	|| (((unsigned char *)s2)[len] != '\0')))
-	{
-		if (((unsigned char *)s1)[len] - ((unsigned char *)s2)[len] != 0)
-			return (((unsigned char *)s1)[len] - ((unsigned char *)s2)[len]);
-		len++;
-	}
-	return (0);
 }

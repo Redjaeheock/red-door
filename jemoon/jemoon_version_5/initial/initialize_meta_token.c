@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/05 21:06:07 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/06 16:51:00 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,8 @@ t_data	*initialize_meta_token(char **envp)
 	meta->path = extract_path(meta->env);
 	if (meta->path == NULL)
 		return (free_meta_token(meta));
+	meta->home = search_value_using_key(meta->exp, "HOME");
+	if (meta->home == NULL)
+		free(meta->home);
 	return (meta);
 }

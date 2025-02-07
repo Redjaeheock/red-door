@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/06 15:13:16 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/06 16:49:00 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct meta_data
 	struct start_list	*exec_cmd;
 	char				**envm;
 	char				**path;
+	char				*home;
 	char				*exit_n;
 	char				*pid_n;
 	char				*lval;

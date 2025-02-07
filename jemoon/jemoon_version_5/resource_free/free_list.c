@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/06 11:31:45 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/06 16:47:12 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	*free_meta_token(t_data *meta)
 		free(meta->pid_n);
 	if (meta->exit_n != NULL)
 		free(meta->exit_n);
+	if (meta->home != NULL)
+		free(meta->home);
 	if (meta->path != NULL)
 		free_sndry_arr((void **)meta->path);
 	if (meta->exp != NULL)

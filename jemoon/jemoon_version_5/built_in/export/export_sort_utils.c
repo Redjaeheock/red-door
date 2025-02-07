@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   export_sort_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/21 22:06:24 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/06 19:16:44 by jemoon           ###   ########.fr       */
+/*   Created: 2025/02/07 10:44:01 by jemoon            #+#    #+#             */
+/*   Updated: 2025/02/07 10:53:53 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 #include "../../syntax/syntax.h"
 #include "../built_in.h"
 
-void	minishell_pwd(t_data *meta)
+int	ft_test(char *s1, const char *s2)
 {
-	char	*str;
+	unsigned int	len;
 
-	if (ft_strcmp(meta->exec_cmd->str[0], "pwd") != 0)
-		return ;
-	str = search_value_using_key(meta->exp, "PWD");
-	printf("%s\n", str);
-	free(str);
+	len = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (-1);
+	while (((((unsigned char *)s1)[len] != '\0') \
+	|| (((unsigned char *)s2)[len] != '\0')))
+	{
+		if (((unsigned char *)s1)[len] - ((unsigned char *)s2)[len] != 0)
+			return (((unsigned char *)s1)[len] - ((unsigned char *)s2)[len]);
+		len++;
+	}
+	return (0);
 }
