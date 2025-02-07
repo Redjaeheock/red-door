@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_utils.c                                         :+:      :+:    :+:   */
+/*   cd_rest_relative.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 10:57:08 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 11:00:06 by jemoon           ###   ########.fr       */
+/*   Created: 2025/02/07 11:03:18 by jemoon            #+#    #+#             */
+/*   Updated: 2025/02/07 11:10:39 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,27 @@
 #include "../../syntax/syntax.h"
 #include "../built_in.h"
 
-char	*get_env(t_path *env, char *home)
+char	*get_relative_path(t_data *meta, char **sp_dir)
 {
-	t_path	*temp;
+	char	*pwd;
+	int		i;
 
-	temp = env;
-	while (temp)
+	i = 0;
+	pwd = ft_strdup(get_env(meta->exp, "PWD"));
+	if (pwd == NULL)
+		return (NULL);
+	while (sp_dir[i] != NULL)
 	{
-		if (ft_strcmp(temp->key, home) == 0)
-			return (temp->value);
-		temp = temp->next;
+		if (is_parent_dir(sp_dir[i]))
+			pwd = back_path(pwd);
+		else if (is_current_dir(sp_dir[i]))
+		{
+			i++;
+			continue ;
+		}
+		else
+			pwd = add_path(pwd, sp_dir[i]);
+		i++;
 	}
-	return (NULL);
-}
-
-int	find_node(t_path *env, char *key)
-{
-	t_path	*temp;
-
-	temp = env;
-	while (temp)
-	{
-		if (ft_strcmp(temp->key, key) == 0)
-			return (1);
-		temp = temp->next;
-	}
-	return (0);
+	return (pwd);
 }

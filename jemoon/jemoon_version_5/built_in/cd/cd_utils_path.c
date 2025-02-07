@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 11:01:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/06 15:18:46 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/07 11:07:06 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,3 @@ char	*back_path(char *pwd)
 		return (pwd);
 	return (back_path);
 }
-

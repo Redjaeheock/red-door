@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:32:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/06 16:09:07 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/07 10:59:56 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	minishell_cd(t_data *meta)
 	{
 		cd_home(meta);
 	}
-	else if(export_len == 2)
+	else if (export_len == 2)
 	{
 		cd_rest(meta, meta->exec_cmd->str[1]);
 	}

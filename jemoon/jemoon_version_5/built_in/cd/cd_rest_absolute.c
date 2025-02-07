@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_utils.c                                         :+:      :+:    :+:   */
+/*   cd_rest_absolute.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 10:57:08 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 11:00:06 by jemoon           ###   ########.fr       */
+/*   Created: 2025/02/07 11:02:24 by jemoon            #+#    #+#             */
+/*   Updated: 2025/02/07 11:03:04 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,38 @@
 #include "../../syntax/syntax.h"
 #include "../built_in.h"
 
-char	*get_env(t_path *env, char *home)
+int	is_absolute_path(char *dir)
 {
-	t_path	*temp;
-
-	temp = env;
-	while (temp)
-	{
-		if (ft_strcmp(temp->key, home) == 0)
-			return (temp->value);
-		temp = temp->next;
-	}
-	return (NULL);
+	if (dir == NULL)
+		return (-1);
+	if (dir[0] == '/')
+		return (1);
+	return (0);
 }
 
-int	find_node(t_path *env, char *key)
+char	*get_absolute_path(char **sp_dir)
 {
-	t_path	*temp;
+	char	*pwd;
+	int		i;
 
-	temp = env;
-	while (temp)
+	i = 0;
+	pwd = (char *)malloc(sizeof(char ) * 2);
+	if (pwd == NULL)
+		return (NULL);
+	pwd[0] = '/';
+	pwd[1] = '\0';
+	while (sp_dir[i] != NULL)
 	{
-		if (ft_strcmp(temp->key, key) == 0)
-			return (1);
-		temp = temp->next;
+		if (is_parent_dir(sp_dir[i]))
+			pwd = back_path(pwd);
+		else if (is_current_dir(sp_dir[i]))
+		{
+			i++;
+			continue ;
+		}
+		else
+			pwd = add_path(pwd, sp_dir[i]);
+		i++;
 	}
-	return (0);
+	return (pwd);
 }
