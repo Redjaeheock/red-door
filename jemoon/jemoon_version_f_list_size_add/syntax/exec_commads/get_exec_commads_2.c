@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 16:20:45 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/07 18:57:39 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,6 @@ char	*set_string_2(char *tokens, int cmd_size)
 	int		string_len;
 	char	*str;
 
-	//if (tokens->token == NULL && cmd_size == 1)
-	//{
-	//	printf("이거 맞냐?[%s] [%d]\n", tokens->key, cmd_size);
-	//	string_len = ft_strlen(tokens->key);
-	//	str = (char *)malloc(sizeof(char) * (string_len + 1));
-	//	if (str == NULL)
-	//		return (NULL);
-	//	strcpy(str, tokens->key);
-	//	printf("값이 왜?[%s]\n", str);
-	//	return (str);
-	//}
-	/* 결국 해당 조건에 맞지 않은 NULL은 아래 코드에서 들어가 버림.*/
-	/* 이를 해결하기 위해서는 말록을 할당하기 전에, 처리해야하고,*/
-	/* NULL포인터 일때, 밖의 i값을 증가시키지 않으면서, 다음 토큰을 업데이트*/
 	string_len = ft_strlen(tokens);
 	str = (char *)malloc(sizeof(char) * (string_len + 1));
 	if (str == NULL)
@@ -43,11 +29,26 @@ char	*set_string_2(char *tokens, int cmd_size)
 void	fill_string_array_2(char **string_array, t_list **tokens, int cmd_size)
 {
 	int	i;
+	int	f_list_len;
+	int	j;
 
 	i = 0;
 	while (i < cmd_size)
 	{
-		if ((*tokens)->token == NULL && cmd_size == 1)
+		if ((*tokens)->f_list != NULL)
+		{
+			f_list_len = sndry_arr_len((void **)(*tokens)->f_list);
+			j = 0;
+			while (j < f_list_len)
+			{
+				string_array[i] = set_string_2((*tokens)->f_list[j], cmd_size);
+				if (string_array[i] == NULL)
+					return ;
+				i++;
+				j++;
+			}
+		}
+		else if ((*tokens)->token == NULL && cmd_size == 1)
 		{
 			string_array[i] = set_string_2((*tokens)->key, cmd_size);
 			if (string_array[i] == NULL)
@@ -133,5 +134,3 @@ void	get_exec_cmd_2(t_list *tokens, t_cmd_list **exec_cmd)
 			exec_add_key_str(&(*exec_cmd), key);
 	}
 }
-
-// 마지막 함수 최종 마지막도 안되면 구조체로 바꾸기.

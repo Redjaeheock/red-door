@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve_test.c                                      :+:      :+:    :+:   */
+/*   cd_frist.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 11:41:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 17:34:27 by jemoon           ###   ########.fr       */
+/*   Created: 2025/01/31 15:04:31 by jemoon            #+#    #+#             */
+/*   Updated: 2025/02/05 17:11:21 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "../../minishell.h"
+#include "../../syntax/syntax.h"
+#include "../built_in.h"
 
-int	main(int ac, char **av, char **envp)
+void	cd_home(t_data *meta)
 {
-	char	*str;
-	char	**arr;
+	char	*home;
 
-	arr = (char **)malloc(sizeof(char *) * 3);
-	arr[0] = "ls";
-	arr[1] = "/home/jemoon/42/red-door/jemoon";
-	arr[2] = NULL;
-	if (execve("/bin/ls", arr, envp) == -1)
-		printf("command not found\n");
-	return (0);
+	home = get_env(meta->env, "HOME");
+	if (home == NULL)
+	{
+		printf("bash: cd:HOME not set\n");
+		return ;
+	}
+	if (chdir(home) == 0)
+	{
+		redefine_export(&meta->exp, home);
+		redefine_export(&meta->env, home);
+	}
+	else
+		printf("bash: cd:%s not set\n", home);
 }

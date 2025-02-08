@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve_test.c                                      :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 11:41:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 17:34:27 by jemoon           ###   ########.fr       */
+/*   Created: 2025/01/22 14:05:29 by jemoon            #+#    #+#             */
+/*   Updated: 2025/02/05 17:23:38 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "../../minishell.h"
+#include "../../syntax/syntax.h"
+#include "../built_in.h"
 
-int	main(int ac, char **av, char **envp)
+void	minishell_export(t_data *meta)
 {
-	char	*str;
-	char	**arr;
+	int		export_len;
 
-	arr = (char **)malloc(sizeof(char *) * 3);
-	arr[0] = "ls";
-	arr[1] = "/home/jemoon/42/red-door/jemoon";
-	arr[2] = NULL;
-	if (execve("/bin/ls", arr, envp) == -1)
-		printf("command not found\n");
-	return (0);
+	export_len = char_arr_len(meta->exec_cmd->str);
+	if (ft_strcmp(meta->exec_cmd->str[0], "export") != 0)
+		return ;
+	if (export_len == 1)
+		frist_export(meta);
+	else
+		rest_export(meta, export_len);
 }

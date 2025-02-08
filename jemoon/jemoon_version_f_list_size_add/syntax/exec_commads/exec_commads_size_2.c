@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 19:12:08 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 16:37:20 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/07 19:59:33 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,24 @@ t_tokentype *plag_redi)
 {
 	(*check_redi) = 1;
 	(*plag_redi) = tokens->type;
+	if (tokens->f_list != NULL)
+		return (sndry_arr_len((void **)tokens->f_list));
 	return (1);
 }
 
 int	handle_pipe_case(t_list *tokens, t_tokentype *plag_pipe)
 {
 	(*plag_pipe) = tokens->type;
+	if (tokens->f_list != NULL)
+		return (sndry_arr_len((void **)tokens->f_list));
 	return (1);
 }
 
-int	handle_previous_redirection(int *check_redi)
+int	handle_previous_redirection(t_list *tokens, int *check_redi)
 {
 	(*check_redi) = 0;
+	if (tokens->f_list != NULL)
+		return (sndry_arr_len((void **)tokens->f_list));
 	return (1);
 }
 
@@ -40,7 +46,9 @@ int	calculate_array_size(t_list *tokens)
 	array_size = 0;
 	while (tokens && !(AND <= tokens->type && tokens->type <= HEREDOC))
 	{
-		if (tokens->token != NULL)
+		if (tokens->f_list != NULL)
+			array_size = array_size + sndry_arr_len((void **)tokens->f_list);
+		else if (tokens->token != NULL)
 			array_size++;
 		tokens = tokens->next;
 	}
@@ -60,11 +68,10 @@ t_tokentype *plag_pipe, t_tokentype *plag_redi)
 	}
 	else if (*check_redi == 1)
 	{
-		return (handle_previous_redirection(check_redi));
+		return (handle_previous_redirection(tokens, check_redi));
 	}
 	else
 	{
 		return (calculate_array_size(tokens));
 	}
 }
-

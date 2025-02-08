@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve_test.c                                      :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 11:41:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 17:34:27 by jemoon           ###   ########.fr       */
+/*   Created: 2025/01/21 12:47:07 by jemoon            #+#    #+#             */
+/*   Updated: 2025/02/05 20:41:34 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "../../minishell.h"
+#include "../../syntax/syntax.h"
+#include "../built_in.h"
 
-int	main(int ac, char **av, char **envp)
+void	minishell_exit(t_data *meta)
 {
-	char	*str;
-	char	**arr;
-
-	arr = (char **)malloc(sizeof(char *) * 3);
-	arr[0] = "ls";
-	arr[1] = "/home/jemoon/42/red-door/jemoon";
-	arr[2] = NULL;
-	if (execve("/bin/ls", arr, envp) == -1)
-		printf("command not found\n");
-	return (0);
+	if (check_built_in_cmd("exit", meta->exec_cmd->str[0]) == 0)
+		return ;
+	printf("exit\n");
+	free_meta_token(meta);
+	exit (1);
 }

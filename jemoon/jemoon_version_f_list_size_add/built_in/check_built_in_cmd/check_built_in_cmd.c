@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve_test.c                                      :+:      :+:    :+:   */
+/*   check_built_in_cmd.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 11:41:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 17:34:27 by jemoon           ###   ########.fr       */
+/*   Created: 2025/01/21 12:59:10 by jemoon            #+#    #+#             */
+/*   Updated: 2025/02/05 17:11:51 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "../../minishell.h"
+#include "../../syntax/syntax.h"
+#include "../built_in.h"
 
-int	main(int ac, char **av, char **envp)
+int	check_built_in_cmd(char *cmd, char *exec_cmd)
 {
-	char	*str;
-	char	**arr;
+	int	i;
 
-	arr = (char **)malloc(sizeof(char *) * 3);
-	arr[0] = "ls";
-	arr[1] = "/home/jemoon/42/red-door/jemoon";
-	arr[2] = NULL;
-	if (execve("/bin/ls", arr, envp) == -1)
-		printf("command not found\n");
-	return (0);
+	i = 0;
+	if (ft_strlen(cmd) != ft_strlen(exec_cmd))
+		return (0);
+	while (cmd[i] != '\0' || exec_cmd[i] != '\0')
+	{
+		if (cmd[i] == exec_cmd[i])
+			i++;
+		else
+			return (0);
+	}
+	if (cmd[i] != exec_cmd[i])
+		return (0);
+	return (1);
 }
