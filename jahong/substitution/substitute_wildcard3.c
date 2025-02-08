@@ -6,116 +6,169 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/06 00:18:56 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/08 11:26:12 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**modify_least_matched_pattern(char **f_list, char *memo)
+int	count_only_single_chr_value_in_2d_arr(char **str, int row, char c)
 {
-	char	**modify;
-	int		len;
-	int		idx;
-	int		row;
+	int	len;
 
-	len = conditional_jump_len(memo, '1');
-	idx = 0;
-	modify = (char **)malloc(sizeof(char *) * (len + 1));
-	if (modify == NULL)
-		return (NULL);
-	row = 0;
-	idx = 0;
-	while (f_list[row] != NULL)
+	len = 0;
+	if (str == NULL)
+		return (0);
+	while (str[row] != NULL)
 	{
-		if (memo[row] == '1')
+		if (are_all_characters_same(str[row], c) == 0)
+			len++;
+		row++;
+	}
+	return (len);
+}
+
+char	**remove_all_same_str(char **str, char c)
+{
+	char	**keep;
+	int		row;
+	int		len;
+
+	row = 0;
+	len = count_only_single_chr_value_in_2d_arr(str, row, c);
+	keep = (char **)malloc(sizeof(char *) * (len + 1));
+	if (keep == NULL)
+		return (memory_alloc_error());
+	len = 0;
+	while (str[row] != 0)
+	{
+		if (are_all_characters_same(str[row], c) == 0)
 		{
-			modify[idx] = ft_strdup(f_list[row]);
-			if (modify[idx] == NULL)
-				return (sndry_alloc_err((void **)modify));
-			idx++;
+			keep[len] = ft_strdup(str[row]);
+			if (keep[len] == NULL)
+				return (sndry_alloc_err((void **)keep));
+			len++;
 		}
 		row++;
 	}
-	modify[idx] = NULL;
-	return (modify);
+	keep[len] = NULL;
+	return (keep);
 }
 
-int	compare_word(char *f_list, int idx, char **path, int *row)
+char	**take_pattern_in_path(char *path, char **div, int len, char c)
 {
-	int	col;
-	int	len;
+	int		row;
+	int 	idx;
+	int		quote;
+	int		start;
 
-	col = 0;
-	len = ft_strlen(path[*row]);
-	while ((f_list[idx] != '\0' && path[*row][col] != '\0'))
+	idx = 0;
+	row = 0;
+	quote = 0;
+	start = idx;
+	while (path[idx] != 0 && row < len)
 	{
-		if (f_list[idx] == path[*row][col])
+		if (path[idx] == c)
 		{
-			col++;
-			idx++;
-			if (col == len)
-			{
-				*row += 1;
-				return (col - 1);
-			}
+			while (path[idx] == c && path[idx] != '\0')
+				idx++;
 		}
 		else
 		{
-			idx += 1 - col;
-			col = 0;
+			while (path[idx] != '\0')
+			{
+				if (path[idx] == '\'' || path[idx] == '"')
+					quote = check_quote_pair(path[idx], quote);
+				if (quote == 0 && path[idx] == c)
+					break;
+				idx++;
+			}
 		}
-	}
-	return (ft_strlen(f_list));
-}
-
-int	matching_fisrt_pattern(char *f_list, char **path)
-{
-	int	row;
-	int	idx;
-
-	row = 0;
-	idx = 0;
-	if (f_list[0] != path[row][0])
-		return (0);
-	while (f_list[idx] != '\0')
-	{
-		idx = compare_word(f_list, idx, path, &row);
-		if (idx == ft_strlen(f_list))
-			return (0);
-		if (row == sndry_arr_len((void **)path))
-			break ;
-		idx++;
-	}
-	if (idx == ft_strlen(f_list) && row != sndry_arr_len((void **)path))
-		return (0);
-	return (1);
-}
-
-char	**mapping_pattern_start_filname(char **path, char **f_list)
-{
-	char	**modify;
-	char	*memo;
-	int		row;
-	int		result;
-	int		len;
-
-	len = sndry_arr_len((void **)f_list);
-	memo = (char *)malloc(sizeof(char) * (len + 1));
-	if (memo == NULL)
-		return (memory_alloc_error());
-	row = 0;
-	while (f_list[row] != NULL)
-	{
-		result = matching_fisrt_pattern(f_list[row], path);
-		memo[row] = result + 48;
+		div[row] = copy_index_range_jump_quote(path, start, idx);
+		if (div[row] == NULL)
+			return (sndry_alloc_err((void **)div));
+		start = idx;
 		row++;
 	}
-	memo[row] = '\0';
-	modify = modify_least_matched_pattern(f_list, memo);
-	free(memo);
-	return (modify);
+	div[row] = NULL;
+	return (div);
 }
+
+int	count_valid_split(char *path, char c)
+{
+	int	idx;
+	int	cnt;
+	int quote;
+
+	idx = 0;
+	cnt = 0;
+	quote = 0;
+	while (path[idx] != '\0')
+	{
+		if (path[idx] == c)
+		{
+			cnt++;
+			while (path[idx] == c && path[idx] != '\0')
+				idx++;
+		}
+		else
+		{
+			cnt++;
+			while (path[idx] != '\0')
+			{
+				if (path[idx] == '\'' || path[idx] == '"')
+					quote = check_quote_pair(path[idx], quote);
+				if (quote == 0 && path[idx] == c)
+					break;
+				idx++;
+			}
+		}
+	}
+	return (cnt);
+}
+
+char	**quote_conitional_split(char *path, char c)
+{
+	char	**div;
+	char	**keep;
+	int		idx;
+	int		len;
+
+	idx = 0;
+	len = count_valid_split(path, c);
+	div = (char **)malloc(sizeof(char *) * (len + 1));
+	if (div == NULL)
+		return (memory_alloc_error());
+	div = take_pattern_in_path(path, div, len, c);
+	if (div == NULL)
+		return (NULL);
+	keep = div;
+	div = remove_all_same_str(keep, c);
+	free_sndry_arr((void **)keep);
+	return (div);
+}
+
+int	check_valid_split(char *path, char c)
+{
+	char	**div;
+	int		idx;
+	int		quote;
+	int		flag;
+
+	idx = 0;
+	quote = 0;
+	flag = 0;
+	while (path[idx] != '\0')
+	{
+		if (path[idx] == '"' || path[idx] == '\'')
+			quote = check_quote_pair(path[idx], quote);
+		if (quote == 0 && path[idx] == '*')
+			flag = 1;
+		idx++;
+	}
+	return (flag);
+}
+
 
 char	*copy_index_range_jump_quote(char *str, int idx, int end)
 {
@@ -142,256 +195,66 @@ char	*copy_index_range_jump_quote(char *str, int idx, int end)
 	copy[n] = '\0';
 	return (copy);
 }
-int	exclusive_use_wildcard_jon_len(char **paths)
-{
-	int	row;
-	int	cnt;
-	int	flag;
-
-	row = 0;
-	cnt = 0;
-	flag = 0;
-	while (paths[row] != NULL)
-	{
-		if (search_chr_in_str(paths[row], '*') == 1)
-		{
-			cnt++;
-			flag = 0;
-		}
-		else
-		{
-			if (flag == 0)
-			{
-				cnt++;
-				flag = 1;
-			}
-		}
-		row++;
-	}
-	return (cnt);
-}
-char	*exclusive_use_wildcar_join2(char **paths, int *row)
-{
-	char	*keep1;
-	char	*keep2;
-
-	keep1 = NULL;
-	while (paths[*row] != NULL)
-	{
-		if (search_chr_in_str(paths[*row], '*') == 1)
-			break ;
-		keep2 = ft_strjoin_v2(keep1, paths[*row]);
-		if (keep1 != NULL)
-			free(keep1);
-		if (keep2 == NULL)
-			return (NULL);
-		keep1 = keep2;
-		*row += 1;
-	}
-	*row -= 1;
-	return (keep1);
-}
-
-char	**exclusive_use_wildcard_join1(char **paths, int len)
-{
-	char	**join;
-	char	*keep;
-	int		row;
-	int		n;
-
-	join = (char **)malloc(sizeof(char *) * (len + 1));
-	if (join == NULL)
-		return (memory_alloc_error());
-	n = 0;
-	row = 0;
-	while (paths[row] != NULL)
-	{
-		if (search_chr_in_str(paths[row], '*') == 0)
-			keep = exclusive_use_wildcar_join2(paths, &row);
-		else
-			keep = ft_strdup(paths[row]);
-		if (keep == NULL)
-			return(free_multi_2d_arrs((void **)paths, (void **)join));
-		join[n] = keep;
-		n++;
-		row++;
-	}
-	join[n] = NULL;
-	free_sndry_arr((void **)paths);
-	return (join);
-}
-
-char	**exclusive_use_wildcard_split(char *src, int len, int row, int idx)
-{
-	char	**str;
-	int		quote;
-	int		start;
-
-	start = 0;
-	str = (char **)malloc(sizeof(char *) * (len + 1));
-	if (str == NULL)
-		return (NULL);
-	quote = 0;
-	while (src[idx] != '\0' && row < len)
-	{
-		start = idx;
-		if (src[idx] != '/')
-		{
-			while (src[idx] != '\0')
-			{
-				quote = check_quote_pair(src[idx], quote);
-				if (quote == 0 && src[idx] == '/')
-					break ;
-				idx++;
-			}
-		}
-		else
-		{
-			while (src[idx] == '/' && src[idx] != '\0')
-				idx++;
-		}
-		str[row] = copy_index_range_jump_quote(src, start, idx);
-		if (str[row] == NULL)
-			return (NULL);
-		row++;
-	}
-	str[row] = NULL;
-	return (str);
-}
-
-char	**get_root_filelist(void)
-{
-	char	**f_list;
-	int		len;
-
-	len = count_file_in_directory("/");
-	if (len == -1)
-		return (NULL);
-	f_list = open_n_read_filenames("/", len);
-	return (f_list);
-}
-
-char	**get_current_filelist(void)
-{
-	char	**f_list;
-	int		len;
-
-	len = count_file_in_directory(".");
-	if (len == -1)
-		return (NULL);
-	f_list = open_n_read_filenames(".", len);
-	return (f_list);
-}
-
-char	**get_path_filelist(char *path)
-{
-	char	**f_list;
-	int		len;
-	len = count_file_in_directory(path);
-	if (len == -1)
-		return (NULL);
-	f_list = open_n_read_filenames(path, len);
-	return (f_list);
-}
-
-// char	**divide_path_n_pattern(char *str, int idx)
-// {
-// 	char	**f_list;
-// 	char	**keep;
-// 	char	*copy;
-
-// 	copy = copy_index_range(str, 0, idx + 1);
-// 	if (copy == NULL)
-// 		return (NULL);
-// 	f_list = get_path_filelist(copy);
-// 	free(copy);
-// 	if (f_list == NULL || ft_strcmp(f_list[0], "Not valid path") == 0)
-// 		return (f_list);
-// 	keep = f_list;
-// 	f_list = NULL;
-// 	copy = copy_index_range(str, idx + 1, ft_strlen(str));
-// 	if (copy == NULL)
-// 		return (free_sndry_arr((void **)keep));
-// 	f_list = mapping_pattern_start_filname(keep, copy);
-// 	free(copy);
-// 	free_sndry_arr((void **)keep);
-// 	return (f_list);
-// }
-
-char	**open_root_directory(char *str)
-{
-	char	**f_list;
-
-	if (ft_strlen(str) == 1)
-		f_list = get_root_filelist();
-	else
-		f_list = get_path_filelist(str);
-	return (f_list);
-}
-
-// char	**open_current_directory(char **str, int row, int idx)
-// {
-// 	char	**f_list;
-// 	char	**keep;
-
-// 	f_list = get_current_filelist();
-// 	if (str[row][0] == '*' && str[row + 1] == NULL)
-// 		return (f_list);
-// 	else if (str[row + 1] != NULL)
-// 	{
-// 		if (search_chr_in_str(str[row + 1], '/') == 0)
-// 		{
-// 			keep = f_list;
-// 			f_list = mapping_pattern_start_filname(keep, str[row]);
-
-// 		}
-
-// 	}
-// 	return (NULL);
-
-// }
 
 char	**open_multi_directory(char *path, char **f_list)
 {
 	char 	**keep;
-	char	**div;;
+	char	**div;
+	char	*copy;
 	int		result;
 	int		len;
+	int	row = 0;
 
 	len = ft_strlen(path);
-	if (search_chr_in_str(path, '*') == 1)
+	if (check_valid_split(path, '*') == 1)
 	{
-		div = ft_split(path, '*');
+		div = quote_conitional_split(path, '*');
 		if (div == NULL)
 			return (NULL);
+		while (div[row] != NULL)
+		{
+			printf("div[%d] = %s\n", row, div[row]);
+			row++;
+		}
 		if (path[0] != '*' && path[len - 1] == '*')
 			keep = mapping_pattern_start_filname(div, f_list);
-		// else if (str[0] == '*' && str[len - 1] != '*')
-
-		// else if (str[0] != '*' && str[len - 1] != '*')
-
-		// else if (str[0] == '*' && str[len - 1] == '*')
+		else if (path[0] == '*' && path[len - 1] != '*')
+			keep = mapping_pattern_last_filname(div, f_list);
+		else if (path[0] != '*' && path[len - 1] != '*')
+			keep = mapping_pattern_side_filname(div, f_list);
+		else if (path[0] == '*' && path[len - 1] == '*')
+			keep = mapping_center_filename(div, f_list);
 		free_sndry_arr((void **)div);
-		if (keep == NULL)
+	}
+	else
+	{
+		printf("open_multi_drectory_els\n");
+		copy = copy_index_range_jump_quote(path, 0, ft_strlen(path));
+		if (copy == NULL)
 			return (NULL);
+		
+		keep = mapping_pattern_filename(copy, f_list);
+		free(copy);
 	}
 	return (keep);
 }
 
-char	**file_open_preprocess(char *path, char **f_list, int row)
+char	**file_open_preprocess(char **path, char **f_list, int row)
 {
 	char	**keep;
 	int		result;
+	int		len;
 	int	idx = 0;
 
+	len = sndry_arr_len((void **)path);
 	if (row == 0)
 	{
-		if (path[0] == '/')
-			keep = open_root_directory(path);
-		// else if (str[row][0] == '*')
-		// 	f_list = open_current_directory(str, row, slash);
-		// else
-		// 	result = open_path_directory(str, &tmp, row, slash);
+		if (path[row][0] == '/')
+			keep = open_root_directory(path[row], len);
+		else if (search_chr_in_str(path[row], '*') == 1)
+			keep = open_wildcard_directory(path[row]);
+		else
+			keep = open_current_directory(path[row]);
 		while (keep[idx] != NULL)
 		{
 			printf("get_file_list = %s\n", keep[idx]);
@@ -399,7 +262,10 @@ char	**file_open_preprocess(char *path, char **f_list, int row)
 		}
 	}
 	else
-		keep = open_multi_directory(path, f_list); //
+	{
+		
+		keep = open_multi_directory(path[row], f_list); //
+	}
 	return (keep);
 }
 
@@ -420,7 +286,7 @@ int	try_substitute_wildcard(t_list *node, char **paths)
 			row++;
 			continue ;
 		}
-		keep2 = file_open_preprocess(paths[row], keep1, row);
+		keep2 = file_open_preprocess(paths, keep1, row);
 		free_sndry_arr((void **)keep1);
 		if (keep2 == NULL)
 			return (-1);
@@ -440,38 +306,6 @@ int	try_substitute_wildcard(t_list *node, char **paths)
 	return (1);
 }
 
-int	exclusive_use_wildcard_len(char *str)
-{
-	int	idx;
-	int	cnt;
-	int	quote;
-
-	idx = 0;
-	cnt = 0;
-	quote = 0;
-	while (str[idx] != 0)
-	{
-		if (str[idx] != '/')
-		{
-			cnt++;
-			while (str[idx] != '\0')
-			{
-				quote = check_quote_pair(str[idx], quote);
-				if (quote == 0 && str[idx] == '/')
-					break ;
-				idx++;
-			}
-		}
-		else
-		{
-			cnt++;
-			while (str[idx] == '/' && str[idx] != '\0')
-				idx++;
-		}
-			
-	}
-	return (cnt);
-}
 int	substitute_wildcard(t_list *node)
 {
 	printf("try subtutite wildcart func\n");
@@ -483,25 +317,37 @@ int	substitute_wildcard(t_list *node)
 		return (0);
 	var = exclusive_use_wildcard_len(node->token);
 	printf("split len = %d\n", var);
-	// if (var == 1 && node->token[0] != '*')
-	// 	return (0);
-	if (var == 1 && node->token[0] == '*')
+	if (var == 1 && are_all_characters_same(node->token, '*') == 1)
 		return (change_only_wildcard_token(node));
-	paths = exclusive_use_wildcard_split(node->token, var, 0, 0);
+	paths = exclusive_use_wildcard_split1(node->token, var, 0, 0);
 	if (paths == NULL)
 		return (0);
-	var = exclusive_use_wildcard_jon_len(paths);
+	row = 0;
+	while (paths[row] != NULL)
+	{
+		printf("split paths str = %s\n", paths[row]);
+		row++;
+	}
+	printf("\n");
+	var = exclusive_use_wildcard_join_len(paths);
 	printf("join len = %d\n", var);
 	paths = exclusive_use_wildcard_join1(paths, var);
 	if (paths == NULL)
 		return (0);
+	row = 0;
 	while (paths[row] != NULL)
 	{
-		printf("jion after split paths str = %s\n", paths[row]);
+		printf("join after split paths str = %s\n", paths[row]);
 		row++;
 	}
 	var = try_substitute_wildcard(node, paths);
 	free_sndry_arr((void **)paths);
+	row = 0;
+	while (node->f_list != NULL && node->f_list[row] != NULL)
+	{
+		printf("filelist all show = %s\n", node->f_list[row]);
+		row++;
+	}
 	// if (var == -1)
 	// 	return (0);
 

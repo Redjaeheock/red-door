@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:28:07 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/05 10:25:36 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/06 13:55:57 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*search_value_using_key(t_path *path, char *src)
 	{
 		if (ft_strcmp(path->key, src) == 0)
 		{
-			value = ft_strdup(src);
+			value = ft_strdup(path->value);
 			if (value == NULL)
 				return (memory_alloc_error());
 			break ;

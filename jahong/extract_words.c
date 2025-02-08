@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 17:03:54 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/06 13:45:05 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ char	*extract_from_envp(char *envp, int *idx, char condition)
 		*idx += 1;
 		col++;
 	}
-	*idx += 1;
+	if (envp[*idx] != '\0')
+		*idx += 1;
 	str[col] = '\0';
 	return (str);
 }

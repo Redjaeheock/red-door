@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:38:03 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/03 12:09:02 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/06 19:22:04 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,27 @@ static char *check_big_head(char *base, char *str, int big_len, int str_len)
 	int	b_idx;
 	int	s_idx;
 	int	cnt;
+	int	keep;
 
 	b_idx = 0;
 	s_idx = 0;
 	cnt = 0;
 	while ((base[b_idx] != '\0' && str[s_idx] != '\0') && (b_idx < big_len))
 	{
+		if (base[b_idx] != '*')
+		{
+			keep = b_idx;
+			while (base[keep] != '*' && base[keep] != '\0')
+				cnt++;
+		}
 		if (base[b_idx] == str[s_idx])
 		{
 			cnt++;
-			if (cnt == str_len)
-				return (base);
-			b_idx++;
-			s_idx++;
 		}
-		else
-			break ;
+		else if (base[b_idx] != str[s_idx] && base[b_idx] == '*')
+			b_idx++;
+		else if (base[b_idx] != str[s_idx])
+			s_idx++;
 	}
 	return (NULL);
 }

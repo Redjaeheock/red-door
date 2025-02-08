@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/05 23:05:18 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/08 09:17:29 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,16 +180,27 @@ int		check_except_substitution(t_tmp	*node);
 char	*copy_current_process_pid(void);
 char	*change_null_string(void);
 
-/* substitute_wildcard1.c */
-int		substitute_wildcard(t_list *tokens);
-
-/* substitute_wildcard2.c */
-int		change_only_wildcard_token(t_list *node);
-// int		change_partial_wildcard2(t_list *node, char *pattrn);
-int		change_partial_wildcard1(t_list *node, char *str);
-
 /* join_sub_tokens*/
 int		join_sub_tokens(t_list *tokens, t_tmp *node, char c);
+
+/* substitute_wildcard3.c */
+char	*copy_index_range_jump_quote(char *str, int idx, int end);
+char	**open_multi_directory(char *path, char **f_list);
+int		substitute_wildcard(t_list *tokens);
+
+/* exclusiv_use_wildcard_subsitute.c */
+// int		exclusive_use_wildcard_join_len(char **paths);
+// char	*exclusive_use_wildcar_join2(char **paths, int *row);
+// char	**exclusive_use_wildcard_join1(char **paths, int len);
+// char	**exclusive_use_wildcard_split(char *src, int len, int row, int idx);
+// int		exclusive_use_wildcard_len(char *str);
+
+/* exclusive_use_wildcard_substitute2.c */
+int		exclusive_use_wildcard_join_len(char **paths);
+char	*exclusive_use_wildcar_join2(char **paths, int *row);
+char	**exclusive_use_wildcard_join1(char **paths, int len);
+char	**exclusive_use_wildcard_split1(char *src, int len, int row, int idx);
+int		exclusive_use_wildcard_len(char *str);
 
 /* remove_quote_set */
 int		remove_quote_tokens(t_list *node);
@@ -198,6 +209,7 @@ int		remove_quote_tokens(t_list *node);
 char	search_chr_in_str(char *str, char c);
 char	are_all_characters_same(char *str, char c);
 char	*get_exit_no(void);
+char	**modify_least_matched_pattern(char **f_list, char *memo);
 
 /*utils2.c*/
 char	*search_value_using_key(t_path *path, char *src);
@@ -205,13 +217,44 @@ char	*copy_conditional_index_range(char *str, int idx, int end, char c);
 char	*copy_index_range(char *str, int idx, int end);
 int		ck_part_of_special_chr(int c);
 
-/* utils_directory.c */
-int		count_valid_head_pattern_filename(char **list, char *str);
-int		count_valid_tail_pattern_filename(char **list, char *str);
-int		search_str_in_f_list(t_list *node, char **list, char *str);
+/* util_as_file1.c */
+// int		count_valid_head_pattern_filename(char **list, char *str);
+// int		count_valid_tail_pattern_filename(char **list, char *str);
+// int		search_str_in_f_list(t_list *node, char **list, char *str);
 char	**take_filenames_basic(struct dirent *entry, DIR *dir, int len);
 char	**open_n_read_filenames(char *path, int len);
 int		count_file_in_directory(char *path);
+
+/* util_as_file2.c */
+int		change_only_wildcard_token(t_list *node);
+char	**get_root_filelist(void);
+char	**get_path_filelist(char *path);
+char	**get_current_filelist(void);
+char	**open_root_directory(char *str, int p_len);
+char	**open_wildcard_directory(char *path);
+char	**open_current_directory(char *path);
+
+/* mapping_pattern_start_n_center_filename.c */
+int		compare_squence_word1(char *f_list, int idx, char **path, int *row);
+int		matching_fisrt_pattern(char *f_list, char **path);
+char	**mapping_pattern_start_filname(char **path, char **f_list);
+int		matching_center_pattern(char *f_list, char **path);
+char	**mapping_center_filename(char **path, char **f_list);
+
+/* mapping_pattern_last_filename.c */
+int		compare_reverse_word(char *f_list, int idx, char **path, int *row);
+int		matching_last_pattern(char *f_list, char **path);
+char	**mapping_pattern_last_filname(char **path, char **f_list);
+
+/* mapping_pattern_side_filename.c */
+int		compare_squence_word2(char *f_list, int idx, char **path, int *row);
+int		matching_side_pattern(char *f_list, char **path);
+char	**mapping_pattern_side_filname(char **path, char **f_list);
+
+/* mapping_pattern_filename.c */
+char	**extract_path_in_f_list(char **f_list, char *path, int len);
+int		count_path_in_f_list(char **f_list, char *path);
+char	**mapping_pattern_filename(char *path, char **f_list);
 
 /* othoer_functions.c*/
 int		is_token_all_null_after_join(t_tmp *tmp);
