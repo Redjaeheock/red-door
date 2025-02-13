@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:41:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 17:34:27 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/10 11:58:19 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **envp)
 
 	arr = (char **)malloc(sizeof(char *) * 3);
 	arr[0] = "ls";
-	arr[1] = "/home/jemoon/42/red-door/jemoon";
+	arr[1] = "/home/jemoon/42/red-door/jemoon/jemoon_version_5/*";
 	arr[2] = NULL;
 	if (execve("/bin/ls", arr, envp) == -1)
 		printf("command not found\n");

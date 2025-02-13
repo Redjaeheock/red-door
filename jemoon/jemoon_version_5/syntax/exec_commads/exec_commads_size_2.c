@@ -45,7 +45,7 @@ int	calculate_array_size(t_list *tokens)
 		tokens = tokens->next;
 	}
 	return (array_size);
-}
+}	
 
 int	get_double_string_array_size(t_list *tokens, int *check_redi, \
 t_tokentype *plag_pipe, t_tokentype *plag_redi)

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 10:33:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 16:32:12 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/10 13:29:12 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*add_readline(t_cmd_list **exec_cmd, t_data *meta, char *str)
 		}
 		add_tokens = mn_split(meta, &add_str, 'c');
 		if (add_tokens == NULL)
-			continue;
+			continue ;
 		str = make_str(str, add_str);
 		if (add_tokens == NULL)
 			return (handle_error(exec_cmd, str));
