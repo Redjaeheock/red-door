@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:06:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/01 15:23:54 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/13 17:40:33 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,6 @@ char	*alloc_tokens_key(t_tmp *tmp, char c)
 int	join_sub_tokens(t_list *tokens, t_tmp *node, char c)
 {
 	char	*str;
-	printf("node->key = %s\n", node->key);
-	printf("node->value = %s\n", node->value);
 	str = alloc_tokens_key(node, c);
 	if (str == NULL)
 		return (0);
@@ -123,7 +121,6 @@ int	join_sub_tokens(t_list *tokens, t_tmp *node, char c)
 	str = alloc_tokens_token(node, c);
 	if (str == NULL) 
 		return (0);
-	printf("copied str = %s\n", str);
 	if (change_null_string_n_null_point(tokens, str, c) == 0)
 		return ((free(str), 0));
 	return ((free(str), 1));

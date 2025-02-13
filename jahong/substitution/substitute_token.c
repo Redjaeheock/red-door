@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/04 11:41:29 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/13 17:41:27 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	subtitute_dollar_sign(t_data *meta, t_list *tokens,  char c)
 	char	**tmp;
 	int		var;
 	t_list	*keep;
-	int	idx = 0;
 
 	if (search_chr_in_str(tokens->token, '$') == 0)
 		return (1);
@@ -54,11 +53,7 @@ int	subtitute_dollar_sign(t_data *meta, t_list *tokens,  char c)
 	tmp = dividing_sub_token(tokens->token, var);
 	if (tmp == NULL)
 		return (0);
-	while (tmp[idx] != NULL)
-	{
-		printf("tmp str[%d] = %s\n", idx , tmp[idx]);
-		idx++;
-	}
+
 	node = do_substitute_dollar_sign(meta, tmp, c);
 	free_sndry_arr((void **)tmp);
 	if (node == NULL)

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:24:38 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/08 11:32:59 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/13 16:20:02 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	matching_side_pattern(char *f_list, char **path)
 	idx = 0;
 	f_len = ft_strlen(f_list) - 1;
 	p_len = ft_strlen(path[row]) - 1;
-	printf("comare f_list = %s\n", f_list);
 	printf("list last chr = %c | path[%d][%d] = %c\n", f_list[f_len], row, p_len, path[row][p_len]);
 	if ((f_list[0] != path[0][0]) || (f_list[f_len] != path[row][p_len]))
 		return (0);
@@ -67,10 +66,7 @@ int	matching_side_pattern(char *f_list, char **path)
 		idx++;
 	}
 	if (ft_str_tail_str(f_list, path[row - 1]) == NULL)
-	{
-		printf("return?????????????????????????????\n");
 		return (0);
-	}
 	return (1);
 }
 
@@ -95,6 +91,8 @@ char	**mapping_pattern_side_filname(char **path, char **f_list)
 		row++;
 	}
 	memo[row] = '\0';
+	if (conditional_jump_len(memo, '1') == 0)
+		return ((free(memo), NULL));
 	modify = modify_least_matched_pattern(f_list, memo);
 	free(memo);
 	return (modify);

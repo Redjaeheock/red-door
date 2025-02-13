@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 11:09:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/08 11:42:55 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/13 16:19:40 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int	matching_center_pattern(char *f_list, char **path)
 
 char	**mapping_center_filename(char **path, char **f_list)
 {
-	printf("como on code sibal fuck you\n");
 	char	**modify;
 	char	*memo;
 	int		row;
@@ -132,6 +131,8 @@ char	**mapping_center_filename(char **path, char **f_list)
 		row++;
 	}
 	memo[row] = '\0';
+	if (conditional_jump_len(memo, '1') == 0)
+		return ((free(memo), NULL));
 	modify = modify_least_matched_pattern(f_list, memo);
 	free(memo);
 	return (modify);

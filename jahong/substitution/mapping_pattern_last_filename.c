@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 12:21:12 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/06 15:13:54 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/13 10:06:05 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ char	**mapping_pattern_last_filname(char **path, char **f_list)
 		row++;
 	}
 	memo[row] = '\0';
+	if (conditional_jump_len(memo, '1') == 0)
+		return ((free(memo), NULL));
 	modify = modify_least_matched_pattern(f_list, memo);
 	free(memo);
 	return (modify);

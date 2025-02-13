@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:12:51 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/07 14:25:03 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/13 17:36:28 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ char	**take_filenames_basic(struct dirent *entry, DIR *dir, int len)
 	return (tmp);
 }
 
+char	**alloc_fail_msg(void)
+{
+	char	**msg;
+
+	msg = (char **)malloc(sizeof(char *) * 2);
+	if (msg == NULL)
+		return (memory_alloc_error());
+	msg[0] = ft_strdup("Not valid path");
+	if (msg[0] == NULL)
+		return (sndry_alloc_err((void **)msg));
+	else 
+		msg[1] = NULL;
+	return (msg);
+}
+
 char	**open_n_read_filenames(char *path, int len)
 {
 	DIR				*dir;
@@ -45,11 +60,9 @@ char	**open_n_read_filenames(char *path, int len)
 	char			**f_list;
 	char			**fail;
 
-	fail = (char **)malloc(sizeof(char *) * 2);
+	fail = alloc_fail_msg();
 	if (fail == NULL)
 		return (NULL);
-	fail[0] = ft_strdup("Not valid path");
-	fail[1] = NULL;
 	dir = opendir(path);
 	if (dir == NULL)
 	{

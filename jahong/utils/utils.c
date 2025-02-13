@@ -6,11 +6,29 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:17:50 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/08 11:00:11 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/13 16:19:13 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	check_chr_not_quote_set(char *str, char c)
+{
+	int		idx;
+	int		quote;
+
+	idx = 0;
+	quote = 0;
+	while (str[idx] != '\0')
+	{
+		if (str[idx] == '"' || str[idx] == '\'')
+			quote = check_quote_pair(str[idx], quote);
+		if (quote == 0 && str[idx] == '*')
+			return (1);
+		idx++;
+	}
+	return (0);
+}
 
 char	search_chr_in_str(char *str, char c)
 {
@@ -79,15 +97,8 @@ char	**modify_least_matched_pattern(char **f_list, char *memo)
 	int		len;
 	int		idx;
 	int		row;
-	int n = 0;
 
 	len = conditional_jump_len(memo, '1');
-	idx = 0;
-	while (memo[n] != '\0')
-	{
-		printf("memo[%d] = %c\n", n, memo[n]);
-		n++;
-	}
 	modify = (char **)malloc(sizeof(char *) * (len + 1));
 	if (modify == NULL)
 		return (NULL);
@@ -97,7 +108,6 @@ char	**modify_least_matched_pattern(char **f_list, char *memo)
 	{
 		if (memo[row] == '1')
 		{
-			printf("modify in str = %s\n", f_list[row]);
 			modify[idx] = ft_strdup(f_list[row]);
 			if (modify[idx] == NULL)
 				return (sndry_alloc_err((void **)modify));

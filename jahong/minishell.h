@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/08 09:17:29 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/13 18:38:25 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,9 @@ char	*ft_strjoin_v2(const char *s1, const char *s2);
 char	*ft_str_head_str(const char *big, const char *little);
 char	*ft_str_tail_str(const char *big, const char *little);
 char	**ft_add_str_to_2d_arr(char **arr, char *str);
+char	**ft_add_2d_arr_to_str(char *str, char **arr);
+int		ft_strncmp(char *s1, const char *s2, unsigned int n);
+void	ft_sort_2d_arr(char **str);
 // char	**ft_merge_2d_arr(char **arr1, char **arr2);
 
 /* main.c */
@@ -184,43 +187,42 @@ char	*change_null_string(void);
 int		join_sub_tokens(t_list *tokens, t_tmp *node, char c);
 
 /* substitute_wildcard3.c */
-char	*copy_index_range_jump_quote(char *str, int idx, int end);
 char	**open_multi_directory(char *path, char **f_list);
 int		substitute_wildcard(t_list *tokens);
 
-/* exclusiv_use_wildcard_subsitute.c */
-// int		exclusive_use_wildcard_join_len(char **paths);
-// char	*exclusive_use_wildcar_join2(char **paths, int *row);
-// char	**exclusive_use_wildcard_join1(char **paths, int len);
-// char	**exclusive_use_wildcard_split(char *src, int len, int row, int idx);
-// int		exclusive_use_wildcard_len(char *str);
-
-/* exclusive_use_wildcard_substitute2.c */
-int		exclusive_use_wildcard_join_len(char **paths);
-char	*exclusive_use_wildcar_join2(char **paths, int *row);
-char	**exclusive_use_wildcard_join1(char **paths, int len);
+/* exclusive_use_wildcard_split.c */
 char	**exclusive_use_wildcard_split1(char *src, int len, int row, int idx);
 int		exclusive_use_wildcard_len(char *str);
+
+/* exclusive_use_wildcard_join.c */
+int		exclusive_use_wildcard_valid_check(char *path);
+int		exclusive_use_wildcard_join_len(char **paths);
+char	*exclusive_use_wildcard_join2(char **paths, int *row);
+char	**exclusive_use_wildcard_join1(char **paths, int len);
 
 /* remove_quote_set */
 int		remove_quote_tokens(t_list *node);
 
 /* utils.c*/
+char	check_chr_not_quote_set(char *str, char c);
 char	search_chr_in_str(char *str, char c);
 char	are_all_characters_same(char *str, char c);
 char	*get_exit_no(void);
 char	**modify_least_matched_pattern(char **f_list, char *memo);
 
 /*utils2.c*/
+char	**change_system_error_msg(void);
 char	*search_value_using_key(t_path *path, char *src);
 char	*copy_conditional_index_range(char *str, int idx, int end, char c);
 char	*copy_index_range(char *str, int idx, int end);
 int		ck_part_of_special_chr(int c);
 
+/* utils3.c*/
+char	*copy_index_range_jump_quote(char *str, int idx, int end);
+char	**remove_all_same_str(char **str, char c);
+int	cnt_valid_split_point_with_chr_in_quote_set(char *path, char c, int quote);
+
 /* util_as_file1.c */
-// int		count_valid_head_pattern_filename(char **list, char *str);
-// int		count_valid_tail_pattern_filename(char **list, char *str);
-// int		search_str_in_f_list(t_list *node, char **list, char *str);
 char	**take_filenames_basic(struct dirent *entry, DIR *dir, int len);
 char	**open_n_read_filenames(char *path, int len);
 int		count_file_in_directory(char *path);
@@ -230,9 +232,18 @@ int		change_only_wildcard_token(t_list *node);
 char	**get_root_filelist(void);
 char	**get_path_filelist(char *path);
 char	**get_current_filelist(void);
+
+/* open_directory1.c */
 char	**open_root_directory(char *str, int p_len);
 char	**open_wildcard_directory(char *path);
 char	**open_current_directory(char *path);
+
+/* open_directory2.c */
+char	**split_last_slash_path(char *path);
+char	**join_path_n_f_list(char **f_list, char **div);
+
+/* open_directory3.c */
+char	**open_multi_directory(char *path, char **f_list);
 
 /* mapping_pattern_start_n_center_filename.c */
 int		compare_squence_word1(char *f_list, int idx, char **path, int *row);
@@ -257,6 +268,7 @@ int		count_path_in_f_list(char **f_list, char *path);
 char	**mapping_pattern_filename(char *path, char **f_list);
 
 /* othoer_functions.c*/
+int		count_only_single_chr_value_in_2d_arr(char **str, int row, char c);
 int		is_token_all_null_after_join(t_tmp *tmp);
 
 #endif
