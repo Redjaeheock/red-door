@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:35:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 17:00:00 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:19:37 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	**div_last_slash_path(char *path, int len, int idx)
 	start = 0;
 	while (row < len)
 	{
-		printf("row = %d ||| idx ===%d %c\n", row, idx, path[idx]);
 		div[row] = copy_index_range(path, start, idx);
 		if (div[row] == NULL)
 			return (sndry_alloc_err((void **)div));

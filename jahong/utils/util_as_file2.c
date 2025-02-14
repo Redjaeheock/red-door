@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 07:28:40 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 16:38:17 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:25:20 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char	**get_current_filelist(void)
 {
 	char	**f_list;
 	int		len;
-	printf("here?\n");
 	len = count_file_in_directory(".");
 	if (len == -1)
 		return (NULL);
@@ -56,7 +55,6 @@ char	**get_path_filelist(char *path)
 	char	**f_list;
 	char	**keep;
 	int		len;
-	printf("get path file func try\n");
 	len = count_file_in_directory(path);
 	if (len == -1)
 		return (NULL);

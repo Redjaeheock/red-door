@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 17:41:27 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:24:33 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,6 @@ int	subtitute_dollar_sign(t_data *meta, t_list *tokens,  char c)
 	if (node == NULL)
 		return (0);
 	var = join_sub_tokens(tokens, node, c);
-	keep = tokens;
-	while (keep != NULL)
-	{
-		if (keep->key != NULL)
-			printf("substutite join key = %s\n", keep->key);
-		if (keep->token != NULL)
-			printf("substutite join token = %s\n", keep->token);
-		keep = keep->next;
-	}
 	if (var == 0)
 		return (0);
 	free_tmp_list(node);

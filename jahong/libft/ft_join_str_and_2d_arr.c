@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:19:11 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 16:59:59 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 12:40:12 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**ft_add_str_to_2d_arr(char **arr, char *str)
 	if (join == NULL)
 		return (NULL);
 	row = 0;
-	while (arr[row] != NULL)
+	while (arr != NULL && arr[row] != NULL)
 	{
 		join[row] = ft_strjoin_v2(arr[row], str);
 		if (join[row] == NULL)
@@ -45,7 +45,7 @@ char	**ft_add_2d_arr_to_str(char *str, char **arr)
 	if (join == NULL)
 		return (NULL);
 	row = 0;
-	while (arr[row] != NULL)
+	while (arr != NULL && arr[row] != NULL)
 	{
 		join[row] = ft_strjoin_v2(str, arr[row]);
 		if (join[row] == NULL)

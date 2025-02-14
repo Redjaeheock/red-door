@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 10:56:37 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/02 12:01:39 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:18:51 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	remove_quote_tokens(t_list *node)
 	int		len;
 
 	len = quote_set_jump_len(node->token);
-	printf("jump quote len = %d\n", len);
 	if (len == 0 && node->token == NULL)
 		return (1);
 	if (keep_quote_set(node) == 0)
@@ -79,7 +78,6 @@ int	remove_quote_tokens(t_list *node)
 	str = copy_quote_set_jump(node->token, str);
 	if (node->token != NULL)
 		free(node->token);
-	printf("after_remove_str = %s\n", str);
 	node->token = str;
 	return (1);
 }

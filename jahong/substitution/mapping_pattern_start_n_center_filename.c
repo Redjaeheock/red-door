@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 11:09:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 16:19:40 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:17:02 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ char	**mapping_pattern_start_filname(char **path, char **f_list)
 {
 	char	**modify;
 	char	*memo;
+	int		len;
 	int		row;
 	int		result;
-	int		len;
 
 	len = sndry_arr_len((void **)f_list);
 	memo = (char *)malloc(sizeof(char) * (len + 1));
@@ -81,6 +81,8 @@ char	**mapping_pattern_start_filname(char **path, char **f_list)
 		row++;
 	}
 	memo[row] = '\0';
+	if (conditional_jump_len(memo, '1') == 0)
+		return ((free(memo), NULL));
 	modify = modify_least_matched_pattern(f_list, memo);
 	free(memo);
 	return (modify);
@@ -90,7 +92,6 @@ int	matching_center_pattern(char *f_list, char **path)
 {
 	int	row;
 	int	idx;
-
 
 	idx = 0;
 	row = 0;
@@ -103,9 +104,6 @@ int	matching_center_pattern(char *f_list, char **path)
 			break ;
 		idx++;
 	}
-	printf("center row row rwo rwor rowrworwrworworo = %d\n", row);
-	printf("f_lsit len f_lsit len f_lsit len f_slit  = %d\n", ft_strlen(f_list));
-	printf("centeridxdixidxdi dxid dxid dxidxd idx x = %d\n", idx);
 	if (idx == ft_strlen(f_list) && row != sndry_arr_len((void **)path))
 		return (0);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/05 23:54:15 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:28:31 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,22 +108,8 @@ t_list *mn_split(t_data *meta, char **str, char c)
 	tokens = split_words(*str, c);
 	if (tokens == NULL)
 		return (NULL);
-	tmp = tokens;
-	while (tmp != NULL)
-	{
-		printf("first_token_key = %s\n", tmp->key);
-		printf("first_mnsplit_token = %s\n", tmp->token);
-		tmp = tmp->next;
-	}
 	if (substitute_tokens(meta, tokens, c) == 0)
 		return (free_t_list(tokens));
-	tmp = tokens;
-	while (tmp != NULL)
-	{
-		printf("check_mnsplit_token_key = %s\n", tmp->key);
-		printf("check_mnsplit_token_token = %s\n", tmp->token);
-		tmp = tmp->next;
-	}
 	return (tokens);
 }
 
@@ -132,6 +118,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*str;
 	t_data 	*meta;
 	t_list	*tmp; // 출력확인용
+	int	row;
 
 	signal(SIGINT, SIG_IGN);
 	(void)argc, (void)argv;
@@ -147,10 +134,16 @@ int	main(int argc, char **argv, char **envp)
 		tmp = meta->tokens;
 		while (tmp != NULL) // 확인용
 		{
+			row = 0;
 			printf("final check key = %s\n", tmp->key);
 			printf("final check token = %s\n", tmp->token);
-			if (tmp->f_list != NULL)
-				printf("final check filelist[0] = %s\n", tmp->f_list[0]);
+			if (tmp->f_list == NULL)
+				printf("final check f_list = (NULL)\n");
+			while (tmp->f_list != NULL && tmp->f_list[row] != NULL)
+			{
+				printf("final check filelist[%d] = %s\n", row, tmp->f_list[row]);
+				row++;
+			}
 			tmp = tmp->next;
 		}
 		meta->tokens = free_t_list(meta->tokens);

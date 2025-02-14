@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 12:21:12 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 10:06:05 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:17:31 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	compare_reverse_word(char *f_list, int idx, char **path, int *row)
 	int	col;
 
 	col = ft_strlen(path[*row]) - 1;
-	printf("compare word = %s\n", path[*row]);
 	while (0 <= idx && 0 <= col)
 	{
 		if (f_list[idx] == path[*row][col])

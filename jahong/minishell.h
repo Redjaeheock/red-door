@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 18:38:25 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:23:29 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char	**ft_add_str_to_2d_arr(char **arr, char *str);
 char	**ft_add_2d_arr_to_str(char *str, char **arr);
 int		ft_strncmp(char *s1, const char *s2, unsigned int n);
 void	ft_sort_2d_arr(char **str);
-// char	**ft_merge_2d_arr(char **arr1, char **arr2);
+char	**ft_merge_2d_arr(char **arr1, char **arr2);
 
 /* main.c */
 int		check_operator_v1(const char *str, int index);
@@ -220,7 +220,7 @@ int		ck_part_of_special_chr(int c);
 /* utils3.c*/
 char	*copy_index_range_jump_quote(char *str, int idx, int end);
 char	**remove_all_same_str(char **str, char c);
-int	cnt_valid_split_point_with_chr_in_quote_set(char *path, char c, int quote);
+int		cnt_valid_split_point_chr_in_quote_set(char *path, char c, int quote);
 
 /* util_as_file1.c */
 char	**take_filenames_basic(struct dirent *entry, DIR *dir, int len);
@@ -234,16 +234,22 @@ char	**get_path_filelist(char *path);
 char	**get_current_filelist(void);
 
 /* open_directory1.c */
+char	**open_path_low_rank(char **path);
 char	**open_root_directory(char *str, int p_len);
 char	**open_wildcard_directory(char *path);
 char	**open_current_directory(char *path);
+char	**open_multi_directory(char *path, char **f_list);
 
 /* open_directory2.c */
 char	**split_last_slash_path(char *path);
 char	**join_path_n_f_list(char **f_list, char **div);
 
 /* open_directory3.c */
-char	**open_multi_directory(char *path, char **f_list);
+char	**div_f_list_on_slash(char **f_list, char **save);
+int	increase_idx_with_chr_in_quote_set(char *path, char c, int idx, int quote);
+char	**take_pattern_in_path(char *path, char **div, int len, char c);
+char	**quote_conitional_split(char *path, char c);
+char	**matching_wildcard_pattern(char *path, char **tmp, char *copy);
 
 /* mapping_pattern_start_n_center_filename.c */
 int		compare_squence_word1(char *f_list, int idx, char **path, int *row);

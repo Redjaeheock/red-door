@@ -3,6 +3,7 @@
         "minishell.h": "c",
         "type_traits": "c",
         "sstream": "c",
-        "regex": "c"
+        "regex": "c",
+        "cstdlib": "c"
     }
 }

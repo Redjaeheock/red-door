@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 17:47:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 18:01:51 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:23:29 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	**remove_all_same_str(char **str, char c)
 	return (keep);
 }
 
-int	cnt_valid_split_point_with_chr_in_quote_set(char *path, char c, int quote)
+int	cnt_valid_split_point_chr_in_quote_set(char *path, char c, int quote)
 {
 	int	idx;
 	int	cnt;

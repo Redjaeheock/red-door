@@ -6,18 +6,31 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 18:40:16 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:24:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	finishing_touches_f_list(t_list *node)
+{
+	if (node->f_list == NULL)
+		return (0);
+	if (node->f_list[0] == NULL)
+	{
+		node->f_list = free_sndry_arr((void **)node->f_list);
+		return (0);
+	}
+	ft_sort_2d_arr(node->f_list);
+	return (1);
+}
+
 char	**file_open_preprocess(char **path, char **f_list, int row)
 {
 	char	**keep;
-	int		result;
+	char	**tmp;
 	int		len;
-	// int	idx = 0;
+	int	idx = 0;
 
 	len = sndry_arr_len((void **)path);
 	if (row == 0)
@@ -28,28 +41,17 @@ char	**file_open_preprocess(char **path, char **f_list, int row)
 			keep = open_wildcard_directory(path[row]);
 		else
 			keep = open_current_directory(path[row]);
-		// while (keep != NULL && keep[idx] != NULL)
-		// {
-		// 	printf("get_file_list = %s\n", keep[idx]);
-		// 	idx++;
-		// }
+	}
+	else if (path[row][0] == '/')
+	{
+		keep = ft_add_str_to_2d_arr(f_list, path[row]);
+		tmp = keep;
+		keep = open_path_low_rank(tmp);
+		free_sndry_arr((void **)tmp);
 	}
 	else
 		keep = open_multi_directory(path[row], f_list); //
 	return (keep);
-}
-
-int	finishing_touches_f_list(t_list *node)
-{
-	if (node->f_list == NULL)
-		return (0);
-	if (node->f_list[0] == NULL)
-	{
-		free_sndry_arr((void **)node->f_list);
-		return (0);
-	}
-	ft_sort_2d_arr(node->f_list);
-	return (1);
 }
 
 int	try_substitute_wildcard(t_list *node, char **paths)
@@ -71,7 +73,7 @@ int	try_substitute_wildcard(t_list *node, char **paths)
 		free_sndry_arr((void **)keep1);
 		if (keep2 == NULL)
 			return (-1);
-		if (ft_strcmp(keep2[0], "Not valid path") == 0)
+		if (ft_strcmp(keep2[0], "Not_valid_path") == 0)
 			return(free_sndry_arr((void **)keep2), 0);
 		keep1 = keep2;
 		row++;
@@ -84,7 +86,6 @@ int	substitute_wildcard(t_list *node)
 {
 	char	**paths;
 	int		var;
-	int	row = 0;
 
 	if (node->token == NULL)
 		return (0);
@@ -105,10 +106,5 @@ int	substitute_wildcard(t_list *node)
 	if (var == -1)
 	 	return (0);
 	var = finishing_touches_f_list(node);
-	while (node->f_list[row] != NULL)
-	{
-		printf("after sort f_list[%d] = %s\n", row, node->f_list[row]);
-		row++;
-	}
 	return (1);
 }

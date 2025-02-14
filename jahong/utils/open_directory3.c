@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:05:20 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 18:07:30 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:23:35 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**quote_conitional_split(char *path, char c)
 	int		quote;
 
 	quote = 0;
-	len = cnt_valid_split_point_with_chr_in_quote_set(path, c, quote);
+	len = cnt_valid_split_point_chr_in_quote_set(path, c, quote);
 	div = (char **)malloc(sizeof(char *) * (len + 1));
 	if (div == NULL)
 		return (memory_alloc_error());
@@ -132,31 +132,3 @@ char	**matching_wildcard_pattern(char *path, char **tmp, char *copy)
 	return (keep);
 }
 
-char	**open_multi_directory(char *path, char **f_list)
-{
-	char 	**keep;
-	char	**tmp;
-	char	*copy;
-	
-	copy = NULL;
-	if (check_chr_not_quote_set(path, '*') == 1)
-	{
-		if (search_chr_in_str(f_list[0], '/') == 1)
-			tmp = div_f_list_on_slash(f_list, &copy);
-		else
-			tmp = f_list;
-		if (tmp == NULL)
-			return (NULL);
-		keep = matching_wildcard_pattern(path, tmp, copy);
-	}
-	else
-	{
-		copy = copy_index_range_jump_quote(path, 0, ft_strlen(path));
-		if (copy == NULL)
-			return (NULL);
-		keep = mapping_pattern_filename(copy, f_list);
-	}
-	if (tmp != f_list)
-		free_sndry_arr((void **)tmp);
-	return ((free(copy), keep));
-}
