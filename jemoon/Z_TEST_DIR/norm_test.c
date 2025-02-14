@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   norm_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/21 12:47:07 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/13 10:40:14 by jemoon           ###   ########.fr       */
+/*   Created: 2025/02/13 15:05:29 by jemoon            #+#    #+#             */
+/*   Updated: 2025/02/13 15:08:50 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
-#include "../../syntax/syntax.h"
-#include "../built_in.h"
+#include <stdio.h>
 
-void	minishell_exit(t_data *meta)
+int	main(void)
 {
-	if (check_built_in_cmd("exit", meta->exec_cmd->str[0]) == 0)
-		return ;
-	printf("exit\n");
-	free_meta_token(meta);
-	exit (0);
+	int		idx;
+	char	*str;
+
+	str = "hello world";
+	if (str[0] != '\0')
+		while (str[idx] != '\0')
+			idx++;
 }
