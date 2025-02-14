@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:35:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 14:19:37 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:49:06 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**split_last_slash_path(char *path)
 char	**join_path_n_f_list(char **f_list, char **div)
 {
 	char	**keep;
-	
+
 	keep = f_list;
 	if (keep != NULL && keep[0] != NULL)
 	{

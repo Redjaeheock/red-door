@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:44:30 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 17:34:55 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:12:12 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	increase_value_of_vars_v2(char *str, int *idx, int *cnt, int *flag)
 	*flag = 1;
 	if (str[*idx + 1] == '$' || check_valid_back(str, *idx + 1) != 0)
 	{
-		*idx += 1;	
+		*idx += 1;
 		*flag = 2;
 	}
 }
@@ -44,6 +44,7 @@ void	increase_value_of_vars_v1(int *cnt, int *flag)
 	*cnt += 1;
 	*flag = 0;
 }
+
 int	check_split_point_str(char *str)
 {
 	int		cnt;

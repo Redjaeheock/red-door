@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:17:50 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 13:39:43 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:48:25 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ char	are_all_characters_same(char *str, char c)
 
 char	*get_exit_no(void)
 {
-	char *tmp;
-	char *exit_no;
-	int	idx;
-	int	len;
+	char	*tmp;
+	char	*exit_no;
+	int		idx;
+	int		len;
 
 	idx = 0;
 	// exit no itoa 처리

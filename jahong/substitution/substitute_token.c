@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 14:24:33 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:14:48 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	measure_length_quote_set(char *str, int cnt)
 {
 	int	idx;
-	int qt;
+	int	qt;
 
 	idx = 0;
 	qt = 0;
 	while (str[idx] != '\0')
 	{
-		if (qt == 0) 
+		if (qt == 0)
 		{
 			if (str[idx] == '\'')
 				qt = 1;
@@ -40,12 +40,11 @@ int	measure_length_quote_set(char *str, int cnt)
 	return (cnt);
 }
 
-int	subtitute_dollar_sign(t_data *meta, t_list *tokens,  char c)
+int	subtitute_dollar_sign(t_data *meta, t_list *tokens, char c)
 {
 	t_tmp	*node;
 	char	**tmp;
 	int		var;
-	t_list	*keep;
 
 	if (search_chr_in_str(tokens->token, '$') == 0)
 		return (1);
@@ -53,7 +52,6 @@ int	subtitute_dollar_sign(t_data *meta, t_list *tokens,  char c)
 	tmp = dividing_sub_token(tokens->token, var);
 	if (tmp == NULL)
 		return (0);
-
 	node = do_substitute_dollar_sign(meta, tmp, c);
 	free_sndry_arr((void **)tmp);
 	if (node == NULL)
@@ -68,7 +66,7 @@ int	subtitute_dollar_sign(t_data *meta, t_list *tokens,  char c)
 int	check_quote_valid(char *token)
 {
 	int	idx;
-	int quote;
+	int	quote;
 
 	idx = 0;
 	quote = 0;
@@ -88,7 +86,7 @@ int	check_quote_valid(char *token)
 int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 {
 	t_list	*tmp;
-	
+
 	tmp = tokens;
 	while (tmp != NULL)
 	{

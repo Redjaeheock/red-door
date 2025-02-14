@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:28:07 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 17:49:21 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:52:27 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**change_system_error_msg(void)
 
 char	*search_value_using_key(t_path *path, char *src)
 {
-	char *value;
+	char	*value;
 
 	value = NULL;
 	while (path != NULL)
@@ -71,7 +71,7 @@ char	*copy_conditional_index_range(char *str, int idx, int end, char c)
 	return (tmp);
 }
 
-char *copy_index_range(char *str, int idx, int end)
+char	*copy_index_range(char *str, int idx, int end)
 {
 	char	*tmp;
 	int		n;

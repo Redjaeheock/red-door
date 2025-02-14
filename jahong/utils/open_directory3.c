@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:05:20 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 14:23:35 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:51:01 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**div_f_list_on_slash(char **f_list, char **save)
 	int		row;
 	int		len;
 	int		idx;
-	
+
 	len = sndry_arr_len((void **)f_list);
 	keep = (char **)malloc(sizeof(char *) * (len + 1));
 	if (keep == NULL)
@@ -52,7 +52,7 @@ int	increase_idx_with_chr_in_quote_set(char *path, char c, int idx, int quote)
 			if (path[idx] == '\'' || path[idx] == '"')
 				quote = check_quote_pair(path[idx], quote);
 			if (quote == 0 && path[idx] == c)
-				break;
+				break ;
 			idx++;
 		}
 	}
@@ -62,7 +62,7 @@ int	increase_idx_with_chr_in_quote_set(char *path, char c, int idx, int quote)
 char	**take_pattern_in_path(char *path, char **div, int len, char c)
 {
 	int		row;
-	int 	idx;
+	int		idx;
 	int		quote;
 	int		start;
 
@@ -131,4 +131,3 @@ char	**matching_wildcard_pattern(char *path, char **tmp, char *copy)
 	}
 	return (keep);
 }
-

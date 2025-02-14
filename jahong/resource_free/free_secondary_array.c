@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:56:30 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/05 23:59:46 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 19:33:55 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	*free_multi_2d_arrs(void **array1, void **array2)
 {
-	int row;
-	
+	int	row;
+
 	if (array1 != NULL)
 	{
 		row = 0;

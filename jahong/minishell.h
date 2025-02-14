@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 14:23:29 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 17:50:16 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include <stdlib.h>
 # include <dirent.h>               /* opendir, readdir, closedir 함수를 사용하기 위한 헤더*/
 
-typedef enum {
+typedef enum
+{
 	NONE,
 	PIPE,
 	REDIRECTION,

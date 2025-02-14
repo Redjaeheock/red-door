@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 12:21:12 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 14:17:31 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:13:08 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char	**mapping_pattern_last_filname(char **path, char **f_list)
 	int		row;
 	int		result;
 	int		len;
+
 	len = sndry_arr_len((void **)f_list);
 	memo = (char *)malloc(sizeof(char) * (len + 1));
 	if (memo == NULL)

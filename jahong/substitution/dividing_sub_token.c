@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:34:43 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 16:53:56 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:45:23 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*temporary_div_token(char *str, int *idx, int *quote)
 	while (str[*idx] != '\0')
 	{
 		if (*quote == 0 && check_quote_pair(str[*idx + 1], *quote) != 0)
-			break;
+			break ;
 		else if (*quote == 1 && check_quote_pair(str[*idx + 1], *quote) == 0)
 		{
 			*idx += 1;

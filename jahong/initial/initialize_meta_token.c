@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/05 23:40:15 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:00:51 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_path	*make_t_path(void)
 {
-	t_path *tmp;
+	t_path	*tmp;
 
 	tmp = (t_path *)malloc(sizeof(t_path));
 	if (tmp == NULL)
@@ -88,11 +88,11 @@ void	meta_token_init_memvar(t_data *meta)
 
 t_data	*initialize_meta_token(char **envp)
 {
-	t_data *meta;
+	t_data	*meta;
 
 	meta = (t_data *)malloc(sizeof(t_data) * 1);
 	if (meta == NULL)
-		return((memory_alloc_error(), NULL));
+		return ((memory_alloc_error(), NULL));
 	meta_token_init_memvar(meta);
 	meta->envm = copy_envp(envp);
 	if (meta->envm == NULL)

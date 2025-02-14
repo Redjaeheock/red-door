@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:54:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 17:39:53 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:40:01 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ int	increase_index(char *str, int idx)
 		return (2);
 	if (ck_part_of_special_chr(str[idx]) != 0)
 		return (2);
-   return (0);
+	return (0);
 }
 
 int	move_index(char *str, int idx, int num)
 {
-	int inc_idx;
+	int	inc_idx;
 
 	inc_idx = 0;
-    while ((num == 1) && str[idx] != '$' && str[idx] != '\0')
+	while ((num == 1) && str[idx] != '$' && str[idx] != '\0')
 	{
-        idx++;
+		idx++;
 	}
 	if (num == 2)
 	{

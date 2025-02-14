@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/06 13:45:05 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 17:55:29 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*extract_from_envp(char *envp, int *idx, char condition)
 int	extract_key_value(t_path *tmp, char *envp)
 {
 	int	idx;
-	int start;
+	int	start;
 
 	idx = 0;
 	start = idx;
@@ -66,7 +66,7 @@ char	*extract_word(char const *str, int start_index, int end)
 {
 	char	*word_line;
 	int		idx;
-    int     len;
+	int		len;
 
 	idx = 0;
 	if (str == NULL)
