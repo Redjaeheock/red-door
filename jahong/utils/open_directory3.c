@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:05:20 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/17 20:15:10 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/17 20:25:48 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	**take_pattern_in_path(char *path, char **div, int len, char c)
 	start = idx;
 	while (path[idx] != 0 && row < len)
 	{
-		idx = increase_idx_with_chr_in_quote_set(path, c, idx, quote);
+		idx = increase_idx_in_quote_set(path, c, idx, quote);
 		div[row] = copy_index_range_jump_quote(path, start, idx);
 		if (div[row] == NULL)
 			return (sndry_alloc_err((void **)div));
