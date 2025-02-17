@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 17:50:16 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/17 20:23:05 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <stdlib.h>
 # include <dirent.h>               /* opendir, readdir, closedir 함수를 사용하기 위한 헤더*/
 
-typedef enum
+typedef enum tokentype
 {
-	NONE,
+	NONE = 0,
 	PIPE,
 	REDIRECTION,
 	CMD,
@@ -29,14 +29,14 @@ typedef enum
 	ARG
 }	t_tokentype;
 
-typedef struct	temp_list
+typedef struct temp_list
 {
 	struct temp_list	*next;
 	char				*key;
 	char				*value;
 }						t_tmp;
 
-typedef struct  cmd_list
+typedef struct cmd_list
 {
 	struct cmd_list		*prev;
 	struct cmd_list		*next;
@@ -46,7 +46,7 @@ typedef struct  cmd_list
 	char				*token;
 }						t_list;
 
-typedef struct	path_list
+typedef struct path_list
 {
 	struct path_list	*next;
 	char				*key;
@@ -247,7 +247,7 @@ char	**join_path_n_f_list(char **f_list, char **div);
 
 /* open_directory3.c */
 char	**div_f_list_on_slash(char **f_list, char **save);
-int	increase_idx_with_chr_in_quote_set(char *path, char c, int idx, int quote);
+int		increase_idx_in_quote_set(char *path, char c, int idx, int quote);
 char	**take_pattern_in_path(char *path, char **div, int len, char c);
 char	**quote_conitional_split(char *path, char c);
 char	**matching_wildcard_pattern(char *path, char **tmp, char *copy);

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 19:39:51 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/17 20:16:34 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,32 +85,32 @@ int	check_operator_v1(const char *str, int index)
 	return (1);
 }
 
-t_list	*mn_split(t_data *meta, char **str, char c)
+int	mn_split(t_data *meta, char **str, char c)
 {
 	t_list	*tokens;
-	t_list	*tmp;
 	int		cmd_flag;
 
 	if (*str == NULL)
-		return (NULL);
+		return (-1);
 	if ((*str)[0] == '\0')
 	{
 		free(*str);
 		*str = NULL;
-		return (NULL);
+		return (0);
 	}
 	if (c == 'c')
 	{
 		cmd_flag = check_operator_v1(*str, 0);
 		if (cmd_flag == -1)
-			return (NULL);
+			return (-1);
 	}
 	tokens = split_words(*str, c);
 	if (tokens == NULL)
-		return (NULL);
+		return ((free(*str), -1));
 	if (substitute_tokens(meta, tokens, c) == 0)
-		return (free_t_list(tokens));
-	return (tokens);
+		return ((free(*str), free_t_list(tokens), 0));
+	meta->tokens = tokens;
+	return (1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -126,11 +126,10 @@ int	main(int argc, char **argv, char **envp)
 	while(1)
 	{
 		str = readline("bash : ");
-		if(str == NULL)
+		if (str == NULL)
 			break ;
-		meta->tokens = mn_split(meta, &str, 'c');
-		if (meta->tokens == NULL)
-			continue;
+		if (mn_split(meta, &str, 'c') < 1)
+			continue ;
 		tmp = meta->tokens;
 		while (tmp != NULL) // 확인용
 		{
@@ -146,7 +145,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			tmp = tmp->next;
 		}
-		play(meta);
+		//play(meta);
 		meta->tokens = free_t_list(meta->tokens);
 //		add_history(str);
 		free(str);

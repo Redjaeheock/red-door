@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:05:20 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:51:01 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/17 20:15:10 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**div_f_list_on_slash(char **f_list, char **save)
 	return (keep);
 }
 
-int	increase_idx_with_chr_in_quote_set(char *path, char c, int idx, int quote)
+int	increase_idx_in_quote_set(char *path, char c, int idx, int quote)
 {
 	if (path[idx] == c)
 	{
