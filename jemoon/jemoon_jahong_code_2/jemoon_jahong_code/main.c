@@ -156,7 +156,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		//play(meta);
 		meta->tokens = free_t_list(meta->tokens);
-//		add_history(str);
+		add_history(str);
 		free(str);
 		printf("\n");
 	}

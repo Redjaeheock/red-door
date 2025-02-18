@@ -40,7 +40,7 @@ int	count_slash(char *str, char c)
 int	count_back_path_len(char *str, int slash_len)
 {
 	int	i;
-	int j;
+	int	j;
 	int	str_len;
 	int	count_slash;
 

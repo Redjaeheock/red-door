@@ -84,6 +84,8 @@ void	*free_meta_token(t_data *meta)
 		free_sndry_arr((void **)meta->envm);
 	if (meta->tokens != NULL)
 		free_t_list(meta->tokens);
+	if (meta->exec_cmd != NULL)
+		free_exec_linked_list(meta->exec_cmd);
 	if (meta != NULL)
 		free_t_data(meta);
 	return (NULL);

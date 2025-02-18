@@ -304,5 +304,6 @@ int		is_token_all_null_after_join(t_tmp *tmp);
 t_path	*make_t_path(void);
 t_data	*initialize_meta_token(char **envp);
 int		mn_split(t_data *meta, char **str, char c);
+void	free_exec_linked_list(t_cmd_list *list);
 
 #endif
