@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:21 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:08:44 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/18 14:17:05 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	add_back_linked_list(t_list *tokenize, t_list *new)
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new;
+	new->prev = temp;
 }
 
 void	make_node(t_list **tokenize, char *str)
