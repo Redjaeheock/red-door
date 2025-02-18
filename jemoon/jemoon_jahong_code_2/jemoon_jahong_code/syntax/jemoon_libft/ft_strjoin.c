@@ -6,11 +6,11 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 11:50:05 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/14 15:38:58 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 13:37:30 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../syntax.h"
 
 char	*ft_strjoin(char *s1, char *s2)
 {

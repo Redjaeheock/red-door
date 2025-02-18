@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 19:02:22 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 13:27:13 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_path	*make_t_path(void)
 {
-	t_path *tmp;
+	t_path	*tmp;
 
 	tmp = (t_path *)malloc(sizeof(t_path));
 	if (tmp == NULL)
@@ -81,6 +81,9 @@ void	meta_token_init_memvar(t_data *meta)
 	meta->env = NULL;
 	meta->envm = NULL;
 	meta->path = NULL;
+	meta->home = NULL;
+	meta->pwd = NULL;
+	meta->oldpwd = NULL;
 	meta->exit_n = NULL;
 	meta->pid_n = NULL;
 	meta->lval = NULL;
@@ -92,7 +95,7 @@ t_data	*initialize_meta_token(char **envp)
 
 	meta = (t_data *)malloc(sizeof(t_data) * 1);
 	if (meta == NULL)
-		return((memory_alloc_error(), NULL));
+		return ((memory_alloc_error(), NULL));
 	meta_token_init_memvar(meta);
 	meta->envm = copy_envp(envp);
 	if (meta->envm == NULL)
@@ -106,14 +109,5 @@ t_data	*initialize_meta_token(char **envp)
 	meta->path = extract_path(meta->env);
 	if (meta->path == NULL)
 		return (free_meta_token(meta));
-	meta->home = search_value_using_key(meta->exp, "HOME");
-	if (meta->home == NULL)
-		free(meta->home);
-	meta->pwd = search_value_using_key(meta->exp, "PWD");
-	if (meta->pwd == NULL)
-		free(meta->pwd);
-	meta->oldpwd = search_value_using_key(meta->exp, "OLDPWD");
-	if (meta->oldpwd == NULL)
-		free(meta->oldpwd);
 	return (meta);
 }

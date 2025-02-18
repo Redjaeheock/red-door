@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/17 18:58:04 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 13:52:47 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 typedef enum tokentype
 {
-	NONE,
+	NONE = 0,
 	AND,
 	OR,
 	PIPE,
@@ -113,7 +113,6 @@ void	*t_data_alloc_err(t_data *meta);
 void	*t_tmp_alloc_err(t_tmp *node);
 
 /* initialize_meta_token.c*/
-t_path	*make_t_path(void);
 t_data	*initialize_meta_token(char **envp);
 
 /* linked_list.c */
@@ -148,8 +147,7 @@ char	**ft_add_2d_arr_to_str(char *str, char **arr);
 int		ft_strncmp(char *s1, const char *s2, unsigned int n);
 void	ft_sort_2d_arr(char **str);
 char	**ft_merge_2d_arr(char **arr1, char **arr2);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strjoin_front_slash(char *s1, char *s2);
+
 /* main.c */
 int		check_operator_v1(const char *str, int index);
 
@@ -271,7 +269,7 @@ char	**join_path_n_f_list(char **f_list, char **div);
 
 /* open_directory3.c */
 char	**div_f_list_on_slash(char **f_list, char **save);
-int		increase_idx_with_chr_in_quote_set(char *path, char c, int idx, int quote);
+int		increase_idx_in_quote_set(char *path, char c, int idx, int quote);
 char	**take_pattern_in_path(char *path, char **div, int len, char c);
 char	**quote_conitional_split(char *path, char c);
 char	**matching_wildcard_pattern(char *path, char **tmp, char *copy);
@@ -302,11 +300,9 @@ char	**mapping_pattern_filename(char *path, char **f_list);
 int		count_only_single_chr_value_in_2d_arr(char **str, int row, char c);
 int		is_token_all_null_after_join(t_tmp *tmp);
 
-/*main. c*/
-//t_list	*mn_split(t_data *meta, char **str, char c);
-t_list *mn_split(t_data *meta, char **str, char **read_str, char c);
+/* initialize_meta_token.c*/
+t_path	*make_t_path(void);
+t_data	*initialize_meta_token(char **envp);
+int		mn_split(t_data *meta, char **str, char c);
 
-void	free_exec_linked_list(t_cmd_list *list);
-
-void	free_linked_list(t_list *list);
 #endif

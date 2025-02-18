@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:24:49 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 17:06:17 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:10:05 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	search_in_envpath(t_data *meta, t_tmp*node)
 	{
 		if (ft_strcmp(&node->key[1], tmp->key) == 0)
 		{
-			node->value =  ft_strdup(tmp->value);
+			node->value = ft_strdup(tmp->value);
 			if (node->value == NULL)
 				return (-1);
 		}

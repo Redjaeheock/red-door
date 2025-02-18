@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 17:47:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 14:23:29 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:49:42 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	cnt_valid_split_point_chr_in_quote_set(char *path, char c, int quote)
 				if (path[idx] == '\'' || path[idx] == '"')
 					quote = check_quote_pair(path[idx], quote);
 				if (quote == 0 && path[idx] == c)
-					break;
+					break ;
 				idx++;
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:53:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 14:18:17 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:11:32 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ char	**extract_path_in_f_list(char **f_list, char *path, int len)
 		row++;
 	}
 	keep[n] = NULL;
-	return(keep);
+	return (keep);
 }
 
 int	count_path_in_f_list(char **f_list, char *path)
 {
 	int		row;
 	int		len;
-	
+
 	row = 0;
 	len = 0;
 	while (f_list[row] != NULL)
@@ -52,14 +52,12 @@ int	count_path_in_f_list(char **f_list, char *path)
 		row++;
 	}
 	return (len);
-
 }
 
 char	**mapping_pattern_filename(char *path, char **f_list)
 {
 	char	**keep;
 	int		len;
-	int		row = 0;
 
 	len = count_path_in_f_list(f_list, path);
 	if (len == -1)

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:35:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 14:21:19 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:55:58 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**open_root_directory(char *path, int p_len)
 		f_list = mapping_pattern_filename(div[1], keep);
 		free_sndry_arr((void **)keep);
 		if (sndry_arr_len((void **)div) == 3)
-		f_list = join_path_n_f_list(f_list, div);
+			f_list = join_path_n_f_list(f_list, div);
 		free_sndry_arr((void **)div);
 	}
 	else
@@ -83,9 +83,9 @@ char	**open_wildcard_directory(char *path)
 		f_list = keep;
 	}
 	return (f_list);
-
 }
-char **open_current_directory(char *path)
+
+char	**open_current_directory(char *path)
 {
 	char	**f_list;
 	char	**keep;
@@ -104,10 +104,10 @@ char **open_current_directory(char *path)
 
 char	**open_multi_directory(char *path, char **f_list)
 {
-	char 	**keep;
+	char	**keep;
 	char	**tmp;
 	char	*copy;
-	
+
 	copy = NULL;
 	if (check_chr_not_quote_set(path, '*') == 1)
 	{

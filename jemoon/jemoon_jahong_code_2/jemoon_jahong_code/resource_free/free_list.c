@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 19:11:42 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 13:30:30 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ void	*free_meta_token(t_data *meta)
 		free_sndry_arr((void **)meta->envm);
 	if (meta->tokens != NULL)
 		free_t_list(meta->tokens);
-	if (meta->exec_cmd != NULL)
-		free_exec_linked_list(meta->exec_cmd);
 	if (meta != NULL)
 		free_t_data(meta);
 	return (NULL);

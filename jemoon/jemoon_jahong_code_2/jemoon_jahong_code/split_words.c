@@ -6,11 +6,11 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 16:44:49 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 17:56:40 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	string_div(t_list **words, char const *str, int index)
 {

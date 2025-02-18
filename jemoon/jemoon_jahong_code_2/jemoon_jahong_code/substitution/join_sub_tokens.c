@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:06:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 17:40:33 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:44:32 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ int	change_null_string_n_null_point(t_list *tokens, char *str, char c)
 
 int	conditional_jump_t_tmp(t_tmp **tmp, int flag, int quote)
 {
-	if (flag != 1 && (*tmp)->value == NULL &&  (*tmp)->key[0] == '$')
+	if (flag != 1 && (*tmp)->value == NULL && (*tmp)->key[0] == '$')
 	{
 		(*tmp) = (*tmp)->next;
 		return (1);
 	}
 	else if ((*tmp)->key != NULL && (*tmp)->key[0] == '$')
 	{
-		if((quote == 0 && ft_strlen((*tmp)->key) == 1) && (*tmp)->next != NULL)
+		if ((quote == 0 && ft_strlen((*tmp)->key) == 1) && (*tmp)->next != NULL)
 		{
 			(*tmp) = (*tmp)->next;
 			return (1);
@@ -112,6 +112,7 @@ char	*alloc_tokens_key(t_tmp *tmp, char c)
 int	join_sub_tokens(t_list *tokens, t_tmp *node, char c)
 {
 	char	*str;
+
 	str = alloc_tokens_key(node, c);
 	if (str == NULL)
 		return (0);
@@ -119,7 +120,7 @@ int	join_sub_tokens(t_list *tokens, t_tmp *node, char c)
 		free(tokens->key);
 	tokens->key = str;
 	str = alloc_tokens_token(node, c);
-	if (str == NULL) 
+	if (str == NULL)
 		return (0);
 	if (change_null_string_n_null_point(tokens, str, c) == 0)
 		return ((free(str), 0));

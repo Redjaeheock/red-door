@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 10:58:16 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/17 19:31:39 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 12:37:39 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_list **tokens, char **str)
 		meta->exec_cmd = NULL;
 		return (1);
 	}
+	meta->tokens = free_t_list(meta->tokens);
 	meta->exec_cmd = *exec_cmd;
 	if ((meta->exec_cmd))
 	{

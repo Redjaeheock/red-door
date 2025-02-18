@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 14:34:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/05 23:21:42 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 19:19:20 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,17 @@ int	quote_set_jump_len(const char *s)
 	while (s[idx] != '\0')
 	{
 		quote = check_quote_pair(s[idx], quote);
-		if ((s[idx] == '\'' && quote == 1) || (s[idx] == '"' && quote == 2) ||
-			(quote == 0 && (s[idx] == '"' || s[idx] == '\'')))
+		if (s[idx] == '\'' && quote == 1)
+			idx++;
+		else if (s[idx] == '"' && quote == 2)
+			idx++;
+		else if (quote == 0 && (s[idx] == '"' || s[idx] == '\''))
+			idx++;
+		else
 		{
 			idx++;
-			continue ;
+			cnt++;
 		}
-		idx++;
-		cnt++;
 	}
 	return (cnt);
 }

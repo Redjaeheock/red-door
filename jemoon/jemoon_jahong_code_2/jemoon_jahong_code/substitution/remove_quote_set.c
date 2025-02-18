@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 10:56:37 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 14:18:51 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:35:24 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,18 @@ char	*copy_quote_set_jump(char *s, char *tmp)
 	while (s[idx] != '\0')
 	{
 		quote = check_quote_pair(s[idx], quote);
-		if ((s[idx] == '\'' && quote == 1) || (s[idx] == '"' && quote == 2) ||
-			(quote == 0 && (s[idx] == '"' || s[idx] == '\'')))
-		{
+		if (s[idx] == '\'' && quote == 1)
 			idx++;
-			continue ;
+		else if (s[idx] == '"' && quote == 2)
+			idx++;
+		else if (quote == 0 && (s[idx] == '"' || s[idx] == '\''))
+			idx++;
+		else
+		{
+			tmp[n] = s[idx];
+			n++;
+			idx++;
 		}
-		tmp[n] = s[idx];
-		n++;
-		idx++;
 	}
 	tmp[n] = '\0';
 	return (tmp);
@@ -40,7 +43,6 @@ char	*copy_quote_set_jump(char *s, char *tmp)
 
 int	keep_quote_set(t_list *node)
 {
-
 	if (node->token[0] == '"' && ft_strcmp(node->token, "\"\"") == 0)
 	{
 		if (node->key == NULL)

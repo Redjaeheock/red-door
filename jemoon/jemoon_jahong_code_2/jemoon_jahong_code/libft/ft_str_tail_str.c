@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:18:07 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 18:45:38 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:57:52 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static char	*check_big_tail(char *base, char *str, int base_len, int str_len)
 
 char	*ft_str_tail_str(const char *big, const char *little)
 {
-
 	int	big_len;
 	int	little_len;
 

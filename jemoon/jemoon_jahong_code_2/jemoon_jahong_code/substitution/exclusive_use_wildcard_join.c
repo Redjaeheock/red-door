@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:58:53 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/13 17:39:08 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:37:02 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ char	*exclusive_use_wildcard_join2(char **paths, int *row)
 			break ;
 		keep2 = ft_strjoin_v2(keep1, paths[*row]);
 		if (keep1 != NULL)
-		free(keep1);
+			free(keep1);
 		if (keep2 == NULL)
-		return (NULL);
+			return (NULL);
 		keep1 = keep2;
 		*row += 1;
 	}
@@ -99,7 +99,7 @@ char	**exclusive_use_wildcard_join1(char **paths, int len)
 		else
 			keep = ft_strdup(paths[row]);
 		if (keep == NULL)
-			return(free_multi_2d_arrs((void **)paths, (void **)join));
+			return (free_multi_2d_arrs((void **)paths, (void **)join));
 		join[n] = keep;
 		n++;
 		row++;

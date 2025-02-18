@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:12:51 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 12:30:03 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:50:25 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	**alloc_fail_msg(void)
 	msg[0] = ft_strdup("Not_valid_path");
 	if (msg[0] == NULL)
 		return (sndry_alloc_err((void **)msg));
-	else 
+	else
 		msg[1] = NULL;
 	return (msg);
 }

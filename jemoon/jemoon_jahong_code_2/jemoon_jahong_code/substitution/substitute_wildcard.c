@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 19:20:44 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 14:24:18 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:46:23 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	**file_open_preprocess(char **path, char **f_list, int row)
 	char	**keep;
 	char	**tmp;
 	int		len;
-	int	idx = 0;
 
 	len = sndry_arr_len((void **)path);
 	if (row == 0)
@@ -50,7 +49,7 @@ char	**file_open_preprocess(char **path, char **f_list, int row)
 		free_sndry_arr((void **)tmp);
 	}
 	else
-		keep = open_multi_directory(path[row], f_list); //
+		keep = open_multi_directory(path[row], f_list);
 	return (keep);
 }
 
@@ -74,7 +73,7 @@ int	try_substitute_wildcard(t_list *node, char **paths)
 		if (keep2 == NULL)
 			return (-1);
 		if (ft_strcmp(keep2[0], "Not_valid_path") == 0)
-			return(free_sndry_arr((void **)keep2), 0);
+			return (free_sndry_arr((void **)keep2), 0);
 		keep1 = keep2;
 		row++;
 	}
@@ -104,7 +103,7 @@ int	substitute_wildcard(t_list *node)
 	var = try_substitute_wildcard(node, paths);
 	free_sndry_arr((void **)paths);
 	if (var == -1)
-	 	return (0);
+		return (0);
 	var = finishing_touches_f_list(node);
 	return (1);
 }
