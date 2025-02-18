@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:59:43 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/18 15:08:23 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/18 15:38:03 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-#define	INT_MIN -2147483648
+#define INT_MIN -2147483648
 
 static char	*change_int_to_ascii(char *str, int n, int len, int negative)
 {
