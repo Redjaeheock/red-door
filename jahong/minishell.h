@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/17 20:25:44 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/18 15:36:06 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ char	*ft_strdup(const char *s);
 int		sndry_arr_len(void **array);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
+char	*ft_atoi(const char* nptr);
 char	*ft_strjoin_v2(const char *s1, const char *s2);
 char	*ft_str_head_str(const char *big, const char *little);
 char	*ft_str_tail_str(const char *big, const char *little);
@@ -125,6 +126,7 @@ char	**ft_add_2d_arr_to_str(char *str, char **arr);
 int		ft_strncmp(char *s1, const char *s2, unsigned int n);
 void	ft_sort_2d_arr(char **str);
 char	**ft_merge_2d_arr(char **arr1, char **arr2);
+void	ft_putstr_fd(char *s, int fd);
 
 /* main.c */
 int		check_operator_v1(const char *str, int index);
