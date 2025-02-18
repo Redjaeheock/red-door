@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:42:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/03 19:22:07 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 16:24:24 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	is_first_node_type(t_list **tokens)
 		(*tokens)->type = AND;
 	else if (ft_strcmp((*tokens)->token, "||") == 0)
 		(*tokens)->type = OR;
-	else /*if (((*tokens)->token[0] != '<' || (*tokens)->token[0] != '>'))*/
+	else
 		(*tokens)->type = CMD;
 }
 

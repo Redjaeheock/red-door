@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:35:17 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 14:16:53 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:04:34 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int	rest_check_is_valid(t_list **tokens)
 {
 	if (AND <= (*tokens)->type && (*tokens)->type <= PIPE)
 	{
-		if ((*tokens)->prev && (AND <= (*tokens)->prev->type && (*tokens)->prev->type <= PIPE))
+		if ((*tokens)->prev && \
+		(AND <= (*tokens)->prev->type && (*tokens)->prev->type <= PIPE))
 			return (0);
 		else if ((*tokens)->next == NULL)
 		{

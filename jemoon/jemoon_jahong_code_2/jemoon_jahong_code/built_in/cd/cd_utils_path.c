@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 11:01:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/14 14:06:15 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:10:20 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,11 @@ int	count_slash(char *str, char c)
 int	count_back_path_len(char *str, int slash_len)
 {
 	int	i;
-	int	j;
-	int	str_len;
 	int	count_slash;
 
 	i = 0;
-	j = 0;
-	str_len = ft_strlen(str);
 	count_slash = 0;
-	while (i + j < str_len)
-	{
-		if (str[i + j] == '/')
-		{
-			count_slash++;
-			i++;
-			while (str[i + j] == '/')
-				j++;
-			if (slash_len == count_slash)
-			{
-				if (i == 0)
-					i++;
-				return (i);
-			}
-		}
-		else
-			i++;
-	}
-	return (i);
+	return (get_slash_position(str, slash_len, &i, &count_slash));
 }
 
 char	*remove_back_path(char *pwd, int len)
@@ -82,22 +60,7 @@ char	*remove_back_path(char *pwd, int len)
 	back_path = (char *)malloc(sizeof(char) * (len + 1));
 	if (back_path == NULL)
 		return (NULL);
-	while (i < len)
-	{
-		if (pwd[i + j] == '/')
-		{
-			back_path[i] = pwd[i + j];
-			i++;
-			while (pwd[i + j] == '/')
-				j++;
-		}
-		else
-		{
-			back_path[i] = pwd[i + j];
-			i++;
-		}
-	}
-	back_path[i] = '\0';
+	make_back_path(pwd, back_path, len);
 	free(pwd);
 	pwd = NULL;
 	printf("len = [%d]\n", len);

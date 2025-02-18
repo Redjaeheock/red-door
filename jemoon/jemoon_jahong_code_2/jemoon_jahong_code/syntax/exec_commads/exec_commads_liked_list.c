@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/14 15:54:58 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:04:59 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_double_string_array(char **str)
 
 void	free_exec_linked_list(t_cmd_list *list)
 {
-	t_cmd_list	*temp; 
+	t_cmd_list	*temp;
 
 	while (list != NULL)
 	{

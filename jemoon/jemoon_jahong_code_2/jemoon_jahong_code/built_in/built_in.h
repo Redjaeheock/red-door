@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 11:12:56 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 15:47:56 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int		count_back_path_len(char *str, int slash_len);
 char	*remove_back_path(char *pwd, int len);
 char	*add_path(char *pwd, char *dir);
 char	*back_path(char *pwd);
+int		get_slash_position(char *str, int slash_len, int *i, int *count_slash);
+void	make_back_path(char *pwd, char *back_path, int len);
 
 /* cd_utils.c */
 char	*get_env(t_path *env, char *home);

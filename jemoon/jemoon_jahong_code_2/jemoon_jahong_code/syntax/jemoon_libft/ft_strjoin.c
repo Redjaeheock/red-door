@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 11:50:05 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 13:37:30 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:02:26 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,52 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (arr);
 }
 
+char	*ft_allocate_and_join(char *s1, char *s2)
+{
+	int		s1_len;
+	int		s2_len;
+	int		total_len;
+	char	*arr;
+
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	total_len = s1_len + s2_len + 1;
+	if (s1_len != 1)
+		total_len++;
+	arr = (char *)malloc(sizeof(char) * (total_len + 1));
+	if (arr == NULL)
+		return (NULL);
+	return (arr);
+}
+
+char	*ft_strjoin_front_slash(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*arr;
+
+	i = 0;
+	j = 0;
+	if (s1 == NULL)
+		return (ft_strdup(s2));
+	arr = ft_allocate_and_join(s1, s2);
+	if (arr == NULL)
+		return (s1);
+	while (s1[i] != '\0')
+	{
+		arr[i] = s1[i];
+		i++;
+	}
+	if (ft_strlen(s1) != 1)
+		arr[i++] = '/';
+	while (s2[j] != '\0')
+		arr[i++] = s2[j++];
+	arr[i] = '\0';
+	free(s1);
+	return (arr);
+}
+
+/*
 char	*ft_strjoin_front_slash(char *s1, char *s2)
 {
 	int		s1_s2_len;
@@ -79,3 +125,4 @@ char	*ft_strjoin_front_slash(char *s1, char *s2)
 	free(s1);
 	return (arr);
 }
+*/

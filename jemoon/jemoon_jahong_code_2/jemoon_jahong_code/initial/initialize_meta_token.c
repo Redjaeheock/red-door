@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/18 13:27:13 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:23:01 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,15 @@ t_data	*initialize_meta_token(char **envp)
 		return (free_meta_token(meta));
 	meta->exp = init_key_value(envp);
 	if (meta->exp == NULL)
+		return (free_meta_token(meta));
+	meta->home = search_value_using_key(meta->exp, "HOME");
+	if (meta->home == NULL)
+		return (free_meta_token(meta));
+	meta->pwd = search_value_using_key(meta->exp, "PWD");
+	if (meta->pwd == NULL)
+		return (free_meta_token(meta));
+	meta->oldpwd = search_value_using_key(meta->exp, "OLDPWD");
+	if (meta->oldpwd == NULL)
 		return (free_meta_token(meta));
 	meta->path = extract_path(meta->env);
 	if (meta->path == NULL)
