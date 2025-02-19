@@ -6,18 +6,27 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/18 15:36:06 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/19 16:48:54 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define _POSIX_C_SOURCE 200809L 
+// VScode 의 intellisence 가 #ifdef __USE_POSIX 인지하지 못 해 
+// 실제로 GCC 또는 Clang으로 컴파일할 때는 POSIX 환경이 활성화되지만, IntelliSense는 
+// __USE_POSIX 가 활성화되지 않았다고 판단하여 해당 함수들을 숨길 수도 있음.
+
 # include <readline/readline.h>    /* readline 함수를 사용하기위한 헤더 */
 # include <readline/history.h>     /* add_history 함수를 사용하기위한 헤더 */
 # include <stdio.h>                /* printf 함수를 사용하기위한 헤더 */
 # include <stdlib.h>
 # include <dirent.h>               /* opendir, readdir, closedir 함수를 사용하기 위한 헤더*/
+# include <string.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <signal.h>
 
 typedef enum tokentype
 {
@@ -279,5 +288,13 @@ char	**mapping_pattern_filename(char *path, char **f_list);
 /* othoer_functions.c*/
 int		count_only_single_chr_value_in_2d_arr(char **str, int row, char c);
 int		is_token_all_null_after_join(t_tmp *tmp);
+
+/* signal_process.c */
+void	handle_heredoc(int signum, sigset_t *preset);
+void	handle_rollback(int signum, sigset_t *preset);
+void	set_up_signal();
+
+/* here_doc */
+int		here_doc(t_list	*tokens);
 
 #endif

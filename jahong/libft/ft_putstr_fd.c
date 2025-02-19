@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 19:17:07 by jahong            #+#    #+#             */
-/*   Updated: 2024/06/27 20:38:16 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/19 16:35:04 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 #include <fcntl.h>
 
 void	ft_putstr_fd(char *s, int fd)

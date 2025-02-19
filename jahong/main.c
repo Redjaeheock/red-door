@@ -6,12 +6,11 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/17 20:16:34 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/19 20:12:36 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <signal.h>
 
 t_list	*split_words(char const *str, char c)
 {
@@ -120,8 +119,6 @@ int	main(int argc, char **argv, char **envp)
 	t_list	*tmp; // 출력확인용
 	int	row;
 
-	signal(SIGINT, SIG_IGN);
-	(void)argc, (void)argv;
 	meta = initialize_meta_token(envp);
 	while(1)
 	{
@@ -146,10 +143,25 @@ int	main(int argc, char **argv, char **envp)
 			tmp = tmp->next;
 		}
 		//play(meta);
+		if (ft_strcmp(meta->tokens->token, "<<") == 0)
+		{
+			if (here_doc(meta->tokens->next) == 0)
+			{
+				unlink(meta->tokens->next->f_list[0]);
+				meta->tokens = free_t_list(meta->tokens);
+			}
+			else
+			{
+				printf("sucess create file\n");
+				if (unlink(meta->tokens->next->f_list[0]) == -1)
+					printf("do nut remove file\n");
+				meta->tokens = free_t_list(meta->tokens);
+			}
+		}
 		meta->tokens = free_t_list(meta->tokens);
 //		add_history(str);
 		free(str);
-		printf("\n");
+		// printf("\n");
 	}
 	free_meta_token(meta);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:59:43 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/18 15:38:03 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/18 20:07:38 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define INT_MIN -2147483648
 
-static char	*change_int_to_ascii(char *str, int n, int len, int negative)
+static char	*change_int_to_ascii(int n, int len, int negative)
 {
 	char	*str;
 
@@ -68,7 +68,7 @@ char	*ft_itoa(int n)
 		n *= -1;
 	}
 	len = length(n);
-	str = change_int_to_ascii(str, n, len + negative, negative);
+	str = change_int_to_ascii(n, len + negative, negative);
 	if (str == NULL)
 		return (NULL);
 	if (orgn == INT_MIN)

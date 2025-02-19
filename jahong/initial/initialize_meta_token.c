@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:00:51 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/19 20:12:35 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ t_data	*initialize_meta_token(char **envp)
 {
 	t_data	*meta;
 
+	set_up_signal();
 	meta = (t_data *)malloc(sizeof(t_data) * 1);
 	if (meta == NULL)
 		return ((memory_alloc_error(), NULL));
