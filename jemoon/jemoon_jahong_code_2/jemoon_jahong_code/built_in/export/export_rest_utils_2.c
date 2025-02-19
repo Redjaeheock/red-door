@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 17:55:20 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/19 20:01:54 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,52 @@ void	oldpwd_add(t_data *meta, t_path *export_add)
 		}
 		meta->oldpwd = ft_strdup(export_add->value);
 	}
+}
+
+int	is_invalid_number_start(char *str, int equal)
+{
+	int	i;
+
+	i = 0;
+	while (('0' <= str[i] && str[i] <= '9') && \
+	(i < equal && str[i] != '\0'))
+	{
+		if ('0' <= str[i] && str[i] <= '9')
+		{
+			printf("bash: export: `%s': not a valid identifier\n", str);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	is_invalid_special_char(char *str, int equal)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0' && i < equal)
+	{
+		if ((33 <= str[i] && str[i] <= 47) || \
+		(58 <= str[i] && str[i] <= 64) || \
+		(91 <= str[i] && str[i] <= 94) || \
+		(123 <= str[i] && str[i] <= 126) || \
+		(str[i] == 96))
+		{
+			printf("bash: export: `%s': not a valid identifier\n", str);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	is_valid_var_name(char *str, int equal)
+{
+	if (is_invalid_number_start(str, equal) == 0)
+		return (0);
+	if (is_invalid_special_char(str, equal) == 0)
+		return (0);
+	return (1);
 }

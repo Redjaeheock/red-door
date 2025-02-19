@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 19:41:43 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/19 20:00:29 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,16 @@
 #include "../../syntax/syntax.h"
 #include "../built_in.h"
 
-int	search_special_characters(char *str)
+int	search_special_characters(char *str, int equal)
 {
 	int	i;
 
 	i = 0;
-	while (('0' <= str[i] && str[i] <= '9') && str[i] != '\0')
-	{
-		if ('0' <= str[i] && str[i] <= '9')
-		{
-			printf("bash: export: `%s': not a valid identifier\n", str);
-			return (0);
-		}
-		i++;
-	}
+	if (is_valid_var_name(str, equal) == 0)
+		return (0);
 	while (str[i] != '\0')
 	{
-		if (!(('A' <= str[i] && str[i] <= 'Z') || \
-		('a' <= str[i] && str[i] <= 'z') || \
-		('0' <= str[i] && str[i] <= '9') || \
-		(str[i] == 32) || (str[i] == '=' && i != 0)))
+		if (str[i] == '!' || str[i] == '#')
 		{
 			printf("bash: export: `%s': not a valid identifier\n", str);
 			return (0);
@@ -90,7 +80,7 @@ int	search_equal(char *str)
 	while (str[i] != '\0')
 	{
 		if (str[i] == '=')
-			return (1);
+			return (i);
 		i++;
 	}
 	return (0);
@@ -99,7 +89,7 @@ int	search_equal(char *str)
 void	process_export_entry(t_data *meta, \
 	t_path *export_add, t_path *env_add, int equal)
 {
-	if (equal == 1)
+	if (equal != 0)
 	{
 		if (check_key(&meta->exp, export_add) == 0)
 			add_back_export_linked_list(&meta->exp, export_add);

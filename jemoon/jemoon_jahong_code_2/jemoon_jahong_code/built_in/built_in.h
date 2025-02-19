@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 17:51:48 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/19 19:59:04 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_path	*add_export(char *str);
 void	add_back_export_linked_list(t_path **old_export, t_path *new);
 
 /* export_rets_utils.c */
-int		search_special_characters(char *str);
+int		search_special_characters(char *str, int equal);
 void	update_node(t_path **old_exp, t_path *prev, \
 	t_path *current, t_path *new_node);
 int		check_key(t_path **old_exp, t_path *export_add);
@@ -95,6 +95,7 @@ int		search_equal(char *str);
 void	process_export_entry(t_data *meta, \
 	t_path *export_add, t_path *env_add, int equal);
 void	oldpwd_add(t_data *meta, t_path *export_add);
+int		is_valid_var_name(char *str, int equal);
 
 /* export_rest.c */
 void	rest_export(t_data *meta, int export_len);
