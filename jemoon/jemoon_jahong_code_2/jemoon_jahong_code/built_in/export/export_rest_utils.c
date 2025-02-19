@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 10:53:48 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 19:41:43 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	search_special_characters(char *str)
 		if (!(('A' <= str[i] && str[i] <= 'Z') || \
 		('a' <= str[i] && str[i] <= 'z') || \
 		('0' <= str[i] && str[i] <= '9') || \
-		(str[i] == '_') || (str[i] == '=' && i != 0)))
+		(str[i] == 32) || (str[i] == '=' && i != 0)))
 		{
 			printf("bash: export: `%s': not a valid identifier\n", str);
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:38:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 13:37:28 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/19 16:12:57 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /* exec_commads */
 /* exec_commads_liked_list_2.c */
 void		exec_make_node_2(t_cmd_list **exec_cmd, char **string_array, \
-t_tokentype plag_pipe, t_tokentype plag_redi);
+			t_tokentype plag_pipe, t_tokentype plag_redi);
 void		exec_add_key_str(t_cmd_list **exec_cmd, char *str);
 
 /* exec_commads_liked_list.c */
@@ -33,12 +33,12 @@ t_tokentype plag_pipe, t_tokentype plag_redi);
 
 /* exec_commads_size_2.c */
 int			handle_redirection_case(t_list *tokens, int *check_redi, \
-t_tokentype *plag_redi);
+			t_tokentype *plag_redi);
 int			handle_pipe_case(t_list *tokens, t_tokentype *plag_pipe);
 int			handle_previous_redirection(t_list *tokens, int *check_redi);
 int			calculate_array_size(t_list *tokens);
 int			get_double_string_array_size(t_list *tokens, int *check_redi, \
-t_tokentype *plag_pipe, t_tokentype *plag_redi);
+			t_tokentype *plag_pipe, t_tokentype *plag_redi);
 
 /* exec_commads_size.c  */
 int			check_redirection_size(t_list **tmp, int *array_size);
@@ -47,8 +47,8 @@ int			get_rest_double_string_array_size(t_list **tmp);
 
 /* get_exec_commads_2.c */
 char		*set_string_2(char *tokens, int cmd_size);
-void		fill_string_array_2(char **string_array, \
-t_list **tokens, int cmd_size);
+//void		fill_string_array_2(char **string_array, \
+//			t_list **tokens, int cmd_size);
 char		**set_string_array_2(t_list **tokens, int cmd_size);
 char		*get_key_string(t_list *tokens);
 char		*get_key(t_list *tokens, int check_redi);
@@ -56,20 +56,20 @@ void		get_exec_cmd_2(t_list *tokens, t_cmd_list **exec_cmd);
 
 /* get_exec_commads_2_utils.c */
 void		get_commads_f_list(char **string_array, t_list **tokens, \
-	int *i, int cmd_size);
+			int *i, int cmd_size);
 void		get_commads_token(char **string_array, t_list **tokens, \
-	int *i, int cmd_size);
+			int *i, int cmd_size);
 void		get_commads_key(char **string_array, t_list **tokens, \
-	int *i, int cmd_size);
+			int *i, int cmd_size);
 
 /* get_exec_commads.c */
 void		recycle_size(t_list *tokens, int *cmd_size, \
-t_tokentype *plag_pipe, t_tokentype *plag_redi);
+			t_tokentype *plag_pipe, t_tokentype *plag_redi);
 char		*set_string(t_list *tokens);
 void		fill_string_array(char **string_array, t_list *tokens, \
-int cmd_size);
+			int cmd_size);
 char		**set_string_array(t_list *tokens, int cmd_size, \
-t_tokentype *plag_pipe, t_tokentype *plag_redi);
+			t_tokentype *plag_pipe, t_tokentype *plag_redi);
 void		get_exec_commads(t_list **tokens, t_cmd_list **exec_commads, int i);
 
 /* new_get_exec_cmd.c*/
@@ -106,7 +106,7 @@ void		tpye_init(t_list **tokens);
 /* validate_syntax */
 /* tread_exec_cmd.c */
 int			trade_exec_cmd(t_data *meta, t_cmd_list **exec_cmd, \
-t_list **tokens, char **str);
+			t_list **tokens, char **str);
 
 /* validate_bash_syntax_utils.c */
 int			check_is_valid_redirection(t_list **tokens);
@@ -122,4 +122,10 @@ int			validate_bash_syntax(t_cmd_list **exec_cmd, t_list **tokens);
 char		*ft_strjoin(char *s1, char *s2);
 char		*ft_strjoin_front_slash(char *s1, char *s2);
 
+/* add code*/
+int			redefine_cmd_size(t_list *tokens, int cmd_size);
+void		get_commads_key_to_token(char **string_array, t_list **tokens, \
+			int *i, int redifine_size);
+void		fill_string_array_2(char **string_array, t_list **tokens, \
+			int cmd_size, int redefine_size);
 #endif

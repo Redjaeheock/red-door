@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:00:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 11:12:35 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/19 16:32:04 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*set_dir(t_data *meta, char *str)
 
 	if (ft_strcmp(str, "-") == 0)
 	{
-		dir = search_value_using_key(meta->exp, "OLDPWD");
+		dir = ft_strdup(meta->oldpwd);
 		if (dir == NULL)
 		{
 			printf("-bash: cd: OLDPWD not set\n");

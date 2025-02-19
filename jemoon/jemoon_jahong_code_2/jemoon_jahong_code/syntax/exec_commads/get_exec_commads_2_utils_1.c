@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 11:01:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/10 12:20:52 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:09:06 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,34 +26,52 @@ char	*set_string_2(char *tokens, int cmd_size)
 	return (str);
 }
 
-void	fill_string_array_2(char **string_array, t_list **tokens, int cmd_size)
+void	fill_string_array_2(char **string_array, t_list **tokens, int cmd_size, \
+		int redefine_size)
 {
 	int	i;
 
 	i = 0;
-	while (i < cmd_size)
+	if (redefine_size != 0)
 	{
-		if ((*tokens)->f_list != NULL)
-			get_commads_f_list(string_array, tokens, &i, cmd_size);
-		else if ((*tokens)->token == NULL && cmd_size == 1)
-			get_commads_key(string_array, tokens, &i, cmd_size);
-		else if ((*tokens)->token != NULL)
-			get_commads_token(string_array, tokens, &i, cmd_size);
-		*tokens = (*tokens)->next;
+		while (i < redefine_size)
+		{
+			get_commads_key_to_token(string_array, tokens, &i, redefine_size);
+			*tokens = (*tokens)->next;
+		}
+		string_array[i] = NULL;
 	}
-	string_array[i] = NULL;
+	else
+	{
+		while (i < cmd_size)
+		{
+			if ((*tokens)->f_list != NULL)
+				get_commads_f_list(string_array, tokens, &i, cmd_size);
+			else if ((*tokens)->token == NULL && cmd_size == 1)
+				get_commads_key(string_array, tokens, &i, cmd_size);
+			else if ((*tokens)->token != NULL)
+				get_commads_token(string_array, tokens, &i, cmd_size);
+			*tokens = (*tokens)->next;
+		}
+		string_array[i] = NULL;
+	}
 }
 
 char	**set_string_array_2(t_list **tokens, int cmd_size)
 {
 	char	**string_array;
+	int		redefine_size;
 
 	if (cmd_size == 0)
 		return (NULL);
-	string_array = (char **)malloc(sizeof(char *) * (cmd_size + 1));
+	redefine_size = redefine_cmd_size(*tokens, cmd_size);
+	if (redefine_size != 0)
+		string_array = (char **)malloc(sizeof(char *) * (redefine_size + 1));
+	else
+		string_array = (char **)malloc(sizeof(char *) * (cmd_size + 1));
 	if (string_array == NULL)
 		return (NULL);
-	fill_string_array_2(string_array, tokens, cmd_size);
+	fill_string_array_2(string_array, tokens, cmd_size, redefine_size);
 	return (string_array);
 }
 

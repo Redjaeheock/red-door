@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:04:54 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/14 19:13:47 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 20:29:03 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	cd_rest(t_data *meta, char *str)
 		pwd = redefine_pwd(meta, dir);
 		redefine_export(&meta->exp, pwd);
 		redefine_export(&meta->env, pwd);
+		free(meta->oldpwd);
+		meta->oldpwd = NULL;
+		meta->oldpwd = ft_strdup(meta->pwd);
 		free(meta->pwd);
 		meta->pwd = NULL;
 		meta->pwd = ft_strdup(pwd);

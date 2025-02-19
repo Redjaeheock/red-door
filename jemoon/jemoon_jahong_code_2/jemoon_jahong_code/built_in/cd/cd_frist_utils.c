@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:07:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 14:38:20 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/18 20:26:52 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,21 @@ void	redefine_export(t_path	**exp, char *home)
 	pwd = get_env(*exp, "PWD");
 	if (find_node(*exp, "OLDPWD") == 0)
 	{
+		/*
 		add_path = make_t_path();
 		if (add_path == NULL)
 			return ;
 		set_oldpwd(add_path, "OLDPWD");
 		add_back_export_linked_list(exp, add_path);
+		*/
+		return ;
 	}
-	set_free_by_key(exp, "OLDPWD");
-	set_value_by_key(exp, "OLDPWD", pwd);
-	set_null_by_key(exp, "PWD");
-	set_value_by_key(exp, "PWD", home);
+	else
+	{
+		set_free_by_key(exp, "OLDPWD");
+		set_value_by_key(exp, "OLDPWD", pwd);
+		set_null_by_key(exp, "PWD");
+		set_value_by_key(exp, "PWD", home);
+	}
 	return ;
 }
