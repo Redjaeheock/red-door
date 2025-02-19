@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 15:47:56 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:51:48 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int		check_key(t_path **old_exp, t_path *export_add);
 int		search_equal(char *str);
 void	process_export_entry(t_data *meta, \
 	t_path *export_add, t_path *env_add, int equal);
+void	oldpwd_add(t_data *meta, t_path *export_add);
 
 /* export_rest.c */
 void	rest_export(t_data *meta, int export_len);

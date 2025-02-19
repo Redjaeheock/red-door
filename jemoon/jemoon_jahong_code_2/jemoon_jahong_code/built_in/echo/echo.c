@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:15:00 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 17:12:39 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:00:56 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	minishell_echo(t_cmd_list **exec_cmd)
 		while ((*exec_cmd)->str[i] != NULL)
 		{
 			printf("%s", (*exec_cmd)->str[i]);
+			if ((*exec_cmd)->str[i + 1] != NULL)
+				printf(" ");
 			i++;
 		}
 		return ;
@@ -57,6 +59,8 @@ void	minishell_echo(t_cmd_list **exec_cmd)
 		while ((*exec_cmd)->str[i] != NULL)
 		{
 			printf("%s", (*exec_cmd)->str[i]);
+			if ((*exec_cmd)->str[i + 1] != NULL)
+				printf(" ");
 			i++;
 		}
 		printf("\n");

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:02:43 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 10:45:50 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:52:09 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	rest_export(t_data *meta, int export_len)
 			env_add = add_export(meta->exec_cmd->str[i]);
 			if (env_add == NULL)
 				return ;
+			oldpwd_add(meta, export_add);
 			process_export_entry(meta, export_add, env_add, equal);
 		}
 		i++;
