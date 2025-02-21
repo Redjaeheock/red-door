@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/19 16:48:54 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/21 20:45:53 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,19 @@ typedef struct path_list
 	char				*set;
 }						t_path;
 
+typedef struct signal
+{
+	int		init;
+	int		heredoc;
+}				t_sig;
+
 typedef struct meta_data
 {
 	struct cmd_list		*tokens;
 	struct path_list	*exp;
 	struct path_list	*env;
+	int					heredoc;
+	int					stdin_flag;
 	char				**envm;
 	char				**path;
 	char				*exit_n;
@@ -89,6 +97,9 @@ void	*free_tmp_list(t_tmp *node);
 void	*free_sndry_arr(void **array);
 void	*free_multi_2d_arrs(void **array1, void **array2);
 
+/* unlink_files.c */
+void	unlink_files(t_list	*tokens);
+
 /*error_process*/
 int		error_syntax(char *str);
 void	error_qoute(int qoute);
@@ -98,9 +109,18 @@ void	*t_list_alloc_err(t_list *tmp);
 void	*sndry_alloc_err(void **arr);
 void	*t_data_alloc_err(t_data *meta);
 void	*t_tmp_alloc_err(t_tmp *node);
+void	wranning_msg(char *eof);
 
 /* initialize_meta_token.c*/
 t_data	*initialize_meta_token(char **envp);
+
+/* signal_process.c */
+void	handle_heredoc(int signum, sigset_t *preset);
+void	handle_rollback(int signum, sigset_t *preset);
+void	set_up_signal(t_data *meta);
+
+/* here_doc */
+int		here_doc(t_data *meta, t_list *tokens);
 
 /* linked_list.c */
 t_list	*create_linked_list(char *str);
@@ -126,7 +146,7 @@ char	*ft_strdup(const char *s);
 int		sndry_arr_len(void **array);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
-char	*ft_atoi(const char* nptr);
+char	*ft_atoi(const char *nptr);
 char	*ft_strjoin_v2(const char *s1, const char *s2);
 char	*ft_str_head_str(const char *big, const char *little);
 char	*ft_str_tail_str(const char *big, const char *little);
@@ -288,13 +308,5 @@ char	**mapping_pattern_filename(char *path, char **f_list);
 /* othoer_functions.c*/
 int		count_only_single_chr_value_in_2d_arr(char **str, int row, char c);
 int		is_token_all_null_after_join(t_tmp *tmp);
-
-/* signal_process.c */
-void	handle_heredoc(int signum, sigset_t *preset);
-void	handle_rollback(int signum, sigset_t *preset);
-void	set_up_signal();
-
-/* here_doc */
-int		here_doc(t_list	*tokens);
 
 #endif

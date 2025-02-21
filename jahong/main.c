@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/19 20:12:36 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/21 20:44:27 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,18 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*meta;
 	t_list	*tmp; // 출력확인용
 	int	row;
+	int	fd;
 
 	meta = initialize_meta_token(envp);
 	while(1)
 	{
+		// if (meta->stdin_flag == -1)
+		// {
+			
+		// 	fd = open("/dev/tty", O_RDONLY);
+		// 	dup2(fd, 0);
+		// 	//close(fd);
+		// }
 		str = readline("bash : ");
 		if (str == NULL)
 			break ;
@@ -143,20 +151,16 @@ int	main(int argc, char **argv, char **envp)
 			tmp = tmp->next;
 		}
 		//play(meta);
-		if (ft_strcmp(meta->tokens->token, "<<") == 0)
+		tmp = meta->tokens;
+		if (ft_strcmp(tmp->token, "<<") == 0)
 		{
-			if (here_doc(meta->tokens->next) == 0)
+			meta->heredoc = 1;
+			if (here_doc(meta, tmp->next) == 0)
 			{
-				unlink(meta->tokens->next->f_list[0]);
-				meta->tokens = free_t_list(meta->tokens);
+				if (meta->stdin_flag == -1)
+					unlink_files(meta->tokens);
 			}
-			else
-			{
-				printf("sucess create file\n");
-				if (unlink(meta->tokens->next->f_list[0]) == -1)
-					printf("do nut remove file\n");
-				meta->tokens = free_t_list(meta->tokens);
-			}
+			meta->heredoc = 0;
 		}
 		meta->tokens = free_t_list(meta->tokens);
 //		add_history(str);

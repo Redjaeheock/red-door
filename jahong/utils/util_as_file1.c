@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:12:51 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:50:25 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/19 21:46:57 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ int	count_file_in_directory(char *path)
 		entry = readdir(dir);
 	}
 	closedir(dir);
+	// .. 과 . 으로 파일을 찾을 때 코드 추가 필요
 	return (cnt);
 }

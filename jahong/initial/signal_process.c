@@ -6,33 +6,57 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:23:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/19 20:15:08 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/21 20:39:19 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_heredoc(int signum, sigset_t *preset)
+void	flag_check(int signum, siginfo_t *tmp, void *info)
 {
-	sigset_t tmp;
+	static t_data	*meta;
 
-	sigemptyset(&tmp);
-	// sigaddset(&tmp, SIGINT);
-	sigprocmask(SIG_UNBLOCK, &tmp, preset);
+	write(0, tmp, 0);
+	if (meta == NULL)
+	{
+		meta = (t_data *)info;
+		return ;
+	}
+	else
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		if (meta->heredoc != 1)
+			rl_redisplay();
+		else
+		{
+			close(STDIN_FILENO);
+			meta->stdin_flag = -1;
+		}
+	}
 }
 
-void	handle_rollback(int signum, sigset_t *preset)
+void	set_up_signal(t_data *meta)
 {
-	sigprocmask(SIG_SETMASK, preset, NULL);
-}
+	struct sigaction	sig;
+	static int			init;
 
-void	set_up_signal(void)
-{
-	struct sigaction sig;
-
-	sig.sa_handler = SIG_IGN;
-	sig.sa_flags = 0;
-	sigemptyset(&sig.sa_mask);
-	sigaction(SIGINT, &sig, NULL);
-	sigaction(SIGQUIT, &sig, NULL);
+	if (init == 0)
+	{
+		flag_check(0, NULL, meta);
+		sigemptyset(&sig.sa_mask);
+		sig.sa_flags = SA_SIGINFO;
+		sig.sa_sigaction = flag_check;
+		signal(SIGQUIT, SIG_IGN);
+		sigaction(SIGINT, &sig, NULL);
+		init = 1;
+	}
+	else
+	{
+		sigemptyset(&sig.sa_mask);
+		sig.sa_flags = SA_SIGINFO;
+		sig.sa_sigaction = flag_check;
+		sigaction(SIGINT, &sig, NULL);
+	}
 }

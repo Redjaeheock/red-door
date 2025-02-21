@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/19 20:12:35 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/21 20:38:30 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ char	**copy_envp(char **envp)
 
 void	meta_token_init_memvar(t_data *meta)
 {
+	meta->heredoc = 0;
+	meta->stdin_flag = 0;
 	meta->tokens = NULL;
 	meta->exp = NULL;
 	meta->env = NULL;
@@ -90,7 +92,6 @@ t_data	*initialize_meta_token(char **envp)
 {
 	t_data	*meta;
 
-	set_up_signal();
 	meta = (t_data *)malloc(sizeof(t_data) * 1);
 	if (meta == NULL)
 		return ((memory_alloc_error(), NULL));
@@ -107,5 +108,6 @@ t_data	*initialize_meta_token(char **envp)
 	meta->path = extract_path(meta->env);
 	if (meta->path == NULL)
 		return (free_meta_token(meta));
+	set_up_signal(meta);
 	return (meta);
 }
