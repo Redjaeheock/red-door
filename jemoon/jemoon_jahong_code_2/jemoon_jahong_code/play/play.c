@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:34:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/21 17:40:33 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/22 15:18:58 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	rutin_free(t_data *meta, char *str)
 {
 	if (meta->exec_cmd)
 	{
+		printf_exec_commads(meta->exec_cmd);
 		free_exec_linked_list(meta->exec_cmd);
 		meta->exec_cmd = NULL;
 	}

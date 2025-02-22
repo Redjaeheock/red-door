@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 10:58:16 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/21 18:39:32 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/22 15:47:50 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_list **tokens, char **str)
 		if (meta->exec_cmd == NULL)
 			return (0);
 		normalize_cmd(meta);
-		printf_exec_commads(meta->exec_cmd);
 		exec_cmd_set_tpye(&meta->exec_cmd);
 	}
 	return (0);
