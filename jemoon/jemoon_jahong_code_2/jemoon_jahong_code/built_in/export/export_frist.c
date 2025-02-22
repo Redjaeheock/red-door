@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:02:43 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 17:54:42 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/21 11:21:21 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@
 void	frist_export(t_data *meta)
 {
 	t_path	*temp;
+	int		equal;
 
 	sort_export(&meta->exp);
 	temp = meta->exp;
 	while (temp != NULL)
 	{
-		printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
+		equal = search_equal(temp->set);
+		if (equal == 0)
+			printf("declare -x %s\n", temp->set);
+		else
+			printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
 		temp = temp->next;
 	}
 }

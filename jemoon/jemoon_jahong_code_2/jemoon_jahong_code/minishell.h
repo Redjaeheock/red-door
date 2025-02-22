@@ -6,12 +6,14 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/18 13:52:47 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/21 18:39:30 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define _POSIX_C_SOURCE 200809L
 
 # include <readline/readline.h>    /* readline 함수를 사용하기위한 헤더 */
 # include <readline/history.h>     /* add_history 함수를 사용하기위한 헤더 */
@@ -20,10 +22,15 @@
 # include <dirent.h>               /* opendir, readdir, closedir 함수를 사용하기 위한 헤더*/
 # include <string.h>
 # include <unistd.h>
+# include <fcntl.h>
+# include <signal.h>
 
 typedef enum tokentype
 {
 	NONE = 0,
+	CMD,
+	OPTION,
+	ARG,
 	AND,
 	OR,
 	PIPE,
@@ -31,10 +38,7 @@ typedef enum tokentype
 	IN_REDEC,
 	OUT_REDEC,
 	GR_REDEC,
-	HEREDOC,
-	CMD,
-	OPTION,
-	ARG
+	HEREDOC
 }	t_tokentype;
 
 typedef struct temp_list
@@ -147,6 +151,7 @@ char	**ft_add_2d_arr_to_str(char *str, char **arr);
 int		ft_strncmp(char *s1, const char *s2, unsigned int n);
 void	ft_sort_2d_arr(char **str);
 char	**ft_merge_2d_arr(char **arr1, char **arr2);
+void	ft_putstr_fd(char *s, int fd);
 
 /* main.c */
 int		check_operator_v1(const char *str, int index);
@@ -305,5 +310,11 @@ t_path	*make_t_path(void);
 t_data	*initialize_meta_token(char **envp);
 int		mn_split(t_data *meta, char **str, char c);
 void	free_exec_linked_list(t_cmd_list *list);
+int		here_doc(t_list	*tokens);
+int		play(t_data *meta);
+int		rutin_free(t_data *meta, char *str);
+void	add_history_and_free(char **str);
+void	normalize_cmd(t_data *meta);
+
 
 #endif

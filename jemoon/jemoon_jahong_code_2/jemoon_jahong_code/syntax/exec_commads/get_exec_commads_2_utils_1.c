@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 11:01:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 17:09:06 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/21 14:53:33 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,7 @@ void	fill_string_array_2(char **string_array, t_list **tokens, int cmd_size, \
 
 	i = 0;
 	if (redefine_size != 0)
-	{
-		while (i < redefine_size)
-		{
-			get_commads_key_to_token(string_array, tokens, &i, redefine_size);
-			*tokens = (*tokens)->next;
-		}
-		string_array[i] = NULL;
-	}
+		get_key_to_toke(string_array, tokens, &i, redefine_size);
 	else
 	{
 		while (i < cmd_size)

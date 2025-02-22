@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:15:00 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 20:12:26 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/21 12:06:13 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ void	minishell_echo(t_cmd_list **exec_cmd)
 {
 	int	i;
 
-	i = 0;
-	if (check_built_in_cmd("echo", (*exec_cmd)->str[i++]) == 0)
-		return ;
+	i = 1;
 	if (check_option_n((*exec_cmd)->str[i]) == 1)
 	{
 		i++;

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 10:58:16 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 16:23:26 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/21 18:39:32 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,7 @@ int	trade_exec_cmd(t_data *meta, t_cmd_list **exec_cmd, \
 t_list **tokens, char **str)
 {
 	tpye_init(tokens);
-//	printf_tokens(*tokens);
-/*
-	while (meta->tokens)
-		if (meta->tokens->type == HEREDOC)
-
-			if heredoc(meta->tokens) == NULL
-			{
-				meta->tokens = free_t_list(meta->tokens);
-				return (-1)
-			}
-*/
+	set_here_doc(tokens);
 	if (validate_bash_syntax(exec_cmd, tokens) == -1)
 	{
 		meta->exec_cmd = NULL;
@@ -46,6 +36,8 @@ t_list **tokens, char **str)
 		}
 		if (meta->exec_cmd == NULL)
 			return (0);
+		normalize_cmd(meta);
+		printf_exec_commads(meta->exec_cmd);
 		exec_cmd_set_tpye(&meta->exec_cmd);
 	}
 	return (0);

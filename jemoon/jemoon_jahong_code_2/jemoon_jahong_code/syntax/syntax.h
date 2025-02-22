@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:38:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 16:12:57 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/21 14:52:24 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,10 @@ char		*ft_strjoin_front_slash(char *s1, char *s2);
 int			redefine_cmd_size(t_list *tokens, int cmd_size);
 void		get_commads_key_to_token(char **string_array, t_list **tokens, \
 			int *i, int redifine_size);
+void		get_key_to_toke(char **string_array, t_list **tokens, \
+			int *i, int redifine_size);
 void		fill_string_array_2(char **string_array, t_list **tokens, \
 			int cmd_size, int redefine_size);
+void		set_here_doc(t_list **tokens);
+
 #endif

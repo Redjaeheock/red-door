@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve_test.c                                      :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 11:41:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 21:17:59 by jemoon           ###   ########.fr       */
+/*   Created: 2024/02/29 19:17:07 by jahong            #+#    #+#             */
+/*   Updated: 2025/02/20 15:51:15 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "../minishell.h"
+#include <fcntl.h>
 
-int	main(int ac, char **av, char **envp)
+void	ft_putstr_fd(char *s, int fd)
 {
-	char	*str;
-	char	**arr;
-
-	arr = (char **)malloc(sizeof(char *) * 2);
-	arr[0] = "pwd";
-	arr[1] = NULL;
-	if (execve("/bin/pwd", arr, envp) == -1)
-		printf("bash %s command not found\n", arr[0]);
-	return (0);
+	if (s == NULL)
+		return ;
+	write(fd, s, ft_strlen(s));
 }

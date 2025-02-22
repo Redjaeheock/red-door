@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 10:33:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 13:53:27 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/19 20:56:28 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ char	*add_readline(t_cmd_list **exec_cmd, t_data *meta, char *str)
 			return (make_str(str, add_str));
 		str = make_str(str, add_str);
 		tpye_init(&meta->tokens);
+		set_here_doc(&meta->tokens);
 		validate_bash_syntax(&add_exec_cmd, &meta->tokens);
 		meta->tokens = free_t_list(meta->tokens);
 		if (add_exec_cmd == NULL)

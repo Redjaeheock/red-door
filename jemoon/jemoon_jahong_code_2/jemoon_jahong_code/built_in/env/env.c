@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:47:07 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 10:54:24 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/21 12:06:25 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	minishell_env(t_data *meta)
 	t_path	*tmp;
 	int		export_len;
 
-	if (ft_strcmp(meta->exec_cmd->str[0], "env") != 0)
-		return ;
 	export_len = char_arr_len(meta->exec_cmd->str);
 	if (export_len > 1)
 	{

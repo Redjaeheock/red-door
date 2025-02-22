@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 16:34:28 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/21 15:10:00 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	validate_bash_syntax(t_cmd_list **exec_cmd, t_list **tokens)
 	*exec_cmd = NULL;
 	while (*tokens != NULL)
 	{
-		//printf("type = [%d] \n", (*tokens)->type);
 		if (check_is_valid(tokens, count_cmd_line) == 0)
 		{
 			error_syntax((*tokens)->token);

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 11:01:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 15:45:33 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/21 14:53:51 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,15 @@ void	get_commads_key_to_token(char **string_array, t_list **tokens, \
 		j++;
 	}
 	free_sndry_arr((void **)str);
+}
+
+void	get_key_to_toke(char **string_array, t_list **tokens, \
+		int *i, int redifine_size)
+{
+	while (*i < redifine_size)
+	{
+		get_commads_key_to_token(string_array, tokens, i, redifine_size);
+		*tokens = (*tokens)->next;
+	}
+	string_array[*i] = NULL;
 }
