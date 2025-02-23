@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 10:58:16 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/22 18:49:52 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/23 11:44:48 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ t_list **tokens, char **str)
 		normalize_cmd(meta);
 		exec_cmd_set_tpye(&meta->exec_cmd);
 		operator_str_free(meta);
-		}
+	}
 	return (0);
 }

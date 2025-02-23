@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/22 17:50:49 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/23 11:51:06 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*meta;
 	int		i;
 
-	signal(SIGINT, SIG_IGN);
 	(void)argc, (void)argv;
 	meta = initialize_meta_token(envp);
 	while (1)
