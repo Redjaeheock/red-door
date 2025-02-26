@@ -6,11 +6,16 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/22 18:21:52 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/26 11:47:41 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "syntax/syntax.h"
+#include "built_in/built_in.h"
+#include <signal.h>
+
+int	g_ws = 0;
 
 t_list	*split_words(char const *str, char c)
 {
@@ -112,53 +117,41 @@ int	mn_split(t_data *meta, char **str, char c)
 	return (1);
 }
 
+void	add_history_and_free(char **str)
+{
+	if (*str == NULL)
+		return ;
+	add_history(*str);
+	free(*str);
+	*str = NULL;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_data	*meta;
-	t_list	*tmp; // 출력확인용
-	int	row;
-	int	fd;
+	int		i;
 
+	//signal(SIGINT, SIG_IGN);
+	(void)argc, (void)argv;
 	meta = initialize_meta_token(envp);
-	while(1)
+	meta->ppid = get_ppid(meta);
+	while (1)
 	{
 		str = readline("bash : ");
 		if (str == NULL)
 			break ;
-		if (mn_split(meta, &str, 'c') < 1)
+		i = mn_split(meta, &str, 'c');
+		if (i < 1)
+		{
+			if (i == -1)
+				add_history_and_free(&str);
 			continue ;
-		tmp = meta->tokens;
-		while (tmp != NULL) // 확인용
-		{
-			row = 0;
-			printf("final check key = %s\n", tmp->key);
-			printf("final check token = %s\n", tmp->token);
-			if (tmp->f_list == NULL)
-				printf("final check f_list = (NULL)\n");
-			while (tmp->f_list != NULL && tmp->f_list[row] != NULL)
-			{
-				printf("final check filelist[%d] = %s\n", row, tmp->f_list[row]);
-				row++;
-			}
-			tmp = tmp->next;
 		}
-		tmp = meta->tokens;
-		if (ft_strcmp(tmp->token, "<<") == 0)
-		{
-			meta->heredoc = 1;
-			if (here_doc(meta, tmp->next) == 0)
-			{
-				if (meta->stdin_flag == -1)
-					unlink_files(meta->tokens);
-			}
-			meta->heredoc = 0;
-		}
-		meta->tokens = free_t_list(meta->tokens);
-		play(meta);
-//		add_history(str);
-		free(str);
-		// printf("\n");
+		if (trade_exec_cmd(meta, &meta->exec_cmd, &meta->tokens, &str) < 0)
+			break ;
+		run(meta);
+		rutin_free(meta, str);
 	}
 	free_meta_token(meta);
 	return (0);
