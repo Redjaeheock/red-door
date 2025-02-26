@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 17:04:59 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/24 17:15:13 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_tokentype plag_pipe, t_tokentype plag_redi)
 		return (NULL);
 	new->str = str;
 	new->key = NULL;
+	new->f_list = NULL;
 	if (AND <= plag_pipe && plag_pipe <= PIPE)
 		new->type_pipe = plag_pipe;
 	else

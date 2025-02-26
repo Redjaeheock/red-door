@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/23 11:51:06 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/25 14:08:39 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ int	mn_split(t_data *meta, char **str, char c)
 		return ((free(*str), -1));
 	if (substitute_tokens(meta, tokens, c) == 0)
 		return ((free(*str), free_t_list(tokens), 0));
-	meta->tokens = tokens;
+	if (meta->tokens == NULL)
+		meta->tokens = tokens;
+	else
+		add_back_linked_list(meta->tokens, tokens);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:04:54 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/23 18:52:45 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/25 12:24:51 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,3 @@ void	cd_rest(t_data *meta, char *str)
 		check_chdir_error(dir);
 	free(dir);
 }
-

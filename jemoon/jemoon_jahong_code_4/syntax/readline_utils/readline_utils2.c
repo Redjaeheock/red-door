@@ -1,37 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_bash_syntax.c                             :+:      :+:    :+:   */
+/*   readline_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/24 15:25:49 by jemoon           ###   ########.fr       */
+/*   Created: 2025/01/17 10:33:38 by jemoon            #+#    #+#             */
+/*   Updated: 2025/02/25 17:04:57 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 #include "../syntax.h"
 
-int	validate_bash_syntax(t_list **tokens)
+char	*add_readline_signal(t_data *meta, char *str)
 {
-	int		count_cmd_line;
-	t_list	*tmp;
-
-	tmp = *tokens;
-	count_cmd_line = 0;
-	//*exec_cmd = NULL;
-	while (*tokens != NULL)
+	if (meta->stdin_flag == -1)
 	{
-		if (check_is_valid(tokens, count_cmd_line) == 0)
-		{
-			error_syntax((*tokens)->token);
-			*tokens = tmp;
-			return (-1);
-		}
-		count_cmd_line++;
+		meta->heredoc = 0;
+		reset_stdin_fileno(meta);
+		return (str);
 	}
-	*tokens = tmp;
-	//get_exec_cmd_2(*tokens, exec_cmd);
-	return (0);
+	else
+	{
+		wranning_msg("abc");
+		free(str);
+		str = NULL;
+		return (NULL);
+	}
+}
+
+void	add_readline_trade_exec_cmd(t_data *meta, t_list *tmp, char *str)
+{
+	tpye_init(&meta->tokens);
+	set_here_doc(meta, tmp);
+	meta->heredoc = 0;
 }

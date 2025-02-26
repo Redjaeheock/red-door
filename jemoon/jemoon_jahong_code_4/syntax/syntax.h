@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:38:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/22 18:48:02 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:59:44 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,11 @@ void		printf_tokens(t_list *tokens);
 /* readline_utils */
 /* readline_utils.c */
 char		*handle_error(t_cmd_list **exec_cmd, char *str);
-int			check_last_tokens(t_cmd_list *exec_cmd);
+//int			check_last_tokens(t_cmd_list *exec_cmd);
+int			check_last_tokens(t_list *exec_cmd);
 void		combine_strings(char *return_str, char *str, char *add_str);
 char		*make_str(char *str, char *add_str);
-char		*add_readline(t_cmd_list **exec_cmd, t_data *meta, char *str);
+char		*add_readline(t_data *meta, char *str);
 
 /* set_tpye */
 /* set_tpye.c*/
@@ -118,7 +119,7 @@ int			rest_check_is_valid(t_list **tokens);
 int			check_is_valid(t_list **tokens, int count_cmd_line);
 
 /* validate_bash_syntax.c*/
-int			validate_bash_syntax(t_cmd_list **exec_cmd, t_list **tokens);
+int			validate_bash_syntax(t_list **tokens);
 
 /* jemoon_libft */
 char		*ft_strjoin(char *s1, char *s2);
@@ -132,7 +133,10 @@ void		get_key_to_toke(char **string_array, t_list **tokens, \
 			int *i, int redifine_size);
 void		fill_string_array_2(char **string_array, t_list **tokens, \
 			int cmd_size, int redefine_size);
-void		set_here_doc(t_data *meta);
+void		set_here_doc(t_data *meta, t_list *tmp);
 void		operator_str_free(t_data *meta);
+char		*add_readline_signal(t_data *meta, char *str);
+void		add_readline_trade_exec_cmd(t_data *meta, t_list *tmp, char *str);
+
 
 #endif

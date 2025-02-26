@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/23 18:29:21 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/24 17:29:53 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct start_list
 	struct start_list	*next;
 	t_tokentype			type_pipe;
 	t_tokentype			type_re;
+	char				**f_list;
 	char				*key;
 	char				**str;
 }	t_cmd_list;
@@ -330,6 +331,7 @@ int		play(t_data *meta);
 int		rutin_free(t_data *meta, char *str);
 void	add_history_and_free(char **str);
 void	normalize_cmd(t_data *meta);
+void	reset_stdin_fileno(t_data *meta);
 
 
 #endif

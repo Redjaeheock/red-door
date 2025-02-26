@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/10 11:42:20 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/24 14:04:10 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	get_exec_cmd_2(t_list *tokens, t_cmd_list **exec_cmd)
 	char		**string_array;
 
 	check_redi = 0;
+	*exec_cmd = NULL;
 	while (tokens)
 	{
 		plag_pipe = NONE;
@@ -36,7 +37,7 @@ void	get_exec_cmd_2(t_list *tokens, t_cmd_list **exec_cmd)
 		string_array = set_string_array_2(&tokens, cmd_size);
 		if (string_array == NULL)
 			return ;
-		exec_make_node_2(&(*exec_cmd), string_array, \
+		exec_make_node_2(exec_cmd, string_array, \
 		plag_pipe, plag_redi);
 	}
 }

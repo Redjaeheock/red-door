@@ -119,4 +119,4 @@ fclean: clean
 
 re: fclean all
 
-rec: all clean
+rec: fclean all clean

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/22 17:27:15 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:18:08 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	meta_token_init_memvar(t_data *meta)
 	meta->heredoc = 0;
 	meta->stdin_flag = 0;
 	meta->tokens = NULL;
+	meta->exec_cmd = NULL;
 	meta->exp = NULL;
 	meta->env = NULL;
 	meta->envm = NULL;
