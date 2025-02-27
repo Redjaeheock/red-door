@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/24 17:29:53 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/26 20:11:06 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,9 @@ void	wranning_msg(char *eof);
 
 /* initialize_meta_token.c*/
 t_data	*initialize_meta_token(char **envp);
+
+/* initialize_disoable.c */
+char	*initialize_oldpwd(t_path *tmp);
 
 /* signal_process.c */
 void	handle_heredoc(int signum, sigset_t *preset);
