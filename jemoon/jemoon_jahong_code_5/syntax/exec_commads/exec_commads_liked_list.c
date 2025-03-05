@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/24 17:15:13 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/28 14:46:02 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	free_exec_linked_list(t_cmd_list *list)
 		if (temp->str != NULL)
 			free_double_string_array(temp->str);
 		free(temp);
+		temp = NULL;
 	}
 	list = NULL;
 }
@@ -53,17 +54,12 @@ t_tokentype plag_pipe, t_tokentype plag_redi)
 	new = (t_cmd_list *)malloc(sizeof(t_cmd_list));
 	if (new == NULL)
 		return (NULL);
-	new->str = str;
+	new->str = NULL;
 	new->key = NULL;
 	new->f_list = NULL;
-	if (AND <= plag_pipe && plag_pipe <= PIPE)
-		new->type_pipe = plag_pipe;
-	else
-		new->type_pipe = NONE;
-	if (REDIRECTION <= plag_redi && plag_redi <= HEREDOC)
-		new->type_re = plag_redi;
-	else
-		new->type_re = NONE;
+	new->token_cmd = CMD;
+	new->type_pipe = NONE;
+	new->type_re = NONE;
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);

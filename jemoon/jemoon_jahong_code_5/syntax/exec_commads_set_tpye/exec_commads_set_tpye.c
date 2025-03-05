@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 20:41:02 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 19:58:00 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/28 15:18:27 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,46 +41,25 @@ int	check_pipe(t_cmd_list	*exec_cmd)
 	return (0);
 }
 
-void	exec_cmd_set_tpye(t_cmd_list **exec_cmd)
+void	exec_cmd_set_tpye(t_data *meta)
 {
 	t_cmd_list	*tmp;
 
-	tmp = *exec_cmd;
-	while (*exec_cmd)
+	tmp = meta->exec_cmd;
+	while (tmp)
 	{
-		if (check_next(*exec_cmd) && check_pipe((*exec_cmd)->next))
+		if (check_pipe(tmp))
 		{
-			(*exec_cmd)->type_pipe = (*exec_cmd)->next->type_pipe;
-			if (check_next((*exec_cmd)->next) && \
-			check_redi((*exec_cmd)->next->next))
-				(*exec_cmd)->type_re = (*exec_cmd)->next->next->type_re;
+			if (check_prev(tmp))
+				tmp->prev->type_pipe = tmp->type_pipe;
+			tmp->token_cmd = NONE;
 		}
-		else if (check_next(*exec_cmd) && check_redi((*exec_cmd)->next))
-			(*exec_cmd)->type_re = (*exec_cmd)->next->type_re;
-		*exec_cmd = (*exec_cmd)->next;
+		else if (check_redi(tmp))
+		{
+			tmp->token_cmd = NONE;
+			if (check_next(tmp))
+				tmp->next->token_cmd = NONE;
+		}
+		tmp = tmp->next;
 	}
-	*exec_cmd = tmp;
 }
-
-/*
-void	exec_cmd_set_tpye(t_cmd_list **exec_cmd)
-{
-	t_cmd_list	*tmp;
-	tmp = *exec_cmd;
-
-	while (*exec_cmd)
-	{
-		if ((*exec_cmd)->next != NULL && \
-		(REDIRECTION <= (*exec_cmd)->type_re && \
-		(*exec_cmd)->type_re <= HEREDOC))
-			(*exec_cmd)->next->type_re = (*exec_cmd)->type_re;
-		if ((*exec_cmd)->prev != NULL && \
-		(AND <= (*exec_cmd)->type_pipe && \
-		(*exec_cmd)->type_pipe <= PIPE))
-			(*exec_cmd)->prev->type_pipe = (*exec_cmd)->type_pipe;
-		*exec_cmd = (*exec_cmd)->next;
-	}
-	*exec_cmd = tmp;
-	return ;
-}
-*/

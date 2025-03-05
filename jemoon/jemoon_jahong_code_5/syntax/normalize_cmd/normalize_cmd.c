@@ -6,12 +6,28 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 10:58:16 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/26 19:58:27 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/28 17:09:59 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 #include "../syntax.h"
+
+t_cmd_list	*cmd_temp_searching_front_pipe(t_cmd_list *temp)
+{
+	while (temp != NULL)
+	{
+		if (temp->type_pipe != NONE)
+			return (NULL);
+		if (temp->type_pipe == NONE && temp->type_re == NONE && \
+			(!temp->prev || temp->prev->type_re == NONE))
+		{
+			return (temp);
+		}
+		temp = temp->next;
+	}
+	return (NULL);
+}
 
 t_cmd_list	*cmd_temp_searching(t_cmd_list *temp)
 {
@@ -35,17 +51,20 @@ t_cmd_list	*get_cmd_node(t_cmd_list **check_temp)
 
 	front_temp = NULL;
 	next_temp = NULL;
-	return_temp = cmd_temp_searching(*check_temp);
+	return_temp = cmd_temp_searching_front_pipe(*check_temp);
 	if (return_temp == NULL)
 		return (NULL);
-	if (return_temp->next != NULL)
-		*check_temp = return_temp->next;
 	if (return_temp->prev != NULL)
 		front_temp = return_temp->prev;
 	if (return_temp->next != NULL)
+	{
+		*check_temp = return_temp->next;
 		next_temp = return_temp->next;
+	}
 	return_temp->next = NULL;
+	return_temp->prev = NULL;
 	front_temp->next = next_temp;
+	next_temp->prev = front_temp;
 	return (return_temp);
 }
 

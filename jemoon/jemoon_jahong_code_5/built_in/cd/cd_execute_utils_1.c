@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_frist_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:07:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/24 16:10:21 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/05 16:03:16 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ int	set_oldpwd(t_path *temp, char *str)
 	return (0);
 }
 
-void	redefine_export(t_path	**exp, char *home)
+void	redefine_export(t_data *meta, t_path **exp, char *home)
 {
 	char	*pwd;
 	t_path	*add_path;
 
-	pwd = get_env(*exp, "PWD");
+	pwd = ft_strdup(meta->pwd);
 	if (pwd == NULL)
 		return ;
 	if (find_node(*exp, "OLDPWD") == 0)

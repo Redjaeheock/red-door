@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/27 16:45:26 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/28 17:13:12 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef enum tokentype
 	IN_REDEC,
 	OUT_REDEC,
 	GR_REDEC,
-	HEREDOC
+	HEREDOC,
 }	t_tokentype;
 
 typedef struct temp_list
@@ -67,8 +67,10 @@ typedef struct start_list
 {
 	struct start_list	*prev;
 	struct start_list	*next;
+	struct redi_list	*redi_list;
 	t_tokentype			type_pipe;
 	t_tokentype			type_re;
+	t_tokentype			token_cmd;
 	char				**f_list;
 	char				*key;
 	char				**str;
@@ -101,6 +103,12 @@ typedef struct meta_data
 	int					pids;
 	int					ppid;
 }						t_data;
+
+typedef struct redi_list
+{
+	struct redi_list	*prev;
+	char				*str;
+}						t_redi;
 
 /* free_list.c*/
 void	*free_t_path(t_path *lsit);

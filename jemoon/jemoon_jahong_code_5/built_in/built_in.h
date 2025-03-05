@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/25 17:05:23 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:19:21 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int		set_null_by_key(t_path **exp, char *key);
 int		set_value_by_key(t_path **exp, char *key, char *value);
 int		set_free_by_key(t_path **exp, char *key);
 int		set_oldpwd(t_path *temp, char *str);
-void	redefine_export(t_path	**exp, char *home);
+void	redefine_export(t_data *meta, t_path **exp, char *home);
 
-/* cd_frist.c */
-void	cd_home(t_data *meta);
+/* cd_execute.c */
+void	cd_execute(t_data *meta, char *str);
 
 /* cd_rest_absolute.c */
 int		is_absolute_path(char *dir);
@@ -40,9 +40,6 @@ int		is_current_dir(char *str);
 int		is_parent_dir(char *str);
 char	*redefine_pwd(t_data *meta, char *dir);
 char	*set_dir(t_data *meta, char *str);
-
-/* cd_rest.c */
-void	cd_rest(t_data *meta, char *str);
 
 /* cd_utils_path.c */
 int		count_slash(char *str, char c);
@@ -59,10 +56,6 @@ int		find_node(t_path *env, char *key);
 
 /* cd.c */
 void	minishell_cd(t_data *meta, t_cmd_list *exec_cmd);
-
-/* check_built_in_cmd */
-/* check_built_in_cmd.c */
-// int		check_built_in_cmd(char *cmd, char *exec_cmd);
 
 /* echo */
 /* echo.c */

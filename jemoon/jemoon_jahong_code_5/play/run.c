@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:34:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/27 16:46:34 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/27 19:56:11 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	set_fd(t_cmd_list *cmd)
 	{
 		fd = open(cmd->next->str[0], O_RDONLY);
 		if (fd == -1)
-			return ; // 처리 코드 작성
+			return ; // 처리 코드 작성W
 		dup2(fd, 0);
-		// close(fd);
+		close(fd);
 	}
 	else if (cmd->type_re == OUT_REDEC)
 	{
@@ -40,7 +40,7 @@ void	set_fd(t_cmd_list *cmd)
 		if (fd == -1)
 			return ;
 		dup2(fd, 1);
-		// close(fd);	
+		// close(fd);
 	}
 }
 
@@ -76,7 +76,7 @@ int	run(t_data *meta)
 				}
 			}
 			if (compare_builtin_list(meta, temp) == 1)
-                pid = builtin(meta, temp);
+				pid = builtin(meta, temp);
 			if (compare_builtin_list(meta, temp) != 1)
 			{
 				printf("temp str[0] = %s\n", temp->str[0]);
