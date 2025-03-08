@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 11:01:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 15:48:13 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:37:36 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,37 +66,3 @@ void	make_back_path(char *pwd, char *back_path, int len)
 	}
 	back_path[i] = '\0';
 }
-
-/*
-int	count_back_path_len(char *str, int slash_len)
-{
-	int	i;
-	int	j;
-	int	str_len;
-	int	count_slash;
-
-	i = 0;
-	j = 0;
-	str_len = ft_strlen(str);
-	count_slash = 0;
-	while (i + j < str_len)
-	{
-		if (str[i + j] == '/')
-		{
-			count_slash++;
-			i++;
-			while (str[i + j] == '/')
-				j++;
-			if (slash_len == count_slash)
-			{
-				if (i == 0)
-					i++;
-				return (i);
-			}
-		}
-		else
-			i++;
-	}
-	return (i);
-}
-*/

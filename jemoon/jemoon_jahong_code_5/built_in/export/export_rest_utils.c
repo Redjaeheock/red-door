@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 20:00:29 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:50:11 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,6 @@ int	check_key(t_path **old_exp, t_path *export_add)
 		}
 		prev = temp;
 		temp = temp->next;
-	}
-	return (0);
-}
-
-int	search_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '=')
-			return (i);
-		i++;
 	}
 	return (0);
 }

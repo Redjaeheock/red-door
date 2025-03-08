@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:02:43 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 19:25:01 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:49:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	rest_export(t_data *meta, int export_len)
 	i = 1;
 	while (i < export_len)
 	{
-		equal = search_equal(meta->exec_cmd->str[i]);
+		equal = search_chr_in_str(meta->exec_cmd->str[i], '=');
 		if (search_special_characters(meta->exec_cmd->str[i], equal) == 1)
 		{
 			export_add = add_export(meta->exec_cmd->str[i]);

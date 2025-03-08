@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/28 17:13:12 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/08 15:04:28 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct start_list
 	struct redi_list	*redi_list;
 	t_tokentype			type_pipe;
 	t_tokentype			type_re;
-	t_tokentype			token_cmd;
+	t_tokentype			type_cmd;
 	char				**f_list;
 	char				*key;
 	char				**str;
@@ -269,7 +269,7 @@ int		remove_quote_tokens(t_list *node);
 
 /* utils.c*/
 char	check_chr_not_quote_set(char *str, char c);
-char	search_chr_in_str(char *str, char c);
+int		search_chr_in_str(char *str, char c);
 char	are_all_characters_same(char *str, char c);
 char	*get_exit_no(void);
 char	**modify_least_matched_pattern(char **f_list, char *memo);

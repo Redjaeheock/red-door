@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:17:50 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:48:25 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:46:50 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	check_chr_not_quote_set(char *str, char c)
 	return (0);
 }
 
-char	search_chr_in_str(char *str, char c)
+int	search_chr_in_str(char *str, char c)
 {
 	int	idx;
 	int	flag;

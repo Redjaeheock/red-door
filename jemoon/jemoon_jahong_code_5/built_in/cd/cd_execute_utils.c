@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_rest_utils.c                                    :+:      :+:    :+:   */
+/*   cd_execute_utils_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:00:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 16:32:04 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:47:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,6 @@ int	is_parent_dir(char *str)
 	return (0);
 }
 
-char	*redefine_pwd(t_data *meta, char *dir)
-{
-	char	*pwd;
-	char	**sp_dir;
-
-	sp_dir = ft_split(dir, '/');
-	if (sp_dir == NULL)
-		return (NULL);
-	if (is_absolute_path(dir) == 1)
-		pwd = get_absolute_path(sp_dir);
-	else
-		pwd = get_relative_path(meta, sp_dir);
-	free_double_string_array(sp_dir);
-	return (pwd);
-}
-
 char	*set_dir(t_data *meta, char *str)
 {
 	char	*dir;
@@ -90,4 +74,25 @@ char	*set_dir(t_data *meta, char *str)
 	}
 	else
 		return (ft_strdup(str));
+}
+
+int	set_oldpwd(t_path *temp, char *str)
+{
+	char	*key;
+	int		key_len;
+	int		i;
+
+	i = 0;
+	key_len = ft_strlen(str);
+	key = (char *)malloc(sizeof(char) * (key_len + 1));
+	if (key == NULL)
+		return (-1);
+	while (i < key_len)
+	{
+		key[i] = str[i];
+		i++;
+	}
+	key[i] = '\0';
+	temp->key = key;
+	return (0);
 }

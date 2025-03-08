@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/28 14:46:02 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/08 15:04:11 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_tokentype plag_pipe, t_tokentype plag_redi)
 	new->str = NULL;
 	new->key = NULL;
 	new->f_list = NULL;
-	new->token_cmd = CMD;
+	new->type_cmd = CMD;
 	new->type_pipe = NONE;
 	new->type_re = NONE;
 	new->prev = NULL;
@@ -77,6 +77,7 @@ t_cmd_list *new)
 	new->prev = temp;
 }
 
+/*
 void	exec_make_node(t_cmd_list **exec_cmd, char **string_array, \
 t_tokentype plag_pipe, t_tokentype plag_redi)
 {
@@ -90,3 +91,4 @@ t_tokentype plag_pipe, t_tokentype plag_redi)
 	else
 		add_back_exec_linked_list(exec_cmd, new_node);
 }
+*/

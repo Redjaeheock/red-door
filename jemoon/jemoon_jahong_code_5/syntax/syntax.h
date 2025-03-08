@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:38:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/28 14:27:41 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/08 15:04:48 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,8 @@ int			calculate_array_size(t_list *tokens);
 int			get_double_string_array_size(t_list *tokens, int *check_redi, \
 			t_tokentype *plag_pipe, t_tokentype *plag_redi);
 
-/* exec_commads_size.c  */
-int			check_redirection_size(t_list **tmp, int *array_size);
-int			get_first_double_string_array_size(t_list **tmp);
-int			get_rest_double_string_array_size(t_list **tmp);
-
 /* get_exec_commads_2.c */
 char		*set_string_2(char *tokens, int cmd_size);
-//void		fill_string_array_2(char **string_array, \
-//			t_list **tokens, int cmd_size);
 char		**set_string_array_2(t_list **tokens, int cmd_size);
 char		*get_key_string(t_list *tokens);
 char		*get_key(t_list *tokens, int check_redi);
@@ -64,16 +57,6 @@ void		get_commads_token(char **string_array, t_list **tokens, \
 void		get_commads_key(char **string_array, t_list **tokens, \
 			int *i, int cmd_size);
 
-/* get_exec_commads.c */
-void		recycle_size(t_list *tokens, int *cmd_size, \
-			t_tokentype *plag_pipe, t_tokentype *plag_redi);
-char		*set_string(t_list *tokens);
-void		fill_string_array(char **string_array, t_list *tokens, \
-			int cmd_size);
-char		**set_string_array(t_list *tokens, int cmd_size, \
-			t_tokentype *plag_pipe, t_tokentype *plag_redi);
-void		get_exec_commads(t_list **tokens, t_cmd_list **exec_commads, int i);
-
 /* new_get_exec_cmd.c*/
 void		new_get_exec_cmd(t_list *tokens, t_cmd_list **exec_cmd);
 
@@ -83,7 +66,7 @@ int			check_prev(t_cmd_list	*exec_cmd);
 int			check_next(t_cmd_list	*exec_cmd);
 int			check_redi(t_cmd_list	*exec_cmd);
 int			check_pipe(t_cmd_list	*exec_cmd);
-void		exec_cmd_set_tpye(t_data *meta);
+void		exec_cmd_set_type(t_data *meta);
 
 
 /* pritnf_utils */

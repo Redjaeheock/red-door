@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_frist_utils.c                                   :+:      :+:    :+:   */
+/*   cd_execute_utils_1.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:07:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/05 16:03:16 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:43:29 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,49 +72,4 @@ int	set_free_by_key(t_path **exp, char *key)
 		temp = temp->next;
 	}
 	return (0);
-}
-
-int	set_oldpwd(t_path *temp, char *str)
-{
-	char	*key;
-	int		key_len;
-	int		i;
-
-	i = 0;
-	key_len = ft_strlen(str);
-	key = (char *)malloc(sizeof(char) * (key_len + 1));
-	if (key == NULL)
-		return (-1);
-	while (i < key_len)
-	{
-		key[i] = str[i];
-		i++;
-	}
-	key[i] = '\0';
-	temp->key = key;
-	return (0);
-}
-
-void	redefine_export(t_data *meta, t_path **exp, char *home)
-{
-	char	*pwd;
-	t_path	*add_path;
-
-	pwd = ft_strdup(meta->pwd);
-	if (pwd == NULL)
-		return ;
-	if (find_node(*exp, "OLDPWD") == 0)
-	{
-		free(pwd);
-		return ;
-	}
-	else
-	{
-		set_free_by_key(exp, "OLDPWD");
-		set_value_by_key(exp, "OLDPWD", pwd);
-		set_null_by_key(exp, "PWD");
-		set_value_by_key(exp, "PWD", home);
-	}
-	free(pwd);
-	return ;
 }

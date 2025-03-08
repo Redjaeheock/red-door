@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/05 17:19:21 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:50:16 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int		get_slash_position(char *str, int slash_len, int *i, int *count_slash);
 void	make_back_path(char *pwd, char *back_path, int len);
 
 /* cd_utils.c */
-char	*get_env(t_path *env, char *home);
 int		find_node(t_path *env, char *key);
 
 /* cd.c */
@@ -84,7 +83,6 @@ int		search_special_characters(char *str, int equal);
 void	update_node(t_path **old_exp, t_path *prev, \
 	t_path *current, t_path *new_node);
 int		check_key(t_path **old_exp, t_path *export_add);
-int		search_equal(char *str);
 void	process_export_entry(t_data *meta, \
 	t_path *export_add, t_path *env_add, int equal);
 void	oldpwd_add(t_data *meta, t_path *export_add);
@@ -102,9 +100,6 @@ void	swap_middle_two(t_path *exp_prev);
 void	swap_export(t_path **exp, t_path *exp_prev);
 void	bubble_sort(t_path **exp, int *swapped);
 void	sort_export(t_path **exp);
-
-/* export_utils.c */
-int		char_arr_len(char **array);
 
 /* export.c */
 void	minishell_export(t_data *meta, t_cmd_list *exec_cmd);

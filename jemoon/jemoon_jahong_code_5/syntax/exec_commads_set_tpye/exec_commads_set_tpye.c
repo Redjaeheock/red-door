@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 20:41:02 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/28 15:18:27 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/08 15:03:40 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ int	check_redi(t_cmd_list	*exec_cmd)
 
 int	check_pipe(t_cmd_list	*exec_cmd)
 {
-	if (AND <= exec_cmd->type_pipe && exec_cmd->type_pipe <= PIPE)
-		return (1);
+	if (exec_cmd->type_pipe == PIPE)
+	{
+		if (exec_cmd->str == NULL && exec_cmd->type_re == NONE)
+			return (1);
+	}
 	return (0);
 }
 
-void	exec_cmd_set_tpye(t_data *meta)
+void	exec_cmd_set_type(t_data *meta)
 {
 	t_cmd_list	*tmp;
 
@@ -52,13 +55,15 @@ void	exec_cmd_set_tpye(t_data *meta)
 		{
 			if (check_prev(tmp))
 				tmp->prev->type_pipe = tmp->type_pipe;
-			tmp->token_cmd = NONE;
+			if (check_next(tmp))
+				tmp->next->type_pipe = tmp->type_pipe;
+			tmp->type_cmd = NONE;
 		}
 		else if (check_redi(tmp))
 		{
-			tmp->token_cmd = NONE;
+			tmp->type_cmd = NONE;
 			if (check_next(tmp))
-				tmp->next->token_cmd = NONE;
+				tmp->next->type_cmd = NONE;
 		}
 		tmp = tmp->next;
 	}

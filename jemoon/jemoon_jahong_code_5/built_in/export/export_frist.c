@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:02:43 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/21 11:21:21 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:47:49 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	frist_export(t_data *meta)
 	temp = meta->exp;
 	while (temp != NULL)
 	{
-		equal = search_equal(temp->set);
+		equal = search_chr_in_str(temp->set, '=');
 		if (equal == 0)
 			printf("declare -x %s\n", temp->set);
 		else

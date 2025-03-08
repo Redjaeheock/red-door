@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 15:01:25 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/24 13:35:46 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/07 15:16:27 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	minishell_unset(t_data *meta, t_cmd_list *exec_cmd)
 {
 	int	unset_len;
 
-	unset_len = char_arr_len(exec_cmd->str);
+	unset_len = sndry_arr_len((void **)exec_cmd->str);
 	if (unset_len == 1)
 	{
 		printf("\n");
