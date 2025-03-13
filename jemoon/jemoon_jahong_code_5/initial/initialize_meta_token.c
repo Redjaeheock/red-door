@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/28 17:19:51 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/13 17:47:40 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,28 @@ t_path	*make_t_path(void)
 	tmp->value = NULL;
 	tmp->set = NULL;
 	return (tmp);
+}
+
+void	move_underbar_path(t_path *path)
+{
+	t_path	*tmp;
+
+	tmp = NULL;
+	while (path->next != NULL)
+	{
+		if (strcmp(path->next->key, "_") == 0)
+		{
+			if (path->next->next != NULL)
+			{
+				tmp = path->next;
+				path->next = path->next->next;
+				tmp->next = NULL;
+			}
+		}
+		path = path->next;
+	}
+	if (tmp != NULL)
+		path->next = tmp;
 }
 
 t_path	*init_key_value(char **envp)
@@ -49,6 +71,7 @@ t_path	*init_key_value(char **envp)
 			return (t_path_key_val_alloc_err(env_path));
 		tmp = tmp->next;
 	}
+	move_underbar_path(env_path);
 	return (env_path);
 }
 

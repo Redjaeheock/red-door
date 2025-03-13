@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 10:58:16 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/28 17:09:59 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/13 22:11:44 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ t_cmd_list	*get_cmd_node(t_cmd_list **check_temp)
 	}
 	return_temp->next = NULL;
 	return_temp->prev = NULL;
-	front_temp->next = next_temp;
-	next_temp->prev = front_temp;
+	if (front_temp != NULL)
+		front_temp->next = next_temp;
+	if (next_temp != NULL)
+		next_temp->prev = front_temp;
 	return (return_temp);
 }
 

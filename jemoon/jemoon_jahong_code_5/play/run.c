@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:34:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/10 13:01:02 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/13 21:19:24 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	run(t_data *meta)
 					// 	exit(0);
 					// }
 					// else 
-						if (execve("/usr/bin/ls", temp->str, meta->envm) == -1)
+						if (execve("/usr/bin/cat", temp->str, meta->envm) == -1)
 						{
 							free_meta_token(meta);
 							exit(127);

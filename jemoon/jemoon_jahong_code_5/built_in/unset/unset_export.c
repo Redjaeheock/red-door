@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 10:45:22 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/09 16:14:56 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/13 20:44:31 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,16 @@ void	unset_export(t_data *meta, t_cmd_list *exec_cmd, int unset_len)
 	i = 1;
 	while (i < unset_len)
 	{
+		if (ft_strcmp(exec_cmd->str[i], "_") == 0)
+		{
+			i++;
+			continue ;
+		}
+		if (check_option(exec_cmd->str[1]) == 1)
+		{
+			builtin_error(exec_cmd->str[1], 62);
+			return ;
+		}
 		if (search_special_characters_unset(exec_cmd->str[i]) == 1)
 		{
 			unset_key(&meta->exp, exec_cmd->str[i]);

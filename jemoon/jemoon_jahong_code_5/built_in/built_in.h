@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/11 12:54:35 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/13 15:54:30 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,12 @@ pid_t	builtin(t_data *meta, t_cmd_list *exec_cmd);
 int		compare_builtin_list(t_data *meta, t_cmd_list *exec_cmd);
 int		check_option(char *str);
 
+/* builtin_error*/
 void	builtin_error(char *str, int index);
+void	cd_error(char *str, int index);
+void	exit_error(char *str, int index);
+void	pwd_error(char *str, int index);
+void	env_error(char *str, int index);
+void	export_error(char *str, int index);
+void	unset_error(char *str, int index);
 #endif

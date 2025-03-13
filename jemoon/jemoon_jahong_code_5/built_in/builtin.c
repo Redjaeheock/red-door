@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:32:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/10 16:38:23 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/13 21:29:09 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ pid_t	builtin(t_data *meta, t_cmd_list *exec_cmd)
 		if (exec_cmd->type_pipe == PIPE || (exec_cmd->prev != NULL && exec_cmd->prev->type_pipe == PIPE))
 		{
 			free_meta_token(meta);
-			exit(0);
+			exit(g_ws);
 		}
 	}
 	// else
