@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:38:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/08 15:04:48 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/08 15:51:03 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@
 
 /* exec_commads */
 /* exec_commads_liked_list_2.c */
-void		exec_make_node_2(t_cmd_list **exec_cmd, char **string_array, \
+void		exec_make_node(t_cmd_list **exec_cmd, char **string_array, \
 			t_tokentype plag_pipe, t_tokentype plag_redi);
-void		exec_add_key_str(t_cmd_list **exec_cmd, char *str);
 
-/* exec_commads_liked_list.c */
+/* exec_commads_liked_list_1.c */
 void		free_double_string_array(char **str);
 void		free_exec_linked_list(t_cmd_list *list);
 t_cmd_list	*create_exec_linked_list(char **str, \
@@ -33,7 +32,7 @@ t_cmd_list *new);
 void		exec_make_node(t_cmd_list **exec_cmd, char **string_array, \
 t_tokentype plag_pipe, t_tokentype plag_redi);
 
-/* exec_commads_size_2.c */
+/* exec_commads_size.c */
 int			handle_redirection_case(t_list *tokens, int *check_redi, \
 			t_tokentype *plag_redi);
 int			handle_pipe_case(t_list *tokens, t_tokentype *plag_pipe);
@@ -42,23 +41,20 @@ int			calculate_array_size(t_list *tokens);
 int			get_double_string_array_size(t_list *tokens, int *check_redi, \
 			t_tokentype *plag_pipe, t_tokentype *plag_redi);
 
-/* get_exec_commads_2.c */
-char		*set_string_2(char *tokens, int cmd_size);
-char		**set_string_array_2(t_list **tokens, int cmd_size);
+/* get_exec_commads.c */
+char		*set_string(char *tokens, int cmd_size);
+char		**set_string_array(t_list **tokens, int cmd_size);
 char		*get_key_string(t_list *tokens);
 char		*get_key(t_list *tokens, int check_redi);
-void		get_exec_cmd_2(t_list *tokens, t_cmd_list **exec_cmd);
+void		get_exec_cmd(t_list *tokens, t_cmd_list **exec_cmd);
 
-/* get_exec_commads_2_utils.c */
+/* get_exec_commads_utils.c */
 void		get_commads_f_list(char **string_array, t_list **tokens, \
 			int *i, int cmd_size);
 void		get_commads_token(char **string_array, t_list **tokens, \
 			int *i, int cmd_size);
 void		get_commads_key(char **string_array, t_list **tokens, \
 			int *i, int cmd_size);
-
-/* new_get_exec_cmd.c*/
-void		new_get_exec_cmd(t_list *tokens, t_cmd_list **exec_cmd);
 
 /* exec_commads_set_type */
 /* exec_commads_set_type.c */
@@ -78,7 +74,6 @@ void		printf_tokens(t_list *tokens);
 /* readline_utils */
 /* readline_utils.c */
 char		*handle_error(t_cmd_list **exec_cmd, char *str);
-//int			check_last_tokens(t_cmd_list *exec_cmd);
 int			check_last_tokens(t_list *exec_cmd);
 void		combine_strings(char *return_str, char *str, char *add_str);
 char		*make_str(char *str, char *add_str);
@@ -115,7 +110,7 @@ void		get_commads_key_to_token(char **string_array, t_list **tokens, \
 			int *i, int redifine_size);
 void		get_key_to_toke(char **string_array, t_list **tokens, \
 			int *i, int redifine_size);
-void		fill_string_array_2(char **string_array, t_list **tokens, \
+void		fill_string_array(char **string_array, t_list **tokens, \
 			int cmd_size, int redefine_size);
 void		set_here_doc(t_data *meta, t_list *tmp);
 void		operator_str_free(t_data *meta);

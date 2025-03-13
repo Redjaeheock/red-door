@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 11:01:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/21 14:53:51 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/08 15:42:43 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	get_commads_f_list(char **string_array, t_list **tokens, \
 	j = 0;
 	while (j < f_list_len)
 	{
-		string_array[*i] = set_string_2((*tokens)->f_list[j], cmd_size);
+		string_array[*i] = set_string((*tokens)->f_list[j], cmd_size);
 		if (string_array[*i] == NULL)
 			return ;
 		(*i)++;
@@ -34,7 +34,7 @@ void	get_commads_f_list(char **string_array, t_list **tokens, \
 void	get_commads_token(char **string_array, t_list **tokens, \
 		int *i, int cmd_size)
 {
-	string_array[*i] = set_string_2((*tokens)->token, cmd_size);
+	string_array[*i] = set_string((*tokens)->token, cmd_size);
 	if (string_array[*i] == NULL)
 		return ;
 	(*i)++;
@@ -43,7 +43,7 @@ void	get_commads_token(char **string_array, t_list **tokens, \
 void	get_commads_key(char **string_array, t_list **tokens, \
 		int *i, int cmd_size)
 {
-	string_array[*i] = set_string_2((*tokens)->key, cmd_size);
+	string_array[*i] = set_string((*tokens)->key, cmd_size);
 	if (string_array[*i] == NULL)
 		return ;
 	(*i)++;
@@ -61,7 +61,7 @@ void	get_commads_key_to_token(char **string_array, t_list **tokens, \
 	str_size = sndry_arr_len((void **)str);
 	while (j < str_size)
 	{
-		string_array[*i] = set_string_2(str[j], redifine_size);
+		string_array[*i] = set_string(str[j], redifine_size);
 		(*i)++;
 		j++;
 	}

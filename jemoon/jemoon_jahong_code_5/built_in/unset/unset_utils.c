@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 10:42:16 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/05 18:39:15 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/11 14:57:53 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,21 @@ int	search_special_characters_unset(char *str)
 	int	i;
 
 	i = 0;
-	while (('0' <= str[i] && str[i] <= '9') && str[i] != '\0')
+	if (str == NULL || str[0] == '\0')
+		return (0);
+	if ('0' <= str[0] && str[0] <= '9')
 	{
-		if ('0' <= str[i] && str[i] <= '9')
-		{
-			printf("bash: unset: `%s': not a valid identifier\n", str);
-			return (0);
-		}
-		i++;
+		builtin_error(str, 61);
+		return (0);
 	}
-	while (str[i] != '\0')
+	while (str[i])
 	{
 		if (!(('A' <= str[i] && str[i] <= 'Z') || \
-		('a' <= str[i] && str[i] <= 'z') || \
-		('0' <= str[i] && str[i] <= '9') || \
-		(str[i] == '_')))
+			('a' <= str[i] && str[i] <= 'z') || \
+			('0' <= str[i] && str[i] <= '9') || \
+			(str[i] == '_')))
 		{
-			printf("bash: unset: `%s': not a valid identifier\n", str);
+			builtin_error(str, 61);
 			return (0);
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:15:00 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/24 13:45:36 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/10 14:01:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	minishell_echo(t_cmd_list *exec_cmd)
 	int	i;
 
 	i = 1;
+	g_ws = 0;
 	if (check_option_n(exec_cmd->str[i]) == 1)
 	{
 		i++;

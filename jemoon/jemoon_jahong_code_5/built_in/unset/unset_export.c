@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 10:45:22 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 16:31:02 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/09 16:14:56 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,13 @@ void	remove_node(t_path **exp, t_path *prev, t_path *current)
 	if (prev == NULL)
 	{
 		*exp = current->next;
-		current->next = NULL;
-		free_t_path(current);
 	}
 	else
 	{
 		prev->next = current->next;
-		current->next = NULL;
-		free_t_path(current);
 	}
+	current->next = NULL;
+	free_t_path(current);
 }
 
 int	unset_key(t_path **exp, char *str)
@@ -50,18 +48,18 @@ int	unset_key(t_path **exp, char *str)
 	return (0);
 }
 
-void	unset_export(t_data *meta, int unset_len)
+void	unset_export(t_data *meta, t_cmd_list *exec_cmd, int unset_len)
 {
 	int	i;
 
 	i = 1;
 	while (i < unset_len)
 	{
-		if (search_special_characters_unset(meta->exec_cmd->str[i]) == 1)
+		if (search_special_characters_unset(exec_cmd->str[i]) == 1)
 		{
-			unset_key(&meta->exp, meta->exec_cmd->str[i]);
-			unset_key(&meta->env, meta->exec_cmd->str[i]);
-			if (ft_strcmp(meta->exec_cmd->str[i], "OLDPWD") == 0)
+			unset_key(&meta->exp, exec_cmd->str[i]);
+			unset_key(&meta->env, exec_cmd->str[i]);
+			if (ft_strcmp(exec_cmd->str[i], "OLDPWD") == 0)
 			{
 				free(meta->oldpwd);
 				meta->oldpwd = NULL;

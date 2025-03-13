@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/07 18:50:16 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/11 12:54:35 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	frist_export(t_data *meta);
 int		ft_lstsize(t_path *lst);
 t_path	*add_export(char *str);
 void	add_back_export_linked_list(t_path **old_export, t_path *new);
+int		search_equal(char *str);
 
 /* export_rets_utils.c */
 int		search_special_characters(char *str, int equal);
@@ -89,7 +90,7 @@ void	oldpwd_add(t_data *meta, t_path *export_add);
 int		is_valid_var_name(char *str, int equal);
 
 /* export_rest.c */
-void	rest_export(t_data *meta, int export_len);
+void	rest_export(t_data *meta, t_cmd_list *exec_cmd, int export_len);
 
 /* export_sort_uitls.c */
 int		ft_test(char *s1, const char *s2);
@@ -106,13 +107,13 @@ void	minishell_export(t_data *meta, t_cmd_list *exec_cmd);
 
 /* pwd */
 /* pwd.c */
-void	minishell_pwd(t_data *meta);
+void	minishell_pwd(t_data *meta, t_cmd_list *exec_cmd);
 
 /* unset */
 /* unset_export*/
 void	remove_node(t_path **exp, t_path *prev, t_path *current);
 int		unset_key(t_path **exp, char *str);
-void	unset_export(t_data *meta, int unset_len);
+void	unset_export(t_data *meta, t_cmd_list *exec_cmd, int unset_len);
 
 /* unset_utils.c */
 int		search_special_characters_unset(char *str);
@@ -123,5 +124,7 @@ void	minishell_unset(t_data *meta, t_cmd_list *exec_cmd);
 /* builtin.c*/
 pid_t	builtin(t_data *meta, t_cmd_list *exec_cmd);
 int		compare_builtin_list(t_data *meta, t_cmd_list *exec_cmd);
+int		check_option(char *str);
 
+void	builtin_error(char *str, int index);
 #endif

@@ -5,6 +5,7 @@
     "sstream": "c",
     "regex": "c",
     "cstdlib": "c",
-    "syntax.h": "c"
+    "syntax.h": "c",
+    "wait.h": "c"
   }
 }

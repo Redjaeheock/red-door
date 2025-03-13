@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/19 20:01:54 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/11 14:56:48 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_invalid_number_start(char *str, int equal)
 	{
 		if ('0' <= str[i] && str[i] <= '9')
 		{
-			printf("bash: export: `%s': not a valid identifier\n", str);
+			builtin_error(str, 51);
 			return (0);
 		}
 		i++;
@@ -58,7 +58,7 @@ int	is_invalid_special_char(char *str, int equal)
 		(123 <= str[i] && str[i] <= 126) || \
 		(str[i] == 96))
 		{
-			printf("bash: export: `%s': not a valid identifier\n", str);
+			builtin_error(str, 51);
 			return (0);
 		}
 		i++;

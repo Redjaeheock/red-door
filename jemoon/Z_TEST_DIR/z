@@ -1,0 +1,13 @@
+a
+a.out
+b
+c
+execve_test.c
+file
+norm_test.c
+output.txt
+test.c
+test_ls.c
+test_pwd.c
+test_signal.c
+z

@@ -6,14 +6,14 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 11:01:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/24 12:21:07 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/08 15:41:32 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 #include "../syntax.h"
 
-char	*set_string_2(char *tokens, int cmd_size)
+char	*set_string(char *tokens, int cmd_size)
 {
 	int		string_len;
 	char	*str;
@@ -26,7 +26,7 @@ char	*set_string_2(char *tokens, int cmd_size)
 	return (str);
 }
 
-void	fill_string_array_2(char **string_array, t_list **tokens, int cmd_size, \
+void	fill_string_array(char **string_array, t_list **tokens, int cmd_size, \
 		int redefine_size)
 {
 	int	i;
@@ -50,7 +50,7 @@ void	fill_string_array_2(char **string_array, t_list **tokens, int cmd_size, \
 	}
 }
 
-char	**set_string_array_2(t_list **tokens, int cmd_size)
+char	**set_string_array(t_list **tokens, int cmd_size)
 {
 	char	**string_array;
 	int		redefine_size;
@@ -64,7 +64,7 @@ char	**set_string_array_2(t_list **tokens, int cmd_size)
 		string_array = (char **)malloc(sizeof(char *) * (cmd_size + 1));
 	if (string_array == NULL)
 		return (NULL);
-	fill_string_array_2(string_array, tokens, cmd_size, redefine_size);
+	fill_string_array(string_array, tokens, cmd_size, redefine_size);
 	return (string_array);
 }
 

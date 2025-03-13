@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:34:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/27 19:56:11 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/10 13:01:02 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,21 @@ int	run(t_data *meta)
 					// }
 					// else 
 						if (execve("/usr/bin/ls", temp->str, meta->envm) == -1)
+						{
 							free_meta_token(meta);
+							exit(127);
+						}
 				}
 			}
 			if (pid > 0)
 			{
 				wait(&status);
-
+				g_ws = (status >> 8) & 0xFF;
 			}
 		}
 		temp = temp->next;
 	}
-	g_ws = status;
+	printf("exit_no = [%d] \n", g_ws);
 	return (0);
 }
 

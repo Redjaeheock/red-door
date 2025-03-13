@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/07 18:50:11 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/11 14:51:55 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	search_special_characters(char *str, int equal)
 		return (0);
 	while (str[i] != '\0')
 	{
-		if (str[i] == '!' || str[i] == '#')
+		if (str[i] == '!' || str[i] == '#' || str[i] == '-')
 		{
-			printf("bash: export: `%s': not a valid identifier\n", str);
+			builtin_error(str, 51);
 			return (0);
 		}
 		i++;
@@ -88,4 +88,18 @@ void	process_export_entry(t_data *meta, \
 			add_back_export_linked_list(&meta->exp, export_add);
 		free_t_path(env_add);
 	}
+}
+
+int	search_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '=')
+			return (i);
+		i++;
+	}
+	return (0);
 }

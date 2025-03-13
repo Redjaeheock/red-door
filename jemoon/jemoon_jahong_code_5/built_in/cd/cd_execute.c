@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:04:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/05 16:01:28 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/11 16:51:01 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_cd_dir(t_data *meta, char *str)
 		dir = ft_strdup(meta->home);
 		if (dir == NULL)
 		{
-			printf("bash: cd:HOME not set\n");
+			builtin_error(NULL, 74);
 			return (NULL);
 		}
 	}
@@ -36,29 +36,62 @@ char	*get_cd_dir(t_data *meta, char *str)
 	return (dir);
 }
 
-void	cd_execute(t_data *meta, char *str)
+int	check_exec_permission(char *dir)
+{
+	if (access(dir, X_OK) == -1)
+	{
+		builtin_error(dir, 75);
+		free(dir);
+		return (0);
+	}
+	return (1);
+}
+
+int	check_exec_stat(char *dir)
+{
+	struct stat	sb;
+
+	if (stat(dir, &sb) == -1)
+	{
+		builtin_error(dir, 72);
+		free(dir);
+		return (0);
+	}
+	return (1);
+}
+
+void	change_directory(t_data *meta, char *dir)
 {
 	char	*pwd;
-	char	*dir;
 
-	dir = get_cd_dir(meta, str);
-	if (dir == NULL)
-		return ;
 	if (chdir(dir) == 0)
 	{
 		pwd = redefine_pwd(meta, dir);
 		redefine_export(meta, &meta->exp, pwd);
 		redefine_export(meta, &meta->env, pwd);
 		free(meta->oldpwd);
-		meta->oldpwd = NULL;
 		meta->oldpwd = ft_strdup(meta->pwd);
 		free(meta->pwd);
-		meta->pwd = NULL;
 		meta->pwd = ft_strdup(pwd);
 		free(pwd);
-		pwd = NULL;
 	}
 	else
-		printf("bash: cd:%s not set\n", dir);
+	{
+		builtin_error(dir, 72);
+	}
+}
+
+void	cd_execute(t_data *meta, char *str)
+{
+	char	*dir;
+
+	dir = get_cd_dir(meta, str);
+	if (dir == NULL)
+		return ;
+	if (check_exec_stat(dir) == 0)
+		return ;
+	if (check_exec_permission(dir) == 0)
+		return ;
+	change_directory(meta, dir);
 	free(dir);
 }

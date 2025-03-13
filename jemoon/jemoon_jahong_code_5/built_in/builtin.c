@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:32:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/27 16:26:03 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/10 16:38:23 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ pid_t	builtin(t_data *meta, t_cmd_list *exec_cmd)
 {
 	pid_t	pid;
 	int		status;
+	int exit_no;
 
 	pid = 0;
 	if (exec_cmd->type_pipe == PIPE || (exec_cmd->prev != NULL && exec_cmd->prev->type_pipe == PIPE))
@@ -34,7 +35,7 @@ pid_t	builtin(t_data *meta, t_cmd_list *exec_cmd)
 		if (ft_strcmp(exec_cmd->str[0], "echo") == 0)
 			minishell_echo(exec_cmd);
 		if (ft_strcmp(exec_cmd->str[0], "pwd") == 0)
-			minishell_pwd(meta);
+			minishell_pwd(meta, exec_cmd);
 		if (ft_strcmp(exec_cmd->str[0], "env") == 0)
 			minishell_env(meta, exec_cmd);
 		if (ft_strcmp(exec_cmd->str[0], "export") == 0)
@@ -50,7 +51,14 @@ pid_t	builtin(t_data *meta, t_cmd_list *exec_cmd)
 		}
 	}
 	// else
-	// 	wait(&status);
+	/*
+	if (exec_cmd->type_pipe == PIPE || (exec_cmd->prev != NULL && exec_cmd->prev->type_pipe == PIPE))
+	{
+		wait(&status);
+		exit_no = (status >> 8) & 0xFF;
+		printf("\n\n exit_no = [%d] \n\n", exit_no);
+	}
+	*/
 	return (pid);
 }
 
@@ -70,6 +78,18 @@ int	compare_builtin_list(t_data *meta, t_cmd_list *exec_cmd)
 	if (ft_strcmp(exec_cmd->str[0], "unset") == 0)
 		return (1);
 	if (ft_strcmp(exec_cmd->str[0], "cd") == 0)
+		return (1);
+	return (0);
+}
+
+int	check_option(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str == NULL)
+		return (0);
+	if (str[i] == '-')
 		return (1);
 	return (0);
 }

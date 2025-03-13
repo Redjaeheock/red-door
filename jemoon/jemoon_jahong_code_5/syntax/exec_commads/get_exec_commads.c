@@ -6,14 +6,14 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/28 14:06:57 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/08 15:43:02 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 #include "../syntax.h"
 
-void	get_exec_cmd_2(t_list *tokens, t_cmd_list **exec_cmd)
+void	get_exec_cmd(t_list *tokens, t_cmd_list **exec_cmd)
 {
 	t_tokentype	plag_pipe;
 	t_tokentype	plag_redi;
@@ -34,10 +34,10 @@ void	get_exec_cmd_2(t_list *tokens, t_cmd_list **exec_cmd)
 			tokens = tokens->next;
 			continue ;
 		}
-		string_array = set_string_array_2(&tokens, cmd_size);
+		string_array = set_string_array(&tokens, cmd_size);
 		if (string_array == NULL)
 			return ;
-		exec_make_node_2(exec_cmd, string_array, \
+		exec_make_node(exec_cmd, string_array, \
 		plag_pipe, plag_redi);
 	}
 }
