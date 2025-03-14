@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"syntax.h": "c",
+		"minishell.h": "c",
+		"built_in.h": "c"
+	}
+}

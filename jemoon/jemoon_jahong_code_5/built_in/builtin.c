@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:32:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/13 21:29:09 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/14 14:02:45 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	compare_builtin_list(t_data *meta, t_cmd_list *exec_cmd)
 		return (1);
 	return (0);
 }
-
 int	check_option(char *str)
 {
 	int	i;
