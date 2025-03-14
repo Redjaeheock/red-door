@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/13 22:03:02 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:10:09 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,24 +118,27 @@ typedef struct redi_list
 	char				*str;
 }						t_redi;
 
-/* free_list.c*/
+/* resource_free/free_list.c */
 void	*free_t_path(t_path *lsit);
 void	*free_t_list(t_list *list);
 void	*free_t_data(t_data *meta);
 void	*free_meta_token(t_data *meta);
 
-/* free_tmp_list.c */
+/* resource_free/free_tmp_list.c */
 void	free_single_tmp_node(t_tmp *node);
 void	*free_tmp_list(t_tmp *node);
 
-/* free_secondary_array.c */
+/* resource_free/free_secondary_array.c */
 void	*free_sndry_arr(void **array);
 void	*free_multi_2d_arrs(void **array1, void **array2);
 
-/* unlink_files.c */
+/* resource_free/unlink_files.c */
 void	unlink_files(t_list	*tokens);
 
-/*error_process*/
+/* resource_free/free_resources.c */
+void	free_resources(t_data *meta, int **pipes, char *path);
+
+/* error_process */
 int		error_syntax(char *str);
 void	error_qoute(int qoute);
 void	*memory_alloc_error(void);
@@ -147,18 +150,14 @@ void	*t_tmp_alloc_err(t_tmp *node);
 void	wranning_msg(char *eof);
 
 /* initialize_meta_token.c*/
+t_path	*make_t_path(void);
 t_data	*initialize_meta_token(char **envp);
 
 /* initialize_disoable.c */
 char	*initialize_oldpwd(t_path *tmp);
 
 /* signal_process.c */
-// void	handle_heredoc(int signum, sigset_t *preset);
-// void	handle_rollback(int signum, sigset_t *preset);
 void	set_up_signal(t_data *meta);
-
-/* here_doc */
-int		here_doc(t_data *meta, t_list *tokens);
 
 /* linked_list.c */
 t_list	*create_linked_list(char *str);
@@ -199,6 +198,7 @@ void	ft_putstr_fd(char *s, int fd);
 
 /* main.c */
 int		check_operator_v1(const char *str, int index);
+int		mn_split(t_data *meta, char **str, char c);
 
 /* extradt_words.c */
 char	*extract_word(char const *str, int start_index, int end);
@@ -278,21 +278,40 @@ char	**exclusive_use_wildcard_join1(char **paths, int len);
 /* remove_quote_set */
 int		remove_quote_tokens(t_list *node);
 
-/* utils.c*/
+/* run_process/here_doc.c */
+int		here_doc(t_data *meta, t_list *tokens);
+
+/* ruen_process/redirection.c */
+int		set_file_descriptor(t_data *meta, t_cmd_list *cmd);
+void	reset_file_descriptor(t_data *meta);
+
+/* run_process/pipe.c */
+int		run(t_data *meta);
+
+/* run_process/run.c */
+void	*close_pipes(int **pipes);
+int		make_pipes(t_data *meta, t_cmd_list *cmd, int ***pipes);
+void	set_pipe_io(t_data *meta, t_cmd_list *cmd, int **pipes, int row);
+
+/* run_process/external.c */
+void	external(t_data *meta, t_cmd_list *cmd, int **pipes, int row);
+
+
+/* utils.c */
 int		check_chr_not_quote_set(char *str, char c);
 int		search_chr_in_str(char *str, char c);
 int		are_all_characters_same(char *str, char c);
 char	*get_exit_no(void);
 char	**modify_least_matched_pattern(char **f_list, char *memo);
 
-/*utils2.c*/
+/* utils2.c */
 char	**change_system_error_msg(void);
 char	*search_value_using_key(t_path *path, char *src);
 char	*copy_conditional_index_range(char *str, int idx, int end, char c);
 char	*copy_index_range(char *str, int idx, int end);
 int		ck_part_of_special_chr(int c);
 
-/* utils3.c*/
+/* utils3.c */
 char	*copy_index_range_jump_quote(char *str, int idx, int end);
 char	**remove_all_same_str(char **str, char c);
 int		cnt_valid_split_point_chr_in_quote_set(char *path, char c, int quote);
@@ -352,28 +371,18 @@ char	**mapping_pattern_filename(char *path, char **f_list);
 int		count_only_single_chr_value_in_2d_arr(char **str, int row, char c);
 int		is_token_all_null_after_join(t_tmp *tmp);
 
-/* initialize_meta_token.c*/
-t_path	*make_t_path(void);
-t_data	*initialize_meta_token(char **envp);
-int		mn_split(t_data *meta, char **str, char c);
-void	free_exec_linked_list(t_cmd_list *list);
+
+
+
+
+
 
 /*jemoon_add_code */
-//int		play(t_data *meta);
+void	free_exec_linked_list(t_cmd_list *list);
 int		rutin_free(t_data *meta, char *str);
 void	add_history_and_free(char **str);
 void	normalize_cmd(t_data *meta);
 void	reset_stdin_fileno(t_data *meta);
 void	add_history_and_free(char **str);
-int		run(t_data *meta);
-
-
-
-void	set_pipe_io(t_data *meta, t_cmd_list *cmd, int **pipes, int row);
-
-int	set_file_descriptor(t_data *meta, t_cmd_list *cmd);
-int	connect_out_redirection(t_data *meta, t_cmd_list *cmd);
-int	connect_in_redirection(t_data *meta, t_cmd_list *cmd);
-void	*close_pipes(int **pipes);
 
 #endif

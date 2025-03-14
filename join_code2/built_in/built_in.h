@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/13 22:02:49 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/14 12:37:12 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int		search_special_characters_unset(char *str);
 void	minishell_unset(t_data *meta, t_cmd_list *exec_cmd);
 
 /* builtin.c*/
-pid_t	builtin(t_data *meta, t_cmd_list *exec_cmd, int **pipes, int row);
+void	builtin(t_data *meta, t_cmd_list *exec_cmd, int **pipes, int row);
 int		compare_builtin_list(t_data *meta, t_cmd_list *exec_cmd);
 
 #endif
