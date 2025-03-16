@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_commads_check_tppe_2.c                        :+:      :+:    :+:   */
+/*   exec_commads_check_tpye_2.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:59:29 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/16 12:06:09 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 13:12:23 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ int	check_and_branch(t_cmd_list	*exec_cmd)
 int	check_or_branch(t_cmd_list	*exec_cmd)
 {
 	if (exec_cmd->str == NULL && exec_cmd->type_pipe == OR)
+		return (1);
+	return (0);
+}
+
+int	check_and_or_branch(t_cmd_list	*exec_cmd)
+{
+	if (check_and_branch(exec_cmd))
+		return (1);
+	if (check_or_branch(exec_cmd))
 		return (1);
 	return (0);
 }

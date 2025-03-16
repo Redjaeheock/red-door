@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 12:09:39 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 13:17:09 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,7 @@ int		set_file_descriptor(t_data *meta, t_cmd_list *cmd);
 void	reset_file_descriptor(t_data *meta);
 
 /* run_process/pipe.c */
-int		run(t_data *meta);
+int		run(t_data *meta, t_cmd_list *cmd);
 
 /* run_process/run.c */
 void	*close_pipes(int **pipes);

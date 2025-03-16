@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 11:43:19 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 13:17:41 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (trade_exec_cmd(meta, &meta->exec_cmd, &meta->tokens, &str) < 0)
 			break ;
-		run(meta);
+		run(meta, meta->exec_cmd);
 		rutin_free(meta, str);
 	}
 	free_meta_token(meta);

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:34:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/15 19:48:28 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 13:17:10 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,10 @@ t_cmd_list *execute_cmdline(t_data *meta, t_cmd_list *cmd, int **pipes)
 	}
 	return (cmd);
 }
-int	run(t_data *meta)
+int	run(t_data *meta, t_cmd_list *cmd)
 {
-	t_cmd_list	*cmd;
 	int			**pipes;
 
-	cmd = meta->exec_cmd;
 	pipes = NULL;
 	while (cmd != NULL) // sleep 도중 시그널 적용 시 버그 발생
 	{
