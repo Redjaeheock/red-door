@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/24 16:20:46 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 11:55:31 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,6 @@ void	*free_t_data(t_data *meta)
 
 void	*free_meta_token(t_data *meta)
 {
-	if (meta->lval != NULL)
-		free(meta->lval);
-	if (meta->pid_n != NULL)
-		free(meta->pid_n);
-	if (meta->exit_n != NULL)
-		free(meta->exit_n);
 	if (meta->home != NULL)
 		free(meta->home);
 	if (meta->pwd != NULL)

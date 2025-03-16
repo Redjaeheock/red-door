@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 19:43:48 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/27 10:40:12 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/16 17:15:58 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,3 @@ int	ft_atoi(const char *nptr)
 		return (count_digit((char *)nptr, idx) * (sign));
 	return (0);
 }
-/*
-#include <stdio.h>
-int main(int argc, char **argv)
-{
-	int	row = 1;
-	
-	while (row < argc)
-	{
-		printf("%d\n", ft_atoi(argv[row++]));
-	}
-}*/

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 09:42:17 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/14 15:37:31 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/16 16:30:58 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 void	verify_open_failure(char *str)
 {
+	// 경우에 따라 에러 문구 처리하기기
 	printf("bash: %s: No such file or directory\n", str);
-
 }
 
 int	connect_in_redirection(t_data *meta, t_cmd_list *cmd)
 {
-	int	fd; // 리다이렉션 + 파이프 구조 처리 코드 적용 필요
+	int	fd;
 
 	fd = open(cmd->next->str[0], O_RDONLY);
 	if (fd == -1)
 	{
 		verify_open_failure(cmd->next->str[0]);
-		return (0); // 처리 코드 작성
+		return (0);
 	}
 	if (meta->oldstdin == -1)
 		meta->oldstdin = dup(STDIN_FILENO);
@@ -35,12 +35,12 @@ int	connect_in_redirection(t_data *meta, t_cmd_list *cmd)
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	return (1);
-
 }
+
 int	connect_out_redirection(t_data *meta, t_cmd_list *cmd)
 {
 	int	fd;
-	
+
 	if (cmd->type_re == OUT_REDEC)
 		fd = open(cmd->next->str[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (cmd->type_re == GR_REDEC)

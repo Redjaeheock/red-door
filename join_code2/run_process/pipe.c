@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 09:26:05 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/14 09:40:44 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/16 13:27:28 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,31 +59,30 @@ int	**create_pipes(int len)
 	return (pipes);
 }
 
-int	make_pipes(t_data *meta, t_cmd_list *cmd, int ***pipes)
+int	count_pipe_nodes(t_data *meta, t_cmd_list *cmd)
 {
 	t_cmd_list	*tmp;
 	int			cnt;
 
 	cnt = 0;
 	tmp = cmd;
+	if (cmd->type_pipe == AND || cmd->type_pipe == OR)
+		cmd = cmd->next;
 	while (cmd != NULL)
 	{
 		if (cmd->type_pipe == AND || cmd->type_pipe == OR)
 		{
-			if (cnt == 0 && change_dollar_underbar(meta, cmd) != 1)
+			if (cnt == 0 && change_dollar_underbar(meta, cmd->prev) != 1)
 				return (-1);
 			break ;
 		}
 		if (cmd->type_cmd == NONE && cmd->type_re == NONE && cmd->type_pipe == PIPE)
 			cnt++;
+		if (cnt == 0 && cmd->next == NULL && change_dollar_underbar(meta, cmd) != 1)
+			return (-1);
 		cmd = cmd->next;
 	}
-	if (cnt == 0)
-		return (set_file_descriptor(meta, tmp));
-	*pipes = create_pipes(cnt);
-	if (*pipes == NULL)
-		return (-1);
-	return (1);
+	return (cnt);
 }
 
 void	set_pipe_io(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
@@ -109,7 +108,7 @@ void	set_pipe_io(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
 	}
 	if (row < end)
 	{
-		if (cmd->type_cmd == CMD && meta->oldstdout == -1 && meta->oldstdin == -1)
+		if (cmd->type_cmd == CMD && meta->oldstdout == -1)
 			dup2(pipes[row][1], STDOUT_FILENO);
 		close(pipes[row][1]);
 	}

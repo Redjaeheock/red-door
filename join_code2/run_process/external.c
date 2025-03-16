@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:41:03 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/14 14:31:43 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/16 16:30:20 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,13 @@ char	*path_check_into_env(t_data *meta, t_cmd_list *tmp)
 		row++;
 	}
 	reset_file_descriptor(meta);
+	meta->oldstderr = dup(STDOUT_FILENO);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
 	printf("%s: command not found\n", tmp->str[0]);
+	g_ws = 127;
 	return (NULL);
 }
+
 char	*cmd_path_check(t_data *meta, t_cmd_list *cmd, int **pipes)
 {
 	char	*path;
@@ -42,7 +46,7 @@ char	*cmd_path_check(t_data *meta, t_cmd_list *cmd, int **pipes)
 		if (path == NULL)
 		{
 			free_resources(meta, pipes, NULL);
-			exit(0);
+			exit(g_ws);
 		}
 	}
 	else
@@ -52,7 +56,7 @@ char	*cmd_path_check(t_data *meta, t_cmd_list *cmd, int **pipes)
 		{
 			memory_alloc_error();
 			free_resources(meta, pipes, NULL);
-			exit(0);
+			exit(g_ws);
 		}
 	}
 	return (path);
@@ -67,21 +71,22 @@ void	external(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
 	pid = fork();
 	if (pid == 0)
 	{
-		// signal(SIGINT, (void *)child_process_kill);
-		// meta->pids = -1;
+		// 자식 프로세스 시그널 처리
 		if (pipes != NULL && set_file_descriptor(meta, cmd) == 0)
 		{
 			free_resources(meta, pipes, NULL);
 			exit(0);
 		}
-		set_pipe_io(meta, cmd, pipes, row);
 		path = cmd_path_check(meta, cmd, pipes);
+		set_pipe_io(meta, cmd, pipes, row);
 		if (execve(path, cmd->str, meta->envm) == -1)
 		{
 			if (access(path, X_OK) != 0)
-				printf("bash: %s: No such file or directory\n", path);
+				perror(path);
 			free_resources(meta, pipes, path);
-			exit(0);
+			exit(127);
 		}
 	}
+	else
+		meta->last_pid = pid;
 }

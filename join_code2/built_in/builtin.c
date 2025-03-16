@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:32:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/14 12:37:02 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/15 14:11:24 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	execute_builtin(t_data *meta, t_cmd_list *exec_cmd)
 	if (ft_strcmp(exec_cmd->str[0], "exit") == 0)
 		minishell_exit(meta, exec_cmd);
 	if (ft_strcmp(exec_cmd->str[0], "echo") == 0)
-		minishell_echo(exec_cmd);
+		minishell_echo(meta, exec_cmd);
 	if (ft_strcmp(exec_cmd->str[0], "pwd") == 0)
 		minishell_pwd(meta);
 	if (ft_strcmp(exec_cmd->str[0], "env") == 0)
@@ -57,6 +57,8 @@ void	builtin(t_data *meta, t_cmd_list *exec_cmd, int **pipes, int row)
 			exit(0);
 		}
 	}
+	else
+		meta->last_pid = pid;
 }
 
 int	compare_builtin_list(t_data *meta, t_cmd_list *exec_cmd)

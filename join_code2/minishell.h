@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/14 15:10:09 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/16 17:17:17 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 # define MINISHELL_H
 
 # define _POSIX_C_SOURCE 200809L
+# define _DEFAULT_SOURCE
 
-# include <readline/readline.h>    /* readline 함수를 사용하기위한 헤더 */
-# include <readline/history.h>     /* add_history 함수를 사용하기위한 헤더 */
-# include <stdio.h>                /* printf 함수를 사용하기위한 헤더 */
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdio.h>
 # include <stdlib.h>
-# include <dirent.h>               /* opendir, readdir, closedir 함수를 사용하기 위한 헤더*/
+# include <dirent.h>
 # include <string.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -32,7 +33,7 @@
 #  define BUFFER_SIZE 4096
 # endif
 
-extern int g_ws;
+extern int	g_ws;
 
 typedef enum tokentype
 {
@@ -78,7 +79,6 @@ typedef struct start_list
 	char				**str;
 	char				**f_list;
 	char				*key;
-	int					idx;
 }	t_cmd_list;
 
 typedef struct path_list
@@ -110,6 +110,7 @@ typedef struct meta_data
 	int					stdin_flag;
 	int					pids;
 	int					ppid;
+	pid_t				last_pid;
 }						t_data;
 
 typedef struct redi_list
@@ -149,12 +150,18 @@ void	*t_data_alloc_err(t_data *meta);
 void	*t_tmp_alloc_err(t_tmp *node);
 void	wranning_msg(char *eof);
 
-/* initialize_meta_token.c*/
+/* initial/initialize_meta_token.c */
 t_path	*make_t_path(void);
 t_data	*initialize_meta_token(char **envp);
 
-/* initialize_disoable.c */
+/* initial/initialize_disoable.c */
 char	*initialize_oldpwd(t_path *tmp);
+
+/* initial/initialize_meta_token_tools.c */
+void	move_underbar_path(t_path *path);
+t_path	*init_key_value(char **envp);
+char	**copy_envp(char **envp);
+int		get_ppid(t_data *meta);
 
 /* signal_process.c */
 void	set_up_signal(t_data *meta);
@@ -224,59 +231,81 @@ int		check_ampersand(const char *str, int index);
 int		check_vartical_bar(const char *str, int index);
 int		check_operator_set(char const *str, int index);
 
-/* devideing_sub_token.c*/
+/* substitution/divideing_sub_token.c */
 char	*extract_partial_token(char *str, int idx, int *end, int *quote);
 char	*temporary_div_token(char *str, int *idx, int *quote);
 char	**dividing_sub_token(char *str, int len);
 
-/* deviding_copied_token.c */
+/* substitution/dividing_copied_token.c */
 t_tmp	*dividing_copied_token(char *str);
 
-/* substitute_token.c*/
+/* substitution/substitute_token.c */
 int		subtitute_dollar_sign(t_data *meta, t_list *tokens, char c);
 int		check_quote_valid(char *token);
 int		substitute_tokens(t_data *meata, t_list *tokens, char c);
 
-/* substitute_dollar_sign.c */
+/* substitution/substitute_dollar_sign.c */
 t_tmp	*do_substitute_dollar_sign(t_data *meta, char **str, char c);
 
-/* substitute_dollar_sign2.c*/
+/* substitution/substitute_dollar_sign2.c */
 int		check_split_point_str(char *str);
 
-/* substitute_dollar_sing3.c */
+/* substitution/substitute_dollar_sing3.c */
 t_tmp	*change_dollar_sign(t_data *meta, char *str);
 
-/* substitute_dollar_sign_check.c */
+/* substitution/substitute_dollar_sign_check.c */
 t_tmp	*pass_substitute(char *str);
 int		check_pass_substitute(char *str, char c);
 
-/* change_dollar_sign.c */
-int		check_except_substitution(t_tmp	*node);
-char	*copy_current_process_pid(void);
+/* substitution/change_dollar_sign.c */
+int		check_except_substitution(t_data *meta, t_tmp *node);
+char	*copy_current_process_pid(t_data *meta);
 char	*change_null_string(void);
 
-/*	change_dollar_underbar.c */
+/*	substitution/change_dollar_underbar.c */
 int		change_dollar_underbar(t_data *meta, t_cmd_list *exec_cmd);
 
-/* join_sub_tokens*/
+/* substitution/join_sub_tokens */
 int		join_sub_tokens(t_list *tokens, t_tmp *node, char c);
 
-/* substitute_wildcard3.c */
+/* substitution/substitute_wildcard.c */
 char	**open_multi_directory(char *path, char **f_list);
 int		substitute_wildcard(t_list *tokens);
 
-/* exclusive_use_wildcard_split.c */
+/* substitution/exclusive_use_wildcard_split.c */
 char	**exclusive_use_wildcard_split1(char *src, int len, int row, int idx);
 int		exclusive_use_wildcard_len(char *str);
 
-/* exclusive_use_wildcard_join.c */
+/* substitution/exclusive_use_wildcard_join.c */
 int		exclusive_use_wildcard_valid_check(char *path);
 int		exclusive_use_wildcard_join_len(char **paths);
 char	*exclusive_use_wildcard_join2(char **paths, int *row);
 char	**exclusive_use_wildcard_join1(char **paths, int len);
 
-/* remove_quote_set */
+/* substitution/remove_quote_set */
 int		remove_quote_tokens(t_list *node);
+
+/* substitution/mapping_pattern_start_n_center_filename.c */
+int		compare_squence_word1(char *f_list, int idx, char **path, int *row);
+int		matching_fisrt_pattern(char *f_list, char **path);
+char	**mapping_pattern_start_filname(char **path, char **f_list);
+int		matching_center_pattern(char *f_list, char **path);
+char	**mapping_center_filename(char **path, char **f_list);
+
+/* substitution/mapping_pattern_last_filename.c */
+int		compare_reverse_word(char *f_list, int idx, char **path, int *row);
+int		matching_last_pattern(char *f_list, char **path);
+char	**mapping_pattern_last_filname(char **path, char **f_list);
+
+/* substitution/mapping_pattern_side_filename.c */
+int		compare_squence_word2(char *f_list, int idx, char **path, int *row);
+int		matching_side_pattern(char *f_list, char **path);
+char	**mapping_pattern_side_filname(char **path, char **f_list);
+
+/* substitution/mapping_pattern_filename.c */
+char	**extract_path_in_f_list(char **f_list, char *path, int len);
+int		count_path_in_f_list(char **f_list, char *path);
+char	**mapping_pattern_filename(char *path, char **f_list);
 
 /* run_process/here_doc.c */
 int		here_doc(t_data *meta, t_list *tokens);
@@ -286,96 +315,68 @@ int		set_file_descriptor(t_data *meta, t_cmd_list *cmd);
 void	reset_file_descriptor(t_data *meta);
 
 /* run_process/pipe.c */
-int		run(t_data *meta);
+int		run(t_data *meta, t_cmd_list *cmd);
 
 /* run_process/run.c */
 void	*close_pipes(int **pipes);
-int		make_pipes(t_data *meta, t_cmd_list *cmd, int ***pipes);
+int		**create_pipes(int len);
+int		count_pipe_nodes(t_data *meta, t_cmd_list *cmd);
 void	set_pipe_io(t_data *meta, t_cmd_list *cmd, int **pipes, int row);
 
 /* run_process/external.c */
 void	external(t_data *meta, t_cmd_list *cmd, int **pipes, int row);
 
-
-/* utils.c */
+/* utils/utils.c */
 int		check_chr_not_quote_set(char *str, char c);
 int		search_chr_in_str(char *str, char c);
 int		are_all_characters_same(char *str, char c);
 char	*get_exit_no(void);
 char	**modify_least_matched_pattern(char **f_list, char *memo);
 
-/* utils2.c */
+/* utils/utils2.c */
 char	**change_system_error_msg(void);
 char	*search_value_using_key(t_path *path, char *src);
 char	*copy_conditional_index_range(char *str, int idx, int end, char c);
 char	*copy_index_range(char *str, int idx, int end);
 int		ck_part_of_special_chr(int c);
 
-/* utils3.c */
+/* utils/utils3.c */
 char	*copy_index_range_jump_quote(char *str, int idx, int end);
 char	**remove_all_same_str(char **str, char c);
 int		cnt_valid_split_point_chr_in_quote_set(char *path, char c, int quote);
 
-/* util_as_file1.c */
+/* utilsutil_as_file1.c */
 char	**take_filenames_basic(struct dirent *entry, DIR *dir, int len);
 char	**open_n_read_filenames(char *path, int len);
 int		count_file_in_directory(char *path);
 
-/* util_as_file2.c */
+/* utils/util_as_file2.c */
 int		change_only_wildcard_token(t_list *node);
 char	**get_root_filelist(void);
 char	**get_path_filelist(char *path);
 char	**get_current_filelist(void);
 
-/* open_directory1.c */
+/* utils/open_directory1.c */
 char	**open_path_low_rank(char **path);
 char	**open_root_directory(char *str, int p_len);
 char	**open_wildcard_directory(char *path);
 char	**open_current_directory(char *path);
 char	**open_multi_directory(char *path, char **f_list);
 
-/* open_directory2.c */
+/* utils/open_directory2.c */
 char	**split_last_slash_path(char *path);
 char	**join_path_n_f_list(char **f_list, char **div);
 
-/* open_directory3.c */
+/* utils/open_directory3.c */
 char	**div_f_list_on_slash(char **f_list, char **save);
 int		increase_idx_in_quote_set(char *path, char c, int idx, int quote);
 char	**take_pattern_in_path(char *path, char **div, int len, char c);
 char	**quote_conitional_split(char *path, char c);
 char	**matching_wildcard_pattern(char *path, char **tmp, char *copy);
 
-/* mapping_pattern_start_n_center_filename.c */
-int		compare_squence_word1(char *f_list, int idx, char **path, int *row);
-int		matching_fisrt_pattern(char *f_list, char **path);
-char	**mapping_pattern_start_filname(char **path, char **f_list);
-int		matching_center_pattern(char *f_list, char **path);
-char	**mapping_center_filename(char **path, char **f_list);
-
-/* mapping_pattern_last_filename.c */
-int		compare_reverse_word(char *f_list, int idx, char **path, int *row);
-int		matching_last_pattern(char *f_list, char **path);
-char	**mapping_pattern_last_filname(char **path, char **f_list);
-
-/* mapping_pattern_side_filename.c */
-int		compare_squence_word2(char *f_list, int idx, char **path, int *row);
-int		matching_side_pattern(char *f_list, char **path);
-char	**mapping_pattern_side_filname(char **path, char **f_list);
-
-/* mapping_pattern_filename.c */
-char	**extract_path_in_f_list(char **f_list, char *path, int len);
-int		count_path_in_f_list(char **f_list, char *path);
-char	**mapping_pattern_filename(char *path, char **f_list);
-
 /* othoer_functions.c*/
 int		count_only_single_chr_value_in_2d_arr(char **str, int row, char c);
 int		is_token_all_null_after_join(t_tmp *tmp);
-
-
-
-
-
-
 
 /*jemoon_add_code */
 void	free_exec_linked_list(t_cmd_list *list);

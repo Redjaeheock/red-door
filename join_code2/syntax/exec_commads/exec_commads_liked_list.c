@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/10 20:06:25 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/14 21:35:12 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ t_tokentype plag_pipe, t_tokentype plag_redi)
 	new = (t_cmd_list *)malloc(sizeof(t_cmd_list));
 	if (new == NULL)
 		return (NULL);
-	new->idx = 0;
 	new->str = NULL;
 	new->key = NULL;
 	new->f_list = NULL;

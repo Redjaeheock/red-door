@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 12:01:02 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/13 18:00:04 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/16 12:45:44 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int	change_dollar_underbar(t_data *meta, t_cmd_list *exec_cmd)
 		}
 		tmp = tmp->next;
 	}
+	printf("Not set '_' environment path\n");
 	return (0);
 }

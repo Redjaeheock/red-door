@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:59:43 by jahong            #+#    #+#             */
-/*   Updated: 2025/01/31 16:58:29 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/16 19:29:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,10 @@ char	*ft_itoa(int n)
 	if (!(len))
 		len = 1;
 	str = (char *)malloc(sizeof(char) * (len + 1 + flag));
-	if (!(str))
-		return (0);
+	if (str == NULL)
+		return (NULL);
 	change(str, n, len + flag, flag);
 	if (orgn == -2147483648)
 		str[len] += 1;
 	return (str);
 }
-/*
-#include <stdio.h>
-int main()
-{
-	int n = 5;
-	printf("%s", ft_itoa(n));
-	return (0);
-}*/

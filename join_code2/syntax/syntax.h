@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:38:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/08 15:04:48 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 12:09:03 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,8 @@ void		new_get_exec_cmd(t_list *tokens, t_cmd_list **exec_cmd);
 int			check_prev(t_cmd_list	*exec_cmd);
 int			check_next(t_cmd_list	*exec_cmd);
 int			check_redi(t_cmd_list	*exec_cmd);
-int			check_pipe(t_cmd_list	*exec_cmd);
+// int			check_pipe(t_cmd_list	*exec_cmd);
 void		exec_cmd_set_type(t_data *meta);
-
 
 /* pritnf_utils */
 /* pritnf_utils.c */

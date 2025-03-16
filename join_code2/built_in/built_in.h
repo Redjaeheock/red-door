@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/14 12:37:12 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/15 14:09:12 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	minishell_cd(t_data *meta, t_cmd_list *exec_cmd);
 /* echo */
 /* echo.c */
 int		check_option_n(char *str);
-void	minishell_echo(t_cmd_list *exec_cmd);
+void	minishell_echo(t_data *meta, t_cmd_list *exec_cmd);
 
 /* env */
 /* env.c */

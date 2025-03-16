@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:15:00 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/24 13:45:36 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/15 14:36:36 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	echo_print(t_cmd_list *exec_cmd, int i)
 	}
 }
 
-void	minishell_echo(t_cmd_list *exec_cmd)
+void	minishell_echo(t_data *meta, t_cmd_list *exec_cmd)
 {
 	int	i;
 

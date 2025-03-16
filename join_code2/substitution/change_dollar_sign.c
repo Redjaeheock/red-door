@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 18:35:13 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:12:36 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/16 19:31:03 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,16 @@ char	*change_null_string(void)
 	return (tmp);
 }
 
-char	*copy_current_process_pid(void)
+char	*copy_current_process_pid(t_data *meta)
 {
 	char	*nums;
 	char	*tmp;
 	int		idx;
 	int		len;
 
-	nums = "54321"; //프로세스 ID itoa 처리
+	nums = itoa(meta->ppid); //ltoa 로 변경 필요
+	if (nums == NULL)
+		return (memory_alloc_error());
 	idx = 0;
 	len = ft_strlen(nums);
 	tmp = (char *)malloc(sizeof(char) * (len + 1));
