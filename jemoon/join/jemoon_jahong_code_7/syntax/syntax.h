@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:38:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/08 15:04:48 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 12:05:57 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,18 @@ void		new_get_exec_cmd(t_list *tokens, t_cmd_list **exec_cmd);
 
 /* exec_commads_set_type */
 /* exec_commads_set_type.c */
+void		exec_cmd_set_type(t_data *meta);
+
+/*exec_commads_check_type_1.c*/
 int			check_prev(t_cmd_list	*exec_cmd);
 int			check_next(t_cmd_list	*exec_cmd);
 int			check_redi(t_cmd_list	*exec_cmd);
-int			check_pipe(t_cmd_list	*exec_cmd);
-void		exec_cmd_set_type(t_data *meta);
 
+/*exec_commads_check_type_2.c*/
+int			check_pipe_branch(t_cmd_list	*exec_cmd);
+int			check_and_branch(t_cmd_list	*exec_cmd);
+int			check_or_branch(t_cmd_list	*exec_cmd);
+int			is_cmd_branch(t_cmd_list	*exec_cmd);
 
 /* pritnf_utils */
 /* pritnf_utils.c */

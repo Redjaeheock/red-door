@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/15 10:06:43 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 11:49:53 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int		is_valid_var_name(char *str, int equal);
 /* export_rest.c */
 void	rest_export(t_data *meta, t_cmd_list *exec_cmd, int export_len);
 int		search_equal(char *str);
-
 
 /* export_sort_uitls.c */
 int		ft_test(char *s1, const char *s2);

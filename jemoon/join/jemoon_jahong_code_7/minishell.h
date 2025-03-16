@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/15 13:41:03 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 12:09:39 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -372,12 +372,6 @@ char	**mapping_pattern_filename(char *path, char **f_list);
 /* othoer_functions.c*/
 int		count_only_single_chr_value_in_2d_arr(char **str, int row, char c);
 int		is_token_all_null_after_join(t_tmp *tmp);
-
-
-
-
-
-
 
 /*jemoon_add_code */
 void	free_exec_linked_list(t_cmd_list *list);

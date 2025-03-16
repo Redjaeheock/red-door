@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:47:07 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/15 10:24:19 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 11:49:36 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	minishell_exit(t_data *meta, t_cmd_list *exec_cmd)
 {
 	int	exit_len;
 	int	exit_no;
-	
+
 	g_ws = 0;
 	printf("exit\n");
 	exit_len = sndry_arr_len((void **)exec_cmd->str);
