@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/26 17:31:45 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/08 15:38:59 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,34 +74,67 @@ char	**copy_envp(char **envp)
 	return (cp_envp);
 }
 
+int	extract_ppid(char *buffer)
+{
+	char	*tmp;
+	char	*end;
+
+	tmp = ft_strnstr(buffer, "Pid:", ft_strlen(buffer));
+	if (tmp == NULL)
+		return (0);
+	end = ft_strchr(tmp, '\n');
+	if (end == NULL)
+	{
+		end = ft_strchr(tmp, '\0');
+		if (end == NULL)
+			return ((printf("bash: system error file EOF\n"), -1));
+	}
+	*end = '\0';
+	while (ft_isdigit(*tmp) == 0 && *tmp != '\0')
+		tmp++;
+	if (*tmp == '\0')
+		return (0);
+	return (atoi(tmp));
+}
+
 unsigned int	get_ppid(t_data *meta)
 {
-	DIR		*dir;
-	struct dirent	*entry;
-	int		pid;
+	char	buffer[BUFFER_SIZE];
+	ssize_t	buffer_size;
+	int		fd;
+	int		ppid;
 
-	pid = -1;	
-	dir = opendir("/proc");
-	if (dir == NULL)
-		return (pid); //시스템 에러 메시지
+	fd = open("/proc/self/status", O_RDONLY);
+	if (fd < 0) 
+		return ((printf("bash: system error file open\n"), -1));
 	while (1)
 	{
-		entry = readdir(dir);
-		if (entry == NULL)
+		buffer_size = read(fd, buffer, BUFFER_SIZE - 1);
+		if (buffer_size < 0)
+			return ((close(fd), 0));
+		buffer[buffer_size] = '\0'; 
+		ppid = extract_ppid(buffer);
+		if (ppid == -1)
 			break ;
-		
+		if (ppid == 0)
+			continue ;
+		else
+			return ((close(fd), ppid));
 	}
-	closedir(dir);
-	return (pid);
+	return ((close(fd), -1));
 }
 
 void	meta_token_init_memvar(t_data *meta)
 {
+	meta->oldstdin = -1;
+	meta->oldstdout = -1;
+	meta->oldstderr = -1;
 	meta->heredoc = 0;
 	meta->stdin_flag = 0;
 	meta->pids = 0;
 	meta->ppid = 0;
 	meta->tokens = NULL;
+	meta->exec_cmd = NULL;
 	meta->exp = NULL;
 	meta->env = NULL;
 	meta->envm = NULL;
@@ -123,6 +156,8 @@ t_data	*initialize_meta_token(char **envp)
 		return ((memory_alloc_error(), NULL));
 	meta_token_init_memvar(meta);
 	meta->ppid = get_ppid(meta);
+	if (meta->ppid == -1)
+		return (free_meta_token(meta));
 	meta->envm = copy_envp(envp);
 	if (meta->envm == NULL)
 		return (free_meta_token(meta));

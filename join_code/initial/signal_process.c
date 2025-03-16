@@ -6,11 +6,17 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:23:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/21 20:39:19 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/02 18:41:26 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	child_process_kill(void)
+{
+	printf("\n");
+	exit(130);
+}
 
 void	flag_check(int signum, siginfo_t *tmp, void *info)
 {
@@ -25,8 +31,12 @@ void	flag_check(int signum, siginfo_t *tmp, void *info)
 	else
 	{
 		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 1);
+		if (meta->pids != -1)
+		{
+			rl_on_new_line();
+			rl_replace_line("", 1);
+		}
+		//printf("%d\n", getpid());
 		if (meta->heredoc != 1)
 			rl_redisplay();
 		else

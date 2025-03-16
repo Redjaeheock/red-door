@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 18:35:13 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/26 11:08:57 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/27 16:50:54 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ char	*change_null_string(void)
 	return (tmp);
 }
 
-char	*copy_current_process_pid(void)
+char	*copy_current_process_pid(t_data *meta)
 {
 	char	*nums;
 	char	*tmp;
 	int		idx;
 	int		len;
 
-	nums = "54321"; //프로세스 ID itoa 처리
+	nums = ft_itoa(meta->ppid); //프로세스 ID itoa 처리
 	idx = 0;
 	len = ft_strlen(nums);
 	tmp = (char *)malloc(sizeof(char) * (len + 1));
@@ -42,5 +42,6 @@ char	*copy_current_process_pid(void)
 		idx++;
 	}
 	tmp[idx] = '\0';
+	free(nums);
 	return (tmp);
 }

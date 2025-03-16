@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 18:35:13 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:12:36 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/16 17:07:07 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*change_null_string(void)
 	return (tmp);
 }
 
-char	*copy_current_process_pid(void)
+char	*copy_current_process_pid(t_data *meta)
 {
 	char	*nums;
 	char	*tmp;

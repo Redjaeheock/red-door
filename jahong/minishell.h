@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/21 20:45:53 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/16 17:58:16 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ char	*ft_strdup(const char *s);
 int		sndry_arr_len(void **array);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
-char	*ft_atoi(const char *nptr);
+int		ft_atoi(const char *nptr);
 char	*ft_strjoin_v2(const char *s1, const char *s2);
 char	*ft_str_head_str(const char *big, const char *little);
 char	*ft_str_tail_str(const char *big, const char *little);
@@ -211,8 +211,8 @@ t_tmp	*pass_substitute(char *str);
 int		check_pass_substitute(char *str, char c);
 
 /* change_dollar_sign.c */
-int		check_except_substitution(t_tmp	*node);
-char	*copy_current_process_pid(void);
+int		check_except_substitution(t_data *meta, t_tmp *node);
+char	*copy_current_process_pid(t_data *meta);
 char	*change_null_string(void);
 
 /* join_sub_tokens*/

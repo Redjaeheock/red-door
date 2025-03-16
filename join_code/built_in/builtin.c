@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:32:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/25 17:16:32 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/08 15:58:34 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ pid_t	builtin(t_data *meta, t_cmd_list *exec_cmd)
 		meta->pids++;
 		pid = fork();
 	}
-	printf("run builtin\n");
 	if (pid == 0)
 	{
 		// 글로벌 exit 번호로 에러 구분시키기
@@ -49,14 +48,11 @@ pid_t	builtin(t_data *meta, t_cmd_list *exec_cmd)
 			exit(0);
 		}
 	}
-	// else
-	// 	wait(&status);
 	return (pid);
 }
 
 int	compare_builtin_list(t_data *meta, t_cmd_list *exec_cmd)
 {
-	printf("check list builtin\n");
 	if (ft_strcmp(exec_cmd->str[0], "exit") == 0)
 		return (1);
 	if (ft_strcmp(exec_cmd->str[0], "echo") == 0)

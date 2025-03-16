@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commads_liked_list.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 17:04:59 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/28 15:30:33 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_tokentype plag_pipe, t_tokentype plag_redi)
 		return (NULL);
 	new->str = str;
 	new->key = NULL;
+	new->type_cmd = CMD;
 	if (AND <= plag_pipe && plag_pipe <= PIPE)
 		new->type_pipe = plag_pipe;
 	else

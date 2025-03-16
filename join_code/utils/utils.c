@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:17:50 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:48:25 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/27 17:03:36 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	check_chr_not_quote_set(char *str, char c)
+int	check_chr_not_quote_set(char *str, char c)
 {
 	int		idx;
 	int		quote;
@@ -30,7 +30,7 @@ char	check_chr_not_quote_set(char *str, char c)
 	return (0);
 }
 
-char	search_chr_in_str(char *str, char c)
+int	search_chr_in_str(char *str, char c)
 {
 	int	idx;
 	int	flag;
@@ -49,7 +49,7 @@ char	search_chr_in_str(char *str, char c)
 	return (flag);
 }
 
-char	are_all_characters_same(char *str, char c)
+int	are_all_characters_same(char *str, char c)
 {
 	int	idx;
 	int	flag;

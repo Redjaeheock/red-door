@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:24:49 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/19 02:11:23 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/16 17:07:04 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ int	choice_null_case(t_tmp *node)
 	return (1);
 }
 
-int	check_except_substitution(t_tmp	*node)
+int	check_except_substitution(t_data *meta, t_tmp *node)
 {
 	if (node->key == NULL)
 		return (1);
 	if (ft_strcmp(node->key, "$$") == 0)
 	{
-		node->value = copy_current_process_pid();
+		node->value = copy_current_process_pid(meta);
 		if (node->value == NULL)
 			return (-1);
 		return (1);
@@ -54,7 +54,7 @@ int	search_in_envpath(t_data *meta, t_tmp*node)
 	int		result;
 
 	tmp = meta->env;
-	result = check_except_substitution(node);
+	result = check_except_substitution(meta, node);
 	if (result != 0)
 		return (result);
 	while (tmp != NULL)

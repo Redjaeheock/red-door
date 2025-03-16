@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printf_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:58:04 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/22 18:52:29 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/02/28 11:35:58 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	printf_exec_commads(t_cmd_list *exec_commands)
 		}
 		else
 			printf("[NULL] ");
-		printf(": [%s] [%s] ", token_type_to_str_1(exec_commands->type_pipe), \
+		printf(": [%s] [%s] [%s] ", token_type_to_str_1(exec_commands->type_cmd), token_type_to_str_1(exec_commands->type_pipe), \
 		token_type_to_str_1(exec_commands->type_re));
 		if (exec_commands->key != NULL)
 			printf("key [%s] \n", exec_commands->key);

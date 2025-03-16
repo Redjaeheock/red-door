@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/26 11:47:41 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/05 16:48:40 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,9 @@ int	main(int argc, char **argv, char **envp)
 	//signal(SIGINT, SIG_IGN);
 	(void)argc, (void)argv;
 	meta = initialize_meta_token(envp);
-	meta->ppid = get_ppid(meta);
-	while (1)
+	while (meta != NULL)
 	{
-		str = readline("bash : ");
+		str = readline("bash: ");
 		if (str == NULL)
 			break ;
 		i = mn_split(meta, &str, 'c');
@@ -149,7 +148,10 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		if (trade_exec_cmd(meta, &meta->exec_cmd, &meta->tokens, &str) < 0)
+		{
+			printf("break\n");
 			break ;
+		}
 		run(meta);
 		rutin_free(meta, str);
 	}

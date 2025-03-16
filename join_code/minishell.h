@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/26 19:01:07 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/08 15:54:04 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <sys/wait.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4096
+# endif
 
 extern int g_ws;
 
@@ -65,6 +69,7 @@ typedef struct start_list
 {
 	struct start_list	*prev;
 	struct start_list	*next;
+	t_tokentype			type_cmd;
 	t_tokentype			type_pipe;
 	t_tokentype			type_re;
 	char				*key;
@@ -93,6 +98,9 @@ typedef struct meta_data
 	char				*exit_n;
 	char				*pid_n;
 	char				*lval;
+	int					oldstdin;
+	int					oldstdout;
+	int					oldstderr;
 	int					heredoc;
 	int					stdin_flag;
 	int					pids;
@@ -131,9 +139,10 @@ void	wranning_msg(char *eof);
 t_data	*initialize_meta_token(char **envp);
 
 /* signal_process.c */
-void	handle_heredoc(int signum, sigset_t *preset);
-void	handle_rollback(int signum, sigset_t *preset);
+// void	handle_heredoc(int signum, sigset_t *preset);
+// void	handle_rollback(int signum, sigset_t *preset);
 void	set_up_signal(t_data *meta);
+void	child_process_kill(void);
 
 /* here_doc */
 int		here_doc(t_data *meta, t_list *tokens);
@@ -158,11 +167,14 @@ int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s);
 int		sndry_arr_len(void **array);
 char	**ft_split(char const *s, char c);
+int		ft_atoi(const char *nptr);
 char	*ft_itoa(int n);
 char	*ft_strjoin_v2(const char *s1, const char *s2);
+char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_str_head_str(const char *big, const char *little);
 char	*ft_str_tail_str(const char *big, const char *little);
 char	**ft_add_str_to_2d_arr(char **arr, char *str);
@@ -226,8 +238,8 @@ t_tmp	*pass_substitute(char *str);
 int		check_pass_substitute(char *str, char c);
 
 /* change_dollar_sign.c */
-int		check_except_substitution(t_tmp	*node);
-char	*copy_current_process_pid(void);
+int		check_except_substitution(t_data *meta, t_tmp *node);
+char	*copy_current_process_pid(t_data *meta);
 char	*change_null_string(void);
 
 /*	change_dollar_underbar.c */
@@ -254,9 +266,9 @@ char	**exclusive_use_wildcard_join1(char **paths, int len);
 int		remove_quote_tokens(t_list *node);
 
 /* utils.c*/
-char	check_chr_not_quote_set(char *str, char c);
-char	search_chr_in_str(char *str, char c);
-char	are_all_characters_same(char *str, char c);
+int		check_chr_not_quote_set(char *str, char c); // 반환 자료형 수정 char -> int
+int		search_chr_in_str(char *str, char c); // 반환 자료형 수정 char -> int
+int		are_all_characters_same(char *str, char c); // 반환 자료형 수정 char -> int
 char	*get_exit_no(void);
 char	**modify_least_matched_pattern(char **f_list, char *memo);
 

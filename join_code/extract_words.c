@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:13:00 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 17:55:29 by jahong           ###   ########.fr       */
+/*   Updated: 2025/02/27 17:55:43 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,30 @@
 
 char	**extract_path(t_path *path)
 {
+	char	**tmp;
 	char	**paths;
+	int		len;
+	int		row;
 
 	while ((path != NULL) && (ft_strcmp(path->key, "PATH") != 0))
 		path = path->next;
-	paths = ft_split(path->value, ':');
+	tmp = ft_split(path->value, ':');
+	if (tmp == NULL)
+		return (memory_alloc_error());
+	len = sndry_arr_len((void **)tmp);
+	paths = (char **)malloc(sizeof(char *) * (len + 1));
 	if (paths == NULL)
 		return (memory_alloc_error());
+	row = 0;
+	while (tmp[row] != NULL)
+	{
+		paths[row] = ft_strjoin_v2(tmp[row], "/");
+		if (paths[row] == NULL)
+			return (free_multi_2d_arrs((void **)paths, (void **)tmp));
+		row++;
+	}
+	paths[row] = NULL;
+	free_sndry_arr((void **)tmp);
 	return (paths);
 }
 

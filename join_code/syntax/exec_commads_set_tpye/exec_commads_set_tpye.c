@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commads_set_tpye.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 20:41:02 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/07 19:58:00 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/08 14:39:26 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ int	check_redi(t_cmd_list	*exec_cmd)
 int	check_pipe(t_cmd_list	*exec_cmd)
 {
 	if (AND <= exec_cmd->type_pipe && exec_cmd->type_pipe <= PIPE)
-		return (1);
+	{
+		if (exec_cmd->str == NULL && exec_cmd->type_re == NONE)
+			return (1);
+	}
 	return (0);
 }
 
@@ -48,15 +51,21 @@ void	exec_cmd_set_tpye(t_cmd_list **exec_cmd)
 	tmp = *exec_cmd;
 	while (*exec_cmd)
 	{
-		if (check_next(*exec_cmd) && check_pipe((*exec_cmd)->next))
+		if (check_pipe((*exec_cmd)))
 		{
-			(*exec_cmd)->type_pipe = (*exec_cmd)->next->type_pipe;
-			if (check_next((*exec_cmd)->next) && \
-			check_redi((*exec_cmd)->next->next))
-				(*exec_cmd)->type_re = (*exec_cmd)->next->next->type_re;
+			(*exec_cmd)->prev->type_pipe = PIPE;
+			// if ((*exec_cmd)->next != NULL)
+				(*exec_cmd)->next->type_pipe = PIPE;
+			(*exec_cmd)->type_cmd = NONE;
+			// if (check_next((*exec_cmd)->next) && \
+			// check_redi((*exec_cmd)->next->next))
+			// 	(*exec_cmd)->type_re = (*exec_cmd)->next->next->type_re;
 		}
-		else if (check_next(*exec_cmd) && check_redi((*exec_cmd)->next))
-			(*exec_cmd)->type_re = (*exec_cmd)->next->type_re;
+		else if (check_redi((*exec_cmd)))
+		{
+			(*exec_cmd)->type_cmd = NONE;
+			(*exec_cmd)->next->type_cmd = NONE;
+		}
 		*exec_cmd = (*exec_cmd)->next;
 	}
 	*exec_cmd = tmp;
