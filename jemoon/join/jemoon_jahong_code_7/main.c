@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 13:17:41 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 15:37:41 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,6 @@ int	mn_split(t_data *meta, char **str, char c)
 	else
 		add_back_linked_list(meta->tokens, tokens);
 	return (1);
-}
-
-void	add_history_and_free(char **str)
-{
-	if (*str == NULL)
-		return ;
-	add_history(*str);
-	free(*str);
-	*str = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 10:33:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/15 20:02:38 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 14:30:43 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ char	*make_str(char *str, char *add_str)
 		return (str);
 	combine_strings(return_str, str, add_str);
 	free(str);
+	str = NULL;
 	free(add_str);
+	add_str = NULL;
 	return (return_str);
 }
 

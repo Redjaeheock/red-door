@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   free_history.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 19:51:02 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 15:35:15 by jemoon           ###   ########.fr       */
+/*   Created: 2025/03/16 15:00:44 by jemoon            #+#    #+#             */
+/*   Updated: 2025/03/16 15:01:38 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_strchr(const char *s, int c)
+void	add_history_and_free(char **str)
 {
-	int	idx;
-
-	idx = 0;
-	while (s[idx])
-	{
-		if (s[idx] == c)
-			return (&((char *)s)[idx]);
-		idx++;
-	}
-	if (s[idx] == c)
-		return (&((char *)s)[idx]);
-	return (NULL);
+	if (*str == NULL)
+		return ;
+	add_history(*str);
+	free(*str);
+	*str = NULL;
 }

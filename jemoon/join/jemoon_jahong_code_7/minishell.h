@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 13:17:09 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 14:36:08 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # define _POSIX_C_SOURCE 200809L
 # define _DEFAULT_SOURCE
 
-# include <readline/readline.h>    /* readline 함수를 사용하기위한 헤더 */
-# include <readline/history.h>     /* add_history 함수를 사용하기위한 헤더 */
-# include <stdio.h>                /* printf 함수를 사용하기위한 헤더 */
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdio.h>
 # include <stdlib.h>
-# include <dirent.h>               /* opendir, readdir, closedir 함수를 사용하기 위한 헤더*/
+# include <dirent.h>
 # include <string.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -33,7 +33,7 @@
 #  define BUFFER_SIZE 4096
 # endif
 
-extern int g_ws;
+extern int	g_ws;
 
 typedef enum tokentype
 {
@@ -298,7 +298,6 @@ void	set_pipe_io(t_data *meta, t_cmd_list *cmd, int **pipes, int row);
 /* run_process/external.c */
 void	external(t_data *meta, t_cmd_list *cmd, int **pipes, int row);
 
-
 /* utils.c */
 int		check_chr_not_quote_set(char *str, char c);
 int		search_chr_in_str(char *str, char c);
@@ -379,6 +378,5 @@ int		rutin_free(t_data *meta, char *str);
 void	add_history_and_free(char **str);
 void	normalize_cmd(t_data *meta);
 void	reset_stdin_fileno(t_data *meta);
-void	add_history_and_free(char **str);
 
 #endif
