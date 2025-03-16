@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/15 17:38:51 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 16:57:51 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 			if (check_quote_valid(tmp->token) == 0)
 				return (0);
 		}
-		/*
 		if (subtitute_dollar_sign(meta, tmp, c) == 0)
 			return (0);
 		if (c == 'c')
@@ -105,7 +104,6 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 			if (remove_quote_tokens(tmp) == 0)
 				return (0);
 		}
-		*/
 		tmp = tmp->next;
 	}
 	return (1);

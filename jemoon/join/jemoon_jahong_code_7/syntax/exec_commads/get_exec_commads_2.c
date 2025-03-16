@@ -6,14 +6,14 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:11:39 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/28 14:06:57 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 16:02:29 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 #include "../syntax.h"
 
-void	get_exec_cmd_2(t_list *tokens, t_cmd_list **exec_cmd)
+void	get_exec_cmd(t_list *tokens, t_cmd_list **exec_cmd)
 {
 	t_tokentype	plag_pipe;
 	t_tokentype	plag_redi;

@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 10:58:16 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/16 15:56:32 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 16:02:25 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_list **tokens, char **str)
 		return (-1);
 	if (validate_bash_syntax(tokens) == -1)
 		return (0);
-	get_exec_cmd_2(*tokens, exec_cmd);
+	get_exec_cmd(*tokens, exec_cmd);
 	meta->tokens = free_t_list(meta->tokens);
 	if (exec_cmd == NULL)
 		return (0);

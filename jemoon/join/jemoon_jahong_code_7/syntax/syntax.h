@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:38:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/16 12:05:57 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 16:02:26 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char		*set_string_2(char *tokens, int cmd_size);
 char		**set_string_array_2(t_list **tokens, int cmd_size);
 char		*get_key_string(t_list *tokens);
 char		*get_key(t_list *tokens, int check_redi);
-void		get_exec_cmd_2(t_list *tokens, t_cmd_list **exec_cmd);
+void		get_exec_cmd(t_list *tokens, t_cmd_list **exec_cmd);
 
 /* get_exec_commads_2_utils.c */
 void		get_commads_f_list(char **string_array, t_list **tokens, \

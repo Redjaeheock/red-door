@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/15 13:41:26 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 17:45:42 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	extract_ppid(char *buffer)
 		tmp++;
 	if (*tmp == '\0')
 		return (0);
-	return (atoi(tmp));
+	return (ft_atoi(tmp));
 }
 
 unsigned int	get_ppid(t_data *meta)
