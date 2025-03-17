@@ -1,0 +1,11 @@
+[ls] [-1] : [NONE] [OUT_REDEC] 
+[>] : [NONE] [OUT_REDEC] 
+[test4] : [NONE] [OUT_REDEC] 
+[>] : [NONE] [OUT_REDEC] 
+[test5] : [NONE] [NONE] 
+성공!
+[?2004hbash : ls
+[?2004l[ls] : [NONE] [NONE] 
+성공!
+[?2004hbash : ^C[?2004l
+bash : [?2004h[?2004l
