@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 10:45:22 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/14 14:22:39 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/17 00:48:05 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,20 @@ int	unset_key(t_path **exp, char *str)
 	return (0);
 }
 
+void	unset_meta_date(t_data *meta, char *str)
+{
+	if (ft_strcmp(str, "PATH") == 0)
+	{
+		free_sndry_arr((void **)meta->path);
+		meta->path = NULL;
+	}
+	if (ft_strcmp(str, "OLDPWD") == 0)
+	{
+		free(meta->oldpwd);
+		meta->oldpwd = NULL;
+	}
+}
+
 void	unset_export(t_data *meta, t_cmd_list *exec_cmd, int unset_len)
 {
 	int	i;
@@ -61,17 +75,10 @@ void	unset_export(t_data *meta, t_cmd_list *exec_cmd, int unset_len)
 			continue ;
 		}
 		if (check_option(exec_cmd->str[1]) == 1)
-		{
-			builtin_error(exec_cmd->str[1], 62);
-			return ;
-		}
+			return (builtin_error(exec_cmd->str[1], 62));
 		unset_key(&meta->exp, exec_cmd->str[i]);
 		unset_key(&meta->env, exec_cmd->str[i]);
-		if (ft_strcmp(exec_cmd->str[i], "OLDPWD") == 0)
-		{
-			free(meta->oldpwd);
-			meta->oldpwd = NULL;
-		}
+		unset_meta_date(meta, exec_cmd->str[i]);
 		i++;
 	}
 }

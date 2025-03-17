@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_utils_path.c                                    :+:      :+:    :+:   */
+/*   cd_execute_path_utils_1.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 11:01:51 by jemoon            #+#    #+#             */
-/*   Updated: 2025/02/18 17:10:20 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 21:09:24 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	count_slash(char *str, char c)
 		}
 		i++;
 	}
-	printf("count [%d]", count);
 	return (count);
 }
 
@@ -63,7 +62,6 @@ char	*remove_back_path(char *pwd, int len)
 	make_back_path(pwd, back_path, len);
 	free(pwd);
 	pwd = NULL;
-	printf("len = [%d]\n", len);
 	return (back_path);
 }
 

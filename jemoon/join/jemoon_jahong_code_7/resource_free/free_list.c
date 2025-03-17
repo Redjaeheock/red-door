@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/24 16:20:46 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/16 23:21:45 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	*free_t_data(t_data *meta)
 
 void	*free_meta_token(t_data *meta)
 {
+	if (meta == NULL)
+		return (NULL);
 	if (meta->lval != NULL)
 		free(meta->lval);
 	if (meta->pid_n != NULL)
@@ -73,13 +75,21 @@ void	*free_meta_token(t_data *meta)
 	if (meta->pwd != NULL)
 		free(meta->pwd);
 	if (meta->oldpwd != NULL)
+	{
 		free(meta->oldpwd);
+	}
 	if (meta->path != NULL)
+	{
+		printf("check1\n");
 		free_sndry_arr((void **)meta->path);
-	if (meta->exp != NULL)
-		free_t_path(meta->exp);
+	}
 	if (meta->env != NULL)
 		free_t_path(meta->env);
+	if (meta->exp != NULL)
+	{
+		printf("check2\n");
+		free_t_path(meta->exp);
+	}
 	if (meta->envm != NULL)
 		free_sndry_arr((void **)meta->envm);
 	if (meta->tokens != NULL)
@@ -87,6 +97,10 @@ void	*free_meta_token(t_data *meta)
 	if (meta->exec_cmd != NULL)
 		free_exec_linked_list(meta->exec_cmd);
 	if (meta != NULL)
+	{
+		printf("check3\n");
 		free_t_data(meta);
+	}
+	printf("check4\n");
 	return (NULL);
 }
