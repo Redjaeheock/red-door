@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_utils.c                                         :+:      :+:    :+:   */
+/*   export_name_check_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 10:57:08 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/17 16:53:27 by jemoon           ###   ########.fr       */
+/*   Created: 2025/02/07 10:44:55 by jemoon            #+#    #+#             */
+/*   Updated: 2025/03/17 20:13:42 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,41 @@
 #include "../../syntax/syntax.h"
 #include "../built_in.h"
 
-int	find_node(t_path *env, char *key)
+int	is_valid_env_char(int c)
 {
-	t_path	*temp;
+	if (('A' <= c && c <= 'Z') || \
+		('a' <= c && c <= 'z') || \
+		('0' <= c && c <= '9') || \
+		(c == '_'))
+		return (1);
+	return (0);
+}
 
-	temp = env;
-	while (temp)
+int	search_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
-		if (ft_strcmp(temp->key, key) == 0)
-			return (1);
-		temp = temp->next;
+		if (str[i] == '=')
+			return (i);
+		i++;
 	}
 	return (0);
 }
 
-char	*get_env(t_path *env, char *str)
+int	is_invalid_number_start(char *str, int equal)
 {
-	t_path	*temp;
-	char	*value;
-
-	temp = env;
-	while (temp != NULL)
+	if ('0' <= str[0] && str[0] <= '9')
 	{
-		if (ft_strcmp(temp->key, str) == 0)
-		{
-			value = ft_strdup(temp->value);
-			if (value == NULL)
-				return (NULL);
-			return (value);
-		}
-		temp = temp->next;
+		builtin_error(str, 51);
+		return (0);
 	}
-	return (NULL);
+	if ('=' == str[0])
+	{
+		builtin_error(str, 51);
+		return (0);
+	}
+	return (1);
 }
