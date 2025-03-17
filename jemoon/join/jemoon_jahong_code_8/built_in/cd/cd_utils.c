@@ -1,0 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd_utils.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/01 10:57:08 by jemoon            #+#    #+#             */
+/*   Updated: 2025/03/17 16:53:27 by jemoon           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../minishell.h"
+#include "../../syntax/syntax.h"
+#include "../built_in.h"
+
+int	find_node(t_path *env, char *key)
+{
+	t_path	*temp;
+
+	temp = env;
+	while (temp)
+	{
+		if (ft_strcmp(temp->key, key) == 0)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
+}
+
+char	*get_env(t_path *env, char *str)
+{
+	t_path	*temp;
+	char	*value;
+
+	temp = env;
+	while (temp != NULL)
+	{
+		if (ft_strcmp(temp->key, str) == 0)
+		{
+			value = ft_strdup(temp->value);
+			if (value == NULL)
+				return (NULL);
+			return (value);
+		}
+		temp = temp->next;
+	}
+	return (NULL);
+}
