@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:41:03 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/17 00:39:48 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/17 17:54:44 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*path_check_into_env(t_data *meta, t_cmd_list *tmp)
 	int		row;
 
 	row = 0;
-	if (meta->path == NULL)
+	if (meta->path == NULL && access(tmp->str[0], X_OK) == -1)
 		return ((perror(tmp->str[0]), NULL));
 	while (meta->path[row] != NULL)
 	{
@@ -73,7 +73,7 @@ void	external(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
 	pid = fork();
 	if (pid == 0)
 	{
-		// 자식 프로세스 시그널 처리
+		set_up_signal_child_process(meta);
 		if (pipes != NULL && set_file_descriptor(meta, cmd) == 0)
 		{
 			free_resources(meta, pipes, NULL);
@@ -90,5 +90,8 @@ void	external(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
 		}
 	}
 	else
+	{
+		signal(SIGINT, SIG_IGN);
 		meta->last_pid = pid;
+	}
 }

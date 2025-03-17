@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:23:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 23:16:56 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/17 11:44:44 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void	flag_check(int signum, siginfo_t *tmp, void *info)
 	}
 }
 
+void	child_process_signal_handler(int signum, siginfo_t *tmp, void *info)
+{
+	exit(130);
+}
+
 void	set_up_signal(t_data *meta)
 {
 	struct sigaction	sig;
@@ -48,6 +53,16 @@ void	set_up_signal(t_data *meta)
 	sigemptyset(&sig.sa_mask);
 	sig.sa_flags = SA_SIGINFO;
 	sig.sa_sigaction = flag_check;
+	signal(SIGQUIT, SIG_IGN);
+	sigaction(SIGINT, &sig, NULL);
+}
+
+void	set_up_signal_child_process(t_data	*meta)
+{
+	struct sigaction	sig;
+	sigemptyset(&sig.sa_mask);
+	sig.sa_flags = SA_SIGINFO;
+	sig.sa_sigaction = child_process_signal_handler;
 	signal(SIGQUIT, SIG_IGN);
 	sigaction(SIGINT, &sig, NULL);
 }

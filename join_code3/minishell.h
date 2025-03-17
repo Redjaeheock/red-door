@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 17:17:17 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/17 17:44:19 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ int		get_ppid(t_data *meta);
 
 /* signal_process.c */
 void	set_up_signal(t_data *meta);
+void	set_up_signal_child_process(t_data	*meta);
 
 /* linked_list.c */
 t_list	*create_linked_list(char *str);

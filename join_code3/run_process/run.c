@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:34:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 16:38:18 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/17 17:54:45 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	wait_for_process_reclaim(t_data *meta)
 		meta->pids--;
 	}
 	g_ws = (result >> 8) & 0xFF;
+	set_up_signal(meta);
 }
 
 void	redirect_with_pipe(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
