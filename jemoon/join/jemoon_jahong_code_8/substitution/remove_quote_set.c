@@ -1,0 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   remove_quote_set.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/01 10:56:37 by jahong            #+#    #+#             */
+/*   Updated: 2025/02/14 18:35:24 by jahong           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+char	*copy_quote_set_jump(char *s, char *tmp)
+{
+	int		quote;
+	int		idx;
+	int		n;
+
+	quote = 0;
+	idx = 0;
+	n = 0;
+	while (s[idx] != '\0')
+	{
+		quote = check_quote_pair(s[idx], quote);
+		if (s[idx] == '\'' && quote == 1)
+			idx++;
+		else if (s[idx] == '"' && quote == 2)
+			idx++;
+		else if (quote == 0 && (s[idx] == '"' || s[idx] == '\''))
+			idx++;
+		else
+		{
+			tmp[n] = s[idx];
+			n++;
+			idx++;
+		}
+	}
+	tmp[n] = '\0';
+	return (tmp);
+}
+
+int	keep_quote_set(t_list *node)
+{
+	if (node->token[0] == '"' && ft_strcmp(node->token, "\"\"") == 0)
+	{
+		if (node->key == NULL)
+		{
+			node->key = ft_strdup(node->token);
+			if (node->key == NULL)
+				return (0);
+		}
+	}
+	else if (node->token[0] == '\'' && ft_strcmp(node->token, "''") == 0)
+	{
+		if (node->key == NULL)
+		{
+			node->key = ft_strdup(node->token);
+			if (node->key == NULL)
+				return (0);
+		}
+	}
+	return (1);
+}
+
+int	remove_quote_tokens(t_list *node)
+{
+	char	*str;
+	int		len;
+
+	len = quote_set_jump_len(node->token);
+	if (len == 0 && node->token == NULL)
+		return (1);
+	if (keep_quote_set(node) == 0)
+		return (0);
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (str == NULL)
+		return (0);
+	str = copy_quote_set_jump(node->token, str);
+	if (node->token != NULL)
+		free(node->token);
+	node->token = str;
+	return (1);
+}
