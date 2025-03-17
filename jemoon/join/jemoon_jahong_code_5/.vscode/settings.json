@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "minishell.h": "c",
+    "type_traits": "c",
+    "sstream": "c",
+    "regex": "c",
+    "cstdlib": "c",
+    "syntax.h": "c",
+    "wait.h": "c"
+  }
+}

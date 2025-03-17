@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "built_in.h": "c",
+        "syntax.h": "c",
+        "cmath": "cpp",
+        "*.tcc": "cpp"
+    }
+}
