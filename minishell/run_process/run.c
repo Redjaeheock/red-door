@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:34:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/17 20:02:40 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 15:42:04 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	wait_for_process_reclaim(t_data *meta)
 	else
 	{
 		g_ws = 128 + check_sig;
-		if (g_ws == 130)
+		if (g_ws == 130 || g_ws == 131)
 			printf("\n");
 	}
-	set_up_signal(meta, 1);
+	set_up_signal(meta);
 }
 
 void	redirect_with_pipe(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
@@ -52,8 +52,8 @@ void	redirect_with_pipe(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
 	{
 		end = sndry_arr_len((void **)pipes);
 		set_file_descriptor(meta, cmd);
-		free_resources(meta, pipes, NULL);
-		exit(0);
+		free_resources(meta, pipes, NULL, 0);
+		// exit(0);
 	}
 	else
 		meta->last_pid = pid;
@@ -71,7 +71,10 @@ t_cmd_list	*execute_cmdline(t_data *meta, t_cmd_list *cmd, int **pipes)
 			if (compare_builtin_list(meta, cmd) == 1)
 				builtin(meta, cmd, pipes, row);
 			else
+			{
 				external(meta, cmd, pipes, row);
+				signal(SIGINT, SIG_IGN); 
+			}
 		}
 		else if (cmd->type_cmd == NONE && cmd->type_re != NONE && cmd->type_pipe == PIPE)
 			redirect_with_pipe(meta, cmd, pipes, row);

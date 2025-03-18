@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:18:58 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/17 20:02:28 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 15:26:15 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,6 @@ t_data	*initialize_meta_token(char **envp)
 	meta->path = extract_path(meta->env);
 	if (meta->path == NULL)
 		return (free_meta_token(meta));
-	set_up_signal(meta, 0);
+	set_up_signal(meta);
 	return (meta);
 }

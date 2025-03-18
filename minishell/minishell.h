@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/17 20:02:13 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 15:39:00 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	*free_multi_2d_arrs(void **array1, void **array2);
 void	unlink_files(t_list	*tokens);
 
 /* resource_free/free_resources.c */
-void	free_resources(t_data *meta, int **pipes, char *path);
+void	free_resources(t_data *meta, int **pipes, char *path, int exit_n);
 
 /* error_process */
 int		error_syntax(char *str);
@@ -164,7 +164,7 @@ char	**copy_envp(char **envp);
 int		get_ppid(t_data *meta);
 
 /* signal_process.c */
-void	set_up_signal(t_data *meta, int flag);
+void	set_up_signal(t_data *meta);
 void	parent_process(t_data *meta);
 void	set_up_signal_child_process(t_data	*meta);
 

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:23:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/17 20:31:15 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 15:27:42 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	flag_check(int signum, siginfo_t *tmp, void *info)
 	}
 	else
 	{
-		printf("\n");
-		rl_on_new_line();
 		rl_replace_line("", 1);
+		rl_on_new_line();
+		printf("\n");
 		if (meta->heredoc != 1)
 			rl_redisplay();
 		else
@@ -46,14 +46,12 @@ void	child_process_signal_handler(int signum, siginfo_t *tmp, void *info)
 
 void	newline(int signum, siginfo_t *tmp, void *info)
 {
+	rl_replace_line("", 1);
 	rl_on_new_line();
-	//printf("\n");
-	// rl_replace_line("", 1);
 	printf("\n");
-	rl_redisplay();
 }
 
-void	set_up_signal(t_data *meta, int flag)
+void	set_up_signal(t_data *meta)
 {
 	struct sigaction	sig;
 	struct sigaction	tmp;
@@ -64,22 +62,11 @@ void	set_up_signal(t_data *meta, int flag)
 		flag_check(0, NULL, meta);
 		init = 1;
 	}
-	if (flag == 0)
-	{
-		sigemptyset(&sig.sa_mask);
-		sig.sa_flags = SA_SIGINFO;
-		sig.sa_sigaction = flag_check;
-		signal(SIGQUIT, SIG_IGN);
-		sigaction(SIGINT, &sig, NULL);
-	}
-	else
-	{
-		sigemptyset(&tmp.sa_mask);
-		tmp.sa_flags = SA_SIGINFO;
-		tmp.sa_sigaction = newline;
-		sigaction(SIGINT, &tmp, NULL);
-		flag = 1;
-	}
+	sigemptyset(&sig.sa_mask);
+	sig.sa_flags = SA_SIGINFO;
+	sig.sa_sigaction = flag_check;
+	signal(SIGQUIT, SIG_IGN);
+	sigaction(SIGINT, &sig, NULL);
 }
 
 void	set_up_signal_child_process(t_data	*meta)
@@ -88,6 +75,7 @@ void	set_up_signal_child_process(t_data	*meta)
 
 	sigemptyset(&sig.sa_mask);
 	sig.sa_flags = SA_SIGINFO;
-	sig.sa_sigaction = child_process_signal_handler;
+	sig.sa_sigaction = NULL;
+	signal(SIGQUIT, SIG_DFL);
 	sigaction(SIGINT, &sig, NULL);
 }

@@ -6,13 +6,13 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 10:00:29 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 11:50:26 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 15:41:21 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_resources(t_data *meta, int **pipes, char *path)
+void	free_resources(t_data *meta, int **pipes, char *path, int exit_n)
 {
 	if (path != NULL)
 		free(path);
@@ -23,4 +23,6 @@ void	free_resources(t_data *meta, int **pipes, char *path)
 		reset_file_descriptor(meta);
 		free_meta_token(meta);
 	}
+	if (-1 < exit_n)
+		exit(exit_n);
 }
