@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:04:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/17 16:52:21 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/18 14:35:05 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,14 @@ int	check_exec_stat(char *dir)
 	return (1);
 }
 
-void	change_directory(t_data *meta, char *dir)
+void	change_directory(t_data *meta, char *dir, char *str)
 {
 	char	*pwd;
 
 	if (chdir(dir) == 0)
 	{
+		if (ft_strcmp(str, "-") == 0)
+			printf("%s\n", dir);
 		pwd = redefine_pwd(meta, dir);
 		redefine_export(meta, &meta->exp, pwd);
 		redefine_export(meta, &meta->env, pwd);
@@ -92,6 +94,6 @@ void	cd_execute(t_data *meta, char *str)
 		return ;
 	if (check_exec_permission(dir) == 0)
 		return ;
-	change_directory(meta, dir);
+	change_directory(meta, dir, str);
 	free(dir);
 }

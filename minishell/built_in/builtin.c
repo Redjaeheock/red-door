@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:32:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/16 20:10:29 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 15:45:49 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	builtin(t_data *meta, t_cmd_list *exec_cmd, int **pipes, int row)
 		execute_builtin(meta, exec_cmd, pipes);
 		if (pipes != NULL)
 		{
-			free_resources(meta, pipes, NULL);
+			free_resources(meta, pipes, NULL); // free_resources 함수 파라미터 추가 됐음(g_ws) 
 			exit(g_ws);
 		}
 	}

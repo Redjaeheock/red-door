@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:00:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/14 15:22:59 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/18 14:35:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char	*set_dir(t_data *meta, char *str)
 				free(dir);
 			return (builtin_error(str, 76), NULL);
 		}
-		printf("%s\n", dir);
 		return (dir);
 	}
 	else if (ft_strcmp(str, "--") == 0)
