@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:32:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/18 15:45:49 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/18 16:14:06 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ void	builtin(t_data *meta, t_cmd_list *exec_cmd, int **pipes, int row)
 		set_pipe_io(meta, exec_cmd, pipes, row);
 		execute_builtin(meta, exec_cmd, pipes);
 		if (pipes != NULL)
-		{
-			free_resources(meta, pipes, NULL); // free_resources 함수 파라미터 추가 됐음(g_ws) 
-			exit(g_ws);
-		}
+			free_resources(meta, pipes, NULL, g_ws);
 	}
 	else
 		meta->last_pid = pid;

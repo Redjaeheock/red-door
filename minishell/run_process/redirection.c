@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 09:42:17 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 16:30:58 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 17:22:36 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	verify_open_failure(char *str)
 {
 	// 경우에 따라 에러 문구 처리하기기
+	g_ws = 1;
 	printf("bash: %s: No such file or directory\n", str);
 }
 

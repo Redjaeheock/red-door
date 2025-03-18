@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:34:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/18 15:42:04 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 17:32:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	wait_for_process_reclaim(t_data *meta)
 		g_ws = 128 + check_sig;
 		if (g_ws == 130 || g_ws == 131)
 			printf("\n");
+		set_up_signal(meta);
 	}
-	set_up_signal(meta);
 }
 
 void	redirect_with_pipe(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
@@ -114,6 +114,16 @@ t_cmd_list	*check_branch(t_cmd_list *cmd)
 	return (cmd);
 }
 
+void	move_cmd(t_cmd_list **cmd)
+{
+	while ((*cmd)->next != NULL)
+	{
+		*cmd = (*cmd)->next;
+		if ((*cmd)->type_pipe == AND || (*cmd)->type_pipe == OR)
+			break ;
+	}
+}
+
 int	run(t_data *meta, t_cmd_list *cmd)
 {
 	int	**pipes;
@@ -127,8 +137,13 @@ int	run(t_data *meta, t_cmd_list *cmd)
 		if (cmd == NULL)
 			break ;
 		cnt = count_pipe_nodes(meta, cmd);
-		if (cnt == -1 || (cnt == 0 && set_file_descriptor(meta, cmd) == -1))
+		if (cnt == -1)
 			break ;
+		if (cnt == 0 && set_file_descriptor(meta, cmd) == -1)
+		{
+			move_cmd(&cmd);
+			continue ;
+		}
 		else if (0 < cnt)
 			pipes = create_pipes(cnt);
 		if (0 < cnt && pipes == NULL)
