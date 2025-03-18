@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:55 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/11 14:51:55 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/17 20:23:05 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,17 @@
 #include "../../syntax/syntax.h"
 #include "../built_in.h"
 
-int	search_special_characters(char *str, int equal)
+void	oldpwd_add(t_data *meta, t_path *export_add)
 {
-	int	i;
-
-	i = 0;
-	if (is_valid_var_name(str, equal) == 0)
-		return (0);
-	while (str[i] != '\0')
+	if (ft_strcmp(export_add->key, "OLDPWD") == 0)
 	{
-		if (str[i] == '!' || str[i] == '#' || str[i] == '-')
+		if (meta->oldpwd != NULL)
 		{
-			builtin_error(str, 51);
-			return (0);
+			free(meta->oldpwd);
+			meta->oldpwd = NULL;
 		}
-		i++;
+		meta->oldpwd = ft_strdup(export_add->value);
 	}
-	return (1);
 }
 
 void	update_node(t_path **old_exp, t_path *prev,
@@ -52,7 +46,7 @@ t_path *current, t_path *new_node)
 	}
 }
 
-int	check_key(t_path **old_exp, t_path *export_add)
+int	check_key(t_data *meta, t_path **old_exp, t_path *export_add, int equal)
 {
 	t_path	*temp;
 	t_path	*prev;
@@ -63,6 +57,12 @@ int	check_key(t_path **old_exp, t_path *export_add)
 	{
 		if (ft_strcmp(temp->key, export_add->key) == 0)
 		{
+			if (equal == 0)
+			{
+				free_t_path(export_add);
+				export_add = NULL;
+				return (1);
+			}
 			update_node(old_exp, prev, temp, export_add);
 			return (1);
 		}
@@ -77,29 +77,20 @@ void	process_export_entry(t_data *meta, \
 {
 	if (equal != 0)
 	{
-		if (check_key(&meta->exp, export_add) == 0)
+		if (check_key(meta, &meta->exp, export_add, equal) == 0)
 			add_back_export_linked_list(&meta->exp, export_add);
-		if (check_key(&meta->env, env_add) == 0)
+		if (check_key(meta, &meta->env, env_add, equal) == 0)
 			add_back_export_linked_list(&meta->env, env_add);
 	}
 	else
 	{
-		if (check_key(&meta->exp, export_add) == 0)
+		if (check_key(meta, &meta->exp, export_add, equal) == 0)
 			add_back_export_linked_list(&meta->exp, export_add);
 		free_t_path(env_add);
+		env_add = NULL;
 	}
-}
-
-int	search_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
+	if (env_add != NULL)
 	{
-		if (str[i] == '=')
-			return (i);
-		i++;
+		meta_path_set(meta, env_add);
 	}
-	return (0);
 }

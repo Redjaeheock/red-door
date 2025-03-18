@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/16 20:10:27 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/17 20:19:58 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,17 @@ int		ft_lstsize(t_path *lst);
 t_path	*add_export(char *str);
 void	add_back_export_linked_list(t_path **old_export, t_path *new);
 
-/* export_rets_utils.c */
+/* export_rest_utils.c */
 int		search_special_characters(char *str, int equal);
 void	update_node(t_path **old_exp, t_path *prev, \
-	t_path *current, t_path *new_node);
-int		check_key(t_path **old_exp, t_path *export_add);
+		t_path *current, t_path *new_node);
+int		check_key(t_data *meta, t_path **old_exp, \
+		t_path *export_add, int equal);
 void	process_export_entry(t_data *meta, \
-	t_path *export_add, t_path *env_add, int equal);
+		t_path *export_add, t_path *env_add, int equal);
 void	oldpwd_add(t_data *meta, t_path *export_add);
 int		is_valid_var_name(char *str, int equal);
+void	meta_path_set(t_data *meta, t_path *env_add);
 
 /* export_rest.c */
 void	rest_export(t_data *meta, t_cmd_list *exec_cmd, int export_len);
@@ -134,4 +136,11 @@ void	pwd_error(char *str, int index);
 void	env_error(char *str, int index);
 void	export_error(char *str, int index);
 void	unset_error(char *str, int index);
+
+void	resize_meta_envm(t_data *meta);
+char	*get_env(t_path *env, char *str);
+
+int		is_invalid_number_start(char *str, int equal);
+int		is_valid_env_char(int c);
+
 #endif
