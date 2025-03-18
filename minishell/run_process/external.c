@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:41:03 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/17 19:29:30 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 15:40:57 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ char	*cmd_path_check(t_data *meta, t_cmd_list *cmd, int **pipes)
 		path = path_check_into_env(meta, cmd);
 		if (path == NULL)
 		{
-			free_resources(meta, pipes, NULL);
-			exit(g_ws);
+			free_resources(meta, pipes, NULL, g_ws);
+			//exit(g_ws);
 		}
 	}
 	else
@@ -57,8 +57,8 @@ char	*cmd_path_check(t_data *meta, t_cmd_list *cmd, int **pipes)
 		if (path == NULL)
 		{
 			memory_alloc_error();
-			free_resources(meta, pipes, NULL);
-			exit(g_ws);
+			free_resources(meta, pipes, NULL, g_ws);
+			//exit(g_ws);
 		}
 	}
 	return (path);
@@ -71,13 +71,15 @@ void	external(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
 
 	meta->pids++;
 	pid = fork();
-	if (pid == 0)
+	if (pid < 0)
+		perror("fork");
+	else if (pid == 0)
 	{
 		set_up_signal_child_process(meta);
 		if (pipes != NULL && set_file_descriptor(meta, cmd) == 0)
 		{
-			free_resources(meta, pipes, NULL);
-			exit(0);
+			free_resources(meta, pipes, NULL, 0);
+			//exit(0);
 		}
 		path = cmd_path_check(meta, cmd, pipes);
 		set_pipe_io(meta, cmd, pipes, row);
@@ -85,13 +87,10 @@ void	external(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
 		{
 			if (access(path, X_OK) != 0)
 				perror(path);
-			free_resources(meta, pipes, path);
-			exit(127);
+			free_resources(meta, pipes, path, 127);
+			//exit(127);
 		}
 	}
 	else
-	{
-		signal(SIGINT, SIG_IGN); 
 		meta->last_pid = pid;
-	}
 }
