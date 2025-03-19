@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:32:11 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/18 16:14:06 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 20:03:08 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,8 @@ void	builtin(t_data *meta, t_cmd_list *exec_cmd, int **pipes, int row)
 	}
 	if (pid == 0)
 	{
-		if (pipes != NULL && set_file_descriptor(meta, exec_cmd) == 0)
-		{
-			close_pipes(pipes);
-			exit(0);
-		}
+		if (pipes != NULL && set_file_descriptor(meta, exec_cmd) == -1)
+			free_resources(meta, pipes, NULL, 1);
 		set_pipe_io(meta, exec_cmd, pipes, row);
 		execute_builtin(meta, exec_cmd, pipes);
 		if (pipes != NULL)

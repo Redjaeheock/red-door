@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:23:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/18 15:27:42 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 23:14:24 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,20 @@ void	flag_check(int signum, siginfo_t *tmp, void *info)
 
 void	child_process_signal_handler(int signum, siginfo_t *tmp, void *info)
 {
-	g_ws = 130;
-	exit(g_ws);
-}
+	static t_data	*meta;
 
-void	newline(int signum, siginfo_t *tmp, void *info)
-{
-	rl_replace_line("", 1);
-	rl_on_new_line();
-	printf("\n");
+	if (meta == NULL)
+	{
+		meta = (t_data *)info;
+		return ;
+	}
+	else
+		printf("Quit (core dumped)\n");
 }
 
 void	set_up_signal(t_data *meta)
 {
 	struct sigaction	sig;
-	struct sigaction	tmp;
 	static int			init;
 
 	if (init == 0)
@@ -72,10 +71,12 @@ void	set_up_signal(t_data *meta)
 void	set_up_signal_child_process(t_data	*meta)
 {
 	struct sigaction	sig;
+	static int			init;
 
-	sigemptyset(&sig.sa_mask);
-	sig.sa_flags = SA_SIGINFO;
-	sig.sa_sigaction = NULL;
+
+	// sigemptyset(&sig.sa_mask);
+	// sig.sa_flags = SA_SIGINFO;
+	// sig.sa_sigaction = NULL;
 	signal(SIGQUIT, SIG_DFL);
-	sigaction(SIGINT, &sig, NULL);
+	// sigaction(SIGQUIT, &sig, NULL);
 }

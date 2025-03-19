@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:34:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/18 17:32:18 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/19 12:58:57 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ void	wait_for_process_reclaim(t_data *meta)
 	pid_t	pid;
 	int		status;
 	int		result;
-	int		check_sig;
 
-	pid = 0;
+	result = 0;
 	while (0 < meta->pids)
 	{
 		pid = wait3(&status, 0, NULL);
@@ -29,16 +28,17 @@ void	wait_for_process_reclaim(t_data *meta)
 			result = status;
 		meta->pids--;
 	}
-	check_sig = result & 0x7F;
-	if (check_sig == 0)
-		g_ws = (result >> 8) & 0xFF;
-	else
+	if ((result & 0x7F) == 0)
 	{
-		g_ws = 128 + check_sig;
-		if (g_ws == 130 || g_ws == 131)
-			printf("\n");
-		set_up_signal(meta);
+		g_ws = (result >> 8) & 0xFF;
+		return ;
 	}
+	else
+		g_ws = 128 + (result & 0x7F);
+	if (g_ws == 131)
+		printf("Quit (core dumped)");
+	printf("\n");
+	set_up_signal(meta);
 }
 
 void	redirect_with_pipe(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
@@ -53,7 +53,6 @@ void	redirect_with_pipe(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
 		end = sndry_arr_len((void **)pipes);
 		set_file_descriptor(meta, cmd);
 		free_resources(meta, pipes, NULL, 0);
-		// exit(0);
 	}
 	else
 		meta->last_pid = pid;
@@ -100,6 +99,9 @@ t_cmd_list	*check_branch(t_cmd_list *cmd)
 	else if (cmd->type_pipe == OR)
 		flag = 0;
 	cmd = cmd->next;
+	if (g_ws == 130)
+		while (cmd != NULL)
+			cmd = cmd->next;	
 	if ((flag != 0 && g_ws != 0) || (flag == 0 && g_ws == 0))
 	{
 		while (cmd != NULL)
@@ -107,7 +109,7 @@ t_cmd_list	*check_branch(t_cmd_list *cmd)
 			if (flag == 0 && cmd->type_cmd == NONE && cmd->type_pipe == AND && cmd->type_re == NONE)
 				break ;
 			else if (flag != 0 && cmd->type_cmd == NONE && cmd->type_pipe == OR && cmd->type_re == NONE)
-				break ;
+					break ;
 			cmd = cmd->next;
 		}
 	}
@@ -156,17 +158,4 @@ int	run(t_data *meta, t_cmd_list *cmd)
 	}
 	meta->pids = 0;
 	return (1);
-}
-
-int	rutin_free(t_data *meta, char *str)
-{
-	if (meta->exec_cmd)
-	{
-		//printf_exec_commads(meta->exec_cmd);
-		free_exec_linked_list(meta->exec_cmd);
-		meta->exec_cmd = NULL;
-	}
-	meta->tokens = free_t_list(meta->tokens);
-	add_history_and_free(&str);
-	return (0);
 }
