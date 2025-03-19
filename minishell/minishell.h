@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/18 15:39:00 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/18 22:01:47 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void	unlink_files(t_list	*tokens);
 
 /* resource_free/free_resources.c */
 void	free_resources(t_data *meta, int **pipes, char *path, int exit_n);
+int		rutin_free(t_data *meta, char *str);
 
 /* error_process */
 int		error_syntax(char *str);
@@ -165,7 +166,6 @@ int		get_ppid(t_data *meta);
 
 /* signal_process.c */
 void	set_up_signal(t_data *meta);
-void	parent_process(t_data *meta);
 void	set_up_signal_child_process(t_data	*meta);
 
 /* linked_list.c */
@@ -310,6 +310,7 @@ int		count_path_in_f_list(char **f_list, char *path);
 char	**mapping_pattern_filename(char *path, char **f_list);
 
 /* run_process/here_doc.c */
+void	reset_stdin_fileno(t_data *meta);
 int		here_doc(t_data *meta, t_list *tokens);
 
 /* ruen_process/redirection.c */
@@ -382,10 +383,7 @@ int		is_token_all_null_after_join(t_tmp *tmp);
 
 /*jemoon_add_code */
 void	free_exec_linked_list(t_cmd_list *list);
-int		rutin_free(t_data *meta, char *str);
 void	add_history_and_free(char **str);
 void	normalize_cmd(t_data *meta);
-void	reset_stdin_fileno(t_data *meta);
-void	add_history_and_free(char **str);
 
 #endif
