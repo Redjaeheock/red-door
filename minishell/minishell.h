@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/18 22:01:47 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/19 17:26:09 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,6 @@ int		get_ppid(t_data *meta);
 
 /* signal_process.c */
 void	set_up_signal(t_data *meta);
-void	set_up_signal_child_process(t_data	*meta);
 
 /* linked_list.c */
 t_list	*create_linked_list(char *str);
@@ -319,6 +318,10 @@ void	reset_file_descriptor(t_data *meta);
 
 /* run_process/pipe.c */
 int		run(t_data *meta, t_cmd_list *cmd);
+
+/* run_process/run_utils.c */
+int		redirect_with_pipe(t_data *meta, t_cmd_list *cmd, int **pipes);
+int		check_pipe_except_case(t_data *meta, t_cmd_list *cmd, int **pipes);
 
 /* run_process/run.c */
 void	*close_pipes(int **pipes);

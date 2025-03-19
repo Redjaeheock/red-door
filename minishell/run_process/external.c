@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:41:03 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/18 17:32:34 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/19 16:29:35 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	external(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
 		perror("fork");
 	else if (pid == 0)
 	{
-		set_up_signal_child_process(meta);
+		signal(SIGQUIT, SIG_DFL);
 		if (pipes != NULL && set_file_descriptor(meta, cmd) == -1)
 			free_resources(meta, pipes, NULL, 1);
 		path = cmd_path_check(meta, cmd, pipes);
