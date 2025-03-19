@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 13:22:18 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:47:42 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/19 13:03:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	error_syntax(char *str)
 		printf("bash: syntax error near unexpected token `>'\n");
 	else if (ft_strcmp(str, ">>") == 0)
 		printf("bash: syntax error near unexpected token `>>'\n");
-	//exit no 설정 역슬래시 관련 문구 추가 필요
+	g_ws = 2;
 	return (-1);
 }
 
