@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:38:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/16 16:02:26 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/19 17:49:46 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define _POSIX_C_SOURCE 200809L 
 
-# include "../minishell.h"
+# include "../minishell.h"					// 제출 직전 사용자 헤더 상위 관계 정리하기 
 
 /* exec_commads */
 /* exec_commads_liked_list_2.c */
@@ -73,7 +73,15 @@ int			check_redi(t_cmd_list	*exec_cmd);
 int			check_pipe_branch(t_cmd_list	*exec_cmd);
 int			check_and_branch(t_cmd_list	*exec_cmd);
 int			check_or_branch(t_cmd_list	*exec_cmd);
+int			check_and_or_branch(t_cmd_list	*exec_cmd);
 int			is_cmd_branch(t_cmd_list	*exec_cmd);
+
+/*exec_commads_check_type_3.c*/
+int			check_redi_in(t_cmd_list *exec_cmd);
+int			check_redi_out(t_cmd_list *exec_cmd);
+int			check_redi_gr(t_cmd_list *exec_cmd);
+int			check_redi_heredoc(t_cmd_list *exec_cmd);
+int			check_redi_with_pipe(t_cmd_list *exec_cmd);
 
 /* pritnf_utils */
 /* pritnf_utils.c */
@@ -83,7 +91,7 @@ void		printf_tokens(t_list *tokens);
 
 /* readline_utils */
 /* readline_utils.c */
-char		*handle_error(t_cmd_list **exec_cmd, char *str);
+// char		*handle_error(t_cmd_list **exec_cmd, char *str);
 //int			check_last_tokens(t_cmd_list *exec_cmd);
 int			check_last_tokens(t_list *exec_cmd);
 void		combine_strings(char *return_str, char *str, char *add_str);
@@ -127,5 +135,8 @@ void		set_here_doc(t_data *meta, t_list *tmp);
 void		operator_str_free(t_data *meta);
 char		*add_readline_signal(t_data *meta, char *str);
 void		add_readline_trade_exec_cmd(t_data *meta, t_list *tmp, char *str);
+
+/* run_process/run_utils.c */
+t_cmd_list	*check_branch(t_cmd_list *cmd);
 
 #endif

@@ -6,56 +6,50 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:34:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/19 12:58:57 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/19 17:32:31 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include "../syntax/syntax.h"
 #include "../built_in/built_in.h"
+
+void	after_run_son_process(int result, int sig)
+{
+	if ((result & 0x7F) == 0)
+	{
+		g_ws = (result >> 8) & 0xFF;
+		if (sig + 128 == 130)
+			printf("\n");
+		return ;
+	}
+	else
+		g_ws = 128 + (result & 0x7F);
+	if (g_ws == 131)
+		printf("Quit (core dumped)\n");
+	else if (g_ws == 130 || g_ws == 131)
+		printf("\n");
+}
 
 void	wait_for_process_reclaim(t_data *meta)
 {
 	pid_t	pid;
 	int		status;
 	int		result;
+	int		sig;
 
 	result = 0;
+	sig = 0;
 	while (0 < meta->pids)
 	{
 		pid = wait3(&status, 0, NULL);
+		if ((status & 0x7F) != 0 && sig == 0)
+			sig = (status & 0x7F);
 		if (pid == meta->last_pid)
 			result = status;
 		meta->pids--;
 	}
-	if ((result & 0x7F) == 0)
-	{
-		g_ws = (result >> 8) & 0xFF;
-		return ;
-	}
-	else
-		g_ws = 128 + (result & 0x7F);
-	if (g_ws == 131)
-		printf("Quit (core dumped)");
-	printf("\n");
 	set_up_signal(meta);
-}
-
-void	redirect_with_pipe(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
-{
-	pid_t	pid;
-	int		end;
-
-	meta->pids++;
-	pid = fork();
-	if (pid == 0)
-	{
-		end = sndry_arr_len((void **)pipes);
-		set_file_descriptor(meta, cmd);
-		free_resources(meta, pipes, NULL, 0);
-	}
-	else
-		meta->last_pid = pid;
+	after_run_son_process(result, sig);
 }
 
 t_cmd_list	*execute_cmdline(t_data *meta, t_cmd_list *cmd, int **pipes)
@@ -72,14 +66,12 @@ t_cmd_list	*execute_cmdline(t_data *meta, t_cmd_list *cmd, int **pipes)
 			else
 			{
 				external(meta, cmd, pipes, row);
-				signal(SIGINT, SIG_IGN); 
+				signal(SIGINT, SIG_IGN);
 			}
 		}
-		else if (cmd->type_cmd == NONE && cmd->type_re != NONE && cmd->type_pipe == PIPE)
-			redirect_with_pipe(meta, cmd, pipes, row);
-		else if (cmd->type_re != NONE && pipes != NULL && cmd->prev == NULL)
-			redirect_with_pipe(meta, cmd, pipes, row);
-		if (cmd->type_cmd == NONE && cmd->type_re == NONE && cmd->type_pipe == PIPE)
+		else if (check_pipe_except_case(meta, cmd, pipes) == -1)
+			redirect_with_pipe(meta, cmd, pipes);
+		if (check_pipe_branch(cmd) == 1)
 			row++;
 		cmd = cmd->next;
 		reset_file_descriptor(meta);
@@ -89,46 +81,34 @@ t_cmd_list	*execute_cmdline(t_data *meta, t_cmd_list *cmd, int **pipes)
 	return (cmd);
 }
 
-t_cmd_list	*check_branch(t_cmd_list *cmd)
+int	set_fd_n_pipe_io(t_data *meta, t_cmd_list **cmd, int ***pipes)
 {
-	int	flag;
+	int	cnt;
 
-	flag = 0;
-	if (cmd->type_pipe == AND)
-		flag = 1;
-	else if (cmd->type_pipe == OR)
-		flag = 0;
-	cmd = cmd->next;
-	if (g_ws == 130)
-		while (cmd != NULL)
-			cmd = cmd->next;	
-	if ((flag != 0 && g_ws != 0) || (flag == 0 && g_ws == 0))
+	cnt = count_pipe_nodes(meta, *cmd);
+	if (cnt == -1)
+		return (-1) ;
+	if (cnt == 0 && set_file_descriptor(meta, *cmd) == -1)
 	{
-		while (cmd != NULL)
+		while ((*cmd)->next != NULL)
 		{
-			if (flag == 0 && cmd->type_cmd == NONE && cmd->type_pipe == AND && cmd->type_re == NONE)
+			*cmd = (*cmd)->next;
+			if ((*cmd)->type_pipe == AND || (*cmd)->type_pipe == OR)
 				break ;
-			else if (flag != 0 && cmd->type_cmd == NONE && cmd->type_pipe == OR && cmd->type_re == NONE)
-					break ;
-			cmd = cmd->next;
 		}
+		return (0) ;
 	}
-	return (cmd);
-}
-
-void	move_cmd(t_cmd_list **cmd)
-{
-	while ((*cmd)->next != NULL)
-	{
-		*cmd = (*cmd)->next;
-		if ((*cmd)->type_pipe == AND || (*cmd)->type_pipe == OR)
-			break ;
-	}
+	else if (0 < cnt)
+		*pipes = create_pipes(cnt);
+	if (0 < cnt && *pipes == NULL)
+		return (-1) ;
+	return (1);
 }
 
 int	run(t_data *meta, t_cmd_list *cmd)
 {
 	int	**pipes;
+	int	result;
 	int	cnt;
 
 	pipes = NULL;
@@ -138,18 +118,11 @@ int	run(t_data *meta, t_cmd_list *cmd)
 			cmd = check_branch(cmd);
 		if (cmd == NULL)
 			break ;
-		cnt = count_pipe_nodes(meta, cmd);
-		if (cnt == -1)
+		result = set_fd_n_pipe_io(meta, &cmd, &pipes);
+		if (result == -1)
 			break ;
-		if (cnt == 0 && set_file_descriptor(meta, cmd) == -1)
-		{
-			move_cmd(&cmd);
+		if (result == 0)
 			continue ;
-		}
-		else if (0 < cnt)
-			pipes = create_pipes(cnt);
-		if (0 < cnt && pipes == NULL)
-			break ;
 		cmd = execute_cmdline(meta, cmd, pipes);
 		pipes = close_pipes(pipes);
 		if (0 < meta->pids)
