@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/18 18:58:07 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/19 17:46:16 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ void	minishell_env(t_data *meta, t_cmd_list *exec_cmd);
 /* exit */
 /* exit.c */
 void	minishell_exit(t_data *meta, t_cmd_list *exec_cmd, int **pipes);
+int		parsing_digit_longlong_max(char *str);
+int		check_overflow(char *num_str);
+
+/* exit_util.c */
 
 /* export */
 /* export_first.c */
