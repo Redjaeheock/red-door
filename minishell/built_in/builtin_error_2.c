@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 17:38:13 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/14 14:39:22 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/18 21:38:13 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,15 @@
 void	exit_error(char *str, int index)
 {
 	if (index == 11)
+	{
+		g_ws = 1;
 		printf("-bash: exit: too many arguments\n");
+	}
 	else if (index == 12)
+	{
+		g_ws = 2;
 		printf("-bash: exit: %s: numeric argument required\n", str);
+	}
 	return ;
 }
 

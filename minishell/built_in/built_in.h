@@ -6,7 +6,7 @@
 /*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:00:31 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/17 20:19:58 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/18 18:58:07 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,18 @@ void	oldpwd_add(t_data *meta, t_path *export_add);
 int		is_valid_var_name(char *str, int equal);
 void	meta_path_set(t_data *meta, t_path *env_add);
 
+/* export_rest_plus.c */
+t_path	*find_node_by_key(t_path *list, char *key);
+void	meta_plus_path_set(t_data *meta, char *str);
+void	value_join_node(t_path *current, t_path *new_node);
+int		check_plus_key(t_data *meta, t_path **old_exp, \
+		t_path *export_add, int equal);
+void	process_plus_export_entry(t_data *meta, \
+		t_path *export_add, t_path *env_add, int equal);
+void	oldpwd_plus_add(t_data *meta, t_path *export_add);
+int		extract_plus_key_value(t_path *tmp, char *str);
+t_path	*add_plus_export(char *str);
+
 /* export_rest.c */
 void	rest_export(t_data *meta, t_cmd_list *exec_cmd, int export_len);
 int		search_equal(char *str);
@@ -142,5 +154,6 @@ char	*get_env(t_path *env, char *str);
 
 int		is_invalid_number_start(char *str, int equal);
 int		is_valid_env_char(int c);
+void	*path_set(t_data *meta, char *str);
 
 #endif
