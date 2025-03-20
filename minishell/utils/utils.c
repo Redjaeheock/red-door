@@ -6,11 +6,22 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:17:50 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/08 15:52:57 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/20 16:26:06 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*change_null_string(void)
+{
+	char	*tmp;
+
+	tmp = (char *)malloc(sizeof(char) * 1);
+	if (tmp == NULL)
+		return (memory_alloc_error());
+	tmp[0] = '\0';
+	return (tmp);
+}
 
 int	check_chr_not_quote_set(char *str, char c)
 {
@@ -66,29 +77,6 @@ int	are_all_characters_same(char *str, char c)
 		idx++;
 	}
 	return (flag);
-}
-
-char	*get_exit_no(void)
-{
-	char	*tmp;
-	char	*exit_no;
-	int		idx;
-	int		len;
-
-	idx = 0;
-	// exit no itoa 처리
-	exit_no = "99999";
-	len = ft_strlen(exit_no);
-	tmp = (char *)malloc(sizeof(char) * (len + 1));
-	if (tmp == NULL)
-		return (sndry_alloc_err(NULL));
-	while (exit_no[idx] != '\0')
-	{
-		tmp[idx] = exit_no[idx];
-		idx++;
-	}
-	tmp[idx] = '\0';
-	return (tmp);
 }
 
 char	**modify_least_matched_pattern(char **f_list, char *memo)

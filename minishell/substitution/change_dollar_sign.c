@@ -6,22 +6,11 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 18:35:13 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 19:57:35 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/20 16:26:09 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*change_null_string(void)
-{
-	char	*tmp;
-
-	tmp = (char *)malloc(sizeof(char) * 1);
-	if (tmp == NULL)
-		return (memory_alloc_error());
-	tmp[0] = '\0';
-	return (tmp);
-}
 
 char	*copy_current_process_pid(t_data *meta)
 {
@@ -30,19 +19,45 @@ char	*copy_current_process_pid(t_data *meta)
 	int		idx;
 	int		len;
 
-	nums = ft_itoa(meta->ppid); //ltoa 로 변경 필요
+	nums = ft_itoa(meta->ppid);
 	if (nums == NULL)
 		return (memory_alloc_error());
+	// idx = 0;
+	// len = ft_strlen(nums);
+	// tmp = (char *)malloc(sizeof(char) * (len + 1));
+	// if (tmp == NULL)
+	// 	return (sndry_alloc_err(NULL));
+	// while (nums[idx] != '\0')
+	// {
+	// 	tmp[idx] = nums[idx];
+	// 	idx++;
+	// }
+	// tmp[idx] = '\0';
+	// return (tmp);
+	return (nums);
+}
+
+char	*get_exit_no(void)
+{
+	char	*tmp;
+	char	*exit_no;
+	int		idx;
+	int		len;
+
 	idx = 0;
-	len = ft_strlen(nums);
-	tmp = (char *)malloc(sizeof(char) * (len + 1));
-	if (tmp == NULL)
-		return (sndry_alloc_err(NULL));
-	while (nums[idx] != '\0')
-	{
-		tmp[idx] = nums[idx];
-		idx++;
-	}
-	tmp[idx] = '\0';
-	return (tmp);
+	exit_no = ft_itoa(g_ws);
+	if (exit_no == NULL)
+		return (memory_alloc_error());
+	// len = ft_strlen(exit_no);
+	// tmp = (char *)malloc(sizeof(char) * (len + 1));
+	// if (tmp == NULL)
+	// 	return (sndry_alloc_err(NULL));
+	// while (exit_no[idx] != '\0')
+	// {
+	// 	tmp[idx] = exit_no[idx];
+	// 	idx++;
+	// }
+	// tmp[idx] = '\0';
+	// return (tmp);
+	return (exit_no);
 }
