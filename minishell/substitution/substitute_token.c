@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitute_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/24 12:21:53 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/20 15:52:46 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 			if (check_quote_valid(tmp->token) == 0)
 				return (0);
 		}
-		/*
+		
 		if (subtitute_dollar_sign(meta, tmp, c) == 0)
 			return (0);
 		if (c == 'c')
@@ -105,7 +105,7 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 			if (remove_quote_tokens(tmp) == 0)
 				return (0);
 		}
-		*/
+		
 		tmp = tmp->next;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:24:49 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 19:24:51 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/20 16:08:49 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,18 @@ int	check_except_substitution(t_data *meta, t_tmp *node)
 		return (1);
 	if (ft_strcmp(node->key, "$$") == 0)
 	{
-		node->value = copy_current_process_pid(meta);
+		// node->value = copy_current_process_pid(meta);
+		node->value = ft_itoa(meta->ppid);
 		if (node->value == NULL)
-			return (-1);
+			return ((memory_alloc_error(), -1));
 		return (1);
 	}
 	if (ft_strcmp(node->key, "$?") == 0)
 	{
-		node->value = get_exit_no();
+		// node->value = get_exit_no();
+		node->value = ft_itoa(g_ws);
 		if (node->value == NULL)
-			return (-1);
+			return ((memory_alloc_error(), -1));
 		return (1);
 	}
 	return (0);

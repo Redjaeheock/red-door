@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/19 17:26:09 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/20 16:29:40 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,8 @@ t_tmp	*do_substitute_dollar_sign(t_data *meta, char **str, char c);
 /* substitution/substitute_dollar_sign2.c */
 int		check_split_point_str(char *str);
 
-/* substitution/substitute_dollar_sing3.c */
+/* substitution/substitute_dollar_sign3.c */
+int		check_except_substitution(t_data *meta, t_tmp *node);
 t_tmp	*change_dollar_sign(t_data *meta, char *str);
 
 /* substitution/substitute_dollar_sign_check.c */
@@ -259,9 +260,8 @@ t_tmp	*pass_substitute(char *str);
 int		check_pass_substitute(char *str, char c);
 
 /* substitution/change_dollar_sign.c */
-int		check_except_substitution(t_data *meta, t_tmp *node);
-char	*copy_current_process_pid(t_data *meta);
-char	*change_null_string(void);
+//char	*copy_current_process_pid(t_data *meta);
+//char	*get_exit_no(void);
 
 /*	substitution/change_dollar_underbar.c */
 int		change_dollar_underbar(t_data *meta, t_cmd_list *exec_cmd);
@@ -333,10 +333,10 @@ void	set_pipe_io(t_data *meta, t_cmd_list *cmd, int **pipes, int row);
 void	external(t_data *meta, t_cmd_list *cmd, int **pipes, int row);
 
 /* utils/utils.c */
+char	*change_null_string(void);
 int		check_chr_not_quote_set(char *str, char c);
 int		search_chr_in_str(char *str, char c);
 int		are_all_characters_same(char *str, char c);
-char	*get_exit_no(void);
 char	**modify_least_matched_pattern(char **f_list, char *memo);
 
 /* utils/utils2.c */

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:23:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/19 17:25:53 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/20 15:54:24 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	flag_check(int signum, siginfo_t *tmp, void *info)
 		{
 			close(STDIN_FILENO);
 			meta->stdin_flag = -1;
+			g_ws = 130;
 		}
 	}
 }
