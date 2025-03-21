@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/21 20:48:22 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 23:44:13 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,14 +217,15 @@ char	**extract_path(t_path *path);
 
 /* split_words.c */
 int		string_div(t_list **words, char const *str, int index);
-int		ampersand_div(t_list **words, const char *str, int index, char c);
-int		in_redirec_div(t_list **words, const char *str, int index, char c);
-int		out_redirec_div(t_list **words, const char *str, int index, char c);
-int		pipe_div(t_list **words, const char *str, int index, char c);
+int		ampersand_div(t_list **words, const char *str, int index);
+int		in_redirec_div(t_list **words, const char *str, int index);
+int		out_redirec_div(t_list **words, const char *str, int index);
+int		pipe_div(t_list **words, const char *str, int index);
 
 /* token_character_check.c */
 int		check_valid_back(char *str, int idx);
 int		check_quote_pair(char c, int quote);
+int		count_quote_set(t_list *tokens, char c);
 
 /* operator_character_check.c */
 int		check_out_redirection(const char *str, int index);
