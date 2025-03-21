@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 09:42:17 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/21 21:19:59 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 21:55:42 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	verify_open_failure(char *str)
 {
 	// 경우에 따라 에러 문구 처리하기기
 	g_ws = 1;
+	if (search_chr_in_str(str, '$') == 1)
+	{
+		printf("bash: %s: ambiguous redirect\n", str);
+		return ;
+	}
 	printf("bash: %s: No such file or directory\n", str);
 }
 
@@ -43,15 +48,14 @@ int	connect_out_redirection(t_data *meta, t_cmd_list *cmd)
 {
 	int	fd;
 
+	if (search_chr_in_str(cmd->next->str[0], '$') == 1)
+		return ((verify_open_failure(cmd->next->str[0]), 0));
 	if (cmd->type_re == OUT_REDEC)
 		fd = open(cmd->next->str[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (cmd->type_re == GR_REDEC)
 		fd = open(cmd->next->str[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-	{
-		verify_open_failure(cmd->next->str[0]);
-		return (0);
-	}
+		return ((verify_open_failure(cmd->next->str[0]), 0));
 	if (meta->oldstdout == -1)
 		meta->oldstdout = dup(STDOUT_FILENO);
 	else

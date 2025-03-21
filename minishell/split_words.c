@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 17:56:40 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 22:21:23 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	string_div(t_list **words, char const *str, int index)
 	return (--index);
 }
 
-int	ampersand_div(t_list **words, const char *str, int index, char c)
+int	ampersand_div(t_list **words, const char *str, int index)
 {
 	int	start_index;
 	int	len;
@@ -47,8 +47,8 @@ int	ampersand_div(t_list **words, const char *str, int index, char c)
 	start_index = index;
 	while (str[index] == '&')
 		index++;
-	if (c == 'c')
-	{
+//	if (c == 'c')
+//	{
 		len = index - start_index;
 		if (len == 1)
 			return (error_syntax("&"));
@@ -56,14 +56,14 @@ int	ampersand_div(t_list **words, const char *str, int index, char c)
 			return (error_syntax("&"));
 		if (4 <= len)
 			return (error_syntax("&&"));
-	}
+//	}
 	make_node(&(*words), extract_word(str, start_index, index));
 	if (words == NULL)
 		return ((memory_alloc_error(), -1));
 	return (--index);
 }
 
-int	in_redirec_div(t_list **words, const char *str, int index, char c)
+int	in_redirec_div(t_list **words, const char *str, int index)
 {
 	int	start_index;
 	int	len;
@@ -71,21 +71,21 @@ int	in_redirec_div(t_list **words, const char *str, int index, char c)
 	start_index = index;
 	while (str[index] == '<')
 		index++;
-	if (c == 'c')
-	{
+//	if (c == 'c')
+//	{
 		len = index - start_index;
 		if (len == 3)
 			return (error_syntax("<"));
 		else if (4 <= len)
 			return (error_syntax("<<"));
-	}
+//	}
 	make_node(&(*words), extract_word(str, start_index, index));
 	if (words == NULL)
 		return ((memory_alloc_error(), -1));
 	return (--index);
 }
 
-int	out_redirec_div(t_list **words, const char *str, int index, char c)
+int	out_redirec_div(t_list **words, const char *str, int index)
 {
 	int	start_index;
 	int	len;
@@ -93,32 +93,32 @@ int	out_redirec_div(t_list **words, const char *str, int index, char c)
 	start_index = index;
 	while (str[index] == '>')
 		index++;
-	if (c == 'c')
-	{
+//	if (c == 'c')
+//	{
 		len = index - start_index;
 		if (len == 3)
 			return (error_syntax(">"));
 		else if (4 <= len)
 			return (error_syntax(">>"));
-	}
+//	}
 	make_node(&(*words), extract_word(str, start_index, index));
 	if (words == NULL)
 		return ((memory_alloc_error(), -1));
 	return (--index);
 }
 
-int	pipe_div(t_list	**words, const char	*str, int index, char c)
+int	pipe_div(t_list	**words, const char	*str, int index)
 {
 	int	start_index;
 
 	start_index = index;
 	while (str[index] == '|')
 		index++;
-	if (c == 'c')
-	{
+//	if (c == 'c')
+//	{
 		if ((index - start_index) > 2)
 			return (error_syntax("||"));
-	}
+//	}
 	make_node(&(*words), extract_word(str, start_index, index));
 	if (words == NULL)
 		return ((memory_alloc_error(), -1));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/21 20:48:54 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 23:44:43 by jemoon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 int	g_ws = 0;
 
-t_list	*split_words(char const *str, char c)
+t_list	*split_words(char const *str)
 {
 	t_list	*words;
 	int		index;
@@ -27,17 +27,17 @@ t_list	*split_words(char const *str, char c)
 	while (str[index] != '\0')
 	{
 		if (str[index] == '|')
-			index = pipe_div(&words, str, index, c);
+			index = pipe_div(&words, str, index);
 		else if (str[index] == '<')
-			index = in_redirec_div(&words, str, index, c);
+			index = in_redirec_div(&words, str, index);
 		else if (str[index] == '>')
-			index = out_redirec_div(&words, str, index, c);
+			index = out_redirec_div(&words, str, index);
 		else if (str[index] == '&')
-			index = ampersand_div(&words, str, index, c);
+			index = ampersand_div(&words, str, index);
 		else if (str[index] != 32)
 			index = string_div(&words, str, index);
 		if (index == -1)
-			return (NULL);
+			return (free_t_list(words), NULL);
 		else if (str[index] == '\0')
 			break ;
 		index++;
@@ -97,21 +97,16 @@ int	mn_split(t_data *meta, char **str, char c)
 	if (*str == NULL)
 		return (-1);
 	if ((*str)[0] == '\0')
-	{
-		free(*str);
-		*str = NULL;
 		return (0);
-	}
-	if (c == 'c')
-	{
-		cmd_flag = check_operator_v1(*str, 0);
-		if (cmd_flag == -1)
-			return (-1);
-	}
-	tokens = split_words(*str, c);
+	if (check_operator_v2(*str, 0) == -1)
+		return (-1);
+	tokens = split_words(*str);
 	if (tokens == NULL)
-		return ((free(*str), -1));
-	if (substitute_tokens(meta, tokens, c) == 0)
+	{
+		meta->tokens = free_t_list(meta->tokens);
+		return (/*(free(*str),*/ -1);
+	}
+	if (count_quote_set(tokens, c) == 0)
 		return (/*(add_history(*str), free(*str),*/ free_t_list(tokens), 0);
 	if (meta->tokens == NULL)
 		meta->tokens = tokens;
