@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:54:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:40:01 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 20:22:52 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,10 @@ t_tmp	*dividing_copied_token(char *str)
 	{
 		copy = split_copied_token(str, &idx, &quote);
 		if (copy == NULL)
-			return (free_tmp_list(tmp));
+			return (free_t_tmp(tmp));
 		keep = make_tmp_node(tmp, copy, NULL);
 		if (keep == NULL)
-			return (free_tmp_list(tmp));
+			return (free_t_tmp(tmp));
 		tmp = keep;
 	}
 	return (tmp);

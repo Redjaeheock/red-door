@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:41:03 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/19 16:29:35 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 19:57:30 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,10 @@ void	external(t_data *meta, t_cmd_list *cmd, int **pipes, int row)
 		set_pipe_io(meta, cmd, pipes, row);
 		if (execve(path, cmd->str, meta->envm) == -1)
 		{
-			if (access(path, X_OK) != 0)
-				perror(path);
+			exceve_error_msg(cmd, path);
 			free_resources(meta, pipes, path, 127);
 		}
 	}
-	else
-		meta->last_pid = pid;
+	meta->last_pid = pid;
+	signal(SIGINT, SIG_IGN);
 }

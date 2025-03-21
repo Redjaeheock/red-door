@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 10:33:38 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/15 19:43:17 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/21 20:52:20 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ char	*add_readline_signal(t_data *meta, char *str)
 	{
 		g_ws = 130;
 		meta->heredoc = 0;
-		reset_stdin_fileno(meta);
+		dup2(meta->oldstdin, STDIN_FILENO);
+		close(meta->oldstdin);
 		return (str);
 	}
 	else
 	{
-		wranning_msg("abc");
+		wranning_msg("abc"); // 수정 요
 		free(str);
 		str = NULL;
 		return (NULL);

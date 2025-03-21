@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 19:09:16 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:09:50 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 20:21:40 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_tmp	*do_substitute_dollar_sign(t_data *meta, char **str, char c)
 	{
 		tmp->next = search_n_change_dollar_sign(meta, str[row], c);
 		if (tmp->next == NULL)
-			return (free_tmp_list(node));
+			return (free_t_tmp(node));
 		tmp = last_tmp_list(tmp);
 		row++;
 	}

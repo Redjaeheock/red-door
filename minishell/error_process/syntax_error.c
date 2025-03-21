@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 13:22:18 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/19 13:03:07 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/21 20:18:53 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ void	error_qoute(int quote)
 		printf("bash: syntax error near unexpected token '\''\n");
 	else
 		printf("bash: syntax error near unexpected token '\"'\n");
-	//exit no 설정
+	g_ws = 2;
 	return ;
 }

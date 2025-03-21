@@ -6,11 +6,12 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 09:26:05 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 13:27:28 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 21:09:39 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "../syntax/syntax.h"
 
 void	*close_pipes(int **pipes)
 {
@@ -45,13 +46,13 @@ int	**create_pipes(int len)
 		if (pipes[row] == NULL)
 		{
 			close_pipes(pipes);
-			return (memory_alloc_error()); // 파일 디스크립터 정리
+			return (memory_alloc_error());
 		}
 		if (pipe(pipes[row]) == -1)
 		{
 			pipes[row + 1] = NULL;
-			printf("system error using pipe\n");
-			return (close_pipes(pipes)); // 파일 디스크립터 정리
+			perror("pipe");
+			return (close_pipes(pipes));
 		}
 		row++;
 	}
@@ -76,10 +77,13 @@ int	count_pipe_nodes(t_data *meta, t_cmd_list *cmd)
 				return (-1);
 			break ;
 		}
-		if (cmd->type_cmd == NONE && cmd->type_re == NONE && cmd->type_pipe == PIPE)
+		if (check_pipe_branch(cmd) == 1)
 			cnt++;
-		if (cnt == 0 && cmd->next == NULL && change_dollar_underbar(meta, cmd) != 1)
-			return (-1);
+		if (cnt == 0 && cmd->next == NULL)
+		{
+			if (change_dollar_underbar(meta, cmd) != 1)
+				return (-1);
+		}
 		cmd = cmd->next;
 	}
 	return (cnt);

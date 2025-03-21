@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/20 15:52:46 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 20:21:54 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int	subtitute_dollar_sign(t_data *meta, t_list *tokens, char c)
 	free_sndry_arr((void **)tmp);
 	if (node == NULL)
 		return (0);
-	var = join_sub_tokens(tokens, node, c);
+	var = join_sub_tokens(tokens, node, c, -1);
 	if (var == 0)
 		return (0);
-	free_tmp_list(node);
+	free_t_tmp(node);
 	return (1);
 }
 
@@ -95,7 +95,7 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 			if (check_quote_valid(tmp->token) == 0)
 				return (0);
 		}
-		
+		/*
 		if (subtitute_dollar_sign(meta, tmp, c) == 0)
 			return (0);
 		if (c == 'c')
@@ -105,7 +105,7 @@ int	substitute_tokens(t_data *meta, t_list *tokens, char c)
 			if (remove_quote_tokens(tmp) == 0)
 				return (0);
 		}
-		
+		*/
 		tmp = tmp->next;
 	}
 	return (1);

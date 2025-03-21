@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:34:04 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/19 17:32:31 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 21:15:49 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ t_cmd_list	*execute_cmdline(t_data *meta, t_cmd_list *cmd, int **pipes)
 			if (compare_builtin_list(meta, cmd) == 1)
 				builtin(meta, cmd, pipes, row);
 			else
-			{
 				external(meta, cmd, pipes, row);
-				signal(SIGINT, SIG_IGN);
-			}
 		}
 		else if (check_pipe_except_case(meta, cmd, pipes) == -1)
 			redirect_with_pipe(meta, cmd, pipes);
@@ -87,7 +84,7 @@ int	set_fd_n_pipe_io(t_data *meta, t_cmd_list **cmd, int ***pipes)
 
 	cnt = count_pipe_nodes(meta, *cmd);
 	if (cnt == -1)
-		return (-1) ;
+		return (-1);
 	if (cnt == 0 && set_file_descriptor(meta, *cmd) == -1)
 	{
 		while ((*cmd)->next != NULL)
@@ -96,12 +93,12 @@ int	set_fd_n_pipe_io(t_data *meta, t_cmd_list **cmd, int ***pipes)
 			if ((*cmd)->type_pipe == AND || (*cmd)->type_pipe == OR)
 				break ;
 		}
-		return (0) ;
+		return (0);
 	}
 	else if (0 < cnt)
 		*pipes = create_pipes(cnt);
 	if (0 < cnt && *pipes == NULL)
-		return (-1) ;
+		return ((reset_file_descriptor(meta), -1));
 	return (1);
 }
 
@@ -112,7 +109,7 @@ int	run(t_data *meta, t_cmd_list *cmd)
 	int	cnt;
 
 	pipes = NULL;
-	while (cmd != NULL) // sleep 도중 시그널 적용 시 버그 발생
+	while (cmd != NULL)
 	{
 		if (cmd->type_pipe == AND || cmd->type_pipe == OR)
 			cmd = check_branch(cmd);

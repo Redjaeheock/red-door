@@ -2,6 +2,7 @@
 	"files.associations": {
 		"built_in.h": "c",
 		"minishell.h": "c",
-		"syntax.h": "c"
+		"syntax.h": "c",
+		"cstdlib": "c"
 	}
 }
