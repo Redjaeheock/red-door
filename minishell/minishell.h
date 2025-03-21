@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/20 16:29:40 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 20:48:22 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,16 +100,13 @@ typedef struct meta_data
 	char				*home;
 	char				*pwd;
 	char				*oldpwd;
-	char				*exit_n;
-	char				*pid_n;
-	char				*lval;
 	int					oldstdin;
 	int					oldstdout;
 	int					oldstderr;
 	int					heredoc;
 	int					stdin_flag;
 	int					pids;
-	int					ppid;
+	int					ppid;	//long 으로 전환 필요
 	pid_t				last_pid;
 }						t_data;
 
@@ -122,12 +119,9 @@ typedef struct redi_list
 /* resource_free/free_list.c */
 void	*free_t_path(t_path *lsit);
 void	*free_t_list(t_list *list);
+void	*free_t_tmp(t_tmp *node);
 void	*free_t_data(t_data *meta);
 void	*free_meta_token(t_data *meta);
-
-/* resource_free/free_tmp_list.c */
-void	free_single_tmp_node(t_tmp *node);
-void	*free_tmp_list(t_tmp *node);
 
 /* resource_free/free_secondary_array.c */
 void	*free_sndry_arr(void **array);
@@ -140,16 +134,23 @@ void	unlink_files(t_list	*tokens);
 void	free_resources(t_data *meta, int **pipes, char *path, int exit_n);
 int		rutin_free(t_data *meta, char *str);
 
-/* error_process */
-int		error_syntax(char *str);
-void	error_qoute(int qoute);
+/* error_process/allocate_error1.c */
 void	*memory_alloc_error(void);
+void	*sndry_alloc_err(void **arr);
+
+/* error_process/allocate_error2.c */
 void	*t_path_key_val_alloc_err(t_path *tmp);
 void	*t_list_alloc_err(t_list *tmp);
-void	*sndry_alloc_err(void **arr);
-void	*t_data_alloc_err(t_data *meta);
 void	*t_tmp_alloc_err(t_tmp *node);
+void	*t_data_alloc_err(t_data *meta);
+
+/* error_process/error_massage.c */
 void	wranning_msg(char *eof);
+void	exceve_error_msg(t_cmd_list *cmd, char *path);
+
+/* error_process/syntax_error.c */
+int		error_syntax(char *str);
+void	error_qoute(int qoute);
 
 /* initial/initialize_meta_token.c */
 t_path	*make_t_path(void);
@@ -232,7 +233,7 @@ int		check_ampersand(const char *str, int index);
 int		check_vartical_bar(const char *str, int index);
 int		check_operator_set(char const *str, int index);
 
-/* substitution/divideing_sub_token.c */
+/* substitution/dividing_sub_token.c */
 char	*extract_partial_token(char *str, int idx, int *end, int *quote);
 char	*temporary_div_token(char *str, int *idx, int *quote);
 char	**dividing_sub_token(char *str, int len);
@@ -241,11 +242,15 @@ char	**dividing_sub_token(char *str, int len);
 t_tmp	*dividing_copied_token(char *str);
 
 /* substitution/substitute_token.c */
+int		measure_length_quote_set(char *str, int cnt);
 int		subtitute_dollar_sign(t_data *meta, t_list *tokens, char c);
 int		check_quote_valid(char *token);
 int		substitute_tokens(t_data *meata, t_list *tokens, char c);
 
-/* substitution/substitute_dollar_sign.c */
+/* substitution/substitute_dollar_sign1.c */
+t_tmp	*pass_substitute(char *str);
+int		check_pass_substitute(char *str, char c);
+t_tmp	*search_n_change_dollar_sign(t_data *meta, char *str, char c);
 t_tmp	*do_substitute_dollar_sign(t_data *meta, char **str, char c);
 
 /* substitution/substitute_dollar_sign2.c */
@@ -267,7 +272,7 @@ int		check_pass_substitute(char *str, char c);
 int		change_dollar_underbar(t_data *meta, t_cmd_list *exec_cmd);
 
 /* substitution/join_sub_tokens */
-int		join_sub_tokens(t_list *tokens, t_tmp *node, char c);
+int		join_sub_tokens(t_list *tokens, t_tmp *node, char c, int fd);
 
 /* substitution/substitute_wildcard.c */
 char	**open_multi_directory(char *path, char **f_list);
@@ -309,7 +314,7 @@ int		count_path_in_f_list(char **f_list, char *path);
 char	**mapping_pattern_filename(char *path, char **f_list);
 
 /* run_process/here_doc.c */
-void	reset_stdin_fileno(t_data *meta);
+// void	reset_stdin_fileno(t_data *meta);
 int		here_doc(t_data *meta, t_list *tokens);
 
 /* ruen_process/redirection.c */

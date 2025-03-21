@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:36:52 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/16 23:24:20 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 20:53:02 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,23 @@ void	*free_t_list(t_list *node)
 	return (NULL);
 }
 
+void	*free_t_tmp(t_tmp *node)
+{
+	t_tmp	*tmp;
+
+	while (node != NULL)
+	{
+		tmp = node;
+		node = node->next;
+		if (tmp->key != NULL)
+			free(tmp->key);
+		if (tmp->value != NULL)
+			free(tmp->value);
+		free(tmp);
+	}
+	return (NULL);
+}
+
 void	*free_t_data(t_data *meta)
 {
 	if (meta == NULL)
@@ -62,7 +79,7 @@ void	*free_t_data(t_data *meta)
 
 void	*free_meta_token(t_data *meta)
 {
-	if (meta == NULL)	
+	if (meta == NULL)
 		return (NULL);
 	if (meta->home != NULL)
 		free(meta->home);

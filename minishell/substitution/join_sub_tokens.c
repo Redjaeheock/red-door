@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:06:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/02/14 18:44:32 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 19:45:09 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,20 +109,30 @@ char	*alloc_tokens_key(t_tmp *tmp, char c)
 	return (str1);
 }
 
-int	join_sub_tokens(t_list *tokens, t_tmp *node, char c)
+int	join_sub_tokens(t_list *tokens, t_tmp *node, char c, int fd)
 {
 	char	*str;
 
-	str = alloc_tokens_key(node, c);
-	if (str == NULL)
-		return (0);
-	if (tokens->key != NULL)
-		free(tokens->key);
-	tokens->key = str;
-	str = alloc_tokens_token(node, c);
-	if (str == NULL)
-		return (0);
-	if (change_null_string_n_null_point(tokens, str, c) == 0)
-		return ((free(str), 0));
+	if (c == 'c')
+	{
+		str = alloc_tokens_key(node, c);
+		if (str == NULL)
+			return (0);
+		if (tokens->key != NULL)
+			free(tokens->key);
+		tokens->key = str;
+		str = alloc_tokens_token(node, c);
+		if (str == NULL)
+			return (0);
+		if (change_null_string_n_null_point(tokens, str, c) == 0)
+			return ((free(str), 0));
+	}
+	else
+	{
+		str = alloc_tokens_token(node, c);
+		if (str != NULL)
+			ft_putstr_fd(str, fd);
+		ft_putstr_fd("\n", fd);
+	}
 	return ((free(str), 1));
 }

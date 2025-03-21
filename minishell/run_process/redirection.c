@@ -6,11 +6,12 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 09:42:17 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/18 17:22:36 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 21:19:59 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "../syntax/syntax.h"
 
 void	verify_open_failure(char *str)
 {
@@ -77,7 +78,7 @@ int	set_file_descriptor(t_data *meta, t_cmd_list *cmd)
 					return (-1);
 			}
 		}
-		if (cmd->type_pipe != NONE && cmd->type_cmd != CMD && cmd->type_re == NONE)
+		if (is_cmd_branch(cmd) == 1)
 			break ;
 		cmd = cmd->next;
 	}

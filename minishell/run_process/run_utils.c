@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:07:01 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/19 17:28:47 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/21 21:00:45 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_pipe_except_case(t_data *meta, t_cmd_list *cmd, int **pipes)
 	if (check_redi_with_pipe(cmd) == 1)
 	{
 		if (redirect_with_pipe(meta, cmd, pipes) != 1)
-		 	return (-1);
+			return (-1);
 		return (1);
 	}
 	else if (cmd->type_re != NONE && pipes != NULL && cmd->prev == NULL)
@@ -62,7 +62,7 @@ t_cmd_list	*check_branch(t_cmd_list *cmd)
 	cmd = cmd->next;
 	if (g_ws == 130)
 		while (cmd != NULL)
-			cmd = cmd->next;	
+			cmd = cmd->next;
 	if ((flag != 0 && g_ws != 0) || (flag == 0 && g_ws == 0))
 	{
 		while (cmd != NULL)
@@ -70,7 +70,7 @@ t_cmd_list	*check_branch(t_cmd_list *cmd)
 			if (flag == 0 && check_and_branch(cmd) == 1)
 				break ;
 			else if (flag != 0 && check_or_branch(cmd) == 1)
-					break ;
+				break ;
 			cmd = cmd->next;
 		}
 	}
