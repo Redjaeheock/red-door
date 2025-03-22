@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_character_check.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:40:39 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/21 23:43:46 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/22 11:13:47 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,26 @@ int	check_quote_pair(char c, int quote)
 	else if (c == '"' && quote == 2)
 		quote = 0;
 	return (quote);
+}
+
+int	check_quote_valid(char *token)
+{
+	int	idx;
+	int	quote;
+
+	idx = 0;
+	quote = 0;
+	while (token[idx] != '\0')
+	{
+		quote = check_quote_pair(token[idx], quote);
+		idx++;
+	}
+	if (quote != 0)
+	{
+		error_qoute(quote);
+		return (0);
+	}
+	return (1);
 }
 
 int	count_quote_set(t_list *tokens, char c)

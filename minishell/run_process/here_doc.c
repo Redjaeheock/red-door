@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:28:31 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/21 21:16:49 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/22 16:41:06 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*make_filename(unsigned int n)
 	char	*num;
 	char	*filename;
 
-	n = (int)n;
+	n = (int)n;       // unsign 범위 수용 못함 수정 필요
 	num = ft_itoa(n);
 	if (num == NULL)
 		return (NULL);
@@ -38,9 +38,9 @@ char	*make_filename(unsigned int n)
 
 char	**alloc_f_list(void)
 {
-	char	**f_list;
-	char	*filename;
-	int		cnt;
+	char			**f_list;
+	char			*filename;
+	unsigned int	cnt;
 
 	cnt = 0;
 	while (1)
@@ -76,7 +76,7 @@ int	write_heredoc_buffer(t_data *meta, char *str, int fd)
 		ft_putstr_fd("\n", fd);
 		return (1);
 	}
-	result = measure_length_quote_set(str, result = 0);
+	result = measure_length_quote_set(str, result = 0, 'h');
 	div = dividing_sub_token(str, result);
 	if (div == NULL)
 		return (0);
@@ -85,9 +85,9 @@ int	write_heredoc_buffer(t_data *meta, char *str, int fd)
 	if (tmp == NULL)
 		return (0);
 	result = join_sub_tokens(NULL, tmp, 'h', fd);
+	free_t_tmp(tmp);
 	if (result == 0)
 		return (0);
-	free_t_tmp(tmp);
 	return (1);
 }
 

@@ -6,31 +6,33 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:06:45 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/21 19:45:09 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/22 20:10:03 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	change_null_string_n_null_point(t_list *tokens, char *str, char c)
+int	change_null_string_n_null_point(t_cmd_list *cmd, char *s, int row)
 {
-	if (tokens->key[0] == '$' && str[0] == '\0')
+	if (cmd->str[row][0] == '$' && s[0] == '\0')
 	{
-		free(tokens->token);
-		tokens->token = NULL;
-	}
-	else if (ft_strcmp(str, "\"\"") == 0)
-	{
-		free(tokens->token);
-		tokens->token = change_null_string();
-		if (tokens->token == NULL)
+		free(cmd->str[row]);
+		cmd->str[row] = change_null_string();
+		if (cmd->str[row] == NULL)
 			return (0);
 	}
-	else if (tokens->token != NULL)
+	else if (ft_strcmp(s, "\"\"") == 0)
 	{
-		free(tokens->token);
-		tokens->token = ft_strdup(str);
-		if (tokens->token == NULL)
+		free(cmd->str[row]);
+		cmd->str[row] = change_null_string();
+		if (cmd->str[row] == NULL)
+			return (0);
+	}
+	else if (cmd->str[row] != NULL)
+	{
+		free(cmd->str[row]);
+		cmd->str[row] = ft_strdup(s);
+		if (cmd->str[row] == NULL)
 			return ((memory_alloc_error(), 0));
 	}
 	return (1);
@@ -109,22 +111,19 @@ char	*alloc_tokens_key(t_tmp *tmp, char c)
 	return (str1);
 }
 
-int	join_sub_tokens(t_list *tokens, t_tmp *node, char c, int fd)
+int	join_sub_tokens(t_cmd_list *cmd, t_tmp *node, char c, int fd)
 {
 	char	*str;
 
 	if (c == 'c')
 	{
-		str = alloc_tokens_key(node, c);
-		if (str == NULL)
+		cmd->f_list[fd] = alloc_tokens_key(node, c);
+		if (cmd->f_list[fd] == NULL)
 			return (0);
-		if (tokens->key != NULL)
-			free(tokens->key);
-		tokens->key = str;
 		str = alloc_tokens_token(node, c);
 		if (str == NULL)
 			return (0);
-		if (change_null_string_n_null_point(tokens, str, c) == 0)
+		if (change_null_string_n_null_point(cmd, str, fd) == 0)
 			return ((free(str), 0));
 	}
 	else
