@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:11:14 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/21 23:44:13 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/22 19:52:17 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ int		pipe_div(t_list **words, const char *str, int index);
 /* token_character_check.c */
 int		check_valid_back(char *str, int idx);
 int		check_quote_pair(char c, int quote);
+int		check_quote_valid(char *token);
 int		count_quote_set(t_list *tokens, char c);
 
 /* operator_character_check.c */
@@ -243,9 +244,8 @@ char	**dividing_sub_token(char *str, int len);
 t_tmp	*dividing_copied_token(char *str);
 
 /* substitution/substitute_token.c */
-int		measure_length_quote_set(char *str, int cnt);
-int		subtitute_dollar_sign(t_data *meta, t_list *tokens, char c);
-int		check_quote_valid(char *token);
+int		measure_length_quote_set(char *str, int cnt, char c);
+int		substitute_dollar_sign(t_data *meta, t_cmd_list *cmd, char *s, char c);
 int		substitute_tokens(t_data *meata, t_list *tokens, char c);
 
 /* substitution/substitute_dollar_sign1.c */
@@ -273,7 +273,7 @@ int		check_pass_substitute(char *str, char c);
 int		change_dollar_underbar(t_data *meta, t_cmd_list *exec_cmd);
 
 /* substitution/join_sub_tokens */
-int		join_sub_tokens(t_list *tokens, t_tmp *node, char c, int fd);
+int		join_sub_tokens(t_cmd_list *cmd, t_tmp *node, char c, int fd);
 
 /* substitution/substitute_wildcard.c */
 char	**open_multi_directory(char *path, char **f_list);

@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 19:09:16 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/21 20:21:40 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/22 15:08:39 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	check_pass_substitute(char *str, char c)
 
 	quote = check_quote_pair(str[0], 0);
 	if (quote == 1 && c == 'c')
+		return (1);
+	else if (search_chr_in_str(str, '$') == 0)
 		return (1);
 	cnt = check_split_point_str(str);
 	if (cnt == 0)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   substitute_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 12:00:09 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/21 23:39:30 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/22 15:30:18 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	measure_length_quote_set(char *str, int cnt)
+int	measure_length_quote_set(char *str, int cnt, char c)
 {
 	int	idx;
 	int	qt;
@@ -23,10 +23,8 @@ int	measure_length_quote_set(char *str, int cnt)
 	{
 		if (qt == 0)
 		{
-			if (str[idx] == '\'')
-				qt = 1;
-			else if (str[idx] == '"')
-				qt = 2;
+			if (str[idx] == '\'' || str[idx] == '"')
+				qt = check_quote_pair(str[idx], qt);
 			else if (idx == 0 || str[idx - 1] == '\'' || str[idx - 1] == '"')
 				cnt++;
 		}
@@ -35,51 +33,34 @@ int	measure_length_quote_set(char *str, int cnt)
 			qt = 0;
 			cnt++;
 		}
+		if (c == 'h' && qt != 0 && str[idx + 1] == '\0')
+			cnt++;
 		idx++;
 	}
 	return (cnt);
 }
 
-int	subtitute_dollar_sign(t_data *meta, t_list *tokens, char c)
+int	substitute_dollar_sign(t_data *meta, t_cmd_list *cmd, char *s, char c)
 {
 	t_tmp	*node;
 	char	**tmp;
+	int		*keep;
 	int		var;
 
-	if (search_chr_in_str(tokens->token, '$') == 0)
+	if (search_chr_in_str(s, '$') == 0)
 		return (1);
-	var = measure_length_quote_set(tokens->token, var = 0);
-	tmp = dividing_sub_token(tokens->token, var);
+	var = measure_length_quote_set(s, var = 0, c);
+	tmp = dividing_sub_token(s, var);
 	if (tmp == NULL)
 		return (0);
 	node = do_substitute_dollar_sign(meta, tmp, c);
 	free_sndry_arr((void **)tmp);
 	if (node == NULL)
 		return (0);
-	var = join_sub_tokens(tokens, node, c, -1);
+	var = join_sub_tokens(cmd, node, c, -1);
 	if (var == 0)
 		return (0);
 	free_t_tmp(node);
-	return (1);
-}
-
-int	check_quote_valid(char *token)
-{
-	int	idx;
-	int	quote;
-
-	idx = 0;
-	quote = 0;
-	while (token[idx] != '\0')
-	{
-		quote = check_quote_pair(token[idx], quote);
-		idx++;
-	}
-	if (quote != 0)
-	{
-		error_qoute(quote);
-		return (0);
-	}
 	return (1);
 }
 

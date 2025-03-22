@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jemoon <jemoon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 05:10:55 by jahong            #+#    #+#             */
-/*   Updated: 2025/03/21 23:44:43 by jemoon           ###   ########.fr       */
+/*   Updated: 2025/03/22 16:13:38 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	check_operator_v1(const char *str, int index)
 int	mn_split(t_data *meta, char **str, char c)
 {
 	t_list	*tokens;
-	int		cmd_flag;
 
 	if (*str == NULL)
 		return (-1);
@@ -104,10 +103,10 @@ int	mn_split(t_data *meta, char **str, char c)
 	if (tokens == NULL)
 	{
 		meta->tokens = free_t_list(meta->tokens);
-		return (/*(free(*str),*/ -1);
+		return (-1);
 	}
 	if (count_quote_set(tokens, c) == 0)
-		return (/*(add_history(*str), free(*str),*/ free_t_list(tokens), 0);
+		return (free_t_list(tokens), 0);
 	if (meta->tokens == NULL)
 		meta->tokens = tokens;
 	else

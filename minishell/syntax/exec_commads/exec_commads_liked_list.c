@@ -6,7 +6,7 @@
 /*   By: jahong <jahong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:13:18 by jemoon            #+#    #+#             */
-/*   Updated: 2025/03/16 22:05:35 by jahong           ###   ########.fr       */
+/*   Updated: 2025/03/22 20:55:40 by jahong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ void	free_exec_linked_list(t_cmd_list *list)
 			free(temp->key);
 		if (temp->str != NULL)
 			free_double_string_array(temp->str);
+		if (temp->f_list != NULL)
+			free_sndry_arr((void **)temp->f_list);
 		free(temp);
 		temp = NULL;
 	}
-	list = NULL;
+	// list = NULL;
 }
 
 t_cmd_list	*create_exec_linked_list(char **str, \
